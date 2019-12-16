@@ -42,14 +42,14 @@ class LogCard extends StatelessWidget {
             style: TextStyle(fontSize: CFFontSize.topTitle),
           ),
           content: SingleChildScrollView(
-            child: ListBody(
+            child: Column(
               children: <Widget>[
                 Container(
-                  height: 15,
+                  height: 1,
                   width: MediaQuery.of(_context).size.width - 100,
                 ),
                 Html(
-                  data: jsonMsg(data.replaceAll(RegExp(r"\n"), '')),
+                  data: jsonMsg(data.replaceAll(RegExp(r"\n", multiLine: true), '')),
                   customTextStyle: (dom.Node node, TextStyle baseStyle) {
                     if (node is dom.Element) {
                       switch (node.localName) {
@@ -119,14 +119,14 @@ class LogCard extends StatelessWidget {
                         ),
                         Expanded(
                             flex: 1,
-                            child: col['event'] == false
-                                ? msg(col, item)
-                                : InkWell(
+                            child: col['event'] == true
+                                ? InkWell(
                                     onTap: () {
                                       dialog(item[col['key']], context);
                                     },
                                     child: msg(col, item),
-                                  ))
+                                  )
+                                : msg(col, item))
                       ],
                     ),
                   );

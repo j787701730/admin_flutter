@@ -27,14 +27,14 @@ class _ChargeLogsState extends State<ChargeLogs> {
   ScrollController _controller;
 
   List columns = [
-    {'title': '对账类型', 'key': 'charge_type_ch_name', 'event': false},
-    {'title': '交易单量', 'key': 'bill_count', 'event': false},
-    {'title': '交易总额', 'key': 'bill_amount', 'event': false},
-    {'title': '手续费总额', 'key': 'service_amount', 'event': false},
-    {'title': '对账结果', 'key': 'state', 'event': false},
-    {'title': '对账日期', 'key': 'bill_date', 'event': false},
-    {'title': '对账时间', 'key': 'create_date', 'event': false},
-    {'title': '备注', 'key': 'comments', 'event': false},
+    {'title': '对账类型', 'key': 'charge_type_ch_name'},
+    {'title': '交易单量', 'key': 'bill_count'},
+    {'title': '交易总额', 'key': 'bill_amount'},
+    {'title': '手续费总额', 'key': 'service_amount'},
+    {'title': '对账结果', 'key': 'state'},
+    {'title': '对账日期', 'key': 'bill_date'},
+    {'title': '对账时间', 'key': 'create_date'},
+    {'title': '备注', 'key': 'comments'},
   ];
 
   DateTime create_date_min;

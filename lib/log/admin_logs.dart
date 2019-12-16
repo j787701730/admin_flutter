@@ -27,14 +27,14 @@ class _AdminLogsState extends State<AdminLogs> {
   Map searchData = {'login_name': '', 'full_name': '', 'oper_ip': ''};
   Map searchName = {'login_name': '用户', 'full_name': '真实姓名', 'oper_ip': 'IP地址'};
   List columns = [
-    {'title': '用户', 'key': 'login_name', 'event': false},
-    {'title': '真实名字', 'key': 'full_name', 'event': false},
-    {'title': '操作类型', 'key': 'oper_type', 'event': false},
-    {'title': '菜单标识', 'key': 'menu_name', 'event': false},
-    {'title': '功能标识', 'key': 'function_name', 'event': false},
+    {'title': '用户', 'key': 'login_name'},
+    {'title': '真实名字', 'key': 'full_name'},
+    {'title': '操作类型', 'key': 'oper_type'},
+    {'title': '菜单标识', 'key': 'menu_name'},
+    {'title': '功能标识', 'key': 'function_name'},
     {'title': '操作标识', 'key': 'oper_content', 'event': true, 'lines': 4},
-    {'title': '操作IP', 'key': 'oper_ip', 'event': false},
-    {'title': '操作时间', 'key': 'oper_time', 'event': false},
+    {'title': '操作IP', 'key': 'oper_ip'},
+    {'title': '操作时间', 'key': 'oper_time'},
   ];
 
   Map operaType = {'1': '后台登入', '2': '操作模块'};
@@ -134,7 +134,8 @@ class _AdminLogsState extends State<AdminLogs> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['curr_page'] += page;
     getData();
   }

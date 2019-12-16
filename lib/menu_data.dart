@@ -296,7 +296,8 @@ List menuData = [
         "spell_all": "chongzhizengsong",
         "spell_index": "czzs",
         "name": "充值赠送",
-        "access": [50]
+        "access": [50],
+        "path": '/chargePresent'
       },
       {
         "spell_all": "chongzhika",
@@ -416,7 +417,8 @@ List menuData = [
         "spell_all": "wangzhanweihu",
         "spell_index": "wzwh",
         "name": "网站维护",
-        "access": [40]
+        "access": [40],
+        "path": '/maintain'
       },
       {
         "spell_all": "shangpinleimu",
@@ -476,7 +478,8 @@ List menuData = [
         "spell_all": "wangzhanxieyi",
         "spell_index": "wzxy",
         "name": "网站协议",
-        "access": [108]
+        "access": [108],
+        "path": '/agreement'
       },
       {
         "spell_all": "gonggao",
@@ -724,7 +727,8 @@ List menuData = [
         "spell_all": "yewuyuanfanli",
         "spell_index": "ywyfl",
         "name": "业务员返利",
-        "access": [84]
+        "access": [84],
+        "path": "/rebateSaleMan"
       },
       {
         "spell_all": "chengshifenxiao",

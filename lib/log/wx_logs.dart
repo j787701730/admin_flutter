@@ -27,16 +27,16 @@ class _WXLogsState extends State<WXLogs> {
   Map searchData = {'user_name': '', 'shop_name': '', 'err_code': '', 'wx_param': ''};
   Map searchName = {'user_name': '用户', 'shop_name': '店铺', 'err_code': '错误码', 'wx_param': '发送参数'};
   List columns = [
-    {'title': '用户', 'key': 'user_name', 'event': false},
-    {'title': '店铺', 'key': 'shop_name', 'event': false},
-    {'title': '消息标识', 'key': 'msg_id', 'event': false},
-    {'title': '微信模板', 'key': 'wx_template', 'event': false},
+    {'title': '用户', 'key': 'user_name'},
+    {'title': '店铺', 'key': 'shop_name'},
+    {'title': '消息标识', 'key': 'msg_id'},
+    {'title': '微信模板', 'key': 'wx_template'},
     {'title': '发送参数', 'key': 'wx_param', 'event': true, 'lines': 4},
-    {'title': '错误码', 'key': 'err_code', 'event': false},
-    {'title': '返回信息', 'key': 'err_msg', 'event': false},
-    {'title': '用户接收状态', 'key': 'receive_status', 'event': false},
-    {'title': '错误码', 'key': 'create_date', 'event': false},
-    {'title': '返回信息', 'key': 'update_date', 'event': false},
+    {'title': '错误码', 'key': 'err_code'},
+    {'title': '返回信息', 'key': 'err_msg'},
+    {'title': '用户接收状态', 'key': 'receive_status'},
+    {'title': '错误码', 'key': 'create_date'},
+    {'title': '返回信息', 'key': 'update_date'},
   ];
 
   DateTime create_date_min;

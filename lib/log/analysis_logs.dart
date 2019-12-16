@@ -28,10 +28,10 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
   BuildContext _context;
   ScrollController _controller;
   List columns = [
-    {'title': '日志来源', 'key': 'log_source', 'event': false},
-    {'title': '接口名称', 'key': 'name', 'event': false},
-    {'title': '调用次数', 'key': 'log_times', 'event': false},
-    {'title': '调用日期', 'key': 'log_day', 'event': false},
+    {'title': '日志来源', 'key': 'log_source'},
+    {'title': '接口名称', 'key': 'name'},
+    {'title': '调用次数', 'key': 'log_times'},
+    {'title': '调用日期', 'key': 'log_day'},
   ];
 
   Map url = {

@@ -41,11 +41,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void countDown() {
 //设置倒计时三秒后执行跳转方法
-    var duration = new Duration(seconds: 1);
+    var duration = Duration(seconds: 1);
     setState(() {
       isAjax = false;
     });
-    new Future.delayed(duration, checkLogin);
+    Future.delayed(duration, checkLogin);
   }
 
   getAccess() async {
@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
   checkLogin() {
     Navigator.push(
       _context,
-      new MaterialPageRoute(builder: (context) => new Login()),
+      MaterialPageRoute(builder: (context) => Login()),
     );
 //      .then((data) {
 //      if (data != null) {
@@ -120,6 +120,101 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  modifyPasswordDialog() {
+    return showDialog<void>(
+      context: _context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            '修改密码',
+            style: TextStyle(fontSize: CFFontSize.topTitle),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text('旧密码: '),
+                    ),
+                    Expanded(
+                        flex: 1,
+                        child: Container(
+                          height: 34,
+                          child: TextField(
+                            style: TextStyle(fontSize: CFFontSize.content),
+                            textAlign: TextAlign.left,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.only(top: 2, bottom: 2, left: 10, right: 10),
+                              hintText: '输入新密码',
+                            ),
+                            obscureText: true,
+                            onChanged: (String val) {
+                              setState(() {
+//                                            password = val;
+                              });
+                            },
+                          ),
+                        ))
+                  ],
+                ),
+                Container(
+                  height: 15,
+                  width: MediaQuery.of(context).size.width - 100,
+                ),
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text('新密码: '),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        height: 34,
+                        child: TextField(
+                          style: TextStyle(fontSize: CFFontSize.content),
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              errorText: null,
+                              contentPadding: EdgeInsets.only(top: 2, bottom: 2, left: 10, right: 10),
+                              hintText: '输入新密码'),
+                          obscureText: true,
+                          onChanged: (String val) {
+                            setState(() {
+//                                            password = val;
+                            });
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('取消'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: Text('提交'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _context = context;
@@ -135,104 +230,14 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Text(
-              '后台管理系统',
-              style: TextStyle(fontSize: CFFontSize.topTitle),
-            ),
+            title: Text('后台管理系统'),
             actions: <Widget>[
               isLogin
                   ? PopupMenuButton(
                       offset: Offset(0, 60),
                       onSelected: (String value) {
                         if (value == '0') {
-                          showDialog<void>(
-                            context: context,
-                            barrierDismissible: false, // user must tap button!
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text(
-                                  '修改密码',
-                                  style: TextStyle(fontSize: CFFontSize.topTitle),
-                                ),
-                                content: SingleChildScrollView(
-                                  child: Column(
-                                    children: <Widget>[
-                                      Row(
-                                        children: <Widget>[
-                                          Container(
-                                            child: Text('旧密码: '),
-                                          ),
-                                          Expanded(
-                                              flex: 1,
-                                              child: TextField(
-                                                style: TextStyle(fontSize: CFFontSize.content),
-                                                textAlign: TextAlign.left,
-                                                decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  contentPadding:
-                                                      EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                                                  hintText: '输入新密码',
-                                                ),
-                                                obscureText: true,
-                                                onChanged: (String val) {
-                                                  setState(() {
-//                                            password = val;
-                                                  });
-                                                },
-                                              ))
-                                        ],
-                                      ),
-                                      Container(
-                                        height: 15,
-                                        width: MediaQuery.of(context).size.width - 100,
-                                      ),
-                                      Row(
-                                        children: <Widget>[
-                                          Container(
-                                            child: Text('新密码: '),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: TextField(
-                                              style: TextStyle(fontSize: CFFontSize.content),
-                                              decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  errorText: null,
-                                                  contentPadding:
-                                                      EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                                                  hintText: '输入新密码'),
-                                              obscureText: true,
-                                              onChanged: (String val) {
-                                                setState(() {
-//                                            password = val;
-                                                });
-                                              },
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    child: Text('取消'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  FlatButton(
-                                    color: Colors.blue,
-                                    textColor: Colors.white,
-                                    child: Text('提交'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
+                          modifyPasswordDialog();
                         } else if (value == '1') {
                           setState(() {
                             isLogin = false;
@@ -240,7 +245,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         }
                       },
                       itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                        new PopupMenuItem(
+                        PopupMenuItem(
                             value: "0",
                             child: Row(
                               children: <Widget>[
@@ -255,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 Text("修改密码", style: TextStyle(fontSize: CFFontSize.content))
                               ],
                             )),
-                        new PopupMenuItem(
+                        PopupMenuItem(
                             value: "1",
                             child: Row(
                               children: <Widget>[
@@ -295,7 +300,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  new MaterialPageRoute(builder: (context) => new Login()),
+                                  MaterialPageRoute(builder: (context) => Login()),
                                 );
 //                                  .then((data) {
 //                                  if (data != null) {

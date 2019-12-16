@@ -27,13 +27,13 @@ class _SmsLogsState extends State<SmsLogs> {
   Map searchData = {'user_name': '', 'acc_nbr': '', 'in_param': '', 'err_code': ''};
   Map searchName = {'user_name': '用户', 'acc_nbr': '手机号', 'in_param': '发送参数', 'err_code': '错误码'};
   List columns = [
-    {'title': '用户', 'key': 'user_name', 'event': false},
-    {'title': '手机号', 'key': 'acc_nbr', 'event': false},
-    {'title': '短信模板', 'key': 'sms_template', 'event': false},
+    {'title': '用户', 'key': 'user_name'},
+    {'title': '手机号', 'key': 'acc_nbr'},
+    {'title': '短信模板', 'key': 'sms_template'},
     {'title': '发送模板', 'key': 'sms_param', 'event': true, 'lines': 4},
-    {'title': '错误码', 'key': 'err_code', 'event': false},
-    {'title': '出参参数', 'key': 'err_msg', 'event': false},
-    {'title': '创建时间', 'key': 'create_date', 'event': false},
+    {'title': '错误码', 'key': 'err_code'},
+    {'title': '出参参数', 'key': 'err_msg'},
+    {'title': '创建时间', 'key': 'create_date'},
   ];
 
   Map smsTemplate = {

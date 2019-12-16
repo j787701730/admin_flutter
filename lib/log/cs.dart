@@ -29,16 +29,12 @@ class _CsLogsState extends State<CsLogs> {
   Map searchData = {'user_name': '', 'ip': '', 'err_code': '', 'url': ''};
   Map searchName = {'user_name': '用户', 'ip': 'IP地址', 'err_code': '错误码', 'url': '访问路径'};
   List columns = [
-    {
-      'title': '用户',
-      'key': 'login_name',
-      'event': false,
-    },
+    {'title': '用户', 'key': 'login_name'},
     {'title': '输入参数', 'key': 'in_param', 'event': true, 'lines': 4},
-    {'title': '访问路径', 'key': 'url', 'event': false},
+    {'title': '访问路径', 'key': 'url'},
     {'title': '输出参数', 'key': 'out_param', 'event': true, 'lines': 4},
-    {'title': 'IP地址', 'key': 'ip', 'event': false},
-    {'title': '操作时间', 'key': 'create_date', 'event': false},
+    {'title': 'IP地址', 'key': 'ip'},
+    {'title': '操作时间', 'key': 'create_date'},
   ];
 
   DateTime create_date_min;
@@ -136,7 +132,8 @@ class _CsLogsState extends State<CsLogs> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     curr_page += page;
     getData();
   }

@@ -28,16 +28,16 @@ class _PhoneLogsState extends State<PhoneLogs> {
   Map searchData = {'user_name': '', 'virtual': '', 'phone_num': ''};
   Map searchName = {'user_name': '用户', 'virtual': '虚拟号码', 'phone_num': '关联号码'};
   List columns = [
-    {'title': '虚拟号码', 'key': 'virtual_nbr', 'event': false},
-    {'title': '主叫用户', 'key': 'calling_name', 'event': false},
-    {'title': '主叫号码', 'key': 'calling_nbr', 'event': false},
-    {'title': '被叫用户', 'key': 'called_name', 'event': false},
-    {'title': '被叫号码', 'key': 'called_nbr', 'event': false},
-    {'title': '拨打时间', 'key': 'start_time', 'event': false},
-    {'title': '挂断时间', 'key': 'end_time', 'event': false},
-    {'title': '通话时长(秒)', 'key': 'call_duration', 'event': false},
-    {'title': '通话费用(元)', 'key': 'fee', 'event': false},
-    {'title': '创建时间', 'key': 'create_date', 'event': false},
+    {'title': '虚拟号码', 'key': 'virtual_nbr'},
+    {'title': '主叫用户', 'key': 'calling_name'},
+    {'title': '主叫号码', 'key': 'calling_nbr'},
+    {'title': '被叫用户', 'key': 'called_name'},
+    {'title': '被叫号码', 'key': 'called_nbr'},
+    {'title': '拨打时间', 'key': 'start_time'},
+    {'title': '挂断时间', 'key': 'end_time'},
+    {'title': '通话时长(秒)', 'key': 'call_duration'},
+    {'title': '通话费用(元)', 'key': 'fee'},
+    {'title': '创建时间', 'key': 'create_date'},
   ];
 
   DateTime create_date_min;

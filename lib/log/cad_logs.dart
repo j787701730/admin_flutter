@@ -35,10 +35,10 @@ class _CADLogsState extends State<CADLogs> {
       'event': false,
     },
     {'title': '输入参数', 'key': 'in_param', 'event': true, 'lines': 4},
-    {'title': '访问路径', 'key': 'url', 'event': false},
+    {'title': '访问路径', 'key': 'url'},
     {'title': '输出参数', 'key': 'out_param', 'event': true, 'lines': 4},
-    {'title': 'IP地址', 'key': 'ip', 'event': false},
-    {'title': '操作时间', 'key': 'create_date', 'event': false},
+    {'title': 'IP地址', 'key': 'ip'},
+    {'title': '操作时间', 'key': 'create_date'},
   ];
 
   DateTime create_date_min;

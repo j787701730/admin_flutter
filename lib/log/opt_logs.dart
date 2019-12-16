@@ -27,12 +27,12 @@ class _OPTLogsState extends State<OPTLogs> {
   Map searchData = {'user_name': '', 'ip': '', 'err_code': '', 'url': '', 'in_param': ''};
   Map searchName = {'user_name': '用户', 'ip': 'IP地址', 'err_code': '错误码', 'url': '访问地址', 'in_param': '入参参数'};
   List columns = [
-    {'title': '用户', 'key': 'user_name', 'event': false},
-    {'title': 'IP', 'key': 'ip', 'event': false},
-    {'title': 'URL', 'key': 'url', 'event': false},
+    {'title': '用户', 'key': 'user_name'},
+    {'title': 'IP', 'key': 'ip'},
+    {'title': 'URL', 'key': 'url'},
     {'title': '入参参数', 'key': 'in_param', 'event': true, 'lines': 4},
     {'title': '出参参数', 'key': 'out_param', 'event': true, 'lines': 4},
-    {'title': '创建时间', 'key': 'create_date', 'event': false},
+    {'title': '创建时间', 'key': 'create_date'},
   ];
 
   DateTime create_date_min;

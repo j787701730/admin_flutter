@@ -47,21 +47,33 @@ class _InputState extends State<Input> {
           ),
           Expanded(
             flex: 1,
-            child: Container(
-              alignment: Alignment.centerLeft,
-              height: 34,
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  contentPadding: widget.contentPadding ?? EdgeInsets.only(top: 0, bottom: 0, left: 15),
-                  hintText: widget.placeholder ?? '',
-                ),
-                maxLines: widget.maxLines,
-                onChanged: (String val) {
-                  widget.onChanged(val);
-                },
-              ),
-            ),
+            child: widget.maxLines == 1
+                ? Container(
+                    alignment: Alignment.centerLeft,
+                    height: 34.0,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: widget.contentPadding ?? EdgeInsets.only(top: 0, bottom: 0, left: 15),
+                        hintText: widget.placeholder ?? '',
+                      ),
+                      maxLines: widget.maxLines,
+                      onChanged: (String val) {
+                        widget.onChanged(val);
+                      },
+                    ),
+                  )
+                : TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      contentPadding: widget.contentPadding ?? EdgeInsets.only(top: 10, bottom: 10, left: 15),
+                      hintText: widget.placeholder ?? '',
+                    ),
+                    maxLines: widget.maxLines,
+                    onChanged: (String val) {
+                      widget.onChanged(val);
+                    },
+                  ),
           )
         ],
       ),

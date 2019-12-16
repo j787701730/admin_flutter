@@ -33,13 +33,13 @@ class _MQLogsState extends State<MQLogs> {
     'order_no': '订单号',
   };
   List columns = [
-    {'title': '队列标识', 'key': 'msg_id', 'event': false},
+    {'title': '队列标识', 'key': 'msg_id'},
     {'title': '消息内容', 'key': 'msg_content', 'event': true, 'lines': 4},
-    {'title': '处理状态', 'key': 'data_state', 'event': false},
-    {'title': '数据失败原因', 'key': 'data_error', 'event': false, 'lines': 4},
-    {'title': '微信推送状态', 'key': 'send_state', 'event': false},
-    {'title': '推送失败原因', 'key': 'send_error', 'event': false},
-    {'title': '消息时间', 'key': 'msg_time', 'event': false},
+    {'title': '处理状态', 'key': 'data_state'},
+    {'title': '数据失败原因', 'key': 'data_error', 'lines': 4},
+    {'title': '微信推送状态', 'key': 'send_state'},
+    {'title': '推送失败原因', 'key': 'send_error'},
+    {'title': '消息时间', 'key': 'msg_time'},
   ];
 
   DateTime create_date_min;

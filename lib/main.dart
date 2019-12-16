@@ -3,14 +3,17 @@ import 'package:admin_flutter/balance/balance_charge.dart';
 import 'package:admin_flutter/balance/balance_manual.dart';
 import 'package:admin_flutter/balance/balance_transfer.dart';
 import 'package:admin_flutter/balance/charge_card.dart';
+import 'package:admin_flutter/balance/charge_present.dart';
 import 'package:admin_flutter/balance/charge_summary.dart';
 import 'package:admin_flutter/balance/extract.dart';
 import 'package:admin_flutter/balance/list.dart';
 import 'package:admin_flutter/balance/pricing.dart';
 import 'package:admin_flutter/balance/redPacket.dart';
+import 'package:admin_flutter/base/agreement.dart';
 import 'package:admin_flutter/base/base_monitor.dart';
 import 'package:admin_flutter/base/base_wxreply.dart';
 import 'package:admin_flutter/base/cache.dart';
+import 'package:admin_flutter/base/maintain.dart';
 import 'package:admin_flutter/base/sitemap.dart';
 import 'package:admin_flutter/erp/added_services.dart';
 import 'package:admin_flutter/erp/erp_config.dart';
@@ -50,6 +53,7 @@ import 'package:admin_flutter/rebate/rebate_distributor.dart';
 import 'package:admin_flutter/rebate/rebate_list.dart';
 import 'package:admin_flutter/rebate/rebate_rates.dart';
 import 'package:admin_flutter/rebate/rebate_rule.dart';
+import 'package:admin_flutter/rebate/rebate_sale_man.dart';
 import 'package:admin_flutter/shop/cad_admins.dart';
 import 'package:admin_flutter/shop/cad_drawing.dart';
 import 'package:admin_flutter/shop/cad_user_relation.dart';
@@ -99,6 +103,7 @@ class MyApp extends StatelessWidget {
         '/usersManager': (_) => UsersManager(), // 用户管理
         '/balanceList': (_) => BalanceList(), // 资金账本
         '/balancePricing': (_) => BalancePricing(), // 定价计划
+        '/chargePresent': (_) => ChargePresent(), // 充值赠送
         '/shopList': (_) => ShopList(), // 店铺列表
         '/cadUserRelation': (_) => CadUserRelation(), // CAD用户关系
         '/cadDrawing': (_) => CadDrawing(), // 效果图制作
@@ -109,6 +114,8 @@ class MyApp extends StatelessWidget {
         '/invoiceList': (_) => InvoiceList(), // 开票管理
         '/accountItem': (_) => AccountItem(), // 出账日志
         '/baseMonitor': (_) => BaseMonitor(), // 主机监控
+        '/maintain': (_) => Maintain(), // 网站维护
+        '/agreement': (_) => Agreement(), // 网站协议
         '/cadDistributor': (_) => CADDistributor(), // CAD经销商
         '/rebateList': (_) => RebateList(), // 返利流水
         '/rebateRates': (_) => RebateRates(), // 返利比例
@@ -116,6 +123,7 @@ class MyApp extends StatelessWidget {
         '/rebateDistributor': (_) => RebateDistributor(), // 经销商
         '/rebateCitySales': (_) => RebateCitySales(), // 城市分销
         '/rebateAuthorize': (_) => RebateAuthorize(), // 门店授权
+        '/rebateSaleMan': (_) => RebateSaleMan(), // 业务员返利
         '/erpSoftware': (_) => ErpSoftware(), // 软件包月
         '/erpOrders': (_) => ErpOrders(), // ERP订单
         '/erpCrm': (_) => ErpCrm(), // 门店客户

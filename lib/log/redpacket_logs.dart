@@ -28,10 +28,10 @@ class _RedPacketLogsState extends State<RedPacketLogs> {
   Map searchData = {'user_name': ''};
   Map searchName = {'user_name': '用户'};
   List columns = [
-    {'title': '用户', 'key': 'login_name', 'event': false},
-    {'title': '金额(元)', 'key': 'receive_amount', 'event': false},
-    {'title': '红包(份)', 'key': 'nums', 'event': false},
-    {'title': '时间', 'key': 'receive_date', 'event': false},
+    {'title': '用户', 'key': 'login_name'},
+    {'title': '金额(元)', 'key': 'receive_amount'},
+    {'title': '红包(份)', 'key': 'nums'},
+    {'title': '时间', 'key': 'receive_date'},
   ];
 
   DateTime create_date_min;
