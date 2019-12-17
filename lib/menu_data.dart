@@ -345,19 +345,22 @@ List menuData = [
         "spell_all": "jilianghuizong",
         "spell_index": "jlhz",
         "name": "积量汇总",
-        "access": [109]
+        "access": [109],
+        "path": "/accumulateFlow"
       },
       {
         "spell_all": "zhifufangan",
         "spell_index": "zffa",
         "name": "支付方案",
-        "access": [111]
+        "access": [111],
+        "path": "/paymentPlan"
       },
       {
         "spell_all": "tixianpeizhi",
         "spell_index": "txpz",
         "name": "提现配置",
-        "access": [140]
+        "access": [140],
+        "path": "/extractConfig"
       },
       {
         "spell_all": "zhangmuhuizong",

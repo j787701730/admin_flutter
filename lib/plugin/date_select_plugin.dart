@@ -9,6 +9,7 @@ class DateSelectPlugin extends StatefulWidget {
   final Function onChanged;
   final bool require; // 是否必填 显示*
   final String label;
+  final bool operaNull; // 是否要处理取消时null
 
   DateSelectPlugin({
     @required this.onChanged,
@@ -17,6 +18,7 @@ class DateSelectPlugin extends StatefulWidget {
     this.max,
     this.labelWidth,
     this.require = false,
+    this.operaNull = false,
   });
 
   @override
@@ -71,12 +73,12 @@ class _DateSelectPluginState extends State<DateSelectPlugin> {
                         context: context,
                         initialDate: min ?? DateTime.now(),
                         firstDate: DateTime.tryParse('1970-01-01 00:00:00'),
-                        // 减 30 天
-                        lastDate: DateTime.tryParse('2099-12-31 23:59:59'), // 加 30 天
+                        lastDate: DateTime.tryParse('2099-12-31 23:59:59'),
                       ).then((DateTime val) {
-                        // 2018-07-12 00:00:00.000
                         setState(() {
-                          min = val;
+                          if (!widget.operaNull || val != null) {
+                            min = val;
+                          }
                           widget.onChanged({'min': min, 'max': max});
                         });
                       }).catchError((err) {
@@ -108,12 +110,12 @@ class _DateSelectPluginState extends State<DateSelectPlugin> {
                           context: context,
                           initialDate: max ?? DateTime.now(),
                           firstDate: DateTime.tryParse('1970-01-01 00:00:00'),
-                          // 减 30 天
-                          lastDate: DateTime.tryParse('2099-12-31 23:59:59'), // 加 30 天
+                          lastDate: DateTime.tryParse('2099-12-31 23:59:59'),
                         ).then((DateTime val) {
-                          // 2018-07-12 00:00:00.000
                           setState(() {
-                            max = val;
+                            if (!widget.operaNull || val != null) {
+                              max = val;
+                            }
                             widget.onChanged({'min': min, 'max': max});
                           });
                         }).catchError((err) {
