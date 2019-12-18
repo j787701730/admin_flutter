@@ -146,11 +146,11 @@ class _FinancialDetailState extends State<FinancialDetail> {
                               width: 80,
                               alignment: Alignment.centerRight,
                               margin: EdgeInsets.only(right: 10),
-                              child: Text('${detail[key]}'),
+                              child: Text('${detail[key]}',style: TextStyle(fontSize: CFFontSize.content),),
                             ),
                             Expanded(
                               flex: 1,
-                              child: Text('${item[key]}'),
+                              child: Text('${item[key]}',style: TextStyle(fontSize: CFFontSize.content),),
                             )
                           ],
                         ),

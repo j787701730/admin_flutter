@@ -101,7 +101,8 @@ class _CadUserRelationState extends State<CadUserRelation> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['curr_page'] += page;
     getData();
   }
@@ -147,7 +148,10 @@ class _CadUserRelationState extends State<CadUserRelation> {
               children: <Widget>[
                 Container(
                   width: MediaQuery.of(context).size.width - 100,
-                  child: Text('确认删除 ${item['a_shop_name']} 发送到 ${item['z_shop_name']} 的CAD用户关系'),
+                  child: Text(
+                    '确认删除 ${item['a_shop_name']} 发送到 ${item['z_shop_name']} 的CAD用户关系',
+                    style: TextStyle(fontSize: CFFontSize.content),
+                  ),
                 )
               ],
             ),

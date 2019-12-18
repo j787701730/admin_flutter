@@ -5,6 +5,7 @@ import 'package:admin_flutter/balance/price_plan.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -219,11 +220,17 @@ class _BalancePricingState extends State<BalancePricing> {
                                                 barrierDismissible: false, // user must tap button!
                                                 builder: (BuildContext context) {
                                                   return AlertDialog(
-                                                    title: Text('系统提示'),
+                                                    title: Text(
+                                                      '系统提示',
+                                                      style: TextStyle(fontSize: CFFontSize.topTitle),
+                                                    ),
                                                     content: SingleChildScrollView(
                                                       child: ListBody(
                                                         children: <Widget>[
-                                                          Text('确定删除 ${item['login_name']} 的定价计划?'),
+                                                          Text(
+                                                            '确定删除 ${item['login_name']} 的定价计划?',
+                                                            style: TextStyle(fontSize: CFFontSize.content),
+                                                          ),
                                                         ],
                                                       ),
                                                     ),

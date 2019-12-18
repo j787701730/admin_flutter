@@ -25,8 +25,6 @@ class _RedPacketState extends State<RedPacket> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  int num = 1;
-
   List columns = [
     {'title': '红包编码', 'key': 'packet_code'},
     {'title': '红包标题', 'key': 'packet_topic'},
@@ -97,9 +95,101 @@ class _RedPacketState extends State<RedPacket> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['curr_page'] += page;
     getData();
+  }
+
+  jsonDialog(item) {
+    int num = 1;
+    List arr = jsonDecode(item['packet_json']);
+    return showDialog<void>(
+      context: _context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('红包列表', style: TextStyle(fontSize: CFFontSize.topTitle)),
+          content: Container(
+            width: MediaQuery.of(context).size.width - 100,
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(color: Colors.grey, width: 1),
+                      ),
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            '#',
+                            style: TextStyle(
+                              fontSize: CFFontSize.content,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                            flex: 1,
+                            child: Text(
+                              '红包金额',
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                fontSize: CFFontSize.content,
+                              ),
+                            ))
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: arr.map<Widget>((item) {
+                      return Container(
+                        padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: Colors.grey, width: 1),
+                          ),
+                        ),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                '${num++}',
+                                style: TextStyle(fontSize: CFFontSize.content),
+                              ),
+                            ),
+                            Expanded(
+                                flex: 1,
+                                child: Text(
+                                  '$item',
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(fontSize: CFFontSize.content),
+                                ))
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  )
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('关闭'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -207,58 +297,14 @@ class _RedPacketState extends State<RedPacket> {
                                           case 'packet_json':
                                             con = InkWell(
                                               onTap: () {
-                                                return showDialog<void>(
-                                                  context: context,
-                                                  barrierDismissible: false, // user must tap button!
-                                                  builder: (BuildContext context) {
-                                                    return AlertDialog(
-                                                      title:
-                                                          Text('红包列表', style: TextStyle(fontSize: CFFontSize.topTitle)),
-                                                      content: Container(
-                                                        width: MediaQuery.of(context).size.width - 100,
-                                                        child: SingleChildScrollView(
-                                                          child: ListBody(
-                                                            children:
-                                                                jsonDecode(item['packet_json']).map<Widget>((item) {
-                                                              return Container(
-                                                                padding: EdgeInsets.only(
-                                                                    left: 10, right: 10, top: 4, bottom: 4),
-                                                                decoration: BoxDecoration(
-                                                                    border: Border(
-                                                                        bottom:
-                                                                            BorderSide(color: Colors.grey, width: 1))),
-                                                                child: Row(
-                                                                  children: <Widget>[
-                                                                    Expanded(flex: 1, child: Text('${num++}')),
-                                                                    Expanded(
-                                                                        flex: 1,
-                                                                        child: Text(
-                                                                          '$item',
-                                                                          textAlign: TextAlign.right,
-                                                                        ))
-                                                                  ],
-                                                                ),
-                                                              );
-                                                            }).toList(),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      actions: <Widget>[
-                                                        FlatButton(
-                                                          child: Text('关闭'),
-                                                          onPressed: () {
-                                                            setState(() {
-                                                              num = 1;
-                                                            });
-                                                            Navigator.of(context).pop();
-                                                          },
-                                                        ),
-                                                      ],
-                                                    );
-                                                  },
-                                                );
+                                                jsonDialog(item);
                                               },
-                                              child: Text('${item['packet_json']}'),
+                                              child: Text(
+                                                '${item['packet_json']}',
+                                                style: TextStyle(
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
                                             );
                                             break;
                                         }

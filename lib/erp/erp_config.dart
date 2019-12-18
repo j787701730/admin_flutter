@@ -117,7 +117,7 @@ class _ErpConfigState extends State<ErpConfig> {
             ),
             content: SingleChildScrollView(
               child: ListBody(
-                children: <Widget>[Text('确认删除 ${item['shop_name']} ERP配置?')],
+                children: <Widget>[Text('确认删除 ${item['shop_name']} ERP配置?',style: TextStyle(fontSize: CFFontSize.content),)],
               ),
             ),
             actions: <Widget>[

@@ -7,6 +7,7 @@ import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/shop/shop_staff.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -174,7 +175,8 @@ class _ShopListState extends State<ShopList> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['page'] += page;
     getData();
   }
@@ -370,7 +372,10 @@ class _ShopListState extends State<ShopList> {
                                                 return StatefulBuilder(builder: (context1, state) {
                                                   /// 这里的state就是setState
                                                   return AlertDialog(
-                                                    title: Text('权限管理'),
+                                                    title: Text(
+                                                      '权限管理',
+                                                      style: TextStyle(fontSize: CFFontSize.topTitle),
+                                                    ),
                                                     content: SingleChildScrollView(
                                                       child: ListBody(
                                                         children: <Widget>[
@@ -420,7 +425,10 @@ class _ShopListState extends State<ShopList> {
                                                                           }
                                                                         }),
                                                                     Container(
-                                                                      child: Text('${roles[key]['role_ch_name']}'),
+                                                                      child: Text(
+                                                                        '${roles[key]['role_ch_name']}',
+                                                                        style: TextStyle(fontSize: CFFontSize.content),
+                                                                      ),
                                                                     )
                                                                   ],
                                                                 ),
@@ -483,12 +491,17 @@ class _ShopListState extends State<ShopList> {
                                                   barrierDismissible: false, // user must tap button!
                                                   builder: (BuildContext context) {
                                                     return AlertDialog(
-                                                      title: Text('系统提示'),
+                                                      title: Text(
+                                                        '系统提示',
+                                                        style: TextStyle(fontSize: CFFontSize.topTitle),
+                                                      ),
                                                       content: SingleChildScrollView(
                                                         child: ListBody(
                                                           children: <Widget>[
                                                             Text(
-                                                                '确定要 ${item['state'] == '1' || item['state'] == '-1' ? '冻结' : '解冻'} ${item['login_name']} 账号?'),
+                                                              '确定要 ${item['state'] == '1' || item['state'] == '-1' ? '冻结' : '解冻'} ${item['login_name']} 账号?',
+                                                              style: TextStyle(fontSize: CFFontSize.content),
+                                                            ),
                                                           ],
                                                         ),
                                                       ),

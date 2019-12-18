@@ -159,7 +159,7 @@ class _SupplyClassState extends State<SupplyClass> {
                         content: SingleChildScrollView(
                           child: ListBody(
                             children: <Widget>[
-                              Text('确认删除 ${data['class_name']} ?'),
+                              Text('确认删除 ${data['class_name']} ?',style: TextStyle(fontSize: CFFontSize.content),),
                             ],
                           ),
                         ),

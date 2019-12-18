@@ -9,6 +9,7 @@ import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/range_input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -135,11 +136,11 @@ class _BalanceListState extends State<BalanceList> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('系统提示'),
+          title: Text('系统提示',style: TextStyle(fontSize: CFFontSize.topTitle),),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('确定稽核?'),
+                Text('确定稽核?',style: TextStyle(fontSize: CFFontSize.content),),
               ],
             ),
           ),

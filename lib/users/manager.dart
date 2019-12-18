@@ -6,6 +6,7 @@ import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/users/loginRecord.dart';
 import 'package:admin_flutter/users/user_message_modify.dart';
 import 'package:admin_flutter/utils.dart';
@@ -195,14 +196,14 @@ class _UsersManagerState extends State<UsersManager> {
         return AlertDialog(
           title: Text(
             '${selectRow['login_name']} 用户类型修改',
-            style: TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: CFFontSize.topTitle),
           ),
           content: SingleChildScrollView(
             child: Container(
                 width: width - 100,
                 child: Text(
                   '用户类型',
-                  style: TextStyle(fontSize: 14),
+                  style: TextStyle(fontSize: CFFontSize.content),
                 )),
           ),
           actions: <Widget>[

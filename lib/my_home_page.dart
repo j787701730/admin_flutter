@@ -136,7 +136,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 Row(
                   children: <Widget>[
                     Container(
-                      child: Text('旧密码: '),
+                      child: Text(
+                        '旧密码: ',
+                        style: TextStyle(fontSize: CFFontSize.content),
+                      ),
                     ),
                     Expanded(
                         flex: 1,
@@ -167,7 +170,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 Row(
                   children: <Widget>[
                     Container(
-                      child: Text('新密码: '),
+                      child: Text(
+                        '新密码: ',
+                        style: TextStyle(fontSize: CFFontSize.content),
+                      ),
                     ),
                     Expanded(
                       flex: 1,

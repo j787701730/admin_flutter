@@ -1,25 +1,22 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:admin_flutter/plugin/date_select_plugin.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/shop/create_cad_admin.dart';
-import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class CadAdmins extends StatefulWidget {
+class DrawType extends StatefulWidget {
   @override
-  _CadAdminsState createState() => _CadAdminsState();
+  _DrawTypeState createState() => _DrawTypeState();
 }
 
-class _CadAdminsState extends State<CadAdmins> {
+class _DrawTypeState extends State<DrawType> {
   BuildContext _context;
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
@@ -29,11 +26,9 @@ class _CadAdminsState extends State<CadAdmins> {
   bool loading = true;
 
   List columns = [
-    {'title': '店铺名称', 'key': 'name'},
-    {'title': '状态', 'key': 'state'},
+    {'title': '中文名称', 'key': 'type_ch_name'},
+    {'title': '英文名称', 'key': 'type_en_name'},
     {'title': '备注', 'key': 'comments'},
-    {'title': '创建日期', 'key': 'create_date'},
-    {'title': '操作', 'key': 'option'},
   ];
 
   void _onRefresh() async {
@@ -42,8 +37,6 @@ class _CadAdminsState extends State<CadAdmins> {
       getData(isRefresh: true);
     });
   }
-
-  Map state = {'all': '全部', '1': '在用', '0': '冻结'};
 
   @override
   void initState() {
@@ -65,11 +58,11 @@ class _CadAdminsState extends State<CadAdmins> {
     setState(() {
       loading = true;
     });
-    ajax('Adminrelas-shopsManage-cadAdminsList', {'param': jsonEncode(param)}, true, (res) {
+    ajax('Adminrelas-LuckyDraw-getDrawType', {'param': jsonEncode(param)}, true, (res) {
       if (mounted) {
         setState(() {
           loading = false;
-          ajaxData = res['data'];
+          ajaxData = res['data'] ?? [];
           count = int.tryParse('${res['count'] ?? 0}');
           toTop();
         });
@@ -89,119 +82,26 @@ class _CadAdminsState extends State<CadAdmins> {
   toTop() {
     _controller.animateTo(
       0,
-      duration: new Duration(milliseconds: 300), // 300ms
+      duration: Duration(milliseconds: 300), // 300ms
       curve: Curves.bounceIn, // 动画方式
     );
   }
 
   getPage(page) {
-    if (loading) return;
     param['curr_page'] += page;
     getData();
-  }
-
-  dialog(data) {
-    showDialog<void>(
-      context: _context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            '${data['name']} 修改',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width - 100,
-                  child: TextField(
-                    controller: TextEditingController(text: '${data['comments']}'),
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
-                    onChanged: (String val) {
-                      setState(() {
-//                              param['loginName'] = val;
-                      });
-                    },
-                    style: TextStyle(fontSize: CFFontSize.content),
-                  ),
-                )
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('关闭'),
-              onPressed: () {
-                Navigator.of(_context).pop();
-              },
-            ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: CFColors.white,
-              child: Text('保存'),
-              onPressed: () {
-                Navigator.of(_context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  stateDialog(item) {
-    showDialog<void>(
-      context: _context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            '提示',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width - 100,
-                  child: Text(
-                    '确定 ${item['state'] == '1' ? '冻结' : '解冻'}' '${item['name']} 店铺?',
-                    style: TextStyle(fontSize: CFFontSize.content),
-                  ),
-                )
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('关闭'),
-              onPressed: () {
-                Navigator.of(_context).pop();
-              },
-            ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: CFColors.white,
-              child: Text('保存'),
-              onPressed: () {
-                Navigator.of(_context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   String defaultVal = 'all';
 
   Map selects = {
     'all': '无',
-    'create_date': '创建时间 升序',
-    'create_date desc': '创建时间 降序',
+    'type_ch_name': '中文名称 升序',
+    'type_ch_name desc': '中文名称 降序',
+    'type_en_name': '英文名称 升序',
+    'type_en_name desc': '英文名称 降序',
+    'comments': '备注 升序',
+    'comments desc': '备注 降序',
   };
 
   orderBy(val) {
@@ -215,26 +115,11 @@ class _CadAdminsState extends State<CadAdmins> {
     getData();
   }
 
-  getDateTime(val) {
-    setState(() {
-      if (val['min'] == null) {
-        param.remove('create_date_l');
-      } else {
-        param['create_date_l'] = val['min'].toString().substring(0, 10);
-      }
-      if (val['max'] == null) {
-        param.remove('create_date_r');
-      } else {
-        param['create_date_r'] = val['max'].toString().substring(0, 10);
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('WEB_CAD管理员'),
+        title: Text('抽奖方式'),
       ),
       body: SmartRefresher(
           enablePullDown: true,
@@ -242,39 +127,46 @@ class _CadAdminsState extends State<CadAdmins> {
           header: WaterDropHeader(),
           controller: _refreshController,
           onRefresh: _onRefresh,
-//          onLoading: _onLoading,
+          // onLoading: _onLoading,
           child: ListView(
             controller: _controller,
             padding: EdgeInsets.all(10),
             children: <Widget>[
               Input(
-                  label: '店铺名称',
-                  onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('shop_name');
-                      } else {
-                        param['shop_name'] = val;
-                      }
-                    });
-                  }),
-              Select(
-                selectOptions: state,
-                selectedValue: param['if_state'] ?? 'all',
-                label: '状态',
-                onChanged: (String newValue) {
+                label: '中文名称',
+                onChanged: (String val) {
                   setState(() {
-                    if (newValue == 'all') {
-                      param.remove('if_state');
+                    if (val == '') {
+                      param.remove('type_ch_name');
                     } else {
-                      param['if_state'] = newValue;
+                      param['type_ch_name'] = val;
                     }
                   });
                 },
               ),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '创建时间',
+              Input(
+                label: '英文名称',
+                onChanged: (String val) {
+                  setState(() {
+                    if (val == '') {
+                      param.remove('type_en_name');
+                    } else {
+                      param['type_en_name'] = val;
+                    }
+                  });
+                },
+              ),
+              Input(
+                label: '备注',
+                onChanged: (String val) {
+                  setState(() {
+                    if (val == '') {
+                      param.remove('comments');
+                    } else {
+                      param['comments'] = val;
+                    }
+                  });
+                },
               ),
               Select(
                 selectOptions: selects,
@@ -297,17 +189,6 @@ class _CadAdminsState extends State<CadAdmins> {
                             FocusScope.of(context).requestFocus(FocusNode());
                           },
                           child: Text('搜索')),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              new MaterialPageRoute(builder: (context) => new CreateCadAdmin()),
-                            );
-                          },
-                          child: Text('新增CAD管理员')),
                     ),
                   ],
                 ),
@@ -342,7 +223,21 @@ class _CadAdminsState extends State<CadAdmins> {
                                         Widget con = Text('${item[col['key']] ?? ''}');
                                         switch (col['key']) {
                                           case 'state':
-                                            con = Text('${state[item['state']]}');
+                                            con = '${item[col['key']]}' == '1' ? Text('在用') : Text('停用');
+                                            break;
+                                          case 'if_charge':
+                                            con = Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: '${item[col['key']]}' == '1'
+                                                  ? Icon(
+                                                      Icons.close,
+                                                      color: Colors.red,
+                                                    )
+                                                  : Icon(
+                                                      Icons.check,
+                                                      color: Colors.green,
+                                                    ),
+                                            );
                                             break;
                                           case 'option':
                                             con = Wrap(
@@ -352,19 +247,8 @@ class _CadAdminsState extends State<CadAdmins> {
                                                 Container(
                                                   height: 30,
                                                   child: PrimaryButton(
-                                                    onPressed: () {
-                                                      dialog(item);
-                                                    },
-                                                    child: Text('修改'),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      stateDialog(item);
-                                                    },
-                                                    child: Text('${item['state']}' == '1' ? '冻结' : '解冻'),
+                                                    onPressed: () {},
+                                                    child: Text(''),
                                                   ),
                                                 )
                                               ],

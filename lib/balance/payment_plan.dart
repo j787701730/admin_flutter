@@ -201,8 +201,10 @@ class _PaymentPlanState extends State<PaymentPlan> {
           content: SingleChildScrollView(
             child: Container(
 //                width: MediaQuery.of(context).size.width - 100,
-              child:
-                  Text('确认删除 ${paymentMethod[data['payment_method']]} ${balanceTypeSelect[data['balance_type_id']]} ?'),
+              child: Text(
+                '确认删除 ${paymentMethod[data['payment_method']]} ${balanceTypeSelect[data['balance_type_id']]} ?',
+                style: TextStyle(fontSize: CFFontSize.content),
+              ),
             ),
           ),
           actions: <Widget>[
@@ -256,6 +258,7 @@ class _PaymentPlanState extends State<PaymentPlan> {
                         Expanded(
                           flex: 1,
                           child: TextField(
+                            style: TextStyle(fontSize: CFFontSize.content),
                             controller: TextEditingController.fromValue(TextEditingValue(
                                 text: '${planTypeModify['type_ch_name'] ?? ''}',
                                 selection: TextSelection.fromPosition(TextPosition(

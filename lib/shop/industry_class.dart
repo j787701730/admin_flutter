@@ -174,7 +174,7 @@ class _IndustryClassState extends State<IndustryClass> {
                         content: SingleChildScrollView(
                           child: ListBody(
                             children: <Widget>[
-                              Text('确认删除 ${data['class_name']} ?'),
+                              Text('确认删除 ${data['class_name']} ?',style: TextStyle(fontSize: CFFontSize.content),),
                             ],
                           ),
                         ),

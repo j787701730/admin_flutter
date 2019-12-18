@@ -7,6 +7,7 @@ import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/plugin/user_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -252,7 +253,10 @@ class _ChargeCardState extends State<ChargeCard> {
                                 return StatefulBuilder(builder: (context1, state) {
                                   /// 这里的state就是setState
                                   return AlertDialog(
-                                    title: Text('充值卡制作'),
+                                    title: Text(
+                                      '充值卡制作',
+                                      style: TextStyle(fontSize: CFFontSize.topTitle),
+                                    ),
                                     content: SingleChildScrollView(
                                       child: ListBody(
                                         children: <Widget>[
@@ -264,7 +268,10 @@ class _ChargeCardState extends State<ChargeCard> {
                                                 Container(
                                                   width: 90,
                                                   alignment: Alignment.centerRight,
-                                                  child: Text('卡类型:'),
+                                                  child: Text(
+                                                    '卡类型:',
+                                                    style: TextStyle(fontSize: CFFontSize.content),
+                                                  ),
                                                   margin: EdgeInsets.only(right: 10),
                                                 ),
                                                 Expanded(
@@ -299,6 +306,7 @@ class _ChargeCardState extends State<ChargeCard> {
                                                                   '${cardType[item]['type_ch_name']}',
                                                                   maxLines: 1,
                                                                   overflow: TextOverflow.ellipsis,
+                                                                  style: TextStyle(fontSize: CFFontSize.content),
                                                                 ),
                                                               ),
                                                             );
@@ -332,12 +340,16 @@ class _ChargeCardState extends State<ChargeCard> {
                                                 Container(
                                                   width: 90,
                                                   alignment: Alignment.centerRight,
-                                                  child: Text('生成数量:'),
+                                                  child: Text(
+                                                    '生成数量:',
+                                                    style: TextStyle(fontSize: CFFontSize.content),
+                                                  ),
                                                   margin: EdgeInsets.only(right: 10),
                                                 ),
                                                 Expanded(
                                                     flex: 1,
                                                     child: TextField(
+                                                      style: TextStyle(fontSize: CFFontSize.content),
                                                       controller: TextEditingController(text: setCardCount),
                                                       decoration: InputDecoration(
                                                           border: OutlineInputBorder(),
@@ -409,7 +421,10 @@ class _ChargeCardState extends State<ChargeCard> {
                                 return StatefulBuilder(builder: (context1, state) {
                                   /// 这里的state就是setState
                                   return AlertDialog(
-                                    title: Text('赠送充值卡'),
+                                    title: Text(
+                                      '赠送充值卡',
+                                      style: TextStyle(fontSize: CFFontSize.topTitle),
+                                    ),
                                     content: SingleChildScrollView(
                                       child: ListBody(
                                         children: <Widget>[
@@ -421,7 +436,10 @@ class _ChargeCardState extends State<ChargeCard> {
                                                 Container(
                                                   width: 60,
                                                   alignment: Alignment.centerRight,
-                                                  child: Text('用户:'),
+                                                  child: Text(
+                                                    '用户:',
+                                                    style: TextStyle(fontSize: CFFontSize.content),
+                                                  ),
                                                   margin: EdgeInsets.only(right: 10),
                                                 ),
                                                 Expanded(
@@ -439,6 +457,7 @@ class _ChargeCardState extends State<ChargeCard> {
                                                               Text(
                                                                 '${selectUser[key]['login_name']}',
                                                                 maxLines: 1,
+                                                                style: TextStyle(fontSize: CFFontSize.content),
                                                               ),
                                                               InkWell(
                                                                 onTap: () {

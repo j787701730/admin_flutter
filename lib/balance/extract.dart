@@ -94,7 +94,8 @@ class _BalanceExtractState extends State<BalanceExtract> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['currPage'] += page;
     getData();
   }
@@ -128,8 +129,14 @@ class _BalanceExtractState extends State<BalanceExtract> {
               child: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
-                    Text('转账时间: '),
-                    Text('${res['pay_date']}'),
+                    Text(
+                      '转账时间: ',
+                      style: TextStyle(fontSize: CFFontSize.content),
+                    ),
+                    Text(
+                      '${res['pay_date']}',
+                      style: TextStyle(fontSize: CFFontSize.content),
+                    ),
                   ],
                 ),
               ),
@@ -166,6 +173,7 @@ class _BalanceExtractState extends State<BalanceExtract> {
               child: ListBody(
                 children: <Widget>[
                   TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
                     controller: TextEditingController.fromValue(TextEditingValue(
                         text: comments,
                         selection: TextSelection.fromPosition(
@@ -321,7 +329,9 @@ class _BalanceExtractState extends State<BalanceExtract> {
                                                 ],
                                               );
                                             } else {
-                                              con = Container(width: 0,);
+                                              con = Container(
+                                                width: 0,
+                                              );
                                             }
                                             break;
                                         }

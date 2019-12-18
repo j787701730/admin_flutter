@@ -1,3 +1,7 @@
+import 'package:admin_flutter/activity/activity_list.dart';
+import 'package:admin_flutter/activity/coupon.dart';
+import 'package:admin_flutter/activity/draw_type.dart';
+import 'package:admin_flutter/activity/user_prizes.dart';
 import 'package:admin_flutter/article/list.dart';
 import 'package:admin_flutter/balance/accum_flow.dart';
 import 'package:admin_flutter/balance/balance_charge.dart';
@@ -11,7 +15,7 @@ import 'package:admin_flutter/balance/extract_config.dart';
 import 'package:admin_flutter/balance/list.dart';
 import 'package:admin_flutter/balance/payment_plan.dart';
 import 'package:admin_flutter/balance/pricing.dart';
-import 'package:admin_flutter/balance/redPacket.dart';
+import 'package:admin_flutter/balance/red_packet.dart';
 import 'package:admin_flutter/base/agreement.dart';
 import 'package:admin_flutter/base/base_monitor.dart';
 import 'package:admin_flutter/base/base_wxreply.dart';
@@ -63,6 +67,7 @@ import 'package:admin_flutter/shop/cad_user_relation.dart';
 import 'package:admin_flutter/shop/industry_class.dart';
 import 'package:admin_flutter/shop/shop_list.dart';
 import 'package:admin_flutter/shop/supply_class.dart';
+import 'package:admin_flutter/task/task_pricing.dart';
 import 'package:admin_flutter/users/add.dart';
 import 'package:admin_flutter/users/manager.dart';
 import 'package:admin_flutter/users/users__cert.dart';
@@ -152,6 +157,11 @@ class MyApp extends StatelessWidget {
         '/financialLoan': (_) => FinancialLoan(), // 丰收贷
         '/systemConfig': (_) => SystemConfig(), // 金融配置
         '/financialDetail': (_) => FinancialDetail(), // 金融明细
+        '/activityList': (_) => ActivityList(), // 活动列表
+        '/userPrizes': (_) => UserPrizes(), // 中奖列表
+        '/drawType': (_) => DrawType(), // 抽奖方式
+        '/coupon': (_) => Coupon(), // 优惠券
+        '/taskPricing': (_) => TaskPricing(), // 任务定价
       },
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

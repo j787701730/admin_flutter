@@ -37,9 +37,12 @@ class _SelectState extends State<Select> {
               children: <Widget>[
                 Text(
                   '${widget.require ? '* ' : ''}',
-                  style: TextStyle(color: CFColors.danger),
+                  style: TextStyle(color: CFColors.danger, fontSize: CFFontSize.content),
                 ),
-                Text('${widget.label}')
+                Text(
+                  '${widget.label}',
+                  style: TextStyle(fontSize: CFFontSize.content),
+                )
               ],
             ),
           ),
@@ -68,6 +71,7 @@ class _SelectState extends State<Select> {
                           '${widget.selectOptions[key]}',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: CFFontSize.content),
                         ),
                       ),
                     );

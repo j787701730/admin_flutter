@@ -147,7 +147,7 @@ class _ChargePresentState extends State<ChargePresent> {
           content: SingleChildScrollView(
             child: Container(
 //                width: MediaQuery.of(context).size.width - 100,
-              child: Text('确认删除 ${data['rule_name']} 赠送规则?'),
+              child: Text('确认删除 ${data['rule_name']} 赠送规则?',style: TextStyle(fontSize: CFFontSize.content),),
             ),
           ),
           actions: <Widget>[

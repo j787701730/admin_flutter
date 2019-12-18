@@ -123,11 +123,11 @@ class _ErpPaymentState extends State<ErpPayment> {
                               margin: EdgeInsets.only(right: 10),
                               width: 120,
                               alignment: Alignment.centerRight,
-                              child: Text('$key:'),
+                              child: Text('$key:',style: TextStyle(fontSize: CFFontSize.content),),
                             ),
                             Expanded(
                               flex: 1,
-                              child: Text('${jsonDecode(shopName)[key]}'),
+                              child: Text('${jsonDecode(shopName)[key]}',style: TextStyle(fontSize: CFFontSize.content),),
                             )
                           ],
                         ),

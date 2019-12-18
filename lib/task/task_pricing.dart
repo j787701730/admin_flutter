@@ -8,19 +8,19 @@ import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/range_input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/rebate/rebate_rates_modify.dart';
 import 'package:admin_flutter/style.dart';
+import 'package:admin_flutter/task/create_task_pricing.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class RebateRates extends StatefulWidget {
+class TaskPricing extends StatefulWidget {
   @override
-  _RebateRatesState createState() => _RebateRatesState();
+  _TaskPricingState createState() => _TaskPricingState();
 }
 
-class _RebateRatesState extends State<RebateRates> {
+class _TaskPricingState extends State<TaskPricing> {
   BuildContext _context;
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
@@ -29,23 +29,24 @@ class _RebateRatesState extends State<RebateRates> {
   int count = 0;
   bool loading = true;
 
+  Map taskType = {
+    "all": '全部',
+    "104": "设计任务",
+  };
+
+  Map taskType2 = {
+    "104": "设计任务",
+  };
   List columns = [
-    {'title': '用户名', 'key': 'login_name'},
-    {'title': '返利类型', 'key': 'type_ch_name'},
-    {'title': '返还账本', 'key': 'balance_type_ch_name'},
-    {'title': '直接返利', 'key': 'direct_rate'},
-    {'title': '间接返利', 'key': 'indirect_rate'},
-    {'title': '保证金返还', 'key': 'return_rate'},
+    {'title': '名称', 'key': 'user_name'},
+    {'title': '任务类型', 'key': 'task_type'},
+    {'title': '价格', 'key': 'price'},
     {'title': '创建时间', 'key': 'create_date'},
+    {'title': '平台补贴', 'key': 'subsidy'},
+    {'title': '更新时间', 'key': 'update_date'},
+    {'title': '描述', 'key': 'comments'},
     {'title': '操作', 'key': 'option'},
   ];
-  Map type = {
-    "all": "全部",
-    "1": "商品推荐返利",
-    "2": "店铺注册返利",
-    "3": "月基本费返利",
-    "4": "流量计费返利",
-  };
 
   void _onRefresh() async {
     setState(() {
@@ -74,12 +75,23 @@ class _RebateRatesState extends State<RebateRates> {
     setState(() {
       loading = true;
     });
-    ajax('Adminrelas-RebateManage-getRateList', {'param': jsonEncode(param)}, true, (res) {
+
+    Map data = {
+      'curr_page': param['curr_page'],
+      'page_count': param['page_count'],
+      'param': jsonEncode(param),
+    };
+
+    if (param['order'] != null) {
+      data['order'] = param['order'];
+    }
+    ajax('Adminrelas-taskManage-taskPriceList', data, true, (res) {
+      print(data);
       if (mounted) {
         setState(() {
           loading = false;
           ajaxData = res['data'] ?? [];
-          count = int.tryParse('${res['serialCount'] ?? 0}');
+          count = int.tryParse('${res['count'] ?? 0}');
           toTop();
         });
         if (isRefresh) {
@@ -103,21 +115,159 @@ class _RebateRatesState extends State<RebateRates> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
     param['curr_page'] += page;
     getData();
   }
 
+  Map modifyItem = {};
+
+  modifyDialog() {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            '${modifyItem['user_name']} 任务定价修改',
+            style: TextStyle(fontSize: CFFontSize.topTitle),
+          ),
+          content: SingleChildScrollView(
+            child: Container(
+              width: MediaQuery.of(context).size.width - 100,
+              child: Column(
+                children: <Widget>[
+                  Select(
+                      selectOptions: taskType2,
+                      selectedValue: modifyItem['task_type'],
+                      label: '任务类型',
+                      onChanged: (val) {
+                        setState(() {
+                          modifyItem['task_type'] = val;
+                        });
+                      }),
+                  Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+                        Container(
+                          width: 80,
+                          alignment: Alignment.centerRight,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              Text(
+                                '* ',
+                                style: TextStyle(color: CFColors.danger, fontSize: CFFontSize.content),
+                              ),
+                              Text(
+                                '价格',
+                                style: TextStyle(fontSize: CFFontSize.content),
+                              )
+                            ],
+                          ),
+                          margin: EdgeInsets.only(right: 10),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 34,
+                            child: TextField(
+                              controller: TextEditingController.fromValue(TextEditingValue(
+                                  text: '${modifyItem['price'] ?? ''}',
+                                  selection: TextSelection.fromPosition(TextPosition(
+                                      affinity: TextAffinity.downstream,
+                                      offset: '${modifyItem['price'] ?? ''}'.length)))),
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                              onChanged: (String val) {
+                                setState(() {
+                                  modifyItem['price'] = val;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ])),
+                  Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                        Container(
+                          width: 80,
+                          alignment: Alignment.centerRight,
+                          height: 34,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              Text(
+                                '* ',
+                                style: TextStyle(color: CFColors.danger, fontSize: CFFontSize.content),
+                              ),
+                              Text(
+                                '平台补贴',
+                                style: TextStyle(fontSize: CFFontSize.content),
+                              )
+                            ],
+                          ),
+                          margin: EdgeInsets.only(right: 10),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 34,
+                            child: TextField(
+                              controller: TextEditingController.fromValue(TextEditingValue(
+                                  text: '${modifyItem['subsidy'] ?? ''}',
+                                  selection: TextSelection.fromPosition(TextPosition(
+                                      affinity: TextAffinity.downstream,
+                                      offset: '${modifyItem['subsidy'] ?? ''}'.length)))),
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                              onChanged: (String val) {
+                                setState(() {
+                                  modifyItem['subsidy'] = val;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ]))
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('取消'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('确认'),
+              color: Colors.blue,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   getDateTime(val) {
     if (val['min'] == null) {
-      param.remove('create_dateL');
+      param.remove('create_date_min');
     } else {
-      param['create_dateL'] = val['min'].toString().substring(0, 10);
+      param['create_date_min'] = val['min'].toString().substring(0, 10);
     }
     if (val['max'] == null) {
-      param.remove('create_dateU');
+      param.remove('create_date_max');
     } else {
-      param['create_dateU'] = val['max'].toString().substring(0, 10);
+      param['create_date_max'] = val['max'].toString().substring(0, 10);
     }
   }
 
@@ -125,20 +275,20 @@ class _RebateRatesState extends State<RebateRates> {
 
   Map selects = {
     'all': '无',
-    'rate_id': '用户名 升序',
-    'rate_id desc': '用户名 降序',
-    'type_ch_name': '返利类型 升序',
-    'type_ch_name desc': '返利类型 降序',
-    'balance_type': '返还账本 升序',
-    'balance_type desc': '返还账本 降序',
-    'direct_rate': '直接返利 升序',
-    'direct_rate desc': '直接返利 降序',
-    'indirect_rate': '间接返利 升序',
-    'indirect_rate desc': '间接返利 降序',
-    'return_rate': '保证金返还 升序',
-    'return_rate desc': '保证金返还 降序',
+    'user_id': '名称 升序',
+    'user_id desc': '名称 降序',
+    'task_type': '任务类型 升序',
+    'task_type desc': '任务类型 降序',
+    'price': '价格 升序',
+    'price desc': '价格 降序',
     'create_date': '创建时间 升序',
     'create_date desc': '创建时间 降序',
+    'subsidy': '平台补贴 升序',
+    'subsidy desc': '平台补贴 降序',
+    'update_date': '更新时间 升序',
+    'update_date desc': '更新时间 降序',
+    'comments': '描述 升序',
+    'comments desc': '描述 降序',
   };
 
   orderBy(val) {
@@ -152,55 +302,11 @@ class _RebateRatesState extends State<RebateRates> {
     getData();
   }
 
-  delDialog(data) {
-    return showDialog<void>(
-      context: _context,
-      barrierDismissible: true, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            '信息',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
-          ),
-          content: SingleChildScrollView(
-            child: Container(
-//                width: MediaQuery.of(context).size.width - 100,
-              child: Text('确认删除 ${data['login_name']} 返利信息?',style: TextStyle(fontSize: CFFontSize.content),),
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('取消'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
-              child: Text('提交'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  turnTo(val) {
-    Navigator.push(
-      _context,
-      MaterialPageRoute(builder: (context) => RebateRatesModify(val)),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('返利比例'),
+        title: Text('任务定价'),
       ),
       body: SmartRefresher(
           enablePullDown: true,
@@ -226,50 +332,57 @@ class _RebateRatesState extends State<RebateRates> {
                 },
               ),
               Select(
-                  selectOptions: type,
-                  selectedValue: param['rebate_type'] ?? 'all',
-                  label: '返利类型',
+                  selectOptions: taskType,
+                  selectedValue: param['task_type'] ?? 'all',
+                  label: '任务类型',
                   onChanged: (val) {
-                    if (val == 'all') {
-                      param.remove('rebate_type');
-                    } else {
-                      param['rebate_type'] = val;
-                    }
+                    setState(() {
+                      if (val == 'all') {
+                        param.remove('task_type');
+                      } else {
+                        param['task_type'] = val;
+                      }
+                    });
                   }),
               RangeInput(
-                  label: '直接返利',
+                  label: '定价区间',
                   onChangeL: (val) {
                     if (val == '') {
-                      param.remove('direct_rate_min');
+                      param.remove('price_min');
                     } else {
-                      param['direct_rate_min'] = val;
+                      param['price_min'] = val;
                     }
                   },
                   onChangeR: (val) {
                     if (val == '') {
-                      param.remove('direct_rate_max');
+                      param.remove('price_max');
                     } else {
-                      param['direct_rate_max'] = val;
+                      param['price_max'] = val;
                     }
                   }),
               RangeInput(
-                  label: '间接返利',
+                  label: '补贴区间',
                   onChangeL: (val) {
                     if (val == '') {
-                      param.remove('invite_rate_min');
+                      param.remove('subsidy_min');
                     } else {
-                      param['invite_rate_min'] = val;
+                      param['subsidy_min'] = val;
                     }
                   },
                   onChangeR: (val) {
                     if (val == '') {
-                      param.remove('invite_rate_max');
+                      param.remove('subsidy_max');
                     } else {
-                      param['invite_rate_max'] = val;
+                      param['subsidy_max'] = val;
                     }
                   }),
               DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
-              Select(selectOptions: selects, selectedValue: defaultVal, label: '排序', onChanged: orderBy),
+              Select(
+                selectOptions: selects,
+                selectedValue: defaultVal,
+                label: '排序',
+                onChanged: orderBy,
+              ),
               Container(
                 child: Wrap(
                   alignment: WrapAlignment.center,
@@ -291,9 +404,12 @@ class _RebateRatesState extends State<RebateRates> {
                       child: PrimaryButton(
                           onPressed: () {
                             FocusScope.of(context).requestFocus(FocusNode());
-                            turnTo(null);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => CreateTaskPricing()),
+                            );
                           },
-                          child: Text('添加返利比例')),
+                          child: Text('添加任务定价')),
                     ),
                   ],
                 ),
@@ -327,6 +443,9 @@ class _RebateRatesState extends State<RebateRates> {
                                       children: columns.map<Widget>((col) {
                                         Widget con = Text('${item[col['key']] ?? ''}');
                                         switch (col['key']) {
+                                          case 'task_type':
+                                            con = Text('${taskType[item['task_type']]}');
+                                            break;
                                           case 'option':
                                             con = Wrap(
                                               runSpacing: 10,
@@ -336,19 +455,12 @@ class _RebateRatesState extends State<RebateRates> {
                                                   height: 30,
                                                   child: PrimaryButton(
                                                     onPressed: () {
-                                                      turnTo(item);
+                                                      setState(() {
+                                                        modifyItem = jsonDecode(jsonEncode(item));
+                                                        modifyDialog();
+                                                      });
                                                     },
                                                     child: Text('修改'),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    type: 'error',
-                                                    onPressed: () {
-                                                      delDialog(item);
-                                                    },
-                                                    child: Text('删除'),
                                                   ),
                                                 )
                                               ],
@@ -361,7 +473,7 @@ class _RebateRatesState extends State<RebateRates> {
                                           child: Row(
                                             children: <Widget>[
                                               Container(
-                                                width: 100,
+                                                width: 80,
                                                 alignment: Alignment.centerRight,
                                                 child: Text('${col['title']}'),
                                                 margin: EdgeInsets.only(right: 10),

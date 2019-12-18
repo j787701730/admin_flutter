@@ -146,7 +146,7 @@ class _ExtractConfigState extends State<ExtractConfig> {
           content: SingleChildScrollView(
             child: Container(
 //                width: MediaQuery.of(context).size.width - 100,
-              child: Text('确认删除 ${data['login_name']} 提现配置?'),
+              child: Text('确认删除 ${data['login_name']} 提现配置?',style: TextStyle(fontSize: CFFontSize.content),),
             ),
           ),
           actions: <Widget>[

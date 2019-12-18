@@ -658,7 +658,8 @@ List menuData = [
         "spell_all": "renwudingjia",
         "spell_index": "rwdj",
         "name": "任务定价",
-        "access": [70]
+        "access": [70],
+        "path": '/taskPricing'
       },
       {
         "spell_all": "renwuliebiao",
@@ -898,19 +899,22 @@ List menuData = [
         "spell_all": "huodongliebiao",
         "spell_index": "hdlb",
         "name": "活动列表",
-        "access": [121]
+        "access": [121],
+        "path": "/activityList"
       },
       {
         "spell_all": "zhongjiangliebiao",
         "spell_index": "zjlb",
         "name": "中奖列表",
-        "access": [122]
+        "access": [122],
+        "path": '/userPrizes'
       },
       {
         "spell_all": "choujianfangshi",
         "spell_index": "cjfs",
         "name": "抽奖方式",
-        "access": [123]
+        "access": [123],
+        "path": '/drawType'
       },
       {
         "spell_all": "chuangjianhuodong",
@@ -922,7 +926,8 @@ List menuData = [
         "spell_all": "youhuiquan",
         "spell_index": "yhq",
         "name": "优惠券",
-        "access": [133]
+        "access": [133],
+        "path": "/coupon"
       }
     ]
   },
