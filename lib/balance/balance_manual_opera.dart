@@ -4,6 +4,7 @@ import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/plugin/user_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
 
 /// 手工账
@@ -372,6 +373,7 @@ class _BalanceManualOperaState extends State<BalanceManualOpera> {
                         child: Container(
                           height: 34,
                           child: TextField(
+                            style: TextStyle(fontSize: CFFontSize.content),
                             controller: TextEditingController.fromValue(
                               TextEditingValue(
                                 text: '${manualAmount ?? ''}',

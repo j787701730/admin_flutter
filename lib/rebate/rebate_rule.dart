@@ -1,12 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:admin_flutter/plugin/input.dart';
-import 'package:admin_flutter/plugin/number_bar.dart';
-import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/utils.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -122,6 +118,7 @@ class _RebateRuleState extends State<RebateRule> {
                     Expanded(
                       flex: 1,
                       child: TextField(
+                        style: TextStyle(fontSize: CFFontSize.content),
                         controller: TextEditingController.fromValue(
                           TextEditingValue(
                             text: '${param['min_charge'] ?? ''}',
@@ -154,6 +151,7 @@ class _RebateRuleState extends State<RebateRule> {
                     Expanded(
                       flex: 1,
                       child: TextField(
+                        style: TextStyle(fontSize: CFFontSize.content),
                         controller: TextEditingController.fromValue(TextEditingValue(
                             text: '${param['plus_charge'] ?? ''}',
                             selection: TextSelection.fromPosition(TextPosition(
@@ -186,6 +184,7 @@ class _RebateRuleState extends State<RebateRule> {
                           Container(
                             height: 34,
                             child: TextField(
+                              style: TextStyle(fontSize: CFFontSize.content),
                               controller: TextEditingController.fromValue(TextEditingValue(
                                   text: '${param['max_charge'] ?? ''}',
                                   selection: TextSelection.fromPosition(TextPosition(
@@ -227,6 +226,7 @@ class _RebateRuleState extends State<RebateRule> {
                           Container(
                             height: 34,
                             child: TextField(
+                              style: TextStyle(fontSize: CFFontSize.content),
                               controller: TextEditingController.fromValue(TextEditingValue(
                                   text: '${param['day_limit'] ?? ''}',
                                   selection: TextSelection.fromPosition(TextPosition(

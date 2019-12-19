@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/plugin/user_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
 
 class RebateRatesModify extends StatefulWidget {
@@ -161,12 +162,22 @@ class _RebateRatesModifyState extends State<RebateRatesModify> {
                 Expanded(
                   flex: 1,
                   child: TextField(
-                    controller: TextEditingController.fromValue(TextEditingValue(
+                    style: TextStyle(fontSize: CFFontSize.content),
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['direct_rate'] ?? ''}',
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['direct_rate'] ?? ''}'.length)))),
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['direct_rate'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15, right: 15),
+                    ),
                     onChanged: (String val) {
                       setState(() {
                         param['direct_rate'] = val;
@@ -189,10 +200,18 @@ class _RebateRatesModifyState extends State<RebateRatesModify> {
                 Expanded(
                   flex: 1,
                   child: TextField(
-                    controller: TextEditingController.fromValue(TextEditingValue(
+                    style: TextStyle(fontSize: CFFontSize.content),
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['indirect_rate'] ?? ''}',
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['indirect_rate'] ?? ''}'.length)))),
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['indirect_rate'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
                         border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
                     onChanged: (String val) {
@@ -205,9 +224,10 @@ class _RebateRatesModifyState extends State<RebateRatesModify> {
                 Text('%')
               ])),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              height: 34,
-              child: Row(children: <Widget>[
+            margin: EdgeInsets.only(bottom: 10),
+            height: 34,
+            child: Row(
+              children: <Widget>[
                 Container(
                   width: 80,
                   alignment: Alignment.centerRight,
@@ -217,12 +237,22 @@ class _RebateRatesModifyState extends State<RebateRatesModify> {
                 Expanded(
                   flex: 1,
                   child: TextField(
-                    controller: TextEditingController.fromValue(TextEditingValue(
+                    style: TextStyle(fontSize: CFFontSize.content),
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['return_rate'] ?? ''}',
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['return_rate'] ?? ''}'.length)))),
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['return_rate'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15, right: 15),
+                    ),
                     onChanged: (String val) {
                       setState(() {
                         param['return_rate'] = val;
@@ -231,45 +261,53 @@ class _RebateRatesModifyState extends State<RebateRatesModify> {
                   ),
                 ),
                 Text('%')
-              ])),
+              ],
+            ),
+          ),
           Select(
-              selectOptions: rebateType,
-              selectedValue: param['rebate_type'] ?? '1',
-              label: '返利类型',
-              onChanged: (val) {
-                setState(() {
-                  param['rebate_type'] = val;
-                });
-              }),
+            selectOptions: rebateType,
+            selectedValue: param['rebate_type'] ?? '1',
+            label: '返利类型',
+            onChanged: (val) {
+              setState(() {
+                param['rebate_type'] = val;
+              });
+            },
+          ),
           Select(
-              selectOptions: balanceType,
-              selectedValue: param['balance_type'] ?? '1',
-              label: '账本类型',
-              onChanged: (val) {
-                setState(() {
-                  param['balance_type'] = val;
-                });
-              }),
+            selectOptions: balanceType,
+            selectedValue: param['balance_type'] ?? '1',
+            label: '账本类型',
+            onChanged: (val) {
+              setState(() {
+                param['balance_type'] = val;
+              });
+            },
+          ),
           Container(
-              margin: EdgeInsets.only(bottom: 6),
-              height: 34,
-              child: Row(children: <Widget>[
+            margin: EdgeInsets.only(bottom: 6),
+            height: 34,
+            child: Row(
+              children: <Widget>[
                 Container(
                   width: 80,
                   child: Text(''),
                   margin: EdgeInsets.only(right: 10),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: Row(
-                      children: <Widget>[
-                        PrimaryButton(
-                          onPressed: () {},
-                          child: Text('保存'),
-                        )
-                      ],
-                    ))
-              ])),
+                  flex: 1,
+                  child: Row(
+                    children: <Widget>[
+                      PrimaryButton(
+                        onPressed: () {},
+                        child: Text('保存'),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

@@ -52,6 +52,7 @@ class _InputState extends State<Input> {
                     alignment: Alignment.centerLeft,
                     height: 34.0,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         contentPadding: widget.contentPadding ??
@@ -70,6 +71,7 @@ class _InputState extends State<Input> {
                     ),
                   )
                 : TextField(
+              style: TextStyle(fontSize: CFFontSize.content),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       contentPadding: widget.contentPadding ??

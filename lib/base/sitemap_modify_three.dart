@@ -1,5 +1,6 @@
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -87,6 +88,7 @@ class _SiteMapModifyThreeState extends State<SiteMapModifyThree> {
                 Expanded(
                   flex: 1,
                   child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
                     controller: TextEditingController.fromValue(TextEditingValue(
                         text: '${param['map_ch_name'] ?? ''}',
                         selection: TextSelection.fromPosition(TextPosition(
@@ -116,6 +118,7 @@ class _SiteMapModifyThreeState extends State<SiteMapModifyThree> {
                 Expanded(
                   flex: 1,
                   child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
                     controller: TextEditingController.fromValue(TextEditingValue(
                         text: '${param['map_en_name'] ?? ''}',
                         selection: TextSelection.fromPosition(TextPosition(
@@ -156,6 +159,7 @@ class _SiteMapModifyThreeState extends State<SiteMapModifyThree> {
                 Expanded(
                   flex: 1,
                   child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
                     controller: TextEditingController.fromValue(TextEditingValue(
                         text: '${param['map_url'] ?? ''}',
                         selection: TextSelection.fromPosition(TextPosition(
@@ -207,6 +211,7 @@ class _SiteMapModifyThreeState extends State<SiteMapModifyThree> {
                 Expanded(
                   flex: 1,
                   child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
                     controller: TextEditingController.fromValue(TextEditingValue(
                         text: '${param['map_sort'] ?? ''}',
                         selection: TextSelection.fromPosition(TextPosition(
@@ -236,6 +241,7 @@ class _SiteMapModifyThreeState extends State<SiteMapModifyThree> {
                 Expanded(
                   flex: 1,
                   child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
                     maxLines: 4,
                     controller: TextEditingController.fromValue(TextEditingValue(
                         text: '${param['comments'] ?? ''}',

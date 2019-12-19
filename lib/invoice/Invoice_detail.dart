@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -355,6 +356,7 @@ class _InvoiceDetailState extends State<InvoiceDetail> {
                                         Expanded(
                                             flex: 1,
                                             child: TextField(
+                                              style: TextStyle(fontSize: CFFontSize.content),
                                               maxLines: 4,
                                               decoration: InputDecoration(
                                                   border: OutlineInputBorder(),

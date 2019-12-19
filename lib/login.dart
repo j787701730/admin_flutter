@@ -1,4 +1,5 @@
 import 'package:admin_flutter/my_home_page.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -83,6 +84,7 @@ class _LoginState extends State<Login> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextField(
+              style: TextStyle(fontSize: CFFontSize.content),
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.person),
                   border: OutlineInputBorder(),
@@ -98,6 +100,7 @@ class _LoginState extends State<Login> {
               height: 15,
             ),
             TextField(
+              style: TextStyle(fontSize: CFFontSize.content),
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.lock),
                   border: OutlineInputBorder(),

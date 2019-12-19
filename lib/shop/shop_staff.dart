@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
-import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,14 +24,12 @@ class _ShopStaffState extends State<ShopStaff> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-
   List columns = [
     {'title': '职员名称', 'key': 'login_name'},
     {'title': '所在部门', 'key': 'department_name'},
     {'title': '职工状态', 'key': 'state'},
     {'title': '创建日期', 'key': 'register_time'},
   ];
-
   Map userState = {'0': '冻结', '1': '在用'};
 
   void _onRefresh() async {
@@ -89,7 +87,8 @@ class _ShopStaffState extends State<ShopStaff> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['curr_page'] += page;
     getData();
   }
@@ -114,7 +113,9 @@ class _ShopStaffState extends State<ShopStaff> {
               Container(
                 padding: EdgeInsets.only(bottom: 6),
                 alignment: Alignment.centerRight,
-                child: Text('共 $count 个职工'),
+                child: NumberBar(
+                  count: count,
+                ),
               ),
               loading
                   ? Container(
@@ -133,41 +134,50 @@ class _ShopStaffState extends State<ShopStaff> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: ajaxData.map<Widget>((item) {
                               return Container(
-                                  decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: columns.map<Widget>((col) {
-                                      Widget con = Text('${item[col['key']] ?? ''}');
-                                      switch (col['key']) {
-                                        case 'state':
-                                          con = Text('${userState[item['state']]}');
-                                          break;
-                                      }
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    switch (col['key']) {
+                                      case 'state':
+                                        con = Text('${userState[item['state']]}');
+                                        break;
+                                    }
 
-                                      return Container(
-                                        margin: EdgeInsets.only(bottom: 6),
-                                        child: Row(
-                                          children: <Widget>[
-                                            Container(
-                                              width: 80,
-                                              alignment: Alignment.centerRight,
-                                              child: Text('${col['title']}'),
-                                              margin: EdgeInsets.only(right: 10),
-                                            ),
-                                            Expanded(flex: 1, child: con)
-                                          ],
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ));
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 80,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
+                                          ),
+                                          Expanded(flex: 1, child: con),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
                             }).toList(),
                           ),
                         ),
               Container(
                 child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
+                  current: param['curr_page'],
+                  total: count,
+                  pageSize: param['page_count'],
+                  function: getPage,
+                ),
               )
             ],
           )),

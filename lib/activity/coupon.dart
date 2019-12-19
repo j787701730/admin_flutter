@@ -273,6 +273,7 @@ class _CouponState extends State<Coupon> {
                           child: Container(
                             height: 34,
                             child: TextField(
+                              style: TextStyle(fontSize: CFFontSize.content),
                               controller: TextEditingController.fromValue(TextEditingValue(
                                   text: '${modifyItem['limit_nums'] ?? ''}',
                                   selection: TextSelection.fromPosition(TextPosition(
@@ -317,6 +318,7 @@ class _CouponState extends State<Coupon> {
                           child: Container(
                             height: 34,
                             child: TextField(
+                              style: TextStyle(fontSize: CFFontSize.content),
                               controller: TextEditingController.fromValue(TextEditingValue(
                                   text: '${modifyItem['left_nums'] ?? ''}',
                                   selection: TextSelection.fromPosition(TextPosition(

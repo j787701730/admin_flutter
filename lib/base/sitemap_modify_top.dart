@@ -1,4 +1,5 @@
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -69,6 +70,7 @@ class _SiteMapModifyTopState extends State<SiteMapModifyTop> {
                 Expanded(
                   flex: 1,
                   child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
                     controller: TextEditingController.fromValue(TextEditingValue(
 
                         text: '${param['map_ch_name'] ?? ''}',
@@ -100,6 +102,7 @@ class _SiteMapModifyTopState extends State<SiteMapModifyTop> {
                 Expanded(
                   flex: 1,
                   child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
                     controller: TextEditingController.fromValue(TextEditingValue(
 
                         text: '${param['map_en_name'] ?? ''}',
@@ -131,6 +134,7 @@ class _SiteMapModifyTopState extends State<SiteMapModifyTop> {
                 Expanded(
                   flex: 1,
                   child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
                     controller: TextEditingController.fromValue(TextEditingValue(
 
                         text: '${param['map_sort'] ?? ''}',
@@ -162,6 +166,7 @@ class _SiteMapModifyTopState extends State<SiteMapModifyTop> {
                 Expanded(
                   flex: 1,
                   child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
                     maxLines: 4,
                     controller: TextEditingController.fromValue(TextEditingValue(
 

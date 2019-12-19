@@ -1,4 +1,5 @@
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:cookie_jar/cookie_jar.dart';
@@ -81,6 +82,7 @@ class _UserMessageModifyState extends State<UserMessageModify> {
                 Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController(text: '${userInfo['login_name']}'),
                       decoration: InputDecoration(
                           border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
@@ -106,6 +108,7 @@ class _UserMessageModifyState extends State<UserMessageModify> {
                 Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController(text: '${userInfo['user_phone']}'),
                       decoration: InputDecoration(
                           border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
@@ -131,6 +134,7 @@ class _UserMessageModifyState extends State<UserMessageModify> {
                 Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController(text: '${userInfo['user_mail']}'),
                       decoration: InputDecoration(
                           border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
@@ -156,6 +160,7 @@ class _UserMessageModifyState extends State<UserMessageModify> {
                 Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController(text: '${userInfo['eff_date']}'),
                       decoration: InputDecoration(
                           border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
@@ -192,6 +197,7 @@ class _UserMessageModifyState extends State<UserMessageModify> {
                 Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController(text: '${userInfo['exp_date']}'),
                       decoration: InputDecoration(
                           border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),

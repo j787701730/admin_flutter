@@ -172,6 +172,7 @@ class _TaskPricingState extends State<TaskPricing> {
                           child: Container(
                             height: 34,
                             child: TextField(
+                              style: TextStyle(fontSize: CFFontSize.content),
                               controller: TextEditingController.fromValue(TextEditingValue(
                                   text: '${modifyItem['price'] ?? ''}',
                                   selection: TextSelection.fromPosition(TextPosition(
@@ -216,6 +217,7 @@ class _TaskPricingState extends State<TaskPricing> {
                           child: Container(
                             height: 34,
                             child: TextField(
+                              style: TextStyle(fontSize: CFFontSize.content),
                               controller: TextEditingController.fromValue(TextEditingValue(
                                   text: '${modifyItem['subsidy'] ?? ''}',
                                   selection: TextSelection.fromPosition(TextPosition(

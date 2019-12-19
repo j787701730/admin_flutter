@@ -71,7 +71,7 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
             child: Row(
               children: <Widget>[
                 Container(
-                  width: 110,
+                  width: 90,
                   alignment: Alignment.centerRight,
                   margin: EdgeInsets.only(right: 10),
                   child: Row(
@@ -90,7 +90,7 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                   child: Container(
                     margin: EdgeInsets.only(right: 10),
                     padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
-                    height: 54,
+                    height: 34,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey, width: 1),
                       borderRadius: BorderRadius.circular(4),
@@ -101,15 +101,10 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                       runSpacing: 10,
                       children: param['a-shops'].keys.toList().map<Widget>((key) {
                         return Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.all(Radius.circular(4))),
-                          height: 34,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
+                          child: Stack(
                             children: <Widget>[
                               Container(
-                                padding: EdgeInsets.only(left: 6, right: 6),
+                                padding: EdgeInsets.only(right: 20),
                                 child: Text(
                                   '${param['a-shops'][key]['shop_name']}',
                                   maxLines: 1,
@@ -117,19 +112,28 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                                 ),
                               ),
                               widget.props == null
-                                  ? InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          param['a-shops'].remove(key);
-                                        });
-                                      },
-                                      child: Icon(
-                                        Icons.clear,
-                                        color: Colors.red,
-                                        size: 20,
+                                  ? Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: Container(
+                                        color: Color(0xffeeeeee),
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              param['a-shops'].remove(key);
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.clear,
+                                            color: Colors.red,
+                                            size: 20,
+                                          ),
+                                        ),
                                       ),
                                     )
-                                  : Container(width: 0,)
+                                  : Container(
+                                      width: 0,
+                                    )
                             ],
                           ),
                         );
@@ -140,15 +144,17 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                 widget.props == null
                     ? Container(
                         height: 34,
+                        width: 70,
                         child: PrimaryButton(
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ShopPlugin(
-                                        shopCount: 1,
-                                        selectShopsData: param['a-shops'],
-                                      )),
+                                builder: (context) => ShopPlugin(
+                                  shopCount: 1,
+                                  selectShopsData: param['a-shops'],
+                                ),
+                              ),
                             ).then((val) {
                               if (val != null) {
                                 param['a-shops'] = val;
@@ -169,7 +175,7 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
             child: Row(
               children: <Widget>[
                 Container(
-                  width: 110,
+                  width: 90,
                   alignment: Alignment.centerRight,
                   margin: EdgeInsets.only(right: 10),
                   child: Row(
@@ -200,15 +206,10 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                           runSpacing: 10,
                           children: param['z-shops'].keys.toList().map<Widget>((key) {
                             return Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.all(Radius.circular(4))),
-                              height: 34,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
+                              child: Stack(
                                 children: <Widget>[
                                   Container(
-                                    padding: EdgeInsets.only(left: 6, right: 6),
+                                    padding: EdgeInsets.only(right: 20),
                                     child: Text(
                                       '${param['z-shops'][key]['shop_name']}',
                                       maxLines: 1,
@@ -216,19 +217,28 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                                     ),
                                   ),
                                   widget.props == null
-                                      ? InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              param['z-shops'].remove(key);
-                                            });
-                                          },
-                                          child: Icon(
-                                            Icons.clear,
-                                            color: Colors.red,
-                                            size: 20,
+                                      ? Positioned(
+                                          top: 0,
+                                          right: 0,
+                                          child: Container(
+                                            color: Color(0xffeeeeee),
+                                            child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  param['z-shops'].remove(key);
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.clear,
+                                                color: Colors.red,
+                                                size: 20,
+                                              ),
+                                            ),
                                           ),
                                         )
-                                      : Container(width: 0,)
+                                      : Container(
+                                          width: 0,
+                                        )
                                 ],
                               ),
                             );
@@ -240,16 +250,18 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                 ),
                 widget.props == null
                     ? Container(
+                        width: 70,
                         height: 34,
                         child: PrimaryButton(
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ShopPlugin(
-                                        shopCount: 0,
-                                        selectShopsData: param['z-shops'],
-                                      )),
+                                builder: (context) => ShopPlugin(
+                                  shopCount: 0,
+                                  selectShopsData: param['z-shops'],
+                                ),
+                              ),
                             ).then((val) {
                               if (val != null) {
                                 param['z-shops'] = val;
@@ -269,7 +281,7 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
             onChanged: getDateTime,
             label: '有效时间',
             require: true,
-            labelWidth: 110,
+            labelWidth: 90,
             min: param['eff_date'],
             max: param['exp_date'],
           ),
@@ -279,7 +291,7 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                 selectOptions: ifDefault,
                 selectedValue: param['if_default'] ?? '1',
                 label: '设置默认',
-                labelWidth: 110,
+                labelWidth: 90,
                 onChanged: (String newValue) {
                   setState(() {
                     if (newValue == 'all') {
@@ -295,7 +307,7 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
             onChanged: (String val) {
               param['comments'] = val;
             },
-            labelWidth: 110,
+            labelWidth: 90,
             maxLines: 4,
           ),
           Container(
@@ -303,10 +315,8 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
             child: Row(
               children: <Widget>[
                 Container(
-                  width: 110,
-                  alignment: Alignment.centerRight,
+                  width: 90,
                   margin: EdgeInsets.only(right: 10),
-                  child: Text(''),
                 ),
                 Expanded(
                   flex: 1,

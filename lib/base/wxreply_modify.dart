@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
 
 class WxReplyModify extends StatefulWidget {
@@ -53,6 +54,7 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                 Expanded(
                   flex: 1,
                   child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
                     controller: TextEditingController.fromValue(TextEditingValue(
 
                         text: '${param['keyword'] ?? ''}',
@@ -154,6 +156,7 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                   Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(TextEditingValue(
 
                           text:
@@ -192,6 +195,7 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                   Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       maxLines: 4,
                       controller: TextEditingController.fromValue(TextEditingValue(
 
@@ -233,6 +237,7 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                       Expanded(
                         flex: 1,
                         child: TextField(
+                          style: TextStyle(fontSize: CFFontSize.content),
                           maxLines: 4,
                           controller: TextEditingController.fromValue(TextEditingValue(
 
@@ -277,6 +282,7 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                       Expanded(
                         flex: 1,
                         child: TextField(
+                          style: TextStyle(fontSize: CFFontSize.content),
                           maxLines: 4,
                           controller: TextEditingController.fromValue(TextEditingValue(
 
@@ -321,6 +327,7 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                       Expanded(
                         flex: 1,
                         child: TextField(
+                          style: TextStyle(fontSize: CFFontSize.content),
                           controller: TextEditingController.fromValue(TextEditingValue(
 
                               text:
@@ -372,6 +379,7 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                       Expanded(
                         flex: 1,
                         child: TextField(
+                          style: TextStyle(fontSize: CFFontSize.content),
                           controller: TextEditingController.fromValue(TextEditingValue(
 
                               text:
@@ -418,6 +426,7 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                 Expanded(
                   flex: 1,
                   child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
                     maxLines: 4,
                     controller: TextEditingController.fromValue(TextEditingValue(
 

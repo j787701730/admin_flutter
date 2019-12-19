@@ -524,6 +524,7 @@ class _PricePlanState extends State<PricePlan> {
                         child: Container(
                           height: 34,
                           child: TextField(
+                            style: TextStyle(fontSize: CFFontSize.content),
                             controller: TextEditingController.fromValue(
                               TextEditingValue(
                                 text: '${pricingStrategyData['limit_fee']}',
@@ -590,6 +591,7 @@ class _PricePlanState extends State<PricePlan> {
                                         width: 120,
                                         height: 34,
                                         child: TextField(
+                                          style: TextStyle(fontSize: CFFontSize.content),
                                           controller: TextEditingController.fromValue(
                                             TextEditingValue(
                                               text: '${pricingStrategyData['pricing_strategy']['pricing_amount']}',
@@ -620,6 +622,7 @@ class _PricePlanState extends State<PricePlan> {
                                         width: 120,
                                         height: 34,
                                         child: TextField(
+                                          style: TextStyle(fontSize: CFFontSize.content),
                                           controller: TextEditingController.fromValue(
                                             TextEditingValue(
                                               text: '${pricingStrategyData['pricing_strategy']['pricing_nums']}',
@@ -716,6 +719,7 @@ class _PricePlanState extends State<PricePlan> {
                                                   width: 120,
                                                   height: 34,
                                                   child: TextField(
+                                                    style: TextStyle(fontSize: CFFontSize.content),
                                                     controller: TextEditingController.fromValue(
                                                       TextEditingValue(
                                                         text: '${item['lower_limit']}',
@@ -744,6 +748,7 @@ class _PricePlanState extends State<PricePlan> {
                                                   width: 120,
                                                   height: 34,
                                                   child: TextField(
+                                                    style: TextStyle(fontSize: CFFontSize.content),
                                                     controller: TextEditingController.fromValue(
                                                       TextEditingValue(
                                                         text: '${item['upper_limit']}',
@@ -772,6 +777,7 @@ class _PricePlanState extends State<PricePlan> {
                                                   width: 120,
                                                   height: 34,
                                                   child: TextField(
+                                                    style: TextStyle(fontSize: CFFontSize.content),
                                                     controller: TextEditingController.fromValue(
                                                       TextEditingValue(
                                                         text: '${item['pricing_amount']}',
@@ -800,6 +806,7 @@ class _PricePlanState extends State<PricePlan> {
                                                   width: 120,
                                                   height: 34,
                                                   child: TextField(
+                                                    style: TextStyle(fontSize: CFFontSize.content),
                                                     controller: TextEditingController.fromValue(
                                                       TextEditingValue(
                                                         text: '${item['pricing_nums']}',

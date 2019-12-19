@@ -173,6 +173,7 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                 Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(TextEditingValue(
                           text: '${param['plat_rate'] ?? ''}',
                           selection: TextSelection.fromPosition(TextPosition(
@@ -210,6 +211,7 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                 Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(TextEditingValue(
                           text: '${param['order_disrate'] ?? ''}',
                           selection: TextSelection.fromPosition(TextPosition(
@@ -247,6 +249,7 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                 Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(TextEditingValue(
                           text: '${param['order_extrate'] ?? ''}',
                           selection: TextSelection.fromPosition(TextPosition(
@@ -284,6 +287,7 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                 Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(TextEditingValue(
                           text: '${param['return_rate_lower'] ?? ''}',
                           selection: TextSelection.fromPosition(TextPosition(
@@ -322,6 +326,7 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                 Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(TextEditingValue(
                           text: '${param['return_rate_upper'] ?? ''}',
                           selection: TextSelection.fromPosition(TextPosition(
@@ -354,6 +359,7 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                 Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       maxLines: 4,
                       controller: TextEditingController.fromValue(TextEditingValue(
                           text: '${param['pay_comments'] ?? ''}',

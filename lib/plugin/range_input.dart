@@ -1,3 +1,4 @@
+import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
 
 class RangeInput extends StatefulWidget {
@@ -33,6 +34,7 @@ class _RangeInputState extends State<RangeInput> {
                   children: <Widget>[
                     Expanded(
                         child: TextField(
+                          style: TextStyle(fontSize: CFFontSize.content),
                       decoration: InputDecoration(
                           border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
                       onChanged: (String val) {
@@ -46,6 +48,7 @@ class _RangeInputState extends State<RangeInput> {
                     ),
                     Expanded(
                         child: TextField(
+                          style: TextStyle(fontSize: CFFontSize.content),
                       decoration: InputDecoration(
                           border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
                       onChanged: (String val) {

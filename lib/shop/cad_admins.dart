@@ -116,6 +116,7 @@ class _CadAdminsState extends State<CadAdmins> {
                 Container(
                   width: MediaQuery.of(context).size.width - 100,
                   child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
                     controller: TextEditingController(text: '${data['comments']}'),
                     maxLines: 5,
                     decoration: InputDecoration(
@@ -125,7 +126,6 @@ class _CadAdminsState extends State<CadAdmins> {
 //                              param['loginName'] = val;
                       });
                     },
-                    style: TextStyle(fontSize: CFFontSize.content),
                   ),
                 )
               ],

@@ -21,6 +21,7 @@ class _IndustryClassState extends State<IndustryClass> {
   List ajaxData = [];
   bool loading = true;
   Map industryClass = {};
+  double width;
 
   void _onRefresh() async {
     setState(() {
@@ -80,7 +81,8 @@ class _IndustryClassState extends State<IndustryClass> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     getData();
   }
 
@@ -97,12 +99,12 @@ class _IndustryClassState extends State<IndustryClass> {
       child: Row(
         children: <Widget>[
           Container(
-            width: 100,
+            width: width / 5,
             alignment: Alignment.centerRight,
             child: Text('${data['sort']}'),
           ),
           Container(
-            width: 70,
+            width: 60,
             child: data['icon'] == ''
                 ? Text('')
                 : Container(
@@ -153,7 +155,7 @@ class _IndustryClassState extends State<IndustryClass> {
             ),
           ),
           Container(
-            width: 100,
+            width: width / 5,
             child: Text('${data['comments'] ?? ''}'),
           ),
           Container(
@@ -174,7 +176,10 @@ class _IndustryClassState extends State<IndustryClass> {
                         content: SingleChildScrollView(
                           child: ListBody(
                             children: <Widget>[
-                              Text('确认删除 ${data['class_name']} ?',style: TextStyle(fontSize: CFFontSize.content),),
+                              Text(
+                                '确认删除 ${data['class_name']} ?',
+                                style: TextStyle(fontSize: CFFontSize.content),
+                              ),
                             ],
                           ),
                         ),
@@ -218,122 +223,132 @@ class _IndustryClassState extends State<IndustryClass> {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text('行业分类'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(label: '行业分类', onChanged: (String val) {}),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(label: '行业分类', onChanged: (String val) {}),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        getData();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Text('搜索'),
                     ),
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            turnTo({'industryClass': industryClass, 'item': null});
-                          },
-                          child: Text('新增分类')),
-                    )
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        turnTo({'industryClass': industryClass, 'item': null});
+                      },
+                      child: Text('新增分类'),
+                    ),
+                  )
+                ],
               ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              children: <Widget>[
-                                Container(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        alignment: Alignment.center,
-                                        width: 100,
-                                        child: Text('排序'),
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.only(bottom: 6),
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      alignment: Alignment.center,
+                                      width: width / 5,
+                                      child: Text('排序'),
+                                    ),
+                                    Container(
+                                      alignment: Alignment.center,
+                                      width: 60,
+                                      child: Text('图标'),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Center(
+                                        child: Text('行业分类'),
                                       ),
-                                      Container(
-                                        alignment: Alignment.center,
-                                        width: 70,
-                                        child: Text('图标'),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Center(
-                                          child: Text('行业分类'),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        alignment: Alignment.center,
-                                        child: Text('备注'),
-                                      ),
-                                      Container(
-                                        width: 50,
-                                        alignment: Alignment.center,
-                                        child: Text('操作'),
-                                      ),
-                                    ],
-                                  ),
-                                  decoration:
-                                      BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
+                                    ),
+                                    Container(
+                                      width: width / 5,
+                                      alignment: Alignment.center,
+                                      child: Text('备注'),
+                                    ),
+                                    Container(
+                                      width: 50,
+                                      alignment: Alignment.center,
+                                      child: Text('操作'),
+                                    ),
+                                  ],
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: ajaxData.map<Widget>((item) {
-                                    return Column(
-                                      children: <Widget>[
-                                        itemContainer(item, 1),
-                                        item['children'].isEmpty
-                                            ? Container(
-                                                width: 0,
-                                              )
-                                            : Column(
-                                                children: item['children'].map<Widget>((children) {
-                                                  return Container(
-                                                    child: itemContainer(children, 2),
-                                                  );
-                                                }).toList(),
-                                              )
-                                      ],
-                                    );
-                                  }).toList(),
-                                )
-                              ],
-                            ),
-                    ),
-            ],
-          )),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: ajaxData.map<Widget>((item) {
+                                  return Column(
+                                    children: <Widget>[
+                                      itemContainer(item, 1),
+                                      item['children'].isEmpty
+                                          ? Container(
+                                              width: 0,
+                                            )
+                                          : Column(
+                                              children: item['children'].map<Widget>((children) {
+                                                return Container(
+                                                  child: itemContainer(children, 2),
+                                                );
+                                              }).toList(),
+                                            )
+                                    ],
+                                  );
+                                }).toList(),
+                              )
+                            ],
+                          ),
+                  ),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),

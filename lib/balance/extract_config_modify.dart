@@ -165,6 +165,7 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                       Container(
                         height: 34,
                         child: TextField(
+                          style: TextStyle(fontSize: CFFontSize.content),
                           controller: TextEditingController.fromValue(TextEditingValue(
                               text: '${param['extract_limit'] ?? ''}',
                               selection: TextSelection.fromPosition(TextPosition(
@@ -215,6 +216,7 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                       Container(
                         height: 34,
                         child: TextField(
+                          style: TextStyle(fontSize: CFFontSize.content),
                           controller: TextEditingController.fromValue(TextEditingValue(
                               text: '${param['extract_rate'] ?? ''}',
                               selection: TextSelection.fromPosition(TextPosition(
@@ -250,6 +252,7 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                 Expanded(
                   flex: 1,
                   child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
                     maxLines: 4,
                     controller: TextEditingController.fromValue(TextEditingValue(
                         text: '${param['comments'] ?? ''}',

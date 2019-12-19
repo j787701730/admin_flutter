@@ -194,6 +194,7 @@ class _CouponCreateState extends State<CouponCreate> {
                   child: Container(
                     height: 34,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(
                         TextEditingValue(
                           text: '${param['leftnum'] ?? '10'}',
@@ -251,6 +252,7 @@ class _CouponCreateState extends State<CouponCreate> {
                   child: Container(
                     height: 34,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(
                         TextEditingValue(
                           text: '${param['limitnum'] ?? '1'}',
@@ -299,6 +301,7 @@ class _CouponCreateState extends State<CouponCreate> {
                   child: Container(
                     height: 34,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(
                         TextEditingValue(
                           text: '${param['subval'] ?? ''}',

@@ -129,6 +129,7 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
                   Expanded(
                       flex: 1,
                       child: TextField(
+                        style: TextStyle(fontSize: CFFontSize.content),
                         controller: TextEditingController.fromValue(TextEditingValue(
 
                             text: '${data['amount']}',
@@ -276,6 +277,7 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           TextField(
+                            style: TextStyle(fontSize: CFFontSize.content),
                             controller: TextEditingController.fromValue(TextEditingValue(
 
                                 text: '${data['show_text']}',
@@ -325,6 +327,7 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           TextField(
+                            style: TextStyle(fontSize: CFFontSize.content),
                             controller: TextEditingController.fromValue(TextEditingValue(
 
                                 text: '${data['show_phone']}',

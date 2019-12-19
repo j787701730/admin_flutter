@@ -1,5 +1,6 @@
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -122,6 +123,7 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                   Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(TextEditingValue(
                           text: '${param['charge_limit'] ?? ''}',
                           selection: TextSelection.fromPosition(TextPosition(
@@ -149,6 +151,7 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                   Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(TextEditingValue(
                           text: '${param['present_value'] ?? ''}',
                           selection: TextSelection.fromPosition(TextPosition(
@@ -266,6 +269,7 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                   Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(TextEditingValue(
                           text: '${param['rule_name'] ?? ''}',
                           selection: TextSelection.fromPosition(TextPosition(
@@ -292,6 +296,7 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                   Expanded(
                     flex: 1,
                     child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       maxLines: 6,
                       controller: TextEditingController.fromValue(TextEditingValue(
                           text: '${param['comments'] ?? ''}',

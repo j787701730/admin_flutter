@@ -311,6 +311,7 @@ class _PaymentPlanState extends State<PaymentPlan> {
                         Expanded(
                           flex: 1,
                           child: TextField(
+                            style: TextStyle(fontSize: CFFontSize.content),
                             controller: TextEditingController.fromValue(
                               TextEditingValue(
                                 text: '${planTypeModify['type_en_name'] ?? ''}',
@@ -349,6 +350,7 @@ class _PaymentPlanState extends State<PaymentPlan> {
                         Expanded(
                           flex: 1,
                           child: TextField(
+                            style: TextStyle(fontSize: CFFontSize.content),
                             maxLines: 3,
                             controller: TextEditingController.fromValue(
                               TextEditingValue(

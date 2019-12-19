@@ -21,6 +21,7 @@ class _SupplyClassState extends State<SupplyClass> {
   List ajaxData = [];
   bool loading = true;
   Map industryClass = {};
+  double width;
 
   void _onRefresh() async {
     setState(() {
@@ -80,7 +81,8 @@ class _SupplyClassState extends State<SupplyClass> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     getData();
   }
 
@@ -90,7 +92,7 @@ class _SupplyClassState extends State<SupplyClass> {
       child: Row(
         children: <Widget>[
           Container(
-            width: 100,
+            width: width / 5,
             alignment: Alignment.centerRight,
             child: Text('${data['sort']}'),
           ),
@@ -138,7 +140,7 @@ class _SupplyClassState extends State<SupplyClass> {
             ),
           ),
           Container(
-            width: 100,
+            width: width / 5,
             child: Text('${data['comments'] ?? ''}'),
           ),
           Container(
@@ -159,7 +161,10 @@ class _SupplyClassState extends State<SupplyClass> {
                         content: SingleChildScrollView(
                           child: ListBody(
                             children: <Widget>[
-                              Text('确认删除 ${data['class_name']} ?',style: TextStyle(fontSize: CFFontSize.content),),
+                              Text(
+                                '确认删除 ${data['class_name']} ?',
+                                style: TextStyle(fontSize: CFFontSize.content),
+                              ),
                             ],
                           ),
                         ),
@@ -203,6 +208,7 @@ class _SupplyClassState extends State<SupplyClass> {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text('供应商分类'),
@@ -232,24 +238,28 @@ class _SupplyClassState extends State<SupplyClass> {
                     SizedBox(
                       height: 30,
                       child: PrimaryButton(
-                          onPressed: () {
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+                        onPressed: () {
+                          getData();
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
+                        child: Text('搜索'),
+                      ),
                     ),
                     SizedBox(
                       height: 30,
                       child: PrimaryButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      SupplyClassModify({'industryClass': industryClass, 'item': null})),
-                            );
-                          },
-                          child: Text('新增分类')),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SupplyClassModify(
+                                {'industryClass': industryClass, 'item': null},
+                              ),
+                            ),
+                          );
+                        },
+                        child: Text('新增分类'),
+                      ),
                     )
                   ],
                 ),
@@ -269,11 +279,14 @@ class _SupplyClassState extends State<SupplyClass> {
                           : Column(
                               children: <Widget>[
                                 Container(
+                                  padding: EdgeInsets.only(
+                                    bottom: 6,
+                                  ),
                                   child: Row(
                                     children: <Widget>[
                                       Container(
                                         alignment: Alignment.center,
-                                        width: 100,
+                                        width: width / 5,
                                         child: Text('排序'),
                                       ),
                                       Expanded(
@@ -283,7 +296,7 @@ class _SupplyClassState extends State<SupplyClass> {
                                         ),
                                       ),
                                       Container(
-                                        width: 100,
+                                        width: width / 5,
                                         alignment: Alignment.center,
                                         child: Text('备注'),
                                       ),
@@ -304,7 +317,9 @@ class _SupplyClassState extends State<SupplyClass> {
                                       children: <Widget>[
                                         itemContainer(item, 1),
                                         item['children'].isEmpty
-                                            ? Container(width: 0,)
+                                            ? Container(
+                                                width: 0,
+                                              )
                                             : Column(
                                                 children: item['children'].map<Widget>((children) {
                                                   return Container(
