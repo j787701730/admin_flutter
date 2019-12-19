@@ -7,7 +7,7 @@ import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:toast/toast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -40,8 +40,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void countDown() {
-//设置倒计时三秒后执行跳转方法
-    var duration = Duration(seconds: 1);
+    // 设置倒计时三秒后执行跳转方法
+    Duration duration = Duration(seconds: 1);
     setState(() {
       isAjax = false;
     });
@@ -69,14 +69,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _context,
       MaterialPageRoute(builder: (context) => Login()),
     );
-//      .then((data) {
-//      if (data != null) {
-//        setState(() {
-//          isLogin = data['islogin'];
-//          access = data['access'];
-//        });
-//      }
-//    });
   }
 
 // 菜单筛选
@@ -142,25 +134,26 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Expanded(
-                        flex: 1,
-                        child: Container(
-                          height: 34,
-                          child: TextField(
-                            style: TextStyle(fontSize: CFFontSize.content),
-                            textAlign: TextAlign.left,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(top: 2, bottom: 2, left: 10, right: 10),
-                              hintText: '输入新密码',
-                            ),
-                            obscureText: true,
-                            onChanged: (String val) {
-                              setState(() {
-//                                            password = val;
-                              });
-                            },
+                      flex: 1,
+                      child: Container(
+                        height: 34,
+                        child: TextField(
+                          style: TextStyle(fontSize: CFFontSize.content),
+                          textAlign: TextAlign.left,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.only(top: 2, bottom: 2, left: 10, right: 10),
+                            hintText: '输入新密码',
                           ),
-                        ))
+                          obscureText: true,
+                          onChanged: (String val) {
+                            setState(() {
+                              // password = val;
+                            });
+                          },
+                        ),
+                      ),
+                    )
                   ],
                 ),
                 Container(
@@ -189,7 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           obscureText: true,
                           onChanged: (String val) {
                             setState(() {
-//                                            password = val;
+                              // password = val;
                             });
                           },
                         ),
@@ -225,139 +218,165 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     _context = context;
     return WillPopScope(
-        onWillPop: () async {
-          Toast.show("再按一次退出app", context, duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-          if (_lastPressedAt == null || DateTime.now().difference(_lastPressedAt) > Duration(seconds: 1)) {
-            // 两次点击间隔超过1秒则重新计时
-            _lastPressedAt = DateTime.now();
-            return false;
-          }
-          return true;
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('后台管理系统'),
-            actions: <Widget>[
-              isLogin
-                  ? PopupMenuButton(
-                      offset: Offset(0, 60),
-                      onSelected: (String value) {
-                        if (value == '0') {
-                          modifyPasswordDialog();
-                        } else if (value == '1') {
-                          setState(() {
-                            isLogin = false;
-                          });
-                        }
-                      },
-                      itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                        PopupMenuItem(
-                            value: "0",
-                            child: Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.settings,
-                                  size: 20,
-                                  color: CFColors.secondary,
-                                ),
-                                Container(
-                                  width: 10,
-                                ),
-                                Text("修改密码", style: TextStyle(fontSize: CFFontSize.content))
-                              ],
-                            )),
-                        PopupMenuItem(
-                            value: "1",
-                            child: Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.power_settings_new,
-                                  size: 20,
-                                  color: CFColors.secondary,
-                                ),
-                                Container(
-                                  width: 10,
-                                ),
-                                Text("退出",
-                                    style: TextStyle(
-                                      fontSize: CFFontSize.content,
-                                    ))
-                              ],
-                            ))
-                      ],
-                      child: Container(
-                        width: 56,
-                        child: Center(
-                          child: Icon(Icons.person),
+      onWillPop: () async {
+        Fluttertoast.showToast(
+          msg: '再按一次退出app',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+        );
+        if (_lastPressedAt == null || DateTime.now().difference(_lastPressedAt) > Duration(seconds: 1)) {
+          // 两次点击间隔超过1秒则重新计时
+          _lastPressedAt = DateTime.now();
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('后台管理系统'),
+          actions: <Widget>[
+            isLogin
+                ? PopupMenuButton(
+                    offset: Offset(0, 60),
+                    onSelected: (String value) {
+                      if (value == '0') {
+                        modifyPasswordDialog();
+                      } else if (value == '1') {
+                        setState(() {
+                          isLogin = false;
+                        });
+                      }
+                    },
+                    itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+                      PopupMenuItem(
+                        value: "0",
+                        child: Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.settings,
+                              size: 20,
+                              color: CFColors.secondary,
+                            ),
+                            Container(
+                              width: 10,
+                            ),
+                            Text(
+                              "修改密码",
+                              style: TextStyle(
+                                fontSize: CFFontSize.content,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    )
-                  : Container(
-                      width: 0,
-                    ),
-            ],
-          ),
-          body: !isLogin
-              ? Container(
-                  child: Center(
-                      child: isAjax
-                          ? CupertinoActivityIndicator()
-                          : PrimaryButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => Login()),
-                                );
-//                                  .then((data) {
-//                                  if (data != null) {
-//                                    setState(() {
-//                                      isLogin = data['islogin'];
-//                                      access = data['access'];
-//                                    });
-//                                  }
-//                                });
-                              },
-                              child: Text(
-                                '登录',
-                                style: TextStyle(),
+                      PopupMenuItem(
+                          value: "1",
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.power_settings_new,
+                                size: 20,
+                                color: CFColors.secondary,
                               ),
-                            )),
-                )
-              : ListView(
-                  padding: EdgeInsets.all(10),
-                  children: <Widget>[
-                    Container(
-                      height: 34,
-                      decoration:
-                          BoxDecoration(color: Color(0xffeeeeee), borderRadius: BorderRadius.all(Radius.circular(44))),
-                      margin: EdgeInsets.only(bottom: 15),
-                      child: TextField(
-                        style: TextStyle(fontSize: CFFontSize.content),
-                        decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.search),
-                            border: OutlineInputBorder(borderSide: BorderSide.none),
-                            contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15),
-                            hintText: '请输入关键字'),
-                        onChanged: (val) {
-                          filterMenu(val.trim());
-                        },
+                              Container(
+                                width: 10,
+                              ),
+                              Text(
+                                "退出",
+                                style: TextStyle(
+                                  fontSize: CFFontSize.content,
+                                ),
+                              )
+                            ],
+                          ))
+                    ],
+                    child: Container(
+                      width: 56,
+                      child: Center(
+                        child: Icon(
+                          Icons.person,
+                        ),
                       ),
                     ),
-                    menu.isEmpty
-                        ? Container(
-                            alignment: Alignment.topCenter,
-                            child: Text(
-                              '空空如也',
-                              style: TextStyle(fontSize: CFFontSize.content),
+                  )
+                : Container(
+                    width: 0,
+                  ),
+          ],
+        ),
+        body: !isLogin
+            ? Container(
+                child: Center(
+                  child: isAjax
+                      ? CupertinoActivityIndicator()
+                      : PrimaryButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Login(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            '登录',
+                          ),
+                        ),
+                ),
+              )
+            : ListView(
+                padding: EdgeInsets.all(10),
+                children: <Widget>[
+                  Container(
+                    height: 34,
+                    decoration: BoxDecoration(
+                      color: Color(0xffeeeeee),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(44),
+                      ),
+                    ),
+                    margin: EdgeInsets.only(bottom: 15),
+                    child: TextField(
+                      style: TextStyle(
+                        fontSize: CFFontSize.content,
+                      ),
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.search,
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
+                        contentPadding: EdgeInsets.only(
+                          top: 6,
+                          bottom: 6,
+                          left: 15,
+                        ),
+                        hintText: '请输入关键字',
+                      ),
+                      onChanged: (val) {
+                        filterMenu(val.trim());
+                      },
+                    ),
+                  ),
+                  menu.isEmpty
+                      ? Container(
+                          alignment: Alignment.topCenter,
+                          child: Text(
+                            '空空如也',
+                            style: TextStyle(
+                              fontSize: CFFontSize.content,
                             ),
-                          )
-                        : GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              FocusScope.of(context).requestFocus(FocusNode());
-                            },
-                            child: Column(
-                              children: menu.map<Widget>((item) {
+                          ),
+                        )
+                      : GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                          },
+                          child: Column(
+                            children: menu.map<Widget>(
+                              (item) {
                                 return access.indexOf(item['access'][0]) == -1
                                     ? Container(
                                         width: 0,
@@ -372,39 +391,43 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 child: Text(
                                                   '${item['name']}',
                                                   style: TextStyle(
-                                                      fontSize: CFFontSize.content,
-                                                      color: CFColors.text,
-                                                      fontWeight: FontWeight.bold),
+                                                    fontSize: CFFontSize.content,
+                                                    color: CFColors.text,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                             Wrap(
                                               runSpacing: 4,
-                                              children: item['children'].map<Widget>((child) {
-                                                return access.indexOf(child['access'][0]) == -1
-                                                    ? Container(
-                                                        width: 0,
-                                                      )
-                                                    : InkWell(
-                                                        onTap: () {
-                                                          FocusScope.of(context).requestFocus(FocusNode());
-                                                          if (child['path'] != null) {
-                                                            Navigator.pushNamed(context, child['path']);
-                                                          }
-                                                        },
-                                                        child: Container(
-                                                          padding:
-                                                              EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
-                                                          child: Text(
-                                                            '${child['name']}',
-                                                            style: TextStyle(
-                                                              fontSize: CFFontSize.content,
-                                                              color: child['path'] == null ? Colors.black : Colors.blue,
+                                              children: item['children'].map<Widget>(
+                                                (child) {
+                                                  return access.indexOf(child['access'][0]) == -1
+                                                      ? Container(
+                                                          width: 0,
+                                                        )
+                                                      : InkWell(
+                                                          onTap: () {
+                                                            FocusScope.of(context).requestFocus(FocusNode());
+                                                            if (child['path'] != null) {
+                                                              Navigator.pushNamed(context, child['path']);
+                                                            }
+                                                          },
+                                                          child: Container(
+                                                            padding:
+                                                                EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
+                                                            child: Text(
+                                                              '${child['name']}',
+                                                              style: TextStyle(
+                                                                fontSize: CFFontSize.content,
+                                                                color:
+                                                                    child['path'] == null ? Colors.black : Colors.blue,
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      );
-                                              }).toList(),
+                                                        );
+                                                },
+                                              ).toList(),
                                             ),
                                             Container(
                                               height: 10,
@@ -412,11 +435,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                           ],
                                         ),
                                       );
-                              }).toList(),
-                            ),
-                          )
-                  ],
-                ),
-        ));
+                              },
+                            ).toList(),
+                          ),
+                        )
+                ],
+              ),
+      ),
+    );
   }
 }

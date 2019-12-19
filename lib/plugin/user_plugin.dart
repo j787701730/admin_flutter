@@ -4,7 +4,7 @@ import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:toast/toast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class UserPlugin extends StatefulWidget {
   final userCount; // 0 无限选择, 1 单选, >1 限制个数选择
@@ -78,7 +78,11 @@ class _UserPluginState extends State<UserPlugin> {
   selectOrCancel(item) {
     FocusScope.of(context).requestFocus(FocusNode());
     if (userCount > 1 && selectUsersData.keys.length == userCount && !selectUsersData.keys.contains(item['user_id'])) {
-      Toast.show('最多选择 $userCount 个用户', _context, duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
+      Fluttertoast.showToast(
+        msg: '最多选择 $userCount 个用户',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
       return;
     }
 

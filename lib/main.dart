@@ -85,7 +85,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         platform: TargetPlatform.iOS,
         textTheme: TextTheme(
-          subhead: TextStyle(textBaseline: TextBaseline.alphabetic), // TextField hintText 居中
+          subhead: TextStyle(
+            textBaseline: TextBaseline.alphabetic, // TextField hintText 居中
+          ),
         ),
       ),
       debugShowCheckedModeBanner: false,
@@ -173,8 +175,10 @@ class MyApp extends StatelessWidget {
         Locale('en', 'US'),
         Locale('zh', 'CH'),
       ],
-      onUnknownRoute: (RouteSettings settings) =>
-          MaterialPageRoute<void>(settings: settings, builder: (BuildContext context) => ErrorPage()),
+      onUnknownRoute: (RouteSettings settings) => MaterialPageRoute<void>(
+        settings: settings,
+        builder: (BuildContext context) => ErrorPage(),
+      ),
     );
   }
 }

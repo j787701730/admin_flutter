@@ -6,7 +6,7 @@ import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:toast/toast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ShopPlugin extends StatefulWidget {
   final shopCount; // 0 无限选择, 1 单选, >1 限制个数选择
@@ -83,7 +83,11 @@ class _ShopPluginState extends State<ShopPlugin> {
 
   selectOrCancel(item) {
     if (shopCount > 1 && selectShopsData.keys.length == shopCount && !selectShopsData.keys.contains(item['shop_id'])) {
-      Toast.show('最多选择 $shopCount 家店铺', _context, duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
+      Fluttertoast.showToast(
+        msg: '最多选择 $shopCount 家店铺',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
       return;
     }
     FocusScope.of(context).requestFocus(FocusNode());
@@ -258,11 +262,8 @@ class _ShopPluginState extends State<ShopPlugin> {
                             color: Color(0xffffffff),
                             border: Border.all(color: Color(0xffdddddd), width: 1),
                             boxShadow: [
-                               BoxShadow(
-                                  color: Color(0xffdddddd),
-                                  offset:  Offset(0.0, 3.0),
-                                  blurRadius: 3.0,
-                                  spreadRadius: 3),
+                              BoxShadow(
+                                  color: Color(0xffdddddd), offset: Offset(0.0, 3.0), blurRadius: 3.0, spreadRadius: 3),
                             ]),
                         child: Row(
                           children: <Widget>[

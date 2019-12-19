@@ -8,7 +8,7 @@ import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:toast/toast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class BaseMonitor extends StatefulWidget {
   @override
@@ -64,7 +64,11 @@ class _BaseMonitorState extends State<BaseMonitor> {
             toTop();
           });
         } else {
-          Toast.show('${res['err_msg']}', _context, duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
+          Fluttertoast.showToast(
+            msg: '${res['err_msg']}',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+          );
         }
         if (isRefresh) {
           _refreshController.refreshCompleted();

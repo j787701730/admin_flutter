@@ -1,6 +1,6 @@
 import 'package:admin_flutter/my_home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:toast/toast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'utils.dart';
 
@@ -26,10 +26,17 @@ class _LoginState extends State<Login> {
         getAccess();
       } else {
         if (res.runtimeType == String) {
-          Toast.show('未登录', _context, duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
+          Fluttertoast.showToast(
+            msg: '未登录',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+          );
         } else {
-          Toast.show('${res['err_code']}: ${res['err_msg']}', _context,
-              duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
+          Fluttertoast.showToast(
+            msg: '${res['err_code']}: ${res['err_msg']}',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+          );
         }
       }
     }, () {}, _context);
@@ -46,10 +53,17 @@ class _LoginState extends State<Login> {
         );
       } else {
         if (res.runtimeType == String) {
-          Toast.show('未登录', _context, duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
+          Fluttertoast.showToast(
+            msg: '未登录',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+          );
         } else {
-          Toast.show('${res['err_code']}: ${res['err_msg']}', _context,
-              duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
+          Fluttertoast.showToast(
+            msg: '${res['err_code']}: ${res['err_msg']}',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+          );
         }
       }
     }, () {}, _context);
@@ -105,9 +119,17 @@ class _LoginState extends State<Login> {
                   textColor: Colors.white,
                   onPressed: () {
                     if (loginName.length < 4) {
-                      Toast.show("账号不少于4位", context, duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
+                      Fluttertoast.showToast(
+                        msg: '账号不少于4位',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                      );
                     } else if (password.length < 4) {
-                      Toast.show("密码不少于4位", context, duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
+                      Fluttertoast.showToast(
+                        msg: '密码不少于4位',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                      );
                     } else {
                       login();
                     }

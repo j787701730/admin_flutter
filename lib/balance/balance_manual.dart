@@ -102,7 +102,8 @@ class _BalanceManualState extends State<BalanceManual> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['curr_page'] += page;
     getData();
   }
@@ -125,53 +126,57 @@ class _BalanceManualState extends State<BalanceManual> {
             padding: EdgeInsets.all(10),
             children: <Widget>[
               Input(
-                  label: '用户名',
-                  onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('login_name');
-                      } else {
-                        param['login_name'] = val;
-                      }
-                    });
-                  }),
+                label: '用户名',
+                onChanged: (String val) {
+                  setState(() {
+                    if (val == '') {
+                      param.remove('login_name');
+                    } else {
+                      param['login_name'] = val;
+                    }
+                  });
+                },
+              ),
               Input(
-                  label: '操作者',
-                  onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('full_name');
-                      } else {
-                        param['full_name'] = val;
-                      }
-                    });
-                  }),
+                label: '操作者',
+                onChanged: (String val) {
+                  setState(() {
+                    if (val == '') {
+                      param.remove('full_name');
+                    } else {
+                      param['full_name'] = val;
+                    }
+                  });
+                },
+              ),
               Select(
-                  selectOptions: balanceType,
-                  selectedValue: param['balance_type_id'] ?? '0',
-                  label: '余额类型:',
-                  onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == '0') {
-                        param.remove('balance_type_id');
-                      } else {
-                        param['balance_type_id'] = newValue;
-                      }
-                    });
-                  }),
+                selectOptions: balanceType,
+                selectedValue: param['balance_type_id'] ?? '0',
+                label: '余额类型:',
+                onChanged: (String newValue) {
+                  setState(() {
+                    if (newValue == '0') {
+                      param.remove('balance_type_id');
+                    } else {
+                      param['balance_type_id'] = newValue;
+                    }
+                  });
+                },
+              ),
               Select(
-                  selectOptions: manualType,
-                  selectedValue: param['manual_type'] ?? '0',
-                  label: '调账类型:',
-                  onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == '0') {
-                        param.remove('manual_type');
-                      } else {
-                        param['manual_type'] = newValue;
-                      }
-                    });
-                  }),
+                selectOptions: manualType,
+                selectedValue: param['manual_type'] ?? '0',
+                label: '调账类型:',
+                onChanged: (String newValue) {
+                  setState(() {
+                    if (newValue == '0') {
+                      param.remove('manual_type');
+                    } else {
+                      param['manual_type'] = newValue;
+                    }
+                  });
+                },
+              ),
               Container(
                 child: Wrap(
                   alignment: WrapAlignment.center,
@@ -181,11 +186,12 @@ class _BalanceManualState extends State<BalanceManual> {
                     SizedBox(
                       height: 30,
                       child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            getData();
-                          },
-                          child: Text('搜索')),
+                        onPressed: () {
+                          param['curr_page'] = 1;
+                          getData();
+                        },
+                        child: Text('搜索'),
+                      ),
                     ),
                   ],
                 ),
@@ -211,8 +217,9 @@ class _BalanceManualState extends State<BalanceManual> {
                             )
                           : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
+                              children: ajaxData.map<Widget>(
+                                (item) {
+                                  return Container(
                                     decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
                                     margin: EdgeInsets.only(bottom: 10),
                                     padding: EdgeInsets.only(top: 5, bottom: 5),
@@ -261,8 +268,10 @@ class _BalanceManualState extends State<BalanceManual> {
                                           ),
                                         );
                                       }).toList(),
-                                    ));
-                              }).toList(),
+                                    ),
+                                  );
+                                },
+                              ).toList(),
                             ),
                     ),
               Container(

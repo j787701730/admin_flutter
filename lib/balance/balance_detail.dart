@@ -202,7 +202,11 @@ class _BalanceDetailState extends State<BalanceDetail> {
                   Text('类型: '),
                   Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(4))),
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(4),
+                      ),
+                    ),
                     height: 34,
                     child: DropdownButton<String>(
                         elevation: 0,
@@ -238,26 +242,27 @@ class _BalanceDetailState extends State<BalanceDetail> {
                     width: 100,
                     height: 34,
                     child: PrimaryButton(
-                        onPressed: () {
-                          if (beginDate == null) {
-                            param.remove('beginDate');
-                          } else {
-                            param['beginDate'] = beginDate.toString().substring(0, 10);
-                          }
+                      onPressed: () {
+                        if (beginDate == null) {
+                          param.remove('beginDate');
+                        } else {
+                          param['beginDate'] = beginDate.toString().substring(0, 10);
+                        }
 
-                          if (endDate == null) {
-                            param.remove('endDate');
-                          } else {
-                            param['endDate'] = endDate.toString().substring(0, 10);
-                          }
-                          param['currPage'] = 1;
+                        if (endDate == null) {
+                          param.remove('endDate');
+                        } else {
+                          param['endDate'] = endDate.toString().substring(0, 10);
+                        }
+                        param['currPage'] = 1;
 
-                          if (param['balanceTypeID'] != null && param['balanceTypeID'] == '0') {
-                            param.remove('balanceTypeID');
-                          }
-                          getData();
-                        },
-                        child: Text('搜索')),
+                        if (param['balanceTypeID'] != null && param['balanceTypeID'] == '0') {
+                          param.remove('balanceTypeID');
+                        }
+                        getData();
+                      },
+                      child: Text('搜索'),
+                    ),
                   )
                 ],
               ),
@@ -275,46 +280,47 @@ class _BalanceDetailState extends State<BalanceDetail> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: ajaxData.map<Widget>((item) {
                             return Container(
-                                decoration: BoxDecoration(border: Border.all(color: Color(0xffeeeeee), width: 1)),
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: columns.map<Widget>((col) {
-                                    Widget con = Text('${item[col['key']] ?? ''}');
-                                    switch (col['key']) {
-                                      case 'balance_type':
-                                        if (item['type'] == '1') {
-                                          if (double.parse('${item['amount']}') < 0) {
-                                            con = Text('收入冲正');
-                                          } else {
-                                            con = Text('收入');
-                                          }
+                              decoration: BoxDecoration(border: Border.all(color: Color(0xffeeeeee), width: 1)),
+                              margin: EdgeInsets.only(bottom: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: columns.map<Widget>((col) {
+                                  Widget con = Text('${item[col['key']] ?? ''}');
+                                  switch (col['key']) {
+                                    case 'balance_type':
+                                      if (item['type'] == '1') {
+                                        if (double.parse('${item['amount']}') < 0) {
+                                          con = Text('收入冲正');
                                         } else {
-                                          if (double.parse('${item['amount']}') < 0) {
-                                            con = Text('支出冲正');
-                                          } else {
-                                            con = Text('支出');
-                                          }
+                                          con = Text('收入');
                                         }
-                                        break;
-                                    }
+                                      } else {
+                                        if (double.parse('${item['amount']}') < 0) {
+                                          con = Text('支出冲正');
+                                        } else {
+                                          con = Text('支出');
+                                        }
+                                      }
+                                      break;
+                                  }
 
-                                    return Container(
-                                      margin: EdgeInsets.only(bottom: 6),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 80,
-                                            alignment: Alignment.centerRight,
-                                            child: Text('${col['title']}'),
-                                            margin: EdgeInsets.only(right: 10),
-                                          ),
-                                          Expanded(flex: 1, child: con)
-                                        ],
-                                      ),
-                                    );
-                                  }).toList(),
-                                ));
+                                  return Container(
+                                    margin: EdgeInsets.only(bottom: 6),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          width: 80,
+                                          alignment: Alignment.centerRight,
+                                          child: Text('${col['title']}'),
+                                          margin: EdgeInsets.only(right: 10),
+                                        ),
+                                        Expanded(flex: 1, child: con)
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            );
                           }).toList(),
                         ),
               stat == null

@@ -58,28 +58,38 @@ class _CreateTaskPricingState extends State<CreateTaskPricing> {
                     alignment: Alignment.centerLeft,
                     child: Wrap(
                       children: param['user'].keys.toList().map<Widget>((key) {
-                        return Row(
-                          children: <Widget>[
-                            SizedBox(
-                              child: Text(
-                                '${param['user'][key]['login_name']}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                        return Container(
+                          child: Stack(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.only(right: 20),
+                                child: Text(
+                                  '${param['user'][key]['login_name']}',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  param['user'].remove(key);
-                                });
-                              },
-                              child: Icon(
-                                Icons.clear,
-                                color: Colors.red,
-                                size: 20,
-                              ),
-                            )
-                          ],
+                              Positioned(
+                                top: 0,
+                                right: 0,
+                                child: Container(
+                                  color: Color(0xffeeeeee),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        param['user'].remove(key);
+                                      });
+                                    },
+                                    child: Icon(
+                                      Icons.clear,
+                                      color: Colors.red,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         );
                       }).toList(),
                     ),
@@ -96,7 +106,9 @@ class _CreateTaskPricingState extends State<CreateTaskPricing> {
                         MaterialPageRoute(
                             builder: (context) => UserPlugin(
                                   userCount: 1,
-                                  selectUsersData: jsonDecode(jsonEncode(param['user'])),
+                                  selectUsersData: jsonDecode(
+                                    jsonEncode(param['user']),
+                                  ),
                                 )),
                       ).then((val) {
                         if (val != null) {

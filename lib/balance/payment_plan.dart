@@ -28,19 +28,29 @@ class _PaymentPlanState extends State<PaymentPlan> {
 
   Map paymentMethod = {"all": '全部', "1": "现金支付"};
   Map planType = {
-    "1": {"type_id": "1", "type_en_name": "PAYMENT_PLAN_TYPE_PLAT", "type_ch_name": "平台购物", "comments": "仅供在平台的商品卖卖"},
+    "1": {
+      "type_id": "1",
+      "type_en_name": "PAYMENT_PLAN_TYPE_PLAT",
+      "type_ch_name": "平台购物",
+      "comments": "仅供在平台的商品卖卖",
+    },
     "2": {
       "type_id": "2",
       "type_en_name": "PAYMENT_PLAN_TYPE_CLOUD_BILL",
       "type_ch_name": "云端计费",
       "comments": "仅供云端ERP按平米计费"
     },
-    "3": {"type_id": "3", "type_en_name": "PAYMENT_PLAN_TYPE_TASK", "type_ch_name": "任务扣费", "comments": "仅供任务扣费使用"},
+    "3": {
+      "type_id": "3",
+      "type_en_name": "PAYMENT_PLAN_TYPE_TASK",
+      "type_ch_name": "任务扣费",
+      "comments": "仅供任务扣费使用",
+    },
     "4": {
       "type_id": "4",
       "type_en_name": "PAYMENT_PLAN_TYPE_ERP_ORDER",
       "type_ch_name": "ERP订单",
-      "comments": "ERP订单付款余额支付方案"
+      "comments": "ERP订单付款余额支付方案",
     }
   };
   Map balanceType = {
@@ -51,7 +61,7 @@ class _PaymentPlanState extends State<PaymentPlan> {
       "if_charge": "1",
       "if_extract": "1",
       "if_transfer": "1",
-      "comments": "平台购物使用，暂时不可充值，可转账，可提取"
+      "comments": "平台购物使用，暂时不可充值，可转账，可提取",
     },
     "2": {
       "balance_type_id": "2",
@@ -60,7 +70,7 @@ class _PaymentPlanState extends State<PaymentPlan> {
       "if_charge": "0",
       "if_extract": "0",
       "if_transfer": "0",
-      "comments": "平台购物使用，不可充值，不可转账，不可提取"
+      "comments": "平台购物使用，不可充值，不可转账，不可提取",
     },
     "3": {
       "balance_type_id": "3",
@@ -69,7 +79,7 @@ class _PaymentPlanState extends State<PaymentPlan> {
       "if_charge": "1",
       "if_extract": "0",
       "if_transfer": "0",
-      "comments": "云拆单与软件包月使用，可充值，不可转账，不可提取"
+      "comments": "云拆单与软件包月使用，可充值，不可转账，不可提取",
     },
     "4": {
       "balance_type_id": "4",
@@ -78,7 +88,7 @@ class _PaymentPlanState extends State<PaymentPlan> {
       "if_charge": "0",
       "if_extract": "0",
       "if_transfer": "0",
-      "comments": "云拆单与软件包月使用，不可充值，不可转账，不可提取"
+      "comments": "云拆单与软件包月使用，不可充值，不可转账，不可提取",
     },
     "5": {
       "balance_type_id": "5",
@@ -87,7 +97,7 @@ class _PaymentPlanState extends State<PaymentPlan> {
       "if_charge": "1",
       "if_extract": "0",
       "if_transfer": "0",
-      "comments": "经销商充值，可充值，不可转账，不可提取"
+      "comments": "经销商充值，可充值，不可转账，不可提取",
     },
     "6": {
       "balance_type_id": "6",
@@ -96,7 +106,7 @@ class _PaymentPlanState extends State<PaymentPlan> {
       "if_charge": "0",
       "if_extract": "0",
       "if_transfer": "0",
-      "comments": "晨丰贷款业务，不可充值，不可转账，不可提取"
+      "comments": "晨丰贷款业务，不可充值，不可转账，不可提取",
     }
   };
 
@@ -183,8 +193,10 @@ class _PaymentPlanState extends State<PaymentPlan> {
 
   turnTo(data) {
     Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => PaymentPlanModify(data)),
+      _context,
+      MaterialPageRoute(
+        builder: (context) => PaymentPlanModify(data),
+      ),
     );
   }
 
@@ -246,9 +258,10 @@ class _PaymentPlanState extends State<PaymentPlan> {
               child: Column(
                 children: <Widget>[
                   Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      height: 34,
-                      child: Row(children: <Widget>[
+                    margin: EdgeInsets.only(bottom: 10),
+                    height: 34,
+                    child: Row(
+                      children: <Widget>[
                         Container(
                           width: 80,
                           alignment: Alignment.centerRight,
@@ -259,14 +272,21 @@ class _PaymentPlanState extends State<PaymentPlan> {
                           flex: 1,
                           child: TextField(
                             style: TextStyle(fontSize: CFFontSize.content),
-                            controller: TextEditingController.fromValue(TextEditingValue(
+                            controller: TextEditingController.fromValue(
+                              TextEditingValue(
                                 text: '${planTypeModify['type_ch_name'] ?? ''}',
-                                selection: TextSelection.fromPosition(TextPosition(
+                                selection: TextSelection.fromPosition(
+                                  TextPosition(
                                     affinity: TextAffinity.downstream,
-                                    offset: '${planTypeModify['type_ch_name'] ?? ''}'.length)))),
+                                    offset: '${planTypeModify['type_ch_name'] ?? ''}'.length,
+                                  ),
+                                ),
+                              ),
+                            ),
                             decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15),
+                            ),
                             onChanged: (String val) {
                               setState(() {
                                 planTypeModify['type_ch_name'] = val;
@@ -274,11 +294,14 @@ class _PaymentPlanState extends State<PaymentPlan> {
                             },
                           ),
                         ),
-                      ])),
+                      ],
+                    ),
+                  ),
                   Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      height: 34,
-                      child: Row(children: <Widget>[
+                    margin: EdgeInsets.only(bottom: 10),
+                    height: 34,
+                    child: Row(
+                      children: <Widget>[
                         Container(
                           width: 80,
                           alignment: Alignment.centerRight,
@@ -288,14 +311,21 @@ class _PaymentPlanState extends State<PaymentPlan> {
                         Expanded(
                           flex: 1,
                           child: TextField(
-                            controller: TextEditingController.fromValue(TextEditingValue(
+                            controller: TextEditingController.fromValue(
+                              TextEditingValue(
                                 text: '${planTypeModify['type_en_name'] ?? ''}',
-                                selection: TextSelection.fromPosition(TextPosition(
+                                selection: TextSelection.fromPosition(
+                                  TextPosition(
                                     affinity: TextAffinity.downstream,
-                                    offset: '${planTypeModify['type_en_name'] ?? ''}'.length)))),
+                                    offset: '${planTypeModify['type_en_name'] ?? ''}'.length,
+                                  ),
+                                ),
+                              ),
+                            ),
                             decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15),
+                            ),
                             onChanged: (String val) {
                               setState(() {
                                 planTypeModify['type_en_name'] = val;
@@ -303,10 +333,13 @@ class _PaymentPlanState extends State<PaymentPlan> {
                             },
                           ),
                         ),
-                      ])),
+                      ],
+                    ),
+                  ),
                   Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      child: Row(children: <Widget>[
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      children: <Widget>[
                         Container(
                           width: 80,
                           alignment: Alignment.centerRight,
@@ -317,14 +350,21 @@ class _PaymentPlanState extends State<PaymentPlan> {
                           flex: 1,
                           child: TextField(
                             maxLines: 3,
-                            controller: TextEditingController.fromValue(TextEditingValue(
+                            controller: TextEditingController.fromValue(
+                              TextEditingValue(
                                 text: '${planTypeModify['comments'] ?? ''}',
-                                selection: TextSelection.fromPosition(TextPosition(
+                                selection: TextSelection.fromPosition(
+                                  TextPosition(
                                     affinity: TextAffinity.downstream,
-                                    offset: '${planTypeModify['comments'] ?? ''}'.length)))),
+                                    offset: '${planTypeModify['comments'] ?? ''}'.length,
+                                  ),
+                                ),
+                              ),
+                            ),
                             decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15)),
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15),
+                            ),
                             onChanged: (String val) {
                               setState(() {
                                 planTypeModify['comments'] = val;
@@ -332,7 +372,9 @@ class _PaymentPlanState extends State<PaymentPlan> {
                             },
                           ),
                         ),
-                      ]))
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -376,38 +418,41 @@ class _PaymentPlanState extends State<PaymentPlan> {
             padding: EdgeInsets.all(10),
             children: <Widget>[
               Select(
-                  selectOptions: paymentMethod,
-                  selectedValue: param['payment_method'] ?? 'all',
-                  label: '支付方式',
-                  onChanged: (val) {
-                    if (val == 'all') {
-                      param.remove('payment_method');
-                    } else {
-                      param['payment_method'] = val;
-                    }
-                  }),
+                selectOptions: paymentMethod,
+                selectedValue: param['payment_method'] ?? 'all',
+                label: '支付方式',
+                onChanged: (val) {
+                  if (val == 'all') {
+                    param.remove('payment_method');
+                  } else {
+                    param['payment_method'] = val;
+                  }
+                },
+              ),
               Select(
-                  selectOptions: planTypeSelect,
-                  selectedValue: param['payment_plan_type'] ?? 'all',
-                  label: '支付方案',
-                  onChanged: (val) {
-                    if (val == 'all') {
-                      param.remove('payment_plan_type');
-                    } else {
-                      param['payment_plan_type'] = val;
-                    }
-                  }),
+                selectOptions: planTypeSelect,
+                selectedValue: param['payment_plan_type'] ?? 'all',
+                label: '支付方案',
+                onChanged: (val) {
+                  if (val == 'all') {
+                    param.remove('payment_plan_type');
+                  } else {
+                    param['payment_plan_type'] = val;
+                  }
+                },
+              ),
               Select(
-                  selectOptions: balanceTypeSelect,
-                  selectedValue: param['balance_type_id'] ?? 'all',
-                  label: '现金类型',
-                  onChanged: (val) {
-                    if (val == 'all') {
-                      param.remove('balance_type_id');
-                    } else {
-                      param['balance_type_id'] = val;
-                    }
-                  }),
+                selectOptions: balanceTypeSelect,
+                selectedValue: param['balance_type_id'] ?? 'all',
+                label: '现金类型',
+                onChanged: (val) {
+                  if (val == 'all') {
+                    param.remove('balance_type_id');
+                  } else {
+                    param['balance_type_id'] = val;
+                  }
+                },
+              ),
               Container(
                 child: Wrap(
                   alignment: WrapAlignment.center,
@@ -417,21 +462,23 @@ class _PaymentPlanState extends State<PaymentPlan> {
                     SizedBox(
                       height: 30,
                       child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+                        onPressed: () {
+                          param['curr_page'] = 1;
+                          getData();
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
+                        child: Text('搜索'),
+                      ),
                     ),
                     SizedBox(
                       height: 30,
                       child: PrimaryButton(
-                          onPressed: () {
-                            turnTo(null);
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('添加支付方案')),
+                        onPressed: () {
+                          turnTo(null);
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
+                        child: Text('添加支付方案'),
+                      ),
                     ),
                   ],
                 ),
@@ -457,169 +504,179 @@ class _PaymentPlanState extends State<PaymentPlan> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: ajaxData.map<Widget>((data) {
                                 return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.all(10),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Container(
-                                          padding: EdgeInsets.only(bottom: 10),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Text(
-                                                '${planTypeSelect[data['payment_plan_type']]}：',
-                                                style: TextStyle(fontWeight: FontWeight.bold),
-                                              ),
-                                              Text('${data['name']} '),
-                                              InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    planTypeModify = {
-                                                      'type_ch_name': '${data['name']}',
-                                                      'type_en_name':
-                                                          '${planType[data['payment_plan_type']]['type_en_name']}',
-                                                      'comments': '${planType[data['payment_plan_type']]['comments']}',
-                                                    };
-                                                    modifyDialog();
-                                                  });
-                                                },
-                                                child: Container(
-                                                  child: Icon(
-                                                    Icons.mode_edit,
-                                                    color: Colors.blue,
-                                                  ),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Color(0xffdddddd),
+                                    ),
+                                  ),
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  padding: EdgeInsets.all(10),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.only(bottom: 10),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Text(
+                                              '${planTypeSelect[data['payment_plan_type']]}：',
+                                              style: TextStyle(fontWeight: FontWeight.bold),
+                                            ),
+                                            Text('${data['name']} '),
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  planTypeModify = {
+                                                    'type_ch_name': '${data['name']}',
+                                                    'type_en_name':
+                                                        '${planType[data['payment_plan_type']]['type_en_name']}',
+                                                    'comments': '${planType[data['payment_plan_type']]['comments']}',
+                                                  };
+                                                  modifyDialog();
+                                                });
+                                              },
+                                              child: Container(
+                                                child: Icon(
+                                                  Icons.mode_edit,
+                                                  color: Colors.blue,
                                                 ),
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                        Column(
-                                          children: data['data'].map<Widget>((item) {
-                                            return Container(
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                                margin: EdgeInsets.only(bottom: 10),
-                                                padding: EdgeInsets.only(top: 5, bottom: 5),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: columns.map<Widget>((col) {
-                                                    Widget con = Text('${item[col['key']] ?? ''}');
-                                                    switch (col['key']) {
-                                                      case 'payment_method':
-                                                        con = Text('${paymentMethod[item['payment_method']]}');
-                                                        break;
-                                                      case 'balance_type_id':
-                                                        con = Text('${balanceTypeSelect[item['balance_type_id']]}');
-                                                        break;
-                                                      case 'type':
-                                                        Map typeTemp = balanceType[item['balance_type_id']];
-                                                        con = Container(
-                                                          child: Row(
-                                                            children: <Widget>[
-                                                              Expanded(
-                                                                flex: 1,
-                                                                child: Row(
-                                                                  children: <Widget>[
-                                                                    Text('充值'),
-                                                                    typeTemp['if_charge'] == '1'
-                                                                        ? Icon(
-                                                                            Icons.check,
-                                                                            color: CFColors.success,
-                                                                          )
-                                                                        : Icon(
-                                                                            Icons.close,
-                                                                            color: CFColors.danger,
-                                                                          )
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                flex: 1,
-                                                                child: Row(
-                                                                  children: <Widget>[
-                                                                    Text('提现'),
-                                                                    typeTemp['if_extract'] == '1'
-                                                                        ? Icon(
-                                                                            Icons.check,
-                                                                            color: CFColors.success,
-                                                                          )
-                                                                        : Icon(
-                                                                            Icons.close,
-                                                                            color: CFColors.danger,
-                                                                          )
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                flex: 1,
-                                                                child: Row(
-                                                                  children: <Widget>[
-                                                                    Text('转账'),
-                                                                    typeTemp['if_transfer'] == '1'
-                                                                        ? Icon(
-                                                                            Icons.check,
-                                                                            color: CFColors.success,
-                                                                          )
-                                                                        : Icon(
-                                                                            Icons.close,
-                                                                            color: CFColors.danger,
-                                                                          )
-                                                                  ],
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        );
-                                                        break;
-                                                      case 'option':
-                                                        con = Wrap(
-                                                          runSpacing: 10,
-                                                          spacing: 10,
-                                                          children: <Widget>[
-                                                            Container(
-                                                              height: 30,
-                                                              child: PrimaryButton(
-                                                                onPressed: () {
-                                                                  turnTo(item);
-                                                                },
-                                                                child: Text('修改'),
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              height: 30,
-                                                              child: PrimaryButton(
-                                                                onPressed: () {
-                                                                  delDialog(item);
-                                                                },
-                                                                child: Text('删除'),
-                                                                type: 'error',
-                                                              ),
-                                                            )
-                                                          ],
-                                                        );
-                                                        break;
-                                                    }
-
-                                                    return Container(
-                                                      margin: EdgeInsets.only(bottom: 6),
+                                      ),
+                                      Column(
+                                        children: data['data'].map<Widget>((item) {
+                                          return Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Color(0xffdddddd),
+                                                width: 1,
+                                              ),
+                                            ),
+                                            margin: EdgeInsets.only(bottom: 10),
+                                            padding: EdgeInsets.only(top: 5, bottom: 5),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: columns.map<Widget>((col) {
+                                                Widget con = Text('${item[col['key']] ?? ''}');
+                                                switch (col['key']) {
+                                                  case 'payment_method':
+                                                    con = Text('${paymentMethod[item['payment_method']]}');
+                                                    break;
+                                                  case 'balance_type_id':
+                                                    con = Text('${balanceTypeSelect[item['balance_type_id']]}');
+                                                    break;
+                                                  case 'type':
+                                                    Map typeTemp = balanceType[item['balance_type_id']];
+                                                    con = Container(
                                                       child: Row(
                                                         children: <Widget>[
-                                                          Container(
-                                                            width: 80,
-                                                            alignment: Alignment.centerRight,
-                                                            child: Text('${col['title']}'),
-                                                            margin: EdgeInsets.only(right: 10),
+                                                          Expanded(
+                                                            flex: 1,
+                                                            child: Row(
+                                                              children: <Widget>[
+                                                                Text('充值'),
+                                                                typeTemp['if_charge'] == '1'
+                                                                    ? Icon(
+                                                                        Icons.check,
+                                                                        color: CFColors.success,
+                                                                      )
+                                                                    : Icon(
+                                                                        Icons.close,
+                                                                        color: CFColors.danger,
+                                                                      )
+                                                              ],
+                                                            ),
                                                           ),
-                                                          Expanded(flex: 1, child: con)
+                                                          Expanded(
+                                                            flex: 1,
+                                                            child: Row(
+                                                              children: <Widget>[
+                                                                Text('提现'),
+                                                                typeTemp['if_extract'] == '1'
+                                                                    ? Icon(
+                                                                        Icons.check,
+                                                                        color: CFColors.success,
+                                                                      )
+                                                                    : Icon(
+                                                                        Icons.close,
+                                                                        color: CFColors.danger,
+                                                                      )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            flex: 1,
+                                                            child: Row(
+                                                              children: <Widget>[
+                                                                Text('转账'),
+                                                                typeTemp['if_transfer'] == '1'
+                                                                    ? Icon(
+                                                                        Icons.check,
+                                                                        color: CFColors.success,
+                                                                      )
+                                                                    : Icon(
+                                                                        Icons.close,
+                                                                        color: CFColors.danger,
+                                                                      )
+                                                              ],
+                                                            ),
+                                                          )
                                                         ],
                                                       ),
                                                     );
-                                                  }).toList(),
-                                                ));
-                                          }).toList(),
-                                        )
-                                      ],
-                                    ));
+                                                    break;
+                                                  case 'option':
+                                                    con = Wrap(
+                                                      runSpacing: 10,
+                                                      spacing: 10,
+                                                      children: <Widget>[
+                                                        Container(
+                                                          height: 30,
+                                                          child: PrimaryButton(
+                                                            onPressed: () {
+                                                              turnTo(item);
+                                                            },
+                                                            child: Text('修改'),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          height: 30,
+                                                          child: PrimaryButton(
+                                                            onPressed: () {
+                                                              delDialog(item);
+                                                            },
+                                                            child: Text('删除'),
+                                                            type: 'error',
+                                                          ),
+                                                        )
+                                                      ],
+                                                    );
+                                                    break;
+                                                }
+
+                                                return Container(
+                                                  margin: EdgeInsets.only(bottom: 6),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Container(
+                                                        width: 80,
+                                                        alignment: Alignment.centerRight,
+                                                        child: Text('${col['title']}'),
+                                                        margin: EdgeInsets.only(right: 10),
+                                                      ),
+                                                      Expanded(flex: 1, child: con)
+                                                    ],
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      )
+                                    ],
+                                  ),
+                                );
                               }).toList(),
                             ),
                     ),

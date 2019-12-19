@@ -108,7 +108,8 @@ class _BalanceChargeState extends State<BalanceCharge> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['curr_page'] += page;
     getData();
   }
@@ -135,38 +136,41 @@ class _BalanceChargeState extends State<BalanceCharge> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Input(
-                      label: '用户名',
-                      onChanged: (String val) {
-                        setState(() {
-                          param['user_name'] = val;
-                        });
-                      }),
+                    label: '用户名',
+                    onChanged: (String val) {
+                      setState(() {
+                        param['user_name'] = val;
+                      });
+                    },
+                  ),
                   Select(
-                      selectOptions: balanceType,
-                      selectedValue: param['balance_type'] ?? '0',
-                      label: '余额类型',
-                      onChanged: (String newValue) {
-                        setState(() {
-                          if (newValue == '0') {
-                            param.remove('balance_type');
-                          } else {
-                            param['balance_type'] = newValue;
-                          }
-                        });
-                      }),
+                    selectOptions: balanceType,
+                    selectedValue: param['balance_type'] ?? '0',
+                    label: '余额类型',
+                    onChanged: (String newValue) {
+                      setState(() {
+                        if (newValue == '0') {
+                          param.remove('balance_type');
+                        } else {
+                          param['balance_type'] = newValue;
+                        }
+                      });
+                    },
+                  ),
                   Select(
-                      selectOptions: cardState,
-                      selectedValue: param['charge_state'] ?? '-2',
-                      label: '充值状态',
-                      onChanged: (String newValue) {
-                        setState(() {
-                          if (newValue == '0') {
-                            param.remove('charge_state');
-                          } else {
-                            param['charge_state'] = newValue;
-                          }
-                        });
-                      }),
+                    selectOptions: cardState,
+                    selectedValue: param['charge_state'] ?? '-2',
+                    label: '充值状态',
+                    onChanged: (String newValue) {
+                      setState(() {
+                        if (newValue == '0') {
+                          param.remove('charge_state');
+                        } else {
+                          param['charge_state'] = newValue;
+                        }
+                      });
+                    },
+                  ),
                   Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -202,10 +206,12 @@ class _BalanceChargeState extends State<BalanceCharge> {
                                 )
                               : Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: ajaxData.map<Widget>((item) {
-                                    return Container(
-                                        decoration:
-                                            BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
+                                  children: ajaxData.map<Widget>(
+                                    (item) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: Color(0xffdddddd), width: 1),
+                                        ),
                                         margin: EdgeInsets.only(bottom: 10),
                                         padding: EdgeInsets.only(top: 5, bottom: 5),
                                         child: Column(
@@ -239,8 +245,10 @@ class _BalanceChargeState extends State<BalanceCharge> {
                                               ),
                                             );
                                           }).toList(),
-                                        ));
-                                  }).toList(),
+                                        ),
+                                      );
+                                    },
+                                  ).toList(),
                                 ),
                         ),
                   Container(

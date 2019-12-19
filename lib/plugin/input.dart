@@ -54,7 +54,13 @@ class _InputState extends State<Input> {
                     child: TextField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: widget.contentPadding ?? EdgeInsets.only(top: 0, bottom: 0, left: 15),
+                        contentPadding: widget.contentPadding ??
+                            EdgeInsets.only(
+                              top: 0,
+                              bottom: 0,
+                              left: 10,
+                              right: 10,
+                            ),
                         hintText: widget.placeholder ?? '',
                       ),
                       maxLines: widget.maxLines,
@@ -66,7 +72,13 @@ class _InputState extends State<Input> {
                 : TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      contentPadding: widget.contentPadding ?? EdgeInsets.only(top: 10, bottom: 10, left: 15),
+                      contentPadding: widget.contentPadding ??
+                          EdgeInsets.only(
+                            top: 10,
+                            bottom: 10,
+                            left: 10,
+                            right: 10,
+                          ),
                       hintText: widget.placeholder ?? '',
                     ),
                     maxLines: widget.maxLines,

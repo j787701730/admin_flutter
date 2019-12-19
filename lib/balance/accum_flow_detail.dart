@@ -258,34 +258,35 @@ class _AccumulateFlowDetailState extends State<AccumulateFlowDetail> {
                             ),
                             height: 34,
                             child: DropdownButton<String>(
-                                isExpanded: true,
-                                elevation: 1,
-                                underline: Container(),
-                                value: param['accumTypeID'] == null ? '-0' : '${param['accumTypeID']}-${param['type']}',
-                                onChanged: (String newValue) {
-                                  List arr = newValue.split('-');
-                                  setState(() {
-                                    if (arr[0] == '') {
-                                      param.remove('accumTypeID');
-                                    } else {
-                                      param['accumTypeID'] = arr[0];
-                                    }
-                                    param['type'] = arr[1];
-                                  });
-                                },
-                                items: balanceType.map<DropdownMenuItem<String>>((item) {
-                                  return DropdownMenuItem(
-                                    value: '${item['value']}-${item['type']}',
-                                    child: Container(
-                                      padding: EdgeInsets.only(left: 10),
-                                      child: Text(
-                                        '${item['name']}',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                              isExpanded: true,
+                              elevation: 1,
+                              underline: Container(),
+                              value: param['accumTypeID'] == null ? '-0' : '${param['accumTypeID']}-${param['type']}',
+                              onChanged: (String newValue) {
+                                List arr = newValue.split('-');
+                                setState(() {
+                                  if (arr[0] == '') {
+                                    param.remove('accumTypeID');
+                                  } else {
+                                    param['accumTypeID'] = arr[0];
+                                  }
+                                  param['type'] = arr[1];
+                                });
+                              },
+                              items: balanceType.map<DropdownMenuItem<String>>((item) {
+                                return DropdownMenuItem(
+                                  value: '${item['value']}-${item['type']}',
+                                  child: Container(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      '${item['name']}',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                  );
-                                }).toList()),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
                         )
                       ],
@@ -300,12 +301,13 @@ class _AccumulateFlowDetailState extends State<AccumulateFlowDetail> {
                     SizedBox(
                       height: 30,
                       child: PrimaryButton(
-                          onPressed: () {
-                            param['currPage'] = 1;
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+                        onPressed: () {
+                          param['currPage'] = 1;
+                          getData();
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
+                        child: Text('搜索'),
+                      ),
                     ),
                   ],
                 ),
@@ -331,7 +333,9 @@ class _AccumulateFlowDetailState extends State<AccumulateFlowDetail> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: ajaxData.map<Widget>((item) {
                                 return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Color(0xffdddddd), width: 1),
+                                    ),
                                     margin: EdgeInsets.only(bottom: 10),
                                     padding: EdgeInsets.only(top: 5, bottom: 5),
                                     child: Column(
@@ -380,7 +384,10 @@ class _AccumulateFlowDetailState extends State<AccumulateFlowDetail> {
                                                 child: Text('${col['title']}'),
                                                 margin: EdgeInsets.only(right: 10),
                                               ),
-                                              Expanded(flex: 1, child: con)
+                                              Expanded(
+                                                flex: 1,
+                                                child: con,
+                                              )
                                             ],
                                           ),
                                         );

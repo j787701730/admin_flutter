@@ -452,30 +452,38 @@ class _ChargeCardState extends State<ChargeCard> {
                                                           border: Border.all(color: Color(0xffdddddd), width: 1)),
                                                       child: Wrap(
                                                         children: selectUser.keys.toList().map<Widget>((key) {
-                                                          return Row(
-                                                            children: <Widget>[
-                                                              Text(
-                                                                '${selectUser[key]['login_name']}',
-                                                                maxLines: 1,
-                                                                style: TextStyle(fontSize: CFFontSize.content),
-                                                              ),
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  setState(() {
-                                                                    selectUser.remove(key);
-                                                                  });
-
-                                                                  state(() {
-                                                                    selectUser.remove(key);
-                                                                  });
-                                                                },
-                                                                child: Icon(
-                                                                  Icons.clear,
-                                                                  size: 20,
-                                                                  color: Colors.red,
+                                                          return Container(
+                                                            child: Stack(
+                                                              children: <Widget>[
+                                                                Container(
+                                                                  padding: EdgeInsets.only(right: 20),
+                                                                  child: Text(
+                                                                    '${selectUser[key]['login_name']}',
+                                                                    maxLines: 1,
+                                                                    overflow: TextOverflow.ellipsis,
+                                                                  ),
                                                                 ),
-                                                              )
-                                                            ],
+                                                                Positioned(
+                                                                  top: 0,
+                                                                  right: 0,
+                                                                  child: Container(
+                                                                    color: Color(0xffeeeeee),
+                                                                    child: InkWell(
+                                                                      onTap: () {
+                                                                        setState(() {
+                                                                          selectUser.remove(key);
+                                                                        });
+                                                                      },
+                                                                      child: Icon(
+                                                                        Icons.clear,
+                                                                        color: Colors.red,
+                                                                        size: 20,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
                                                           );
                                                         }).toList(),
                                                       ),

@@ -7,8 +7,8 @@ import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:toast/toast.dart';
 
 final baseUrl = 'http://192.168.1.115/';
 
@@ -58,30 +58,38 @@ ajax(String url, data, bool toast, Function fun, Function fun2, BuildContext _co
     );
     if (res.data['err_code'] == 0) {
       if (toast == true) {
-        Toast.show('${res.data['err_msg']}'.length > 15 ? '成功' : '${res.data['err_msg']}', _context,
-            duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
+        Fluttertoast.showToast(
+          msg: '${res.data['err_msg']}'.length > 15 ? '成功' : '${res.data['err_msg']}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
       }
       fun(res.data);
     } else if ('${res.data['err_code']}' == '88888') {
-      if (toast == true) {
-        Toast.show('${res.data['err_code']}: ${res.data['err_msg']}', _context,
-            duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
-      }
-//      Navigator.pushNamed(_context, '/login').then((backVal) {
-//        print('登录返回信息: $backVal');
-//        if (backVal != null) {
-//          ajax(url, data, toast, fun, fun2, _context);
-//        }
-//      });
+      //      if (toast == true) {
+      //        Toast.show('${res.data['err_code']}: ${res.data['err_msg']}', _context,
+      //            duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
+      //      }
+      //      Navigator.pushNamed(_context, '/login').then((backVal) {
+      //        print('登录返回信息: $backVal');
+      //        if (backVal != null) {
+      //          ajax(url, data, toast, fun, fun2, _context);
+      //        }
+      //      });
       Navigator.pushAndRemoveUntil(
         _context,
-        MaterialPageRoute(builder: (context) => Login()),
+        MaterialPageRoute(
+          builder: (context) => Login(),
+        ),
         (route) => route == null,
       );
     } else {
       if (toast == true) {
-        Toast.show('${res.data['err_code']}: ${res.data['err_msg']}', _context,
-            duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
+        Fluttertoast.showToast(
+          msg: '${res.data['err_code']}: ${res.data['err_msg']}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
       }
       fun2();
     }
@@ -107,7 +115,11 @@ ajax(String url, data, bool toast, Function fun, Function fun2, BuildContext _co
       // print(e.message);
     }
     // print(e);
-    Toast.show('$e', _context, duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
+    Fluttertoast.showToast(
+      msg: '$e',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+    );
   }
 }
 
