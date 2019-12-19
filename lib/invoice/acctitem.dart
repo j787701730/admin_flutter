@@ -131,8 +131,40 @@ class _AccountItemState extends State<AccountItem> {
     });
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['curr_page'] += page;
+    getData();
+  }
+
+  String defaultVal = 'all';
+
+  Map selects = {
+    'all': '无',
+    'user_id': '用户 升序',
+    'user_id desc': '用户 降序',
+    'bill_state': '出账状态 升序',
+    'bill_state desc': '出账状态 降序',
+    'user_count': '总用户数 升序',
+    'user_count desc': '总用户数 降序',
+    'amount': '总费用 升序',
+    'amount desc': '总费用 降序',
+    'comments': '出账说明 升序',
+    'comments desc': '出账说明 降序',
+    'create_date': '创建时间 升序',
+    'create_date desc': '创建时间 降序',
+    'update_date': '更新时间 升序',
+    'update_date desc': '更新时间 降序',
+  };
+
+  orderBy(val) {
+    if (val == 'all') {
+      param.remove('order');
+    } else {
+      param['order'] = val;
+    }
+    param['curr_page'] = 1;
+    defaultVal = val;
     getData();
   }
 
@@ -154,29 +186,31 @@ class _AccountItemState extends State<AccountItem> {
             padding: EdgeInsets.all(10),
             children: <Widget>[
               Input(
-                  label: '用户名',
-                  onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('login_name');
-                      } else {
-                        param['login_name'] = val;
-                      }
-                    });
-                  }),
+                label: '用户名',
+                onChanged: (String val) {
+                  setState(() {
+                    if (val == '') {
+                      param.remove('login_name');
+                    } else {
+                      param['login_name'] = val;
+                    }
+                  });
+                },
+              ),
               Select(
-                  selectOptions: billState,
-                  selectedValue: param['bill_state'] ?? 'all',
-                  label: '对账状态',
-                  onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == 'all') {
-                        param.remove('bill_state');
-                      } else {
-                        param['bill_state'] = newValue;
-                      }
-                    });
-                  }),
+                selectOptions: billState,
+                selectedValue: param['bill_state'] ?? 'all',
+                label: '对账状态',
+                onChanged: (String newValue) {
+                  setState(() {
+                    if (newValue == 'all') {
+                      param.remove('bill_state');
+                    } else {
+                      param['bill_state'] = newValue;
+                    }
+                  });
+                },
+              ),
               DateSelectPlugin(
                 onChanged: getCreateDate,
                 label: '创建时间',
@@ -184,6 +218,12 @@ class _AccountItemState extends State<AccountItem> {
               DateSelectPlugin(
                 onChanged: getUpdateDate,
                 label: '更新时间',
+              ),
+              Select(
+                selectOptions: selects,
+                selectedValue: defaultVal,
+                label: '排序',
+                onChanged: orderBy,
               ),
               Container(
                 child: Wrap(
@@ -194,12 +234,13 @@ class _AccountItemState extends State<AccountItem> {
                     SizedBox(
                       height: 30,
                       child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+                        onPressed: () {
+                          param['curr_page'] = 1;
+                          getData();
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
+                        child: Text('搜索'),
+                      ),
                     ),
                   ],
                 ),
@@ -223,37 +264,44 @@ class _AccountItemState extends State<AccountItem> {
                             )
                           : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
+                              children: ajaxData.map<Widget>(
+                                (item) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Color(0xffdddddd), width: 1),
+                                    ),
                                     margin: EdgeInsets.only(bottom: 10),
                                     padding: EdgeInsets.only(top: 5, bottom: 5),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        switch (col['key']) {
-                                          case 'bill_state':
-                                            con = Text('${billState[item['bill_state']]}');
-                                            break;
-                                        }
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 80,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
-                                              ),
-                                              Expanded(flex: 1, child: con)
-                                            ],
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
+                                      children: columns.map<Widget>(
+                                        (col) {
+                                          Widget con = Text('${item[col['key']] ?? ''}');
+                                          switch (col['key']) {
+                                            case 'bill_state':
+                                              con = Text('${billState[item['bill_state']]}');
+                                              break;
+                                          }
+                                          return Container(
+                                            margin: EdgeInsets.only(bottom: 6),
+                                            child: Row(
+                                              children: <Widget>[
+                                                Container(
+                                                  width: 80,
+                                                  alignment: Alignment.centerRight,
+                                                  child: Text('${col['title']}'),
+                                                  margin: EdgeInsets.only(right: 10),
+                                                ),
+                                                Expanded(flex: 1, child: con)
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ).toList(),
+                                    ),
+                                  );
+                                },
+                              ).toList(),
                             ),
                     ),
               Container(

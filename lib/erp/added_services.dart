@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:admin_flutter/balance/pricing_data.dart';
+import 'package:admin_flutter/plugin/date_select_plugin.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
@@ -104,8 +105,68 @@ class _AddedServicesState extends State<AddedServices> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['currPage'] += page;
+    getData();
+  }
+
+  getDateTime(val) {
+    if (val['min'] == null) {
+      param.remove('payout_date_min');
+    } else {
+      param['payout_date_min'] = '${val['min'].toString().substring(0, 10)} 00:00:00';
+    }
+    if (val['max'] == null) {
+      param.remove('payout_date_max');
+    } else {
+      param['payout_date_max'] = '${val['max'].toString().substring(0, 10)} 23:59:59';
+    }
+  }
+
+  getDateTime2(val) {
+    if (val['min'] == null) {
+      param.remove('start_date');
+    } else {
+      param['start_date'] = '${val['min'].toString().substring(0, 10)}';
+    }
+    if (val['max'] == null) {
+      param.remove('end_date');
+    } else {
+      param['end_date'] = '${val['max'].toString().substring(0, 10)}';
+    }
+  }
+
+  String defaultVal = 'all';
+
+  Map selects = {
+    'all': '无',
+    'user_name': '用户 升序',
+    'user_name desc': '用户 降序',
+    'shop_name': '工厂 升序',
+    'shop_name desc': '工厂 降序',
+    'payout_date': '购买时间 升序',
+    'payout_date desc': '购买时间 降序',
+    'class_ch_name': '业务名称 升序',
+    'class_ch_name desc': '业务名称 降序',
+    'payout_nums': '购买月数 升序',
+    'payout_nums desc': '购买月数 降序',
+    'payout_amount': '购买费用 升序',
+    'payout_amount desc': '购买费用 降序',
+    'start_date': '生效日期 升序',
+    'start_date desc': '生效日期 降序',
+    'end_date': '失效日期 升序',
+    'end_date desc': '失效日期 降序',
+  };
+
+  orderBy(val) {
+    if (val == 'all') {
+      param.remove('order');
+    } else {
+      param['order'] = val;
+    }
+    param['curr_page'] = 1;
+    defaultVal = val;
     getData();
   }
 
@@ -161,6 +222,20 @@ class _AddedServicesState extends State<AddedServices> {
                       }
                     });
                   }),
+              DateSelectPlugin(
+                onChanged: getDateTime,
+                label: '购买时间',
+              ),
+              DateSelectPlugin(
+                onChanged: getDateTime2,
+                label: '有效时间',
+              ),
+              Select(
+                selectOptions: selects,
+                selectedValue: defaultVal,
+                label: '排序',
+                onChanged: orderBy,
+              ),
               Container(
                 child: Wrap(
                   alignment: WrapAlignment.center,

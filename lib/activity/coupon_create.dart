@@ -38,7 +38,7 @@ class _CouponCreateState extends State<CouponCreate> {
                         '* ',
                         style: TextStyle(color: CFColors.danger),
                       ),
-                      Text('店铺')
+                      Text('店铺'),
                     ],
                   ),
                 ),
@@ -57,35 +57,37 @@ class _CouponCreateState extends State<CouponCreate> {
                         Wrap(
                           spacing: 10,
                           runSpacing: 10,
-                          children: param['shops'].keys.toList().map<Widget>((key) {
-                            return Container(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Container(
-                                    padding: EdgeInsets.only(left: 6),
-                                    child: Text(
-                                      '${param['shops'][key]['login_name']}',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
+                          children: param['shops'].keys.toList().map<Widget>(
+                            (key) {
+                              return Container(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Container(
+                                      padding: EdgeInsets.only(left: 6),
+                                      child: Text(
+                                        '${param['shops'][key]['login_name']}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        param['shops'].remove(key);
-                                      });
-                                    },
-                                    child: Icon(
-                                      Icons.clear,
-                                      color: CFColors.danger,
-                                      size: 20,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          }).toList(),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          param['shops'].remove(key);
+                                        });
+                                      },
+                                      child: Icon(
+                                        Icons.clear,
+                                        color: CFColors.danger,
+                                        size: 20,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                          ).toList(),
                         )
                       ],
                     ),
@@ -98,10 +100,11 @@ class _CouponCreateState extends State<CouponCreate> {
                       Navigator.push(
                         context,
                         new MaterialPageRoute(
-                            builder: (context) => new ShopPlugin(
-                                  shopCount: 1,
-                                  selectShopsData: param['shops'],
-                                )),
+                          builder: (context) => new ShopPlugin(
+                            shopCount: 1,
+                            selectShopsData: param['shops'],
+                          ),
+                        ),
                       ).then((val) {
                         if (val != null) {
                           param['shops'] = val;
@@ -115,16 +118,22 @@ class _CouponCreateState extends State<CouponCreate> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(bottom: 10),
+            margin: EdgeInsets.only(
+              bottom: 10,
+            ),
             child: Row(
               children: <Widget>[
                 Container(
                   width: 100,
                   alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
+                  margin: EdgeInsets.only(
+                    right: 10,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[Text('快捷')],
+                    children: <Widget>[
+                      Text('快捷'),
+                    ],
                   ),
                 ),
                 Expanded(
@@ -160,8 +169,10 @@ class _CouponCreateState extends State<CouponCreate> {
             ),
           ),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
                 Container(
                   width: 100,
                   alignment: Alignment.centerRight,
@@ -173,7 +184,7 @@ class _CouponCreateState extends State<CouponCreate> {
                         '* ',
                         style: TextStyle(color: CFColors.danger),
                       ),
-                      Text('发放量')
+                      Text('发放量'),
                     ],
                   ),
                   margin: EdgeInsets.only(right: 10),
@@ -183,12 +194,19 @@ class _CouponCreateState extends State<CouponCreate> {
                   child: Container(
                     height: 34,
                     child: TextField(
-                      controller: TextEditingController.fromValue(TextEditingValue(
+                      controller: TextEditingController.fromValue(
+                        TextEditingValue(
                           text: '${param['leftnum'] ?? '10'}',
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream, offset: '${param['leftnum'] ?? '10'}'.length)))),
+                          selection: TextSelection.fromPosition(
+                            TextPosition(
+                                affinity: TextAffinity.downstream, offset: '${param['leftnum'] ?? '10'}'.length),
+                          ),
+                        ),
+                      ),
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15),
+                      ),
                       onChanged: (String val) {
                         setState(() {
                           param['leftnum'] = val;
@@ -197,10 +215,14 @@ class _CouponCreateState extends State<CouponCreate> {
                     ),
                   ),
                 ),
-              ])),
+              ],
+            ),
+          ),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
                 Container(
                   width: 100,
                   alignment: Alignment.centerRight,
@@ -229,12 +251,19 @@ class _CouponCreateState extends State<CouponCreate> {
                   child: Container(
                     height: 34,
                     child: TextField(
-                      controller: TextEditingController.fromValue(TextEditingValue(
+                      controller: TextEditingController.fromValue(
+                        TextEditingValue(
                           text: '${param['limitnum'] ?? '1'}',
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream, offset: '${param['limitnum'] ?? '1'}'.length)))),
+                          selection: TextSelection.fromPosition(
+                            TextPosition(
+                                affinity: TextAffinity.downstream, offset: '${param['limitnum'] ?? '1'}'.length),
+                          ),
+                        ),
+                      ),
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15),
+                      ),
                       onChanged: (String val) {
                         setState(() {
                           param['limitnum'] = val;
@@ -243,7 +272,9 @@ class _CouponCreateState extends State<CouponCreate> {
                     ),
                   ),
                 ),
-              ])),
+              ],
+            ),
+          ),
           Container(
               margin: EdgeInsets.only(bottom: 10),
               child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
@@ -268,12 +299,18 @@ class _CouponCreateState extends State<CouponCreate> {
                   child: Container(
                     height: 34,
                     child: TextField(
-                      controller: TextEditingController.fromValue(TextEditingValue(
+                      controller: TextEditingController.fromValue(
+                        TextEditingValue(
                           text: '${param['subval'] ?? ''}',
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream, offset: '${param['subval'] ?? ''}'.length)))),
+                          selection: TextSelection.fromPosition(
+                            TextPosition(affinity: TextAffinity.downstream, offset: '${param['subval'] ?? ''}'.length),
+                          ),
+                        ),
+                      ),
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15),
+                      ),
                       onChanged: (String val) {
                         setState(() {
                           param['subval'] = val;
@@ -310,39 +347,40 @@ class _CouponCreateState extends State<CouponCreate> {
                           '* ',
                           style: TextStyle(color: CFColors.danger),
                         ),
-                        Text('生效日期')
+                        Text('生效日期'),
                       ],
                     ),
                   ),
                   Expanded(
                     flex: 1,
                     child: InkWell(
-                        onTap: () {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          DatePicker.showDateTimePicker(
-                            context,
-                            showTitleActions: true,
-                            minTime: DateTime(1970, 1, 1),
-                            maxTime: DateTime(2099, 12, 31),
-                            onChanged: (date) {
-                              print('change $date');
-                            },
-                            onConfirm: (date) {
-                              setState(() {
-                                param['eff_date'] = date;
-                              });
-                            },
-                            currentTime: param['eff_date'] ?? DateTime.now(),
-                            locale: LocaleType.zh,
-                          );
-                        },
-                        child: Container(
-                          height: 34,
-                          padding: EdgeInsets.only(left: 10),
-                          alignment: Alignment.centerLeft,
-                          decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
-                          child: Text(param['eff_date'] == null ? '' : '${param['eff_date']}'.substring(0, 19)),
-                        )),
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        DatePicker.showDateTimePicker(
+                          context,
+                          showTitleActions: true,
+                          minTime: DateTime(1970, 1, 1),
+                          maxTime: DateTime(2099, 12, 31),
+                          onChanged: (date) {
+                            print('change $date');
+                          },
+                          onConfirm: (date) {
+                            setState(() {
+                              param['eff_date'] = date;
+                            });
+                          },
+                          currentTime: param['eff_date'] ?? DateTime.now(),
+                          locale: LocaleType.zh,
+                        );
+                      },
+                      child: Container(
+                        height: 34,
+                        padding: EdgeInsets.only(left: 10),
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
+                        child: Text(param['eff_date'] == null ? '' : '${param['eff_date']}'.substring(0, 19)),
+                      ),
+                    ),
                   ),
                   Container(
                     width: 20,
@@ -352,60 +390,63 @@ class _CouponCreateState extends State<CouponCreate> {
                   Expanded(
                     flex: 1,
                     child: InkWell(
-                        onTap: () {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          DatePicker.showDateTimePicker(
-                            context,
-                            showTitleActions: true,
-                            minTime: DateTime(1970, 1, 1),
-                            maxTime: DateTime(2099, 12, 31),
-                            onChanged: (date) {
-                              print('change $date');
-                            },
-                            onConfirm: (date) {
-                              setState(() {
-                                param['exp_date'] = date;
-                              });
-                            },
-                            currentTime: param['exp_date'] ?? DateTime.now(),
-                            locale: LocaleType.zh,
-                          );
-                        },
-                        child: Container(
-                          height: 34,
-                          padding: EdgeInsets.only(left: 10),
-                          alignment: Alignment.centerLeft,
-                          decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
-                          child: Text(param['exp_date'] == null ? '' : '${param['exp_date']}'.substring(0, 19)),
-                        )),
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        DatePicker.showDateTimePicker(
+                          context,
+                          showTitleActions: true,
+                          minTime: DateTime(1970, 1, 1),
+                          maxTime: DateTime(2099, 12, 31),
+                          onChanged: (date) {
+                            print('change $date');
+                          },
+                          onConfirm: (date) {
+                            setState(() {
+                              param['exp_date'] = date;
+                            });
+                          },
+                          currentTime: param['exp_date'] ?? DateTime.now(),
+                          locale: LocaleType.zh,
+                        );
+                      },
+                      child: Container(
+                        height: 34,
+                        padding: EdgeInsets.only(left: 10),
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
+                        child: Text(param['exp_date'] == null ? '' : '${param['exp_date']}'.substring(0, 19)),
+                      ),
+                    ),
                   )
                 ],
               )),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 100,
-                    margin: EdgeInsets.only(right: 10),
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 100,
+                  margin: EdgeInsets.only(right: 10),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        height: 30,
+                        child: PrimaryButton(
+                          onPressed: () {
+                            print(param);
+                          },
+                          child: Text('保存'),
+                        ),
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          height: 30,
-                          child: PrimaryButton(
-                              onPressed: () {
-                                print(param);
-                              },
-                              child: Text('保存')),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ))
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

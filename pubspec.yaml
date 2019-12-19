@@ -36,6 +36,8 @@ dependencies:
   pull_to_refresh: 1.5.7
   # 日期
   flutter_datetime_picker: 1.2.8
+  # 月份选择器
+  month_picker_dialog: 0.3.0
   # 文件
   path_provider: 1.4.0
   # 微信

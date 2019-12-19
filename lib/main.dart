@@ -135,7 +135,6 @@ class MyApp extends StatelessWidget {
         '/rebateCitySales': (_) => RebateCitySales(), // 城市分销
         '/rebateAuthorize': (_) => RebateAuthorize(), // 门店授权
         '/rebateSaleMan': (_) => RebateSaleMan(), // 业务员返利
-        '/erpSoftware': (_) => ErpSoftware(), // 软件包月
         '/erpOrders': (_) => ErpOrders(), // ERP订单
         '/erpCrm': (_) => ErpCrm(), // 门店客户
         '/erpPayment': (_) => ErpPayment(), // 收款记录
@@ -153,6 +152,7 @@ class MyApp extends StatelessWidget {
         '/redPacket': (_) => RedPacket(), // 红包管理
         '/erpPayout': (_) => ErpPayout(), // 拆单流水
         '/payoutSummary': (_) => PayoutSummary(), // 拆单汇总
+        '/erpSoftware': (_) => ErpSoftware(), // 软件包月
         '/addedServices': (_) => AddedServices(), // 增值服务
         '/financialLoan': (_) => FinancialLoan(), // 丰收贷
         '/systemConfig': (_) => SystemConfig(), // 金融配置

@@ -332,51 +332,57 @@ class _TaskPricingState extends State<TaskPricing> {
                 },
               ),
               Select(
-                  selectOptions: taskType,
-                  selectedValue: param['task_type'] ?? 'all',
-                  label: '任务类型',
-                  onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('task_type');
-                      } else {
-                        param['task_type'] = val;
-                      }
-                    });
-                  }),
+                selectOptions: taskType,
+                selectedValue: param['task_type'] ?? 'all',
+                label: '任务类型',
+                onChanged: (val) {
+                  setState(() {
+                    if (val == 'all') {
+                      param.remove('task_type');
+                    } else {
+                      param['task_type'] = val;
+                    }
+                  });
+                },
+              ),
               RangeInput(
-                  label: '定价区间',
-                  onChangeL: (val) {
-                    if (val == '') {
-                      param.remove('price_min');
-                    } else {
-                      param['price_min'] = val;
-                    }
-                  },
-                  onChangeR: (val) {
-                    if (val == '') {
-                      param.remove('price_max');
-                    } else {
-                      param['price_max'] = val;
-                    }
-                  }),
+                label: '定价区间',
+                onChangeL: (val) {
+                  if (val == '') {
+                    param.remove('price_min');
+                  } else {
+                    param['price_min'] = val;
+                  }
+                },
+                onChangeR: (val) {
+                  if (val == '') {
+                    param.remove('price_max');
+                  } else {
+                    param['price_max'] = val;
+                  }
+                },
+              ),
               RangeInput(
-                  label: '补贴区间',
-                  onChangeL: (val) {
-                    if (val == '') {
-                      param.remove('subsidy_min');
-                    } else {
-                      param['subsidy_min'] = val;
-                    }
-                  },
-                  onChangeR: (val) {
-                    if (val == '') {
-                      param.remove('subsidy_max');
-                    } else {
-                      param['subsidy_max'] = val;
-                    }
-                  }),
-              DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
+                label: '补贴区间',
+                onChangeL: (val) {
+                  if (val == '') {
+                    param.remove('subsidy_min');
+                  } else {
+                    param['subsidy_min'] = val;
+                  }
+                },
+                onChangeR: (val) {
+                  if (val == '') {
+                    param.remove('subsidy_max');
+                  } else {
+                    param['subsidy_max'] = val;
+                  }
+                },
+              ),
+              DateSelectPlugin(
+                onChanged: getDateTime,
+                label: '创建时间',
+              ),
               Select(
                 selectOptions: selects,
                 selectedValue: defaultVal,
@@ -392,24 +398,28 @@ class _TaskPricingState extends State<TaskPricing> {
                     SizedBox(
                       height: 30,
                       child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+                        onPressed: () {
+                          param['curr_page'] = 1;
+                          getData();
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
+                        child: Text('搜索'),
+                      ),
                     ),
                     SizedBox(
                       height: 30,
                       child: PrimaryButton(
-                          onPressed: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => CreateTaskPricing()),
-                            );
-                          },
-                          child: Text('添加任务定价')),
+                        onPressed: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreateTaskPricing(),
+                            ),
+                          );
+                        },
+                        child: Text('添加任务定价'),
+                      ),
                     ),
                   ],
                 ),
@@ -433,58 +443,63 @@ class _TaskPricingState extends State<TaskPricing> {
                             )
                           : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
+                              children: ajaxData.map<Widget>(
+                                (item) {
+                                  return Container(
                                     decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
                                     margin: EdgeInsets.only(bottom: 10),
                                     padding: EdgeInsets.only(top: 5, bottom: 5),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        switch (col['key']) {
-                                          case 'task_type':
-                                            con = Text('${taskType[item['task_type']]}');
-                                            break;
-                                          case 'option':
-                                            con = Wrap(
-                                              runSpacing: 10,
-                                              spacing: 10,
+                                      children: columns.map<Widget>(
+                                        (col) {
+                                          Widget con = Text('${item[col['key']] ?? ''}');
+                                          switch (col['key']) {
+                                            case 'task_type':
+                                              con = Text('${taskType[item['task_type']]}');
+                                              break;
+                                            case 'option':
+                                              con = Wrap(
+                                                runSpacing: 10,
+                                                spacing: 10,
+                                                children: <Widget>[
+                                                  Container(
+                                                    height: 30,
+                                                    child: PrimaryButton(
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          modifyItem = jsonDecode(jsonEncode(item));
+                                                          modifyDialog();
+                                                        });
+                                                      },
+                                                      child: Text('修改'),
+                                                    ),
+                                                  )
+                                                ],
+                                              );
+                                              break;
+                                          }
+
+                                          return Container(
+                                            margin: EdgeInsets.only(bottom: 6),
+                                            child: Row(
                                               children: <Widget>[
                                                 Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        modifyItem = jsonDecode(jsonEncode(item));
-                                                        modifyDialog();
-                                                      });
-                                                    },
-                                                    child: Text('修改'),
-                                                  ),
-                                                )
+                                                  width: 80,
+                                                  alignment: Alignment.centerRight,
+                                                  child: Text('${col['title']}'),
+                                                  margin: EdgeInsets.only(right: 10),
+                                                ),
+                                                Expanded(flex: 1, child: con),
                                               ],
-                                            );
-                                            break;
-                                        }
-
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 80,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
-                                              ),
-                                              Expanded(flex: 1, child: con)
-                                            ],
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
+                                            ),
+                                          );
+                                        },
+                                      ).toList(),
+                                    ),
+                                  );
+                                },
+                              ).toList(),
                             ),
                     ),
               Container(
