@@ -349,7 +349,7 @@ class _IndustryClassState extends State<IndustryClass> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

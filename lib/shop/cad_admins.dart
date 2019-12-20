@@ -120,7 +120,14 @@ class _CadAdminsState extends State<CadAdmins> {
                     controller: TextEditingController(text: '${data['comments']}'),
                     maxLines: 5,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 6,
+                        bottom: 6,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (String val) {
                       setState(() {
 //                              param['loginName'] = val;
@@ -237,167 +244,181 @@ class _CadAdminsState extends State<CadAdmins> {
         title: Text('WEB_CAD管理员'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                  label: '店铺名称',
-                  onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('shop_name');
-                      } else {
-                        param['shop_name'] = val;
-                      }
-                    });
-                  }),
-              Select(
-                selectOptions: state,
-                selectedValue: param['if_state'] ?? 'all',
-                label: '状态',
-                onChanged: (String newValue) {
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+                label: '店铺名称',
+                onChanged: (String val) {
                   setState(() {
-                    if (newValue == 'all') {
-                      param.remove('if_state');
+                    if (val == '') {
+                      param.remove('shop_name');
                     } else {
-                      param['if_state'] = newValue;
+                      param['shop_name'] = val;
                     }
                   });
-                },
-              ),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '创建时间',
-              ),
-              Select(
-                selectOptions: selects,
-                selectedValue: defaultVal,
-                label: '排序',
-                onChanged: orderBy,
-              ),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+                }),
+            Select(
+              selectOptions: state,
+              selectedValue: param['if_state'] ?? 'all',
+              label: '状态',
+              onChanged: (String newValue) {
+                setState(() {
+                  if (newValue == 'all') {
+                    param.remove('if_state');
+                  } else {
+                    param['if_state'] = newValue;
+                  }
+                });
+              },
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '创建时间',
+            ),
+            Select(
+              selectOptions: selects,
+              selectedValue: defaultVal,
+              label: '排序',
+              onChanged: orderBy,
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                      },
+                      child: Text('搜索'),
                     ),
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              new MaterialPageRoute(builder: (context) => new CreateCadAdmin()),
-                            );
-                          },
-                          child: Text('新增CAD管理员')),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                            builder: (context) => new CreateCadAdmin(),
+                          ),
+                        );
+                      },
+                      child: Text('新增CAD管理员'),
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        switch (col['key']) {
-                                          case 'state':
-                                            con = Text('${state[item['state']]}');
-                                            break;
-                                          case 'option':
-                                            con = Wrap(
-                                              runSpacing: 10,
-                                              spacing: 10,
-                                              children: <Widget>[
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      dialog(item);
-                                                    },
-                                                    child: Text('修改'),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      stateDialog(item);
-                                                    },
-                                                    child: Text('${item['state']}' == '1' ? '冻结' : '解冻'),
-                                                  ),
-                                                )
-                                              ],
-                                            );
-                                            break;
-                                        }
-
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 80,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>((item) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Color(0xffdddddd), width: 1),
+                                ),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    switch (col['key']) {
+                                      case 'state':
+                                        con = Text('${state[item['state']]}');
+                                        break;
+                                      case 'option':
+                                        con = Wrap(
+                                          runSpacing: 10,
+                                          spacing: 10,
+                                          children: <Widget>[
+                                            Container(
+                                              height: 30,
+                                              child: PrimaryButton(
+                                                onPressed: () {
+                                                  dialog(item);
+                                                },
+                                                child: Text('修改'),
                                               ),
-                                              Expanded(flex: 1, child: con)
-                                            ],
-                                          ),
+                                            ),
+                                            Container(
+                                              height: 30,
+                                              child: PrimaryButton(
+                                                onPressed: () {
+                                                  stateDialog(item);
+                                                },
+                                                child: Text('${item['state']}' == '1' ? '冻结' : '解冻'),
+                                              ),
+                                            )
+                                          ],
                                         );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
+                                        break;
+                                    }
+
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 80,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
+                                          ),
+                                          Expanded(flex: 1, child: con)
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

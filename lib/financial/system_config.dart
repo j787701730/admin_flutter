@@ -1,10 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/plugin/number_bar.dart';
-import 'package:admin_flutter/plugin/page_plugin.dart';
-import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -174,7 +170,8 @@ class _SystemConfigState extends State<SystemConfig> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['curr_page'] += page;
     getData();
   }
@@ -186,16 +183,16 @@ class _SystemConfigState extends State<SystemConfig> {
         title: Text('金融配置'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
 //              Container(
 //                margin: EdgeInsets.only(bottom: 10),
 //                child: Row(
@@ -211,7 +208,7 @@ class _SystemConfigState extends State<SystemConfig> {
 //                      child: TextField(
 //                        decoration: InputDecoration(
 //                            border: OutlineInputBorder(),
-//                            contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 15)),
+//                            contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 15,right: 15,)),
 //                        onChanged: (String val) {
 //                          setState(() {
 //                            if (val == '') {
@@ -251,63 +248,67 @@ class _SystemConfigState extends State<SystemConfig> {
 //                alignment: Alignment.centerRight,
 //                child: NumberBar(count: count),
 //              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        switch (col['key']) {
-                                          case 'config_id':
-                                            if ('${item['config_id']}' == '7') {
-                                              con = Text('${item[col['key']] == '1' ? '是' : '否'}');
-                                            } else {
-                                              con = Text('${item['config_value']}');
-                                            }
-                                            break;
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>((item) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Color(0xffdddddd), width: 1),
+                                ),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    switch (col['key']) {
+                                      case 'config_id':
+                                        if ('${item['config_id']}' == '7') {
+                                          con = Text('${item[col['key']] == '1' ? '是' : '否'}');
+                                        } else {
+                                          con = Text('${item['config_value']}');
                                         }
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 80,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
-                                              ),
-                                              Expanded(flex: 1, child: con)
-                                            ],
+                                        break;
+                                    }
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 80,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
                                           ),
-                                        );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
-                            ),
-                    ),
+                                          Expanded(flex: 1, child: con)
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                  ),
 //              Container(
 //                child: PagePlugin(
-//                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
+//                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage,),
 //              ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

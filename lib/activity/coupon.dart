@@ -240,8 +240,10 @@ class _CouponState extends State<Coupon> {
               child: Column(
                 children: <Widget>[
                   Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
                         Container(
                           width: 100,
                           alignment: Alignment.centerRight,
@@ -275,13 +277,17 @@ class _CouponState extends State<Coupon> {
                             child: TextField(
                               style: TextStyle(fontSize: CFFontSize.content),
                               controller: TextEditingController.fromValue(TextEditingValue(
-                                  text: '${modifyItem['limit_nums'] ?? ''}',
-                                  selection: TextSelection.fromPosition(TextPosition(
-                                      affinity: TextAffinity.downstream,
-                                      offset: '${modifyItem['limit_nums'] ?? ''}'.length)))),
+                                text: '${modifyItem['limit_nums'] ?? ''}',
+                                selection: TextSelection.fromPosition(
+                                  TextPosition(
+                                    affinity: TextAffinity.downstream,
+                                    offset: '${modifyItem['limit_nums'] ?? ''}'.length,
+                                  ),
+                                ),
+                              )),
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                                  contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),),
                               onChanged: (String val) {
                                 setState(() {
                                   modifyItem['limit_nums'] = val;
@@ -290,10 +296,14 @@ class _CouponState extends State<Coupon> {
                             ),
                           ),
                         ),
-                      ])),
+                      ],
+                    ),
+                  ),
                   Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
                         Container(
                           width: 100,
                           alignment: Alignment.centerRight,
@@ -320,13 +330,17 @@ class _CouponState extends State<Coupon> {
                             child: TextField(
                               style: TextStyle(fontSize: CFFontSize.content),
                               controller: TextEditingController.fromValue(TextEditingValue(
-                                  text: '${modifyItem['left_nums'] ?? ''}',
-                                  selection: TextSelection.fromPosition(TextPosition(
-                                      affinity: TextAffinity.downstream,
-                                      offset: '${modifyItem['left_nums'] ?? ''}'.length)))),
+                                text: '${modifyItem['left_nums'] ?? ''}',
+                                selection: TextSelection.fromPosition(
+                                  TextPosition(
+                                    affinity: TextAffinity.downstream,
+                                    offset: '${modifyItem['left_nums'] ?? ''}'.length,
+                                  ),
+                                ),
+                              ),),
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                                  contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),),
                               onChanged: (String val) {
                                 setState(() {
                                   modifyItem['left_nums'] = val;
@@ -335,7 +349,9 @@ class _CouponState extends State<Coupon> {
                             ),
                           ),
                         ),
-                      ]))
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -368,251 +384,258 @@ class _CouponState extends State<Coupon> {
         title: Text('优惠券'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          // onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                label: '店铺',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('shop_name');
-                    } else {
-                      param['shop_name'] = val;
-                    }
-                  });
-                },
-                labelWidth: 90,
-              ),
-              Select(
-                selectOptions: couponType,
-                selectedValue: param['coupon_type'] ?? 'all',
-                label: '优惠券类型',
-                onChanged: (val) {
-                  setState(() {
-                    if (val == 'all') {
-                      param.remove('coupon_type');
-                    } else {
-                      param['coupon_type'] = val;
-                    }
-                  });
-                },
-                labelWidth: 90,
-              ),
-              Select(
-                selectOptions: couponType,
-                selectedValue: param['goods_type'] ?? 'all',
-                label: '商品类型',
-                onChanged: (val) {
-                  setState(() {
-                    if (val == 'all') {
-                      param.remove('goods_type');
-                    } else {
-                      param['goods_type'] = val;
-                    }
-                  });
-                },
-                labelWidth: 90,
-              ),
-              Select(
-                selectOptions: couponSource,
-                selectedValue: param['coupon_source'] ?? 'all',
-                label: '优惠券来源',
-                onChanged: (val) {
-                  setState(() {
-                    if (val == 'all') {
-                      param.remove('coupon_source');
-                    } else {
-                      param['coupon_source'] = val;
-                    }
-                  });
-                },
-                labelWidth: 90,
-              ),
-              Select(
-                selectOptions: state,
-                selectedValue: param['state'] ?? 'all',
-                label: '状态',
-                onChanged: (val) {
-                  setState(() {
-                    if (val == 'all') {
-                      param.remove('state');
-                    } else {
-                      param['state'] = val;
-                    }
-                  });
-                },
-                labelWidth: 90,
-              ),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '创建时间',
-                labelWidth: 90,
-              ),
-              DateSelectPlugin(
-                onChanged: getDateTime2,
-                label: '有效时间',
-                labelWidth: 90,
-              ),
-              Select(
-                selectOptions: selects,
-                selectedValue: defaultVal,
-                label: '排序',
-                onChanged: orderBy,
-                labelWidth: 90,
-              ),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        // onLoading: _onLoading,
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '店铺',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('shop_name');
+                  } else {
+                    param['shop_name'] = val;
+                  }
+                });
+              },
+              labelWidth: 90,
+            ),
+            Select(
+              selectOptions: couponType,
+              selectedValue: param['coupon_type'] ?? 'all',
+              label: '优惠券类型',
+              onChanged: (val) {
+                setState(() {
+                  if (val == 'all') {
+                    param.remove('coupon_type');
+                  } else {
+                    param['coupon_type'] = val;
+                  }
+                });
+              },
+              labelWidth: 90,
+            ),
+            Select(
+              selectOptions: couponType,
+              selectedValue: param['goods_type'] ?? 'all',
+              label: '商品类型',
+              onChanged: (val) {
+                setState(() {
+                  if (val == 'all') {
+                    param.remove('goods_type');
+                  } else {
+                    param['goods_type'] = val;
+                  }
+                });
+              },
+              labelWidth: 90,
+            ),
+            Select(
+              selectOptions: couponSource,
+              selectedValue: param['coupon_source'] ?? 'all',
+              label: '优惠券来源',
+              onChanged: (val) {
+                setState(() {
+                  if (val == 'all') {
+                    param.remove('coupon_source');
+                  } else {
+                    param['coupon_source'] = val;
+                  }
+                });
+              },
+              labelWidth: 90,
+            ),
+            Select(
+              selectOptions: state,
+              selectedValue: param['state'] ?? 'all',
+              label: '状态',
+              onChanged: (val) {
+                setState(() {
+                  if (val == 'all') {
+                    param.remove('state');
+                  } else {
+                    param['state'] = val;
+                  }
+                });
+              },
+              labelWidth: 90,
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '创建时间',
+              labelWidth: 90,
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime2,
+              label: '有效时间',
+              labelWidth: 90,
+            ),
+            Select(
+              selectOptions: selects,
+              selectedValue: defaultVal,
+              label: '排序',
+              onChanged: orderBy,
+              labelWidth: 90,
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Text('搜索'),
                     ),
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => CouponCreate()),
-                            );
-                          },
-                          child: Text('创建优惠券')),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CouponCreate()),
+                        );
+                      },
+                      child: Text('创建优惠券'),
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        switch (col['key']) {
-                                          case 'coupon_id':
-                                            con = Text('coupons-${item['coupon_id']}');
-                                            break;
-                                          case 'coupon_type':
-                                            con = Text('${couponType[item['coupon_type']]}');
-                                            break;
-                                          case 'goods_type':
-                                            con = '${item['goods_type']}' == '0'
-                                                ? Text('全部商品')
-                                                : Text('${goodsType[item['goods_type']]}');
-                                            break;
-                                          case 'coupon_source':
-                                            con = Text('${couponSource[item['coupon_source']]}');
-                                            break;
-                                          case 'state':
-                                            con = Text('${state[item['state']]}');
-                                            break;
-                                          case 'option':
-                                            con = Wrap(
-                                              runSpacing: 10,
-                                              spacing: 10,
-                                              children: <Widget>[
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        modifyItem = jsonDecode(jsonEncode(item));
-                                                        modifyDialog();
-                                                      });
-                                                    },
-                                                    child: Text('修改'),
-                                                  ),
-                                                ),
-                                                '${item['state']}' == '1'
-                                                    ? Container(
-                                                        height: 30,
-                                                        child: PrimaryButton(
-                                                          onPressed: () {
-                                                            stateDialog(item);
-                                                          },
-                                                          child: Text('关闭'),
-                                                          type: 'error',
-                                                        ),
-                                                      )
-                                                    : Container(
-                                                        height: 30,
-                                                        child: PrimaryButton(
-                                                          onPressed: () {
-                                                            stateDialog(item);
-                                                          },
-                                                          child: Text('开启'),
-                                                        ),
-                                                      ),
-                                              ],
-                                            );
-                                            break;
-                                        }
-
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>((item) {
+                              return Container(
+                                  decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1),),
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: columns.map<Widget>((col) {
+                                      Widget con = Text('${item[col['key']] ?? ''}');
+                                      switch (col['key']) {
+                                        case 'coupon_id':
+                                          con = Text('coupons-${item['coupon_id']}');
+                                          break;
+                                        case 'coupon_type':
+                                          con = Text('${couponType[item['coupon_type']]}');
+                                          break;
+                                        case 'goods_type':
+                                          con = '${item['goods_type']}' == '0'
+                                              ? Text('全部商品')
+                                              : Text('${goodsType[item['goods_type']]}');
+                                          break;
+                                        case 'coupon_source':
+                                          con = Text('${couponSource[item['coupon_source']]}');
+                                          break;
+                                        case 'state':
+                                          con = Text('${state[item['state']]}');
+                                          break;
+                                        case 'option':
+                                          con = Wrap(
+                                            runSpacing: 10,
+                                            spacing: 10,
                                             children: <Widget>[
                                               Container(
-                                                width: 100,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
+                                                height: 30,
+                                                child: PrimaryButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      modifyItem = jsonDecode(jsonEncode(item));
+                                                      modifyDialog();
+                                                    });
+                                                  },
+                                                  child: Text('修改'),
+                                                ),
                                               ),
-                                              Expanded(flex: 1, child: con)
+                                              '${item['state']}' == '1'
+                                                  ? Container(
+                                                      height: 30,
+                                                      child: PrimaryButton(
+                                                        onPressed: () {
+                                                          stateDialog(item);
+                                                        },
+                                                        child: Text('关闭'),
+                                                        type: 'error',
+                                                      ),
+                                                    )
+                                                  : Container(
+                                                      height: 30,
+                                                      child: PrimaryButton(
+                                                        onPressed: () {
+                                                          stateDialog(item);
+                                                        },
+                                                        child: Text('开启'),
+                                                      ),
+                                                    ),
                                             ],
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
+                                          );
+                                          break;
+                                      }
+
+                                      return Container(
+                                        margin: EdgeInsets.only(bottom: 6),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Container(
+                                              width: 100,
+                                              alignment: Alignment.centerRight,
+                                              child: Text('${col['title']}'),
+                                              margin: EdgeInsets.only(right: 10),
+                                            ),
+                                            Expanded(flex: 1, child: con)
+                                          ],
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ));
+                            }).toList(),
+                          ),
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

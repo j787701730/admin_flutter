@@ -73,69 +73,79 @@ class _RebateRatesModifyState extends State<RebateRatesModify> {
                   margin: EdgeInsets.only(right: 10),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: Container(
-                      margin: EdgeInsets.only(right: 10),
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
-                      height: 34,
-                      alignment: Alignment.centerLeft,
-                      child: Wrap(
-                        children: param['user'].keys.toList().map<Widget>((key) {
-                          return Container(
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  padding: EdgeInsets.only(right: 20),
-                                  child: Text(
-                                    '${param['user'][key]['login_name']}',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                  flex: 1,
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 1),
+                    ),
+                    height: 34,
+                    alignment: Alignment.centerLeft,
+                    child: Wrap(
+                      children: param['user'].keys.toList().map<Widget>((key) {
+                        return Container(
+                          child: Stack(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.only(right: 20),
+                                child: Text(
+                                  '${param['user'][key]['login_name']}',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  child: Container(
-                                    color: Color(0xffeeeeee),
-                                    child: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          param['user'].remove(key);
-                                        });
-                                      },
-                                      child: Icon(
-                                        Icons.clear,
-                                        color: Colors.red,
-                                        size: 20,
-                                      ),
+                              ),
+                              Positioned(
+                                top: 0,
+                                right: 0,
+                                child: Container(
+                                  color: Color(0xffeeeeee),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        param['user'].remove(key);
+                                      });
+                                    },
+                                    child: Icon(
+                                      Icons.clear,
+                                      color: Colors.red,
+                                      size: 20,
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    )),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
                 widget.props == null
                     ? SizedBox(
                         width: 110,
                         height: 30,
                         child: PrimaryButton(
                           onPressed: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
+                            FocusScope.of(context).requestFocus(
+                              FocusNode(),
+                            );
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UserPlugin(
-                                        userCount: 1,
-                                        selectUsersData: jsonDecode(jsonEncode(param['user'])),
-                                      )),
+                                builder: (context) => UserPlugin(
+                                  userCount: 1,
+                                  selectUsersData: jsonDecode(
+                                    jsonEncode(param['user']),
+                                  ),
+                                ),
+                              ),
                             ).then((val) {
                               if (val != null) {
                                 setState(() {
-                                  param['user'] = jsonDecode(jsonEncode(val));
+                                  param['user'] = jsonDecode(
+                                    jsonEncode(val),
+                                  );
                                 });
                               }
                             });
@@ -150,79 +160,88 @@ class _RebateRatesModifyState extends State<RebateRatesModify> {
             ),
           ),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              height: 34,
-              child: Row(children: <Widget>[
-                Container(
-                  width: 80,
-                  alignment: Alignment.centerRight,
-                  child: Text('直接返利'),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['direct_rate'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['direct_rate'] ?? ''}'.length,
-                          ),
+            margin: EdgeInsets.only(bottom: 10),
+            height: 34,
+            child: Row(children: <Widget>[
+              Container(
+                width: 80,
+                alignment: Alignment.centerRight,
+                child: Text('直接返利'),
+                margin: EdgeInsets.only(right: 10),
+              ),
+              Expanded(
+                flex: 1,
+                child: TextField(
+                  style: TextStyle(fontSize: CFFontSize.content),
+                  controller: TextEditingController.fromValue(
+                    TextEditingValue(
+                      text: '${param['direct_rate'] ?? ''}',
+                      selection: TextSelection.fromPosition(
+                        TextPosition(
+                          affinity: TextAffinity.downstream,
+                          offset: '${param['direct_rate'] ?? ''}'.length,
                         ),
                       ),
                     ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15, right: 15),
-                    ),
-                    onChanged: (String val) {
-                      setState(() {
-                        param['direct_rate'] = val;
-                      });
-                    },
                   ),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15, right: 15),
+                  ),
+                  onChanged: (String val) {
+                    setState(() {
+                      param['direct_rate'] = val;
+                    });
+                  },
                 ),
-                Text('%')
-              ])),
+              ),
+              Text('%')
+            ]),
+          ),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              height: 34,
-              child: Row(children: <Widget>[
-                Container(
-                  width: 80,
-                  alignment: Alignment.centerRight,
-                  child: Text('间接返利'),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['indirect_rate'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['indirect_rate'] ?? ''}'.length,
-                          ),
+            margin: EdgeInsets.only(bottom: 10),
+            height: 34,
+            child: Row(children: <Widget>[
+              Container(
+                width: 80,
+                alignment: Alignment.centerRight,
+                child: Text('间接返利'),
+                margin: EdgeInsets.only(right: 10),
+              ),
+              Expanded(
+                flex: 1,
+                child: TextField(
+                  style: TextStyle(fontSize: CFFontSize.content),
+                  controller: TextEditingController.fromValue(
+                    TextEditingValue(
+                      text: '${param['indirect_rate'] ?? ''}',
+                      selection: TextSelection.fromPosition(
+                        TextPosition(
+                          affinity: TextAffinity.downstream,
+                          offset: '${param['indirect_rate'] ?? ''}'.length,
                         ),
                       ),
                     ),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
-                    onChanged: (String val) {
-                      setState(() {
-                        param['indirect_rate'] = val;
-                      });
-                    },
                   ),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.only(
+                      top: 0,
+                      bottom: 0,
+                      left: 15,
+                      right: 15,
+                    ),
+                  ),
+                  onChanged: (String val) {
+                    setState(() {
+                      param['indirect_rate'] = val;
+                    });
+                  },
                 ),
-                Text('%')
-              ])),
+              ),
+              Text('%')
+            ]),
+          ),
           Container(
             margin: EdgeInsets.only(bottom: 10),
             height: 34,

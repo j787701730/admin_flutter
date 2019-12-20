@@ -265,7 +265,8 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     if (tabType == 1) {
       param['curr_page'] += page;
       getData();
@@ -316,216 +317,229 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
         title: Text('日志分析'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Select(
-                  selectOptions: logSource,
-                  selectedValue: param['log_source'] ?? 'all',
-                  label: '日志来源',
-                  onChanged: (String newValue) {
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Select(
+              selectOptions: logSource,
+              selectedValue: param['log_source'] ?? 'all',
+              label: '日志来源',
+              onChanged: (String newValue) {
+                setState(() {
+                  if (newValue == 'all') {
+                    param.remove('log_source');
+                    param2.remove('log_source');
+                  } else {
+                    param['log_source'] = newValue;
+                    param2['log_source'] = newValue;
+                  }
+                });
+              },
+            ),
+            Select(
+              selectOptions: url,
+              selectedValue: param['url_id'] ?? 'all',
+              label: '接口名称',
+              onChanged: (String newValue) {
+                setState(() {
+                  if (newValue == 'all') {
+                    param.remove('url_id');
+                    param2.remove('url_id');
+                  } else {
+                    param['url_id'] = newValue;
+                    param2['url_id'] = newValue;
+                  }
+                });
+              },
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '操作日期',
+            ),
+            Select(
+              selectOptions: selects,
+              selectedValue: defaultVal,
+              label: '排序',
+              onChanged: orderBy,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                PrimaryButton(
+                  onPressed: () {
                     setState(() {
-                      if (newValue == 'all') {
-                        param.remove('log_source');
-                        param2.remove('log_source');
-                      } else {
-                        param['log_source'] = newValue;
-                        param2['log_source'] = newValue;
-                      }
+                      param['curr_page'] = 1;
+                      param2['curr_page'] = 1;
+                      getData();
+                      getData2();
                     });
-                  }),
-              Select(
-                  selectOptions: url,
-                  selectedValue: param['url_id'] ?? 'all',
-                  label: '接口名称',
-                  onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == 'all') {
-                        param.remove('url_id');
-                        param2.remove('url_id');
-                      } else {
-                        param['url_id'] = newValue;
-                        param2['url_id'] = newValue;
-                      }
-                    });
-                  }),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '操作日期',
-              ),
-              Select(
-                selectOptions: selects,
-                selectedValue: defaultVal,
-                label: '排序',
-                onChanged: orderBy,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                  },
+                  child: Text('搜索'),
+                )
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              decoration: BoxDecoration(),
+              height: 34,
+              child: Row(
                 children: <Widget>[
-                  PrimaryButton(
-                    onPressed: () {
+                  Container(
+                    height: 34,
+                    width: 15,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Color(0xffff4400),
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
                       setState(() {
-                        param['curr_page'] = 1;
-                        param2['curr_page'] = 1;
-                        getData();
-                        getData2();
+                        tabType = 1;
                       });
                     },
-                    child: Text('搜索'),
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 2),
+                          left: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1),
+                          right: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1),
+                          bottom: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1),
+                        ),
+                      ),
+                      height: 34,
+                      child: Center(
+                        child: Text(
+                          '日志明细',
+                          style: TextStyle(color: tabType == 1 ? Color(0xffff4400) : CFColors.text),
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        tabType = 2;
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      height: 34,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 2),
+                          left: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1),
+                          right: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1),
+                          bottom: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '日志汇总',
+                          style: TextStyle(color: tabType == 2 ? Color(0xffff4400) : CFColors.text),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      height: 34,
+                      width: 15,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: Color(0xffff4400), width: 1),
+                        ),
+                      ),
+                    ),
                   )
                 ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 10),
-                decoration: BoxDecoration(),
-                height: 34,
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      height: 34,
-                      width: 15,
-                      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Color(0xffff4400), width: 1))),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          tabType = 1;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.only(left: 15, right: 15),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                top: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 2),
-                                left:
-                                    BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1),
-                                right:
-                                    BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1),
-                                bottom: BorderSide(
-                                    color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1))),
-                        height: 34,
-                        child: Center(
-                          child: Text(
-                            '日志明细',
-                            style: TextStyle(color: tabType == 1 ? Color(0xffff4400) : CFColors.text),
-                          ),
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          tabType = 2;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.only(left: 15, right: 15),
-                        height: 34,
-                        decoration: BoxDecoration(
-                            border: Border(
-                                top: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 2),
-                                left:
-                                    BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1),
-                                right:
-                                    BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1),
-                                bottom: BorderSide(
-                                    color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1))),
-                        child: Center(
-                          child: Text(
-                            '日志汇总',
-                            style: TextStyle(color: tabType == 2 ? Color(0xffff4400) : CFColors.text),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        height: 34,
-                        width: 15,
-                        decoration:
-                            BoxDecoration(border: Border(bottom: BorderSide(color: Color(0xffff4400), width: 1))),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              loading
-                  ? Container(
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Column(
-                      children: <Widget>[
-                        Offstage(
-                          offstage: tabType != 1,
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(bottom: 8),
-                                alignment: Alignment.centerRight,
-                                child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Column(
+                    children: <Widget>[
+                      Offstage(
+                        offstage: tabType != 1,
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(bottom: 8),
+                              alignment: Alignment.centerRight,
+                              child: NumberBar(count: count),
+                            ),
+                            logs.isEmpty
+                                ? Container(
+                                    alignment: Alignment.topCenter,
+                                    child: Text('无数据'),
+                                  )
+                                : LogCard(
+                                    columns,
+                                    logs,
+                                    labelWidth: 110.0,
+                                  ),
+                            Container(
+                              child: PagePlugin(
+                                current: param['curr_page'],
+                                total: count,
+                                pageSize: param['page_count'],
+                                function: getPage,
                               ),
-                              logs.isEmpty
-                                  ? Container(
-                                      alignment: Alignment.topCenter,
-                                      child: Text('无数据'),
-                                    )
-                                  : LogCard(
-                                      columns,
-                                      logs,
-                                      labelWidth: 110.0,
-                                    ),
-                              Container(
-                                child: PagePlugin(
-                                    current: param['curr_page'],
-                                    total: count,
-                                    pageSize: param['page_count'],
-                                    function: getPage),
-                              )
-                            ],
-                          ),
+                            )
+                          ],
                         ),
-                        Offstage(
-                          offstage: tabType != 2,
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(bottom: 8),
-                                alignment: Alignment.centerRight,
-                                child: NumberBar(count: count2),
+                      ),
+                      Offstage(
+                        offstage: tabType != 2,
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(bottom: 8),
+                              alignment: Alignment.centerRight,
+                              child: NumberBar(count: count2),
+                            ),
+                            logs2.isEmpty
+                                ? Container(
+                                    alignment: Alignment.topCenter,
+                                    child: Text('无数据'),
+                                  )
+                                : LogCard(
+                                    columns,
+                                    logs2,
+                                    labelWidth: 110.0,
+                                  ),
+                            Container(
+                              child: PagePlugin(
+                                current: param2['curr_page'],
+                                total: count2,
+                                pageSize: param2['page_count'],
+                                function: getPage,
                               ),
-                              logs2.isEmpty
-                                  ? Container(
-                                      alignment: Alignment.topCenter,
-                                      child: Text('无数据'),
-                                    )
-                                  : LogCard(
-                                      columns,
-                                      logs2,
-                                      labelWidth: 110.0,
-                                    ),
-                              Container(
-                                child: PagePlugin(
-                                    current: param2['curr_page'],
-                                    total: count2,
-                                    pageSize: param2['page_count'],
-                                    function: getPage),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

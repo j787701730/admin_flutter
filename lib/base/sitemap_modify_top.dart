@@ -72,13 +72,23 @@ class _SiteMapModifyTopState extends State<SiteMapModifyTop> {
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
                     controller: TextEditingController.fromValue(TextEditingValue(
-
-                        text: '${param['map_ch_name'] ?? ''}',
-
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['map_ch_name'] ?? ""}'.length)))),
+                      text: '${param['map_ch_name'] ?? ''}',
+                      selection: TextSelection.fromPosition(
+                        TextPosition(
+                          affinity: TextAffinity.downstream,
+                          offset: '${param['map_ch_name'] ?? ""}'.length,
+                        ),
+                      ),
+                    )),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 6,
+                        bottom: 6,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         param['map_ch_name'] = val;
@@ -103,14 +113,26 @@ class _SiteMapModifyTopState extends State<SiteMapModifyTop> {
                   flex: 1,
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(TextEditingValue(
-
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['map_en_name'] ?? ''}',
-
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['map_en_name'] ?? ''}'.length)))),
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['map_en_name'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 6,
+                        bottom: 6,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         param['map_en_name'] = val;
@@ -135,14 +157,26 @@ class _SiteMapModifyTopState extends State<SiteMapModifyTop> {
                   flex: 1,
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(TextEditingValue(
-
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['map_sort'] ?? ''}',
-
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['map_sort'] ?? ''}'.length)))),
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['map_sort'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 6,
+                        bottom: 6,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         param['map_sort'] = val;
@@ -168,14 +202,26 @@ class _SiteMapModifyTopState extends State<SiteMapModifyTop> {
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
                     maxLines: 4,
-                    controller: TextEditingController.fromValue(TextEditingValue(
-
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['comments'] ?? ''}',
-
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['comments'] ?? ''}'.length)))),
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['comments'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 6,
+                        bottom: 6,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         param['comments'] = val;
@@ -192,16 +238,17 @@ class _SiteMapModifyTopState extends State<SiteMapModifyTop> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 PrimaryButton(
-                    onPressed: () {
-                      print(param);
-                    },
-                    child: Text('确认保存'))
+                  onPressed: () {
+                    print(param);
+                  },
+                  child: Text('确认保存'),
+                )
               ],
             ),
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

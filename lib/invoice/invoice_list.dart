@@ -288,7 +288,9 @@ class _InvoiceListState extends State<InvoiceList> {
                           children: ajaxData.map<Widget>(
                             (item) {
                               return Container(
-                                decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Color(0xffdddddd), width: 1),
+                                ),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(
                                   top: 5,
@@ -364,7 +366,7 @@ class _InvoiceListState extends State<InvoiceList> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

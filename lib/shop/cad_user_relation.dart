@@ -207,217 +207,239 @@ class _CadUserRelationState extends State<CadUserRelation> {
         title: Text('CAD用户关系'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                  label: '发送店铺',
-                  onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('a_shop_name');
-                      } else {
-                        param['a_shop_name'] = val;
-                      }
-                    });
-                  }),
-              Input(
-                  label: '发送电话',
-                  onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('a_user_phone');
-                      } else {
-                        param['a_user_phone'] = val;
-                      }
-                    });
-                  }),
-              Input(
-                  label: '接收店铺',
-                  onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('z_shop_name');
-                      } else {
-                        param['z_shop_name'] = val;
-                      }
-                    });
-                  }),
-              Input(
-                  label: '接收电话',
-                  onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('z_user_phone');
-                      } else {
-                        param['z_user_phone'] = val;
-                      }
-                    });
-                  }),
-              Select(
-                  selectOptions: ifDefault,
-                  selectedValue: param['if_default'] ?? 'all',
-                  label: '状态',
-                  onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == 'all') {
-                        param.remove('if_default');
-                      } else {
-                        param['if_default'] = newValue;
-                      }
-                    });
-                  }),
-              Select(
-                  selectOptions: relationSource,
-                  selectedValue: param['rela_source'] ?? 'all',
-                  label: '数据来源',
-                  onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == 'all') {
-                        param.remove('rela_source');
-                      } else {
-                        param['rela_source'] = newValue;
-                      }
-                    });
-                  }),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '创建时间',
-              ),
-              DateSelectPlugin(
-                onChanged: getDateTime2,
-                label: '有效时间',
-              ),
-              Select(
-                selectOptions: selects,
-                selectedValue: defaultVal,
-                label: '排序',
-                onChanged: orderBy,
-              ),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '发送店铺',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('a_shop_name');
+                  } else {
+                    param['a_shop_name'] = val;
+                  }
+                });
+              },
+            ),
+            Input(
+              label: '发送电话',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('a_user_phone');
+                  } else {
+                    param['a_user_phone'] = val;
+                  }
+                });
+              },
+            ),
+            Input(
+              label: '接收店铺',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('z_shop_name');
+                  } else {
+                    param['z_shop_name'] = val;
+                  }
+                });
+              },
+            ),
+            Input(
+              label: '接收电话',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('z_user_phone');
+                  } else {
+                    param['z_user_phone'] = val;
+                  }
+                });
+              },
+            ),
+            Select(
+              selectOptions: ifDefault,
+              selectedValue: param['if_default'] ?? 'all',
+              label: '状态',
+              onChanged: (String newValue) {
+                setState(() {
+                  if (newValue == 'all') {
+                    param.remove('if_default');
+                  } else {
+                    param['if_default'] = newValue;
+                  }
+                });
+              },
+            ),
+            Select(
+              selectOptions: relationSource,
+              selectedValue: param['rela_source'] ?? 'all',
+              label: '数据来源',
+              onChanged: (String newValue) {
+                setState(() {
+                  if (newValue == 'all') {
+                    param.remove('rela_source');
+                  } else {
+                    param['rela_source'] = newValue;
+                  }
+                });
+              },
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '创建时间',
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime2,
+              label: '有效时间',
+            ),
+            Select(
+              selectOptions: selects,
+              selectedValue: defaultVal,
+              label: '排序',
+              onChanged: orderBy,
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                      },
+                      child: Text('搜索'),
                     ),
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              new MaterialPageRoute(builder: (context) => new CreateCadUserRelation(null)),
-                            );
-                          },
-                          child: Text('新增CAD用户关系')),
-                    )
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                            builder: (context) => new CreateCadUserRelation(null),
+                          ),
+                        );
+                      },
+                      child: Text('新增CAD用户关系'),
+                    ),
+                  )
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        switch (col['key']) {
-                                          case 'option':
-                                            con = Wrap(
-                                              spacing: 10,
-                                              runSpacing: 10,
-                                              children: <Widget>[
-                                                SizedBox(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                      onPressed: () {
-                                                        Navigator.push(
-                                                          context,
-                                                          new MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  new CreateCadUserRelation({'item': item})),
-                                                        );
-                                                      },
-                                                      child: Text('修改')),
-                                                ),
-                                                SizedBox(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                      type: 'error',
-                                                      onPressed: () {
-                                                        delDialog(item);
-                                                      },
-                                                      child: Text('删除')),
-                                                )
-                                              ],
-                                            );
-                                            break;
-                                        }
-
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 80,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>((item) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Color(0xffdddddd), width: 1),
+                                ),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    switch (col['key']) {
+                                      case 'option':
+                                        con = Wrap(
+                                          spacing: 10,
+                                          runSpacing: 10,
+                                          children: <Widget>[
+                                            SizedBox(
+                                              height: 30,
+                                              child: PrimaryButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    new MaterialPageRoute(
+                                                      builder: (context) => new CreateCadUserRelation({'item': item}),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Text('修改'),
                                               ),
-                                              Expanded(flex: 1, child: con)
-                                            ],
-                                          ),
+                                            ),
+                                            SizedBox(
+                                              height: 30,
+                                              child: PrimaryButton(
+                                                type: 'error',
+                                                onPressed: () {
+                                                  delDialog(item);
+                                                },
+                                                child: Text('删除'),
+                                              ),
+                                            )
+                                          ],
                                         );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
+                                        break;
+                                    }
+
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 80,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
+                                          ),
+                                          Expanded(flex: 1, child: con)
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

@@ -100,16 +100,20 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                         margin: EdgeInsets.only(right: 10),
                       ),
                       Expanded(
-                          flex: 1,
-                          child: Container(
-                            height: 34,
-                            alignment: Alignment.centerLeft,
-                            padding: EdgeInsets.only(left: 10, right: 10),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey, width: 1),
-                                borderRadius: BorderRadius.all(Radius.circular(6))),
-                            child: Text('${param['shop_name'] ?? ''}'),
-                          )),
+                        flex: 1,
+                        child: Container(
+                          height: 34,
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(left: 10, right: 10),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 1),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(6),
+                            ),
+                          ),
+                          child: Text('${param['shop_name'] ?? ''}'),
+                        ),
+                      ),
                       Container(
                         width: 70,
                         height: 34,
@@ -125,11 +129,11 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                  ShopPlugin(
-                                    shopCount: 1,
-                                    selectShopsData: data,
-                                  )),
+                                builder: (context) => ShopPlugin(
+                                  shopCount: 1,
+                                  selectShopsData: data,
+                                ),
+                              ),
                             ).then((val) {
                               if (val != null) {
                                 setState(() {
@@ -145,12 +149,20 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                     ],
                   ),
                 )
-              : Container(width: 0,),
-          Select(selectOptions: payOnline, selectedValue: param['pay_online'] ?? '1', label: '在线支付：',labelWidth: 150, onChanged: (String newValue) {
-            setState(() {
-              param['pay_online'] = newValue;
-            });
-          }),
+              : Container(
+                  width: 0,
+                ),
+          Select(
+            selectOptions: payOnline,
+            selectedValue: param['pay_online'] ?? '1',
+            label: '在线支付：',
+            labelWidth: 150,
+            onChanged: (String newValue) {
+              setState(() {
+                param['pay_online'] = newValue;
+              });
+            },
+          ),
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Row(
@@ -171,21 +183,35 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                   margin: EdgeInsets.only(right: 10),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(TextEditingValue(
-                          text: '${param['plat_rate'] ?? ''}',
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream, offset: '${param['plat_rate'] ?? ''}'.length)))),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
-                      onChanged: (val) {
-                        setState(() {
-                          param['plat_rate'] = val;
-                        });
-                      },
-                    )),
+                  flex: 1,
+                  child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: '${param['plat_rate'] ?? ''}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['plat_rate'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(
+                          top: 6,
+                          bottom: 6,
+                          left: 15,
+                          right: 15,
+                        )),
+                    onChanged: (val) {
+                      setState(() {
+                        param['plat_rate'] = val;
+                      });
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -209,21 +235,36 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                   margin: EdgeInsets.only(right: 10),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(TextEditingValue(
-                          text: '${param['order_disrate'] ?? ''}',
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream, offset: '${param['order_disrate'] ?? ''}'.length)))),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
-                      onChanged: (val) {
-                        setState(() {
-                          param['order_disrate'] = val;
-                        });
-                      },
-                    )),
+                  flex: 1,
+                  child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: '${param['order_disrate'] ?? ''}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['order_disrate'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 6,
+                        bottom: 6,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
+                    onChanged: (val) {
+                      setState(() {
+                        param['order_disrate'] = val;
+                      });
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -247,21 +288,35 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                   margin: EdgeInsets.only(right: 10),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(TextEditingValue(
-                          text: '${param['order_extrate'] ?? ''}',
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream, offset: '${param['order_extrate'] ?? ''}'.length)))),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
-                      onChanged: (val) {
-                        setState(() {
-                          param['order_extrate'] = val;
-                        });
-                      },
-                    )),
+                  flex: 1,
+                  child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: '${param['order_extrate'] ?? ''}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['order_extrate'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(
+                          top: 6,
+                          bottom: 6,
+                          left: 15,
+                          right: 15,
+                        )),
+                    onChanged: (val) {
+                      setState(() {
+                        param['order_extrate'] = val;
+                      });
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -285,22 +340,36 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                   margin: EdgeInsets.only(right: 10),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(TextEditingValue(
-                          text: '${param['return_rate_lower'] ?? ''}',
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream,
-                              offset: '${param['return_rate_lower'] ?? ''}'.length)))),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
-                      onChanged: (val) {
-                        setState(() {
-                          param['return_rate_lower'] = val;
-                        });
-                      },
-                    )),
+                  flex: 1,
+                  child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: '${param['return_rate_lower'] ?? ''}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['return_rate_lower'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 6,
+                        bottom: 6,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
+                    onChanged: (val) {
+                      setState(() {
+                        param['return_rate_lower'] = val;
+                      });
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -324,22 +393,35 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                   margin: EdgeInsets.only(right: 10),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(TextEditingValue(
-                          text: '${param['return_rate_upper'] ?? ''}',
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream,
-                              offset: '${param['return_rate_upper'] ?? ''}'.length)))),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
-                      onChanged: (val) {
-                        setState(() {
-                          param['return_rate_upper'] = val;
-                        });
-                      },
-                    )),
+                  flex: 1,
+                  child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: '${param['return_rate_upper'] ?? ''}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['return_rate_upper'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(
+                          top: 6,
+                          bottom: 6,
+                          left: 15,
+                          right: 15,
+                        )),
+                    onChanged: (val) {
+                      setState(() {
+                        param['return_rate_upper'] = val;
+                      });
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -357,22 +439,37 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                   margin: EdgeInsets.only(right: 10),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      maxLines: 4,
-                      controller: TextEditingController.fromValue(TextEditingValue(
-                          text: '${param['pay_comments'] ?? ''}',
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream, offset: '${param['pay_comments'] ?? ''}'.length)))),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
-                      onChanged: (val) {
-                        setState(() {
-                          param['pay_comments'] = val;
-                        });
-                      },
-                    )),
+                  flex: 1,
+                  child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
+                    maxLines: 4,
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: '${param['pay_comments'] ?? ''}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['pay_comments'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 6,
+                        bottom: 6,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
+                    onChanged: (val) {
+                      setState(() {
+                        param['pay_comments'] = val;
+                      });
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -387,20 +484,21 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                   margin: EdgeInsets.only(right: 10),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          height: 30,
-                          child: PrimaryButton(
-                            onPressed: () {
-                              print(param);
-                            },
-                            child: Text('保存'),
-                          ),
-                        )
-                      ],
-                    )),
+                  flex: 1,
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        height: 30,
+                        child: PrimaryButton(
+                          onPressed: () {
+                            print(param);
+                          },
+                          child: Text('保存'),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           )

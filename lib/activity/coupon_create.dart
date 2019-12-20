@@ -206,7 +206,7 @@ class _CouponCreateState extends State<CouponCreate> {
                       ),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15),
+                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),
                       ),
                       onChanged: (String val) {
                         setState(() {
@@ -264,7 +264,7 @@ class _CouponCreateState extends State<CouponCreate> {
                       ),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15),
+                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),
                       ),
                       onChanged: (String val) {
                         setState(() {
@@ -278,8 +278,10 @@ class _CouponCreateState extends State<CouponCreate> {
             ),
           ),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
                 Container(
                   width: 100,
                   alignment: Alignment.centerRight,
@@ -312,7 +314,7 @@ class _CouponCreateState extends State<CouponCreate> {
                       ),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15),
+                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),
                       ),
                       onChanged: (String val) {
                         setState(() {
@@ -322,7 +324,9 @@ class _CouponCreateState extends State<CouponCreate> {
                     ),
                   ),
                 ),
-              ])),
+              ],
+            ),
+          ),
           Select(
             selectOptions: goodsType,
             selectedValue: param['goods_type'] ?? '0',
@@ -336,93 +340,94 @@ class _CouponCreateState extends State<CouponCreate> {
             labelWidth: 100,
           ),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 100,
-                    alignment: Alignment.centerRight,
-                    margin: EdgeInsets.only(right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          '* ',
-                          style: TextStyle(color: CFColors.danger),
-                        ),
-                        Text('生效日期'),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: InkWell(
-                      onTap: () {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        DatePicker.showDateTimePicker(
-                          context,
-                          showTitleActions: true,
-                          minTime: DateTime(1970, 1, 1),
-                          maxTime: DateTime(2099, 12, 31),
-                          onChanged: (date) {
-                            print('change $date');
-                          },
-                          onConfirm: (date) {
-                            setState(() {
-                              param['eff_date'] = date;
-                            });
-                          },
-                          currentTime: param['eff_date'] ?? DateTime.now(),
-                          locale: LocaleType.zh,
-                        );
-                      },
-                      child: Container(
-                        height: 34,
-                        padding: EdgeInsets.only(left: 10),
-                        alignment: Alignment.centerLeft,
-                        decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
-                        child: Text(param['eff_date'] == null ? '' : '${param['eff_date']}'.substring(0, 19)),
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 100,
+                  alignment: Alignment.centerRight,
+                  margin: EdgeInsets.only(right: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Text(
+                        '* ',
+                        style: TextStyle(color: CFColors.danger),
                       ),
+                      Text('生效日期'),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: InkWell(
+                    onTap: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      DatePicker.showDateTimePicker(
+                        context,
+                        showTitleActions: true,
+                        minTime: DateTime(1970, 1, 1),
+                        maxTime: DateTime(2099, 12, 31),
+                        onChanged: (date) {
+                          print('change $date');
+                        },
+                        onConfirm: (date) {
+                          setState(() {
+                            param['eff_date'] = date;
+                          });
+                        },
+                        currentTime: param['eff_date'] ?? DateTime.now(),
+                        locale: LocaleType.zh,
+                      );
+                    },
+                    child: Container(
+                      height: 34,
+                      padding: EdgeInsets.only(left: 10),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1),),
+                      child: Text(param['eff_date'] == null ? '' : '${param['eff_date']}'.substring(0, 19),),
                     ),
                   ),
-                  Container(
-                    width: 20,
-                    child: Text('-'),
-                    alignment: Alignment.center,
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: InkWell(
-                      onTap: () {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        DatePicker.showDateTimePicker(
-                          context,
-                          showTitleActions: true,
-                          minTime: DateTime(1970, 1, 1),
-                          maxTime: DateTime(2099, 12, 31),
-                          onChanged: (date) {
-                            print('change $date');
-                          },
-                          onConfirm: (date) {
-                            setState(() {
-                              param['exp_date'] = date;
-                            });
-                          },
-                          currentTime: param['exp_date'] ?? DateTime.now(),
-                          locale: LocaleType.zh,
-                        );
-                      },
-                      child: Container(
-                        height: 34,
-                        padding: EdgeInsets.only(left: 10),
-                        alignment: Alignment.centerLeft,
-                        decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
-                        child: Text(param['exp_date'] == null ? '' : '${param['exp_date']}'.substring(0, 19)),
-                      ),
+                ),
+                Container(
+                  width: 20,
+                  child: Text('-'),
+                  alignment: Alignment.center,
+                ),
+                Expanded(
+                  flex: 1,
+                  child: InkWell(
+                    onTap: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      DatePicker.showDateTimePicker(
+                        context,
+                        showTitleActions: true,
+                        minTime: DateTime(1970, 1, 1),
+                        maxTime: DateTime(2099, 12, 31),
+                        onChanged: (date) {
+                          print('change $date');
+                        },
+                        onConfirm: (date) {
+                          setState(() {
+                            param['exp_date'] = date;
+                          });
+                        },
+                        currentTime: param['exp_date'] ?? DateTime.now(),
+                        locale: LocaleType.zh,
+                      );
+                    },
+                    child: Container(
+                      height: 34,
+                      padding: EdgeInsets.only(left: 10),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1),),
+                      child: Text(param['exp_date'] == null ? '' : '${param['exp_date']}'.substring(0, 19),),
                     ),
-                  )
-                ],
-              )),
+                  ),
+                )
+              ],
+            ),
+          ),
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Row(

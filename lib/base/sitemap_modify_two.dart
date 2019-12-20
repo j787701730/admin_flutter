@@ -80,11 +80,16 @@ class _SiteMapModifyTwoState extends State<SiteMapModifyTwo> {
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
                     controller: TextEditingController.fromValue(TextEditingValue(
-                        text: '${param['map_icon'] ?? ''}',
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['map_icon'] ?? ""}'.length)))),
+                      text: '${param['map_icon'] ?? ''}',
+                      selection: TextSelection.fromPosition(
+                        TextPosition(
+                          affinity: TextAffinity.downstream,
+                          offset: '${param['map_icon'] ?? ""}'.length,
+                        ),
+                      ),
+                    )),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15,right: 15,)),
                     onChanged: (val) {
                       setState(() {
                         param['map_icon'] = val;
@@ -109,12 +114,26 @@ class _SiteMapModifyTwoState extends State<SiteMapModifyTwo> {
                   flex: 1,
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(TextEditingValue(
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['map_ch_name'] ?? ''}',
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['map_ch_name'] ?? ""}'.length)))),
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['map_ch_name'] ?? ""}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 6,
+                        bottom: 6,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         param['map_ch_name'] = val;
@@ -139,12 +158,26 @@ class _SiteMapModifyTwoState extends State<SiteMapModifyTwo> {
                   flex: 1,
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(TextEditingValue(
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['map_en_name'] ?? ''}',
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['map_en_name'] ?? ''}'.length)))),
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['map_en_name'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 6,
+                        bottom: 6,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         param['map_en_name'] = val;
@@ -156,15 +189,16 @@ class _SiteMapModifyTwoState extends State<SiteMapModifyTwo> {
             ),
           ),
           Select(
-              selectOptions: parentMenu,
-              selectedValue: param['parent_map_id'] ?? '',
-              label: '父菜单',
-              labelWidth: 90,
-              onChanged: (String newValue) {
-                setState(() {
-                  param['parent_map_id'] = newValue;
-                });
-              }),
+            selectOptions: parentMenu,
+            selectedValue: param['parent_map_id'] ?? '',
+            label: '父菜单',
+            labelWidth: 90,
+            onChanged: (String newValue) {
+              setState(() {
+                param['parent_map_id'] = newValue;
+              });
+            },
+          ),
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Row(
@@ -180,11 +214,23 @@ class _SiteMapModifyTwoState extends State<SiteMapModifyTwo> {
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
                     controller: TextEditingController.fromValue(TextEditingValue(
-                        text: '${param['map_sort'] ?? ''}',
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['map_sort'] ?? ''}'.length)))),
+                      text: '${param['map_sort'] ?? ''}',
+                      selection: TextSelection.fromPosition(
+                        TextPosition(
+                          affinity: TextAffinity.downstream,
+                          offset: '${param['map_sort'] ?? ''}'.length,
+                        ),
+                      ),
+                    )),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 6,
+                        bottom: 6,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         param['map_sort'] = val;
@@ -210,12 +256,26 @@ class _SiteMapModifyTwoState extends State<SiteMapModifyTwo> {
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
                     maxLines: 4,
-                    controller: TextEditingController.fromValue(TextEditingValue(
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['comments'] ?? ''}',
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['comments'] ?? ''}'.length)))),
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['comments'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 6,
+                        bottom: 6,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         param['comments'] = val;
@@ -232,16 +292,17 @@ class _SiteMapModifyTwoState extends State<SiteMapModifyTwo> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 PrimaryButton(
-                    onPressed: () {
-                      print(param);
-                    },
-                    child: Text('确认保存'))
+                  onPressed: () {
+                    print(param);
+                  },
+                  child: Text('确认保存'),
+                )
               ],
             ),
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

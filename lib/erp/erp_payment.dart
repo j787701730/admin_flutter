@@ -93,7 +93,8 @@ class _ErpPaymentState extends State<ErpPayment> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['curr_page'] += page;
     getData();
   }
@@ -123,11 +124,17 @@ class _ErpPaymentState extends State<ErpPayment> {
                               margin: EdgeInsets.only(right: 10),
                               width: 120,
                               alignment: Alignment.centerRight,
-                              child: Text('$key:',style: TextStyle(fontSize: CFFontSize.content),),
+                              child: Text(
+                                '$key:',
+                                style: TextStyle(fontSize: CFFontSize.content),
+                              ),
                             ),
                             Expanded(
                               flex: 1,
-                              child: Text('${jsonDecode(shopName)[key]}',style: TextStyle(fontSize: CFFontSize.content),),
+                              child: Text(
+                                '${jsonDecode(shopName)[key]}',
+                                style: TextStyle(fontSize: CFFontSize.content),
+                              ),
                             )
                           ],
                         ),
@@ -219,128 +226,138 @@ class _ErpPaymentState extends State<ErpPayment> {
         title: Text('收款记录'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          // onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Column(
-                children: searchInputs.keys.toList().map<Widget>((item) {
-                  return Input(
-                      label: '${searchInputs[item]}',
-                      onChanged: (String val) {
-                        setState(() {
-                          if (val == '') {
-                            param.remove('$item');
-                          } else {
-                            param['$item'] = val;
-                          }
-                        });
-                      });
-                }).toList(),
-              ),
-              DateSelectPlugin(
-                onChanged: getCreateDate,
-                label: '收款时间',
-              ),
-              DateSelectPlugin(
-                onChanged: getPaymentDate,
-                label: '创建时间',
-              ),
-              Select(selectOptions: selects, selectedValue: defaultVal, label: '排序', onChanged: orderBy),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        // onLoading: _onLoading,
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Column(
+              children: searchInputs.keys.toList().map<Widget>((item) {
+                return Input(
+                  label: '${searchInputs[item]}',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('$item');
+                      } else {
+                        param['$item'] = val;
+                      }
+                    });
+                  },
+                );
+              }).toList(),
+            ),
+            DateSelectPlugin(
+              onChanged: getCreateDate,
+              label: '收款时间',
+            ),
+            DateSelectPlugin(
+              onChanged: getPaymentDate,
+              label: '创建时间',
+            ),
+            Select(selectOptions: selects, selectedValue: defaultVal, label: '排序', onChanged: orderBy),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Text('搜索'),
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        switch (col['key']) {
-                                          case 'shop_name':
-                                            con = '${item[col['key']] ?? ''}' == ''
-                                                ? Text('')
-                                                : InkWell(
-                                                    onTap: () {
-                                                      dialog(item['shop_name']);
-                                                    },
-                                                    child: Text(
-                                                      '${item[col['key']] ?? ''}',
-                                                      style: TextStyle(color: CFColors.primary),
-                                                    ),
-                                                  );
-                                            break;
-                                        }
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 80,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
-                                              ),
-                                              Expanded(flex: 1, child: con)
-                                            ],
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>((item) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Color(0xffdddddd), width: 1),
+                                ),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    switch (col['key']) {
+                                      case 'shop_name':
+                                        con = '${item[col['key']] ?? ''}' == ''
+                                            ? Text('')
+                                            : InkWell(
+                                                onTap: () {
+                                                  dialog(item['shop_name']);
+                                                },
+                                                child: Text(
+                                                  '${item[col['key']] ?? ''}',
+                                                  style: TextStyle(color: CFColors.primary),
+                                                ),
+                                              );
+                                        break;
+                                    }
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 80,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
                                           ),
-                                        );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
+                                          Expanded(flex: 1, child: con)
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

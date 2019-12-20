@@ -193,34 +193,162 @@ class _UsersManagerState extends State<UsersManager> {
       context: _context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            '${selectRow['login_name']} 用户类型修改',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
-          ),
-          content: SingleChildScrollView(
-            child: Container(
-                width: width - 100,
-                child: Text(
-                  '用户类型',
-                  style: TextStyle(fontSize: CFFontSize.content),
-                )),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('取消'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+        return StatefulBuilder(builder: (context1, state) {
+          return AlertDialog(
+            title: Text(
+              '${selectRow['login_name']} 用户类型修改',
+              style: TextStyle(fontSize: CFFontSize.topTitle),
             ),
-            PrimaryButton(
-              child: Text('确定'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+            contentPadding: EdgeInsets.all(10),
+            content: SingleChildScrollView(
+              child: Container(
+                width: 1400,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Wrap(
+                      runSpacing: 4,
+                      children: userType.keys.toList().map<Widget>(
+                        (key) {
+                          return key == '0' || '${userType[key]['select_type']}' == '1'
+                              ? Container(
+                                  width: 0,
+                                )
+                              : Container(
+                                  margin: EdgeInsets.only(right: 10),
+                                  child: InkWell(
+                                    onTap: () {
+                                      state(() {
+                                        if (selectRow['user_type'].contains(key)) {
+                                          selectRow['user_type'].remove(key);
+                                        } else {
+                                          selectRow['user_type'].add(key);
+                                        }
+                                      });
+                                    },
+                                    child: Container(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Checkbox(
+                                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                              value: selectRow['user_type'].contains(key),
+                                              onChanged: (val) {
+                                                state(() {
+                                                  if (selectRow['user_type'].contains(key)) {
+                                                    selectRow['user_type'].remove(key);
+                                                  } else {
+                                                    selectRow['user_type'].add(key);
+                                                  }
+                                                });
+                                              }),
+                                          Text(
+                                            '${userType[key]['type_ch_name']}',
+                                            style: TextStyle(
+                                              fontSize: CFFontSize.content,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                        },
+                      ).toList(),
+                    ),
+                    Container(
+                      height: 1,
+                      color: Colors.grey,
+                    ),
+                    Wrap(
+                      runSpacing: 4,
+                      children: userType.keys.toList().map<Widget>(
+                        (key) {
+                          return '${userType[key]['select_type']}' == '1'
+                              ? Container(
+                                  margin: EdgeInsets.only(right: 10),
+                                  child: InkWell(
+                                    onTap: () {
+                                      state(() {
+                                        for (var k in userType.keys.toList()) {
+                                          if ('${userType[k]['select_type']}' == '1') {
+                                            if (k == key) {
+                                              if (selectRow['user_type'].contains(k)) {
+                                                selectRow['user_type'].remove(k);
+                                              } else {
+                                                selectRow['user_type'].add(k);
+                                              }
+                                            } else {
+                                              selectRow['user_type'].remove(k);
+                                            }
+                                          }
+                                        }
+                                      });
+                                    },
+                                    child: Container(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Radio(
+                                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                              value: key,
+                                              groupValue: selectRow['user_type'].indexOf(key) > -1
+                                                  ? selectRow['user_type'][selectRow['user_type'].indexOf(key)]
+                                                  : '',
+                                              onChanged: (val) {
+                                                state(() {
+                                                  for (var k in userType.keys.toList()) {
+                                                    if ('${userType[k]['select_type']}' == '1') {
+                                                      if (k == key) {
+                                                        if (selectRow['user_type'].contains(k)) {
+                                                          selectRow['user_type'].remove(k);
+                                                        } else {
+                                                          selectRow['user_type'].add(k);
+                                                        }
+                                                      } else {
+                                                        selectRow['user_type'].remove(k);
+                                                      }
+                                                    }
+                                                  }
+                                                });
+                                              }),
+                                          Text(
+                                            '${userType[key]['type_ch_name']}',
+                                            style: TextStyle(
+                                              fontSize: CFFontSize.content,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  width: 0,
+                                );
+                        },
+                      ).toList(),
+                    )
+                  ],
+                ),
+              ),
             ),
-          ],
-        );
+            actions: <Widget>[
+              FlatButton(
+                child: Text('取消'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              PrimaryButton(
+                child: Text('确定'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
       },
     );
   }
@@ -326,247 +454,261 @@ class _UsersManagerState extends State<UsersManager> {
         title: Text('用户管理'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Column(
-                children: searchData.keys.map<Widget>((key) {
-                  return Input(
-                      label: '${searchName[key]}',
-                      onChanged: (String val) {
-                        setState(() {
-                          searchData[key] = val;
-                        });
-                      });
-                }).toList(),
-              ),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '操作日期',
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  PrimaryButton(
-                    onPressed: () {
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Column(
+              children: searchData.keys.map<Widget>((key) {
+                return Input(
+                    label: '${searchName[key]}',
+                    onChanged: (String val) {
                       setState(() {
-                        param['curr_page'] = 1;
-                        getData();
+                        searchData[key] = val;
                       });
-                    },
-                    child: Text('搜索'),
-                  )
-                ],
-              ),
-              Container(
-                margin: EdgeInsets.only(bottom: 8),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? CupertinoActivityIndicator()
-                  : logs.isEmpty
-                      ? Container(
-                          alignment: Alignment.topCenter,
-                          child: Text('无数据'),
-                        )
-                      : Column(
-                          children: logs.map<Widget>((item) {
-                            return Container(
-                              margin: EdgeInsets.only(bottom: 15),
-                              child: Container(
-                                decoration:
-                                    BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1), boxShadow: [
+                    });
+              }).toList(),
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '操作日期',
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                PrimaryButton(
+                  onPressed: () {
+                    setState(() {
+                      param['curr_page'] = 1;
+                      getData();
+                    });
+                  },
+                  child: Text('搜索'),
+                )
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 8),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? CupertinoActivityIndicator()
+                : logs.isEmpty
+                    ? Container(
+                        alignment: Alignment.topCenter,
+                        child: Text('无数据'),
+                      )
+                    : Column(
+                        children: logs.map<Widget>((item) {
+                          return Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Color(0xffdddddd), width: 1),
+                                boxShadow: [
                                   BoxShadow(
-                                      color: Color(0xffdddddd),
-                                      offset: Offset(0.0, 3.0),
-                                      blurRadius: 3.0,
-                                      spreadRadius: 3),
-                                ]),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Color(0xffffffff),
+                                    color: Color(0xffdddddd),
+                                    offset: Offset(0.0, 3.0),
+                                    blurRadius: 3.0,
+                                    spreadRadius: 3,
                                   ),
-                                  padding: EdgeInsets.only(left: 6, right: 6, top: 8, bottom: 8),
-                                  child: Column(
-                                    children: columns.map<Widget>((col) {
-                                      Widget con = Container(
-                                        width: 0,
-                                      );
+                                ],
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Color(0xffffffff),
+                                ),
+                                padding: EdgeInsets.only(left: 6, right: 6, top: 8, bottom: 8),
+                                child: Column(
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Container(
+                                      width: 0,
+                                    );
 
-                                      switch (col['key']) {
-                                        case 'type':
-                                          if (0 >= int.tryParse(item['shop_id']) &&
-                                              int.tryParse(item['staff_id']) >= 1) {
-                                            con = Text('员工账号');
-                                          } else if (0 >= int.tryParse(item['shop_id']) &&
-                                              int.tryParse(item['staff_id']) < 1) {
-                                            con = Text('普通账号');
-                                          } else if (int.tryParse(item['shop_id']) >= 1) {
-                                            con = Text('企业主人');
-                                          }
-                                          break;
-                                        case 'login_name':
-                                          if (item['user_sex'] == '1') {
-                                            con = Text('${item['login_name']}(真名: ${item['login_name']})(男)');
-                                          } else if (item['user_sex'] == '2') {
-                                            con = Text('${item['login_name']}(真名: ${item['login_name']})(女)');
-                                          } else {
-                                            con = Text('${item['login_name']}(真名: ${item['login_name']})');
-                                          }
-                                          break;
-                                        case 'user_type':
-                                          List uType = item['user_type'].split(',');
-                                          con = GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                selectRow = item;
-                                                userTypeDialog();
-                                              });
-                                            },
-                                            child: Wrap(
-                                              children: uType.map<Widget>((t) {
-                                                return Container(
-                                                  margin: EdgeInsets.only(right: 10),
-                                                  child: Text(
-                                                    '${userType[t]['type_ch_name']}',
-                                                    style: TextStyle(color: Colors.blue),
-                                                  ),
-                                                );
-                                              }).toList(),
+                                    switch (col['key']) {
+                                      case 'type':
+                                        if (0 >= int.tryParse(item['shop_id']) && int.tryParse(item['staff_id']) >= 1) {
+                                          con = Text('员工账号');
+                                        } else if (0 >= int.tryParse(item['shop_id']) &&
+                                            int.tryParse(item['staff_id']) < 1) {
+                                          con = Text('普通账号');
+                                        } else if (int.tryParse(item['shop_id']) >= 1) {
+                                          con = Text('企业主人');
+                                        }
+                                        break;
+                                      case 'login_name':
+                                        if (item['user_sex'] == '1') {
+                                          con = Text('${item['login_name']}(真名: ${item['login_name']})(男)');
+                                        } else if (item['user_sex'] == '2') {
+                                          con = Text('${item['login_name']}(真名: ${item['login_name']})(女)');
+                                        } else {
+                                          con = Text('${item['login_name']}(真名: ${item['login_name']})');
+                                        }
+                                        break;
+                                      case 'user_type':
+                                        List uType = item['user_type'].split(',');
+                                        con = InkWell(
+                                          hoverColor: Colors.grey,
+                                          onTap: () {
+                                            setState(() {
+                                              selectRow = jsonDecode(jsonEncode(item));
+                                              selectRow['user_type'] = uType;
+                                              userTypeDialog();
+                                            });
+                                          },
+                                          child: Wrap(
+                                            children: uType.map<Widget>((t) {
+                                              return Container(
+                                                margin: EdgeInsets.only(right: 10),
+                                                child: Text(
+                                                  '${userType[t]['type_ch_name']}',
+                                                  style: TextStyle(color: Colors.blue),
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        );
+                                        break;
+                                      case 'last_login_time':
+                                        con = int.tryParse(item['visit_times']) > 0
+                                            ? InkWell(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => LoginRecord(item),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Text(
+                                                  '${item['last_login_time']}',
+                                                  style: TextStyle(color: Colors.blue),
+                                                ),
+                                              )
+                                            : Text('${item['last_login_time']}');
+                                        break;
+                                      case 'user_state':
+                                        if (item['user_state'] == '0') {
+                                          con = Text('正常');
+                                        } else if (item['user_state'] == '-1') {
+                                          con = Text('冻结');
+                                        } else {
+                                          con = Text('${item['user_state']}');
+                                        }
+                                        break;
+                                      case 'eff_date':
+                                        con = Text('${item['eff_date']} 至 ${item['exp_date']}');
+                                        break;
+                                      case 'option':
+                                        Widget btn;
+                                        Widget btn2 = Container(width: 0);
+                                        if (item['user_state'] == '0') {
+                                          btn = Container(
+                                            height: 30,
+                                            margin: EdgeInsets.only(right: 10),
+                                            child: PrimaryButton(
+                                              onPressed: () {},
+                                              padding: EdgeInsets.only(left: 0),
+                                              child: Text('冻结'),
                                             ),
                                           );
-                                          break;
-                                        case 'last_login_time':
-                                          con = int.tryParse(item['visit_times']) > 0
-                                              ? InkWell(
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(builder: (context) => LoginRecord(item)),
-                                                    );
-                                                  },
-                                                  child: Text(
-                                                    '${item['last_login_time']}',
-                                                    style: TextStyle(color: Colors.blue),
-                                                  ),
-                                                )
-                                              : Text('${item['last_login_time']}');
-                                          break;
-                                        case 'user_state':
-                                          if (item['user_state'] == '0') {
-                                            con = Text('正常');
-                                          } else if (item['user_state'] == '-1') {
-                                            con = Text('冻结');
-                                          } else {
-                                            con = Text('${item['user_state']}');
-                                          }
-                                          break;
-                                        case 'eff_date':
-                                          con = Text('${item['eff_date']} 至 ${item['exp_date']}');
-                                          break;
-                                        case 'option':
-                                          Widget btn;
-                                          Widget btn2 = Container(width: 0);
-                                          if (item['user_state'] == '0') {
-                                            btn = Container(
-                                                height: 30,
-                                                margin: EdgeInsets.only(right: 10),
-                                                child: PrimaryButton(
-                                                  onPressed: () {},
-                                                  padding: EdgeInsets.only(left: 0),
-                                                  child: Text('冻结'),
-                                                ));
-                                          } else if (item['user_state'] == '-1') {
-                                            btn = Container(
-                                                height: 30,
-                                                margin: EdgeInsets.only(right: 10),
-                                                child: PrimaryButton(
-                                                  onPressed: () {},
-                                                  child: Text('解冻'),
-                                                ));
-                                          } else {
-                                            btn = Container(
-                                                height: 30,
-                                                margin: EdgeInsets.only(right: 10),
-                                                child: PrimaryButton(
-                                                  onPressed: () {},
-                                                  child: Text('${item['user_state']}'),
-                                                ));
-                                          }
-
-                                          if (int.tryParse(item['shop_id']) >= 1) {
-                                            if (item['invite_user_id'] != '0') {
-                                              btn2 = Container(
-                                                  height: 30,
-                                                  margin: EdgeInsets.only(right: 10),
-                                                  child: PrimaryButton(
-                                                    onPressed: () {},
-                                                    child: Text('用户推荐人'),
-                                                  ));
-                                            } else if (item['invite_user_id'] == '0') {
-                                              btn2 = Container(
-                                                  height: 30,
-                                                  margin: EdgeInsets.only(right: 10),
-                                                  child: PrimaryButton(
-                                                    onPressed: () {},
-                                                    child: Text('用户推荐人'),
-                                                  ));
-                                            }
-                                          }
-
-                                          con = Wrap(
-                                            runSpacing: 10,
-                                            children: <Widget>[
-                                              Container(
-                                                height: 30,
-                                                margin: EdgeInsets.only(right: 10),
-                                                child: PrimaryButton(
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(builder: (context) => UserMessageModify(item)),
-                                                    );
-                                                  },
-                                                  child: Text('编辑'),
-                                                ),
-                                              ),
-                                              btn,
-                                              item['erp_open_id '] == '1'
-                                                  ? Container(
-                                                      height: 30,
-                                                      margin: EdgeInsets.only(right: 10),
-                                                      child: PrimaryButton(
-                                                        onPressed: () {},
-                                                        child: Text('ERP解绑'),
-                                                      ))
-                                                  : Container(width: 0),
-                                              (0 >= int.tryParse(item['shop_id']) && int.tryParse(item['staff_id']) < 1)
-                                                  ? Container(
-                                                      height: 30,
-                                                      margin: EdgeInsets.only(right: 10),
-                                                      child: PrimaryButton(
-                                                        onPressed: () {},
-                                                        child: Text('升级为企业用户'),
-                                                      ))
-                                                  : Container(width: 0),
-                                              btn2
-                                            ],
+                                        } else if (item['user_state'] == '-1') {
+                                          btn = Container(
+                                            height: 30,
+                                            margin: EdgeInsets.only(right: 10),
+                                            child: PrimaryButton(
+                                              onPressed: () {},
+                                              child: Text('解冻'),
+                                            ),
                                           );
-                                          break;
-                                        default:
-                                          con = Text('${item[col['key']] ?? ''}');
-                                      }
+                                        } else {
+                                          btn = Container(
+                                            height: 30,
+                                            margin: EdgeInsets.only(right: 10),
+                                            child: PrimaryButton(
+                                              onPressed: () {},
+                                              child: Text('${item['user_state']}'),
+                                            ),
+                                          );
+                                        }
 
-                                      return Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        if (int.tryParse(item['shop_id']) >= 1) {
+                                          if (item['invite_user_id'] != '0') {
+                                            btn2 = Container(
+                                              height: 30,
+                                              margin: EdgeInsets.only(right: 10),
+                                              child: PrimaryButton(
+                                                onPressed: () {},
+                                                child: Text('用户推荐人'),
+                                              ),
+                                            );
+                                          } else if (item['invite_user_id'] == '0') {
+                                            btn2 = Container(
+                                              height: 30,
+                                              margin: EdgeInsets.only(right: 10),
+                                              child: PrimaryButton(
+                                                onPressed: () {},
+                                                child: Text('用户推荐人'),
+                                              ),
+                                            );
+                                          }
+                                        }
+
+                                        con = Wrap(
+                                          runSpacing: 10,
+                                          spacing: 10,
+                                          children: <Widget>[
+                                            Container(
+                                              height: 30,
+                                              child: PrimaryButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => UserMessageModify(item),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Text('编辑'),
+                                              ),
+                                            ),
+                                            btn,
+                                            item['erp_open_id '] == '1'
+                                                ? Container(
+                                                    height: 30,
+                                                    child: PrimaryButton(
+                                                      onPressed: () {},
+                                                      child: Text('ERP解绑'),
+                                                    ),
+                                                  )
+                                                : Container(width: 0),
+                                            (0 >= int.tryParse(item['shop_id']) && int.tryParse(item['staff_id']) < 1)
+                                                ? Container(
+                                                    height: 30,
+                                                    child: PrimaryButton(
+                                                      onPressed: () {},
+                                                      child: Text('升级为企业用户'),
+                                                    ),
+                                                  )
+                                                : Container(width: 0),
+                                            btn2
+                                          ],
+                                        );
+                                        break;
+                                      default:
+                                        con = Text('${item[col['key']] ?? ''}');
+                                    }
+
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
                                         children: <Widget>[
                                           Container(
                                             width: 80,
@@ -576,21 +718,27 @@ class _UsersManagerState extends State<UsersManager> {
                                           ),
                                           Expanded(flex: 1, child: con)
                                         ],
-                                      );
-                                    }).toList(),
-                                  ),
+                                      ),
+                                    );
+                                  }).toList(),
                                 ),
                               ),
-                            );
-                          }).toList(),
-                        ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
-              )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                            ),
+                          );
+                        }).toList(),
+                      ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
+              ),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

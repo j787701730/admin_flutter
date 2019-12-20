@@ -116,101 +116,113 @@ class _CADDistributorState extends State<CADDistributor> {
         title: Text('CAD经销商'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                  label: '用户名',
-                  onChanged: (String val) {
-                    setState(() {
-                      param['loginName'] = val;
-                    });
-                  }),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? CupertinoActivityIndicator()
-                  : Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: ajaxData.map<Widget>((item) {
-                          return Container(
-                              decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                              margin: EdgeInsets.only(bottom: 10),
-                              padding: EdgeInsets.only(top: 5, bottom: 5),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: columns.map<Widget>((col) {
-                                  Widget con = Text('${item[col['key']] ?? ''}');
-                                  switch (col['key']) {
-                                    case 'if_show':
-                                      con = Container(
-                                        alignment: Alignment.centerLeft,
-                                        child: '${item[col['key']]}' == '1' ? Text('是') : Text('否'),
-                                      );
-                                      break;
-                                    case 'option':
-                                      con = Wrap(
-                                        runSpacing: 10,
-                                        spacing: 10,
-                                        children: <Widget>[
-                                          SizedBox(
-                                            height: 30,
-                                            child: PrimaryButton(
-                                                onPressed: () {
-                                                  turnToModify({'item': item});
-                                                },
-                                                child: Text('修改')),
-                                          ),
-                                          SizedBox(
-                                            height: 30,
-                                            child: PrimaryButton(
-                                                onPressed: () {
-                                                  turnToHistory({'item': item});
-                                                },
-                                                child: Text('开通历史')),
-                                          ),
-                                        ],
-                                      );
-                                      break;
-                                  }
-
-                                  return Container(
-                                    margin: EdgeInsets.only(bottom: 6),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Container(
-                                          width: 80,
-                                          alignment: Alignment.centerRight,
-                                          child: Text('${col['title']}'),
-                                          margin: EdgeInsets.only(right: 10),
-                                        ),
-                                        Expanded(flex: 1, child: con)
-                                      ],
-                                    ),
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '用户名',
+              onChanged: (String val) {
+                setState(() {
+                  param['loginName'] = val;
+                });
+              },
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? CupertinoActivityIndicator()
+                : Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: ajaxData.map<Widget>((item) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Color(0xffdddddd),
+                              width: 1,
+                            ),
+                          ),
+                          margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.only(top: 5, bottom: 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: columns.map<Widget>((col) {
+                              Widget con = Text('${item[col['key']] ?? ''}');
+                              switch (col['key']) {
+                                case 'if_show':
+                                  con = Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: '${item[col['key']]}' == '1' ? Text('是') : Text('否'),
                                   );
-                                }).toList(),
-                              ));
-                        }).toList(),
-                      ),
+                                  break;
+                                case 'option':
+                                  con = Wrap(
+                                    runSpacing: 10,
+                                    spacing: 10,
+                                    children: <Widget>[
+                                      SizedBox(
+                                        height: 30,
+                                        child: PrimaryButton(
+                                            onPressed: () {
+                                              turnToModify({'item': item});
+                                            },
+                                            child: Text('修改')),
+                                      ),
+                                      SizedBox(
+                                        height: 30,
+                                        child: PrimaryButton(
+                                            onPressed: () {
+                                              turnToHistory({'item': item});
+                                            },
+                                            child: Text('开通历史')),
+                                      ),
+                                    ],
+                                  );
+                                  break;
+                              }
+
+                              return Container(
+                                margin: EdgeInsets.only(bottom: 6),
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: 80,
+                                      alignment: Alignment.centerRight,
+                                      child: Text('${col['title']}'),
+                                      margin: EdgeInsets.only(right: 10),
+                                    ),
+                                    Expanded(flex: 1, child: con)
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        );
+                      }).toList(),
                     ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
-              )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
+              ),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

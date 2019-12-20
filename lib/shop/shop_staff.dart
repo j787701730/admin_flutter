@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
+import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -100,88 +101,89 @@ class _ShopStaffState extends State<ShopStaff> {
         title: Text('${widget.props['shop_name']} 员工'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(
-                  count: count,
-                ),
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(
+                count: count,
               ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      height: 50,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : ajaxData.isEmpty
-                      ? Container(
-                          height: 34,
-                          alignment: Alignment.center,
-                          child: Text('该店铺没有其他员工'),
-                        )
-                      : Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: ajaxData.map<Widget>((item) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Color(0xffdddddd),
-                                  ),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : ajaxData.isEmpty
+                    ? Container(
+                        height: 34,
+                        alignment: Alignment.center,
+                        child: Text('该店铺没有其他员工'),
+                      )
+                    : Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: ajaxData.map<Widget>((item) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Color(0xffdddddd),
                                 ),
-                                margin: EdgeInsets.only(bottom: 10),
-                                padding: EdgeInsets.only(top: 5, bottom: 5),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: columns.map<Widget>((col) {
-                                    Widget con = Text('${item[col['key']] ?? ''}');
-                                    switch (col['key']) {
-                                      case 'state':
-                                        con = Text('${userState[item['state']]}');
-                                        break;
-                                    }
+                              ),
+                              margin: EdgeInsets.only(bottom: 10),
+                              padding: EdgeInsets.only(top: 5, bottom: 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: columns.map<Widget>((col) {
+                                  Widget con = Text('${item[col['key']] ?? ''}');
+                                  switch (col['key']) {
+                                    case 'state':
+                                      con = Text('${userState[item['state']]}');
+                                      break;
+                                  }
 
-                                    return Container(
-                                      margin: EdgeInsets.only(bottom: 6),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 80,
-                                            alignment: Alignment.centerRight,
-                                            child: Text('${col['title']}'),
-                                            margin: EdgeInsets.only(right: 10),
-                                          ),
-                                          Expanded(flex: 1, child: con),
-                                        ],
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
-                              );
-                            }).toList(),
-                          ),
+                                  return Container(
+                                    margin: EdgeInsets.only(bottom: 6),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          width: 80,
+                                          alignment: Alignment.centerRight,
+                                          child: Text('${col['title']}'),
+                                          margin: EdgeInsets.only(right: 10),
+                                        ),
+                                        Expanded(flex: 1, child: con),
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            );
+                          }).toList(),
                         ),
-              Container(
-                child: PagePlugin(
-                  current: param['curr_page'],
-                  total: count,
-                  pageSize: param['page_count'],
-                  function: getPage,
-                ),
-              )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                      ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
+              ),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

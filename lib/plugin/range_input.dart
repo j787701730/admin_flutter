@@ -27,37 +27,53 @@ class _RangeInputState extends State<RangeInput> {
             width: widget.labelWidth ?? 80,
           ),
           Expanded(
-              flex: 1,
-              child: Container(
-                height: 34,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: TextField(
-                          style: TextStyle(fontSize: CFFontSize.content),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
-                      onChanged: (String val) {
-                        widget.onChangeL(val);
-                      },
-                    )),
-                    Container(
-                      width: 20,
-                      alignment: Alignment.center,
-                      child: Text('-'),
+            flex: 1,
+            child: Container(
+              height: 34,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                      child: TextField(
+                    style: TextStyle(fontSize: CFFontSize.content),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 0,
+                        bottom: 0,
+                        left: 15,
+                        right: 15,
+                      ),
                     ),
-                    Expanded(
-                        child: TextField(
-                          style: TextStyle(fontSize: CFFontSize.content),
+                    onChanged: (String val) {
+                      widget.onChangeL(val);
+                    },
+                  )),
+                  Container(
+                    width: 20,
+                    alignment: Alignment.center,
+                    child: Text('-'),
+                  ),
+                  Expanded(
+                    child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(
+                          top: 0,
+                          bottom: 0,
+                          left: 15,
+                          right: 15,
+                        ),
+                      ),
                       onChanged: (String val) {
                         widget.onChangeR(val);
                       },
-                    )),
-                  ],
-                ),
-              ))
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );

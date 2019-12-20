@@ -123,7 +123,8 @@ class _OPTLogsState extends State<OPTLogs> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['curr_page'] += page;
     getData();
   }
@@ -171,77 +172,83 @@ class _OPTLogsState extends State<OPTLogs> {
         title: Text('软件优化日志'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Column(
-                children: searchData.keys.map<Widget>((key) {
-                  return Input(
-                      label: '${searchName[key]}',
-                      onChanged: (String val) {
-                        setState(() {
-                          searchData[key] = val;
-                        });
-                      });
-                }).toList(),
-              ),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '操作日期',
-              ),
-              Select(
-                selectOptions: selects,
-                selectedValue: defaultVal,
-                onChanged: orderBy,
-                label: '排序',
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  PrimaryButton(
-                    onPressed: () {
-                      setState(() {
-                        param['curr_page'] = 1;
-                        getData();
-                      });
-                    },
-                    child: Text('搜索'),
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Column(
+              children: searchData.keys.map<Widget>((key) {
+                return Input(
+                  label: '${searchName[key]}',
+                  onChanged: (String val) {
+                    setState(() {
+                      searchData[key] = val;
+                    });
+                  },
+                );
+              }).toList(),
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '操作日期',
+            ),
+            Select(
+              selectOptions: selects,
+              selectedValue: defaultVal,
+              onChanged: orderBy,
+              label: '排序',
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                PrimaryButton(
+                  onPressed: () {
+                    setState(() {
+                      param['curr_page'] = 1;
+                      getData();
+                    });
+                  },
+                  child: Text('搜索'),
+                )
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 8),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    child: CupertinoActivityIndicator(),
                   )
-                ],
+                : logs.isEmpty
+                    ? Container(
+                        alignment: Alignment.topCenter,
+                        child: Text('无数据'),
+                      )
+                    : LogCard(
+                        columns,
+                        logs,
+                        labelWidth: 110.0,
+                      ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 8),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : logs.isEmpty
-                      ? Container(
-                          alignment: Alignment.topCenter,
-                          child: Text('无数据'),
-                        )
-                      : LogCard(
-                          columns,
-                          logs,
-                          labelWidth: 110.0,
-                        ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
-              )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

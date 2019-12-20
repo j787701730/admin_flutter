@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:admin_flutter/log/components/log_card.dart';
 import 'package:admin_flutter/plugin/date_select_plugin.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
@@ -70,9 +69,9 @@ class _RebateListState extends State<RebateList> {
 
 //  void _onLoading() async{
 //    // monitor network fetch
-//    await Future.delayed(Duration(milliseconds: 1000));
+//    await Future.delayed(Duration(milliseconds: 1000),);
 //    // if failed,use loadFailed(),if no data return,use LoadNodata()
-////    items.add((items.length+1).toString());
+////    items.add((items.length+1).toString(),);
 //    if(mounted)
 //      setState(() {
 //
@@ -171,7 +170,8 @@ class _RebateListState extends State<RebateList> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     if (tabType == 1) {
       param['curr_page'] += page;
       getData();
@@ -222,367 +222,379 @@ class _RebateListState extends State<RebateList> {
         title: Text('返利流水'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          // onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                  label: '收益用户',
-                  onChanged: (val) {
-                    if (val == '') {
-                      param.remove('user_name');
-                      param2.remove('user_name');
-                    } else {
-                      param['user_name'] = val;
-                      param2['user_name'] = val;
-                    }
-                  }),
-              Input(
-                  label: '消费用户',
-                  onChanged: (val) {
-                    if (val == '') {
-                      param.remove('login_name');
-                      param2.remove('login_name');
-                    } else {
-                      param['login_name'] = val;
-                      param2['login_name'] = val;
-                    }
-                  }),
-              RangeInput(
-                  label: '返利区间',
-                  onChangeL: (val) {
-                    if (val == '') {
-                      param.remove('amountL');
-                      param2.remove('amountL');
-                    } else {
-                      param['amountL'] = val;
-                      param2['amountL'] = val;
-                    }
-                  },
-                  onChangeR: (val) {
-                    if (val == '') {
-                      param.remove('amountU');
-                      param2.remove('amountU');
-                    } else {
-                      param['amountU'] = val;
-                      param2['amountU'] = val;
-                    }
-                  }),
-              RangeInput(
-                  label: '间接返利',
-                  onChangeL: (val) {
-                    if (val == '') {
-                      param.remove('invite_rate_min');
-                      param2.remove('invite_rate_min');
-                    } else {
-                      param['invite_rate_min'] = val;
-                      param2['invite_rate_min'] = val;
-                    }
-                  },
-                  onChangeR: (val) {
-                    if (val == '') {
-                      param.remove('invite_rate_max');
-                      param2.remove('invite_rate_max');
-                    } else {
-                      param['invite_rate_max'] = val;
-                      param2['invite_rate_max'] = val;
-                    }
-                  }),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '操作日期',
-              ),
-              Select(
-                  selectOptions: type,
-                  selectedValue: param['rebate_type'] ?? 'all',
-                  label: '返利类型',
-                  onChanged: (val) {
-                    if (val == 'all') {
-                      param.remove('rebate_type');
-                      param2.remove('rebate_type');
-                    } else {
-                      param['rebate_type'] = val;
-                      param2['rebate_type'] = val;
-                    }
-                  }),
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        // onLoading: _onLoading,
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+                label: '收益用户',
+                onChanged: (val) {
+                  if (val == '') {
+                    param.remove('user_name');
+                    param2.remove('user_name');
+                  } else {
+                    param['user_name'] = val;
+                    param2['user_name'] = val;
+                  }
+                }),
+            Input(
+                label: '消费用户',
+                onChanged: (val) {
+                  if (val == '') {
+                    param.remove('login_name');
+                    param2.remove('login_name');
+                  } else {
+                    param['login_name'] = val;
+                    param2['login_name'] = val;
+                  }
+                }),
+            RangeInput(
+                label: '返利区间',
+                onChangeL: (val) {
+                  if (val == '') {
+                    param.remove('amountL');
+                    param2.remove('amountL');
+                  } else {
+                    param['amountL'] = val;
+                    param2['amountL'] = val;
+                  }
+                },
+                onChangeR: (val) {
+                  if (val == '') {
+                    param.remove('amountU');
+                    param2.remove('amountU');
+                  } else {
+                    param['amountU'] = val;
+                    param2['amountU'] = val;
+                  }
+                }),
+            RangeInput(
+                label: '间接返利',
+                onChangeL: (val) {
+                  if (val == '') {
+                    param.remove('invite_rate_min');
+                    param2.remove('invite_rate_min');
+                  } else {
+                    param['invite_rate_min'] = val;
+                    param2['invite_rate_min'] = val;
+                  }
+                },
+                onChangeR: (val) {
+                  if (val == '') {
+                    param.remove('invite_rate_max');
+                    param2.remove('invite_rate_max');
+                  } else {
+                    param['invite_rate_max'] = val;
+                    param2['invite_rate_max'] = val;
+                  }
+                }),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '操作日期',
+            ),
+            Select(
+                selectOptions: type,
+                selectedValue: param['rebate_type'] ?? 'all',
+                label: '返利类型',
+                onChanged: (val) {
+                  if (val == 'all') {
+                    param.remove('rebate_type');
+                    param2.remove('rebate_type');
+                  } else {
+                    param['rebate_type'] = val;
+                    param2['rebate_type'] = val;
+                  }
+                }),
 //              Select(
 //                selectOptions: selects,
 //                selectedValue: defaultVal,
 //                label: '排序',
 //                onChanged: orderBy,
 //              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                PrimaryButton(
+                  onPressed: () {
+                    setState(() {
+                      param['curr_page'] = 1;
+                      param2['curr_page'] = 1;
+                      getData();
+                      getData2();
+                    });
+                  },
+                  child: Text('搜索'),
+                )
+              ],
+            ),
+            amount.isEmpty
+                ? Container()
+                : Container(
+                    margin: EdgeInsets.only(bottom: 10, top: 6),
+                    child: Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      children: <Widget>[
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              '返利总金额：',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text('${amount['actualrebate']}元')
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              '直接推荐人返利总金额：',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text('${amount['directrebate']}元')
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              '间接推荐人返利总金额：',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text('${amount['indirectrebate']}元')
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              '流失金额：',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text('${amount['toprebate']}元')
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              decoration: BoxDecoration(),
+              height: 34,
+              child: Row(
                 children: <Widget>[
-                  PrimaryButton(
-                    onPressed: () {
+                  Container(
+                    height: 34,
+                    width: 15,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(color: Color(0xffff4400), width: 1),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
                       setState(() {
-                        param['curr_page'] = 1;
-                        param2['curr_page'] = 1;
-                        getData();
-                        getData2();
+                        tabType = 1;
                       });
                     },
-                    child: Text('搜索'),
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 2),
+                          left: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1),
+                          right: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1),
+                          bottom: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1),
+                        ),
+                      ),
+                      height: 34,
+                      child: Center(
+                        child: Text(
+                          '返利明细',
+                          style: TextStyle(color: tabType == 1 ? Color(0xffff4400) : CFColors.text),
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        tabType = 2;
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      height: 34,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 2),
+                          left: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1),
+                          right: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1),
+                          bottom: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '返利汇总',
+                          style: TextStyle(color: tabType == 2 ? Color(0xffff4400) : CFColors.text),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      height: 34,
+                      width: 15,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: Color(0xffff4400), width: 1),
+                        ),
+                      ),
+                    ),
                   )
                 ],
               ),
-              amount.isEmpty
-                  ? Container()
-                  : Container(
-                      margin: EdgeInsets.only(bottom: 10, top: 6),
-                      child: Wrap(
-                        spacing: 10,
-                        runSpacing: 10,
-                        children: <Widget>[
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Text(
-                                '返利总金额：',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text('${amount['actualrebate']}元')
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Text(
-                                '直接推荐人返利总金额：',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text('${amount['directrebate']}元')
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Text(
-                                '间接推荐人返利总金额：',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text('${amount['indirectrebate']}元')
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Text(
-                                '流失金额：',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text('${amount['toprebate']}元')
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-              Container(
-                margin: EdgeInsets.only(bottom: 10),
-                decoration: BoxDecoration(),
-                height: 34,
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      height: 34,
-                      width: 15,
-                      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Color(0xffff4400), width: 1))),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          tabType = 1;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.only(left: 15, right: 15),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                top: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 2),
-                                left:
-                                    BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1),
-                                right:
-                                    BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1),
-                                bottom: BorderSide(
-                                    color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1))),
-                        height: 34,
-                        child: Center(
-                          child: Text(
-                            '返利明细',
-                            style: TextStyle(color: tabType == 1 ? Color(0xffff4400) : CFColors.text),
-                          ),
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          tabType = 2;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.only(left: 15, right: 15),
-                        height: 34,
-                        decoration: BoxDecoration(
-                            border: Border(
-                                top: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 2),
-                                left:
-                                    BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1),
-                                right:
-                                    BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1),
-                                bottom: BorderSide(
-                                    color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1))),
-                        child: Center(
-                          child: Text(
-                            '返利汇总',
-                            style: TextStyle(color: tabType == 2 ? Color(0xffff4400) : CFColors.text),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        height: 34,
-                        width: 15,
-                        decoration:
-                            BoxDecoration(border: Border(bottom: BorderSide(color: Color(0xffff4400), width: 1))),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              loading
-                  ? Container(
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Column(
-                      children: <Widget>[
-                        Offstage(
-                          offstage: tabType != 1,
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(bottom: 8),
-                                alignment: Alignment.centerRight,
-                                child: NumberBar(count: count),
-                              ),
-                              logs.isEmpty
-                                  ? Container(
-                                      alignment: Alignment.topCenter,
-                                      child: Text('无数据'),
-                                    )
-                                  : Container(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: logs.map<Widget>((item) {
-                                          return Container(
-                                              decoration:
-                                                  BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                              margin: EdgeInsets.only(bottom: 10),
-                                              padding: EdgeInsets.only(top: 5, bottom: 5),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: columns.map<Widget>((col) {
-                                                  Widget con = Text('${item[col['key']] ?? ''}');
+            ),
+            loading
+                ? Container(
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Column(
+                    children: <Widget>[
+                      Offstage(
+                        offstage: tabType != 1,
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(bottom: 8),
+                              alignment: Alignment.centerRight,
+                              child: NumberBar(count: count),
+                            ),
+                            logs.isEmpty
+                                ? Container(
+                                    alignment: Alignment.topCenter,
+                                    child: Text('无数据'),
+                                  )
+                                : Container(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: logs.map<Widget>((item) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(color: Color(0xffdddddd), width: 1),
+                                          ),
+                                          margin: EdgeInsets.only(bottom: 10),
+                                          padding: EdgeInsets.only(top: 5, bottom: 5),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: columns.map<Widget>((col) {
+                                              Widget con = Text('${item[col['key']] ?? ''}');
 
-                                                  return Container(
-                                                    margin: EdgeInsets.only(bottom: 6),
-                                                    child: Row(
-                                                      children: <Widget>[
-                                                        Container(
-                                                          width: 80,
-                                                          alignment: Alignment.centerRight,
-                                                          child: Text('${col['title']}'),
-                                                          margin: EdgeInsets.only(right: 10),
-                                                        ),
-                                                        Expanded(flex: 1, child: con)
-                                                      ],
+                                              return Container(
+                                                margin: EdgeInsets.only(bottom: 6),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Container(
+                                                      width: 80,
+                                                      alignment: Alignment.centerRight,
+                                                      child: Text('${col['title']}'),
+                                                      margin: EdgeInsets.only(right: 10),
                                                     ),
-                                                  );
-                                                }).toList(),
-                                              ));
-                                        }).toList(),
-                                      ),
+                                                    Expanded(flex: 1, child: con)
+                                                  ],
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        );
+                                      }).toList(),
                                     ),
-                              Container(
-                                child: PagePlugin(
-                                    current: param['curr_page'],
-                                    total: count,
-                                    pageSize: param['page_count'],
-                                    function: getPage),
-                              )
-                            ],
-                          ),
-                        ),
-                        Offstage(
-                          offstage: tabType != 2,
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(bottom: 8),
-                                alignment: Alignment.centerRight,
-                                child: NumberBar(count: count2),
+                                  ),
+                            Container(
+                              child: PagePlugin(
+                                current: param['curr_page'],
+                                total: count,
+                                pageSize: param['page_count'],
+                                function: getPage,
                               ),
-                              logs2.isEmpty
-                                  ? Container(
-                                      alignment: Alignment.topCenter,
-                                      child: Text('无数据'),
-                                    )
-                                  : Container(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: logs2.map<Widget>((item) {
-                                          return Container(
-                                              decoration:
-                                                  BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                              margin: EdgeInsets.only(bottom: 10),
-                                              padding: EdgeInsets.only(top: 5, bottom: 5),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: columns2.map<Widget>((col) {
-                                                  Widget con = Text('${item['${col['key']}'] ?? ''}');
-                                                  return Container(
-                                                    margin: EdgeInsets.only(bottom: 6),
-                                                    child: Row(
-                                                      children: <Widget>[
-                                                        Container(
-                                                          width: 100,
-                                                          alignment: Alignment.centerRight,
-                                                          child: Text('${col['title']}'),
-                                                          margin: EdgeInsets.only(right: 10),
-                                                        ),
-                                                        Expanded(flex: 1, child: con)
-                                                      ],
+                            )
+                          ],
+                        ),
+                      ),
+                      Offstage(
+                        offstage: tabType != 2,
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(bottom: 8),
+                              alignment: Alignment.centerRight,
+                              child: NumberBar(count: count2),
+                            ),
+                            logs2.isEmpty
+                                ? Container(
+                                    alignment: Alignment.topCenter,
+                                    child: Text('无数据'),
+                                  )
+                                : Container(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: logs2.map<Widget>((item) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(color: Color(0xffdddddd), width: 1),
+                                          ),
+                                          margin: EdgeInsets.only(bottom: 10),
+                                          padding: EdgeInsets.only(top: 5, bottom: 5),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: columns2.map<Widget>((col) {
+                                              Widget con = Text('${item['${col['key']}'] ?? ''}');
+                                              return Container(
+                                                margin: EdgeInsets.only(bottom: 6),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Container(
+                                                      width: 100,
+                                                      alignment: Alignment.centerRight,
+                                                      child: Text('${col['title']}'),
+                                                      margin: EdgeInsets.only(right: 10),
                                                     ),
-                                                  );
-                                                }).toList(),
-                                              ));
-                                        }).toList(),
-                                      ),
+                                                    Expanded(flex: 1, child: con)
+                                                  ],
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        );
+                                      }).toList(),
                                     ),
-                              Container(
-                                child: PagePlugin(
-                                    current: param2['curr_page'],
-                                    total: count2,
-                                    pageSize: param2['page_count'],
-                                    function: getPage),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                                  ),
+                            Container(
+                              child: PagePlugin(
+                                current: param2['curr_page'],
+                                total: count2,
+                                pageSize: param2['page_count'],
+                                function: getPage,
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

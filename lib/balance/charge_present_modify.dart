@@ -61,61 +61,67 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
           padding: EdgeInsets.all(10),
           children: <Widget>[
             Select(
-                labelWidth: 110,
-                selectOptions: balanceType,
-                selectedValue: param['balance_type'] ?? '1',
-                label: '账本类型',
-                onChanged: (val) {
-                  setState(() {
-                    param['balance_type'] = val;
-                  });
-                }),
+              labelWidth: 100,
+              selectOptions: balanceType,
+              selectedValue: param['balance_type'] ?? '1',
+              label: '账本类型',
+              onChanged: (val) {
+                setState(() {
+                  param['balance_type'] = val;
+                });
+              },
+            ),
             Select(
-                labelWidth: 110,
-                selectOptions: chargeType,
-                selectedValue: param['charge_type'] ?? '2',
-                label: '充值类型',
-                onChanged: (val) {
-                  setState(() {
-                    param['charge_type'] = val;
-                  });
-                }),
+              labelWidth: 100,
+              selectOptions: chargeType,
+              selectedValue: param['charge_type'] ?? '2',
+              label: '充值类型',
+              onChanged: (val) {
+                setState(() {
+                  param['charge_type'] = val;
+                });
+              },
+            ),
             Select(
-                labelWidth: 110,
-                selectOptions: userType,
-                selectedValue: param['user_type'] ?? '1',
-                label: '用户类型',
-                onChanged: (val) {
-                  setState(() {
-                    param['user_type'] = val;
-                  });
-                }),
+              labelWidth: 100,
+              selectOptions: userType,
+              selectedValue: param['user_type'] ?? '1',
+              label: '用户类型',
+              onChanged: (val) {
+                setState(() {
+                  param['user_type'] = val;
+                });
+              },
+            ),
             Select(
-                labelWidth: 110,
-                selectOptions: presentType,
-                selectedValue: param['present_type'] ?? '1',
-                label: '赠送类型',
-                onChanged: (val) {
-                  setState(() {
-                    param['present_type'] = val;
-                  });
-                }),
+              labelWidth: 100,
+              selectOptions: presentType,
+              selectedValue: param['present_type'] ?? '1',
+              label: '赠送类型',
+              onChanged: (val) {
+                setState(() {
+                  param['present_type'] = val;
+                });
+              },
+            ),
             Select(
-                labelWidth: 110,
-                selectOptions: presentBalance,
-                selectedValue: param['present_balance_type'] ?? '2',
-                label: '赠送账本类型',
-                onChanged: (val) {
-                  setState(() {
-                    param['present_balance_type'] = val;
-                  });
-                }),
+              labelWidth: 100,
+              selectOptions: presentBalance,
+              selectedValue: param['present_balance_type'] ?? '2',
+              label: '赠送账本类型',
+              onChanged: (val) {
+                setState(() {
+                  param['present_balance_type'] = val;
+                });
+              },
+            ),
             Container(
-                margin: EdgeInsets.only(bottom: 10),
-                height: 34,
-                child: Row(children: <Widget>[
+              margin: EdgeInsets.only(bottom: 10),
+              height: 34,
+              child: Row(
+                children: <Widget>[
                   Container(
-                    width: 110,
+                    width: 100,
                     alignment: Alignment.centerRight,
                     child: Text('充值上限'),
                     margin: EdgeInsets.only(right: 10),
@@ -124,12 +130,21 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                     flex: 1,
                     child: TextField(
                       style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(TextEditingValue(
+                      controller: TextEditingController.fromValue(
+                        TextEditingValue(
                           text: '${param['charge_limit'] ?? ''}',
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream, offset: '${param['charge_limit'] ?? ''}'.length)))),
+                          selection: TextSelection.fromPosition(
+                            TextPosition(
+                              affinity: TextAffinity.downstream,
+                              offset: '${param['charge_limit'] ?? ''}'.length,
+                            ),
+                          ),
+                        ),
+                      ),
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),
+                      ),
                       onChanged: (String val) {
                         setState(() {
                           param['charge_limit'] = val;
@@ -137,13 +152,16 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                       },
                     ),
                   ),
-                ])),
+                ],
+              ),
+            ),
             Container(
-                margin: EdgeInsets.only(bottom: 10),
-                height: 34,
-                child: Row(children: <Widget>[
+              margin: EdgeInsets.only(bottom: 10),
+              height: 34,
+              child: Row(
+                children: <Widget>[
                   Container(
-                    width: 110,
+                    width: 100,
                     alignment: Alignment.centerRight,
                     child: Text('赠送额度'),
                     margin: EdgeInsets.only(right: 10),
@@ -152,12 +170,19 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                     flex: 1,
                     child: TextField(
                       style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(TextEditingValue(
+                      controller: TextEditingController.fromValue(
+                        TextEditingValue(
                           text: '${param['present_value'] ?? ''}',
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream, offset: '${param['present_value'] ?? ''}'.length)))),
+                          selection: TextSelection.fromPosition(
+                            TextPosition(
+                                affinity: TextAffinity.downstream, offset: '${param['present_value'] ?? ''}'.length),
+                          ),
+                        ),
+                      ),
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),
+                      ),
                       onChanged: (String val) {
                         setState(() {
                           param['present_value'] = val;
@@ -165,103 +190,121 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                       },
                     ),
                   ),
-                ])),
+                ],
+              ),
+            ),
             Container(
-                margin: EdgeInsets.only(bottom: 10),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      width: 110,
-                      alignment: Alignment.centerRight,
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[Text('生效日期')],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: InkWell(
-                          onTap: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            DatePicker.showDateTimePicker(
-                              context,
-                              showTitleActions: true,
-                              minTime: DateTime.now(),
-                              maxTime: DateTime(2099, 12, 31),
-                              onChanged: (date) {
-                                print('change $date');
-                              },
-                              onConfirm: (date) {
-                                setState(() {
-                                  param['eff_date'] = date;
-                                });
-                              },
-                              currentTime: param['eff_date'] ?? DateTime.now(),
-                              locale: LocaleType.zh,
-                            );
-                          },
-                          child: Container(
-                            height: 34,
-                            padding: EdgeInsets.only(left: 10),
-                            alignment: Alignment.centerLeft,
-                            decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
-                            child: Text(param['eff_date'] == null ? '' : '${param['eff_date']}'.substring(0, 19)),
-                          )),
-                    )
-                  ],
-                )),
-            Container(
-                margin: EdgeInsets.only(bottom: 10),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      width: 110,
-                      alignment: Alignment.centerRight,
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[Text('失效日期')],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: InkWell(
-                          onTap: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            DatePicker.showDateTimePicker(
-                              context,
-                              showTitleActions: true,
-                              minTime: DateTime.now(),
-                              maxTime: DateTime(2099, 12, 31),
-                              onChanged: (date) {
-                                print('change $date');
-                              },
-                              onConfirm: (date) {
-                                setState(() {
-                                  param['exp_date'] = date;
-                                });
-                              },
-                              currentTime: param['exp_date'] ?? DateTime.now(),
-                              locale: LocaleType.zh,
-                            );
-                          },
-                          child: Container(
-                            height: 34,
-                            padding: EdgeInsets.only(left: 10),
-                            alignment: Alignment.centerLeft,
-                            decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
-                            child: Text(param['exp_date'] == null ? '' : '${param['exp_date']}'.substring(0, 19)),
-                          )),
-                    )
-                  ],
-                )),
-            Container(
-                margin: EdgeInsets.only(bottom: 10),
-                height: 34,
-                child: Row(children: <Widget>[
+              margin: EdgeInsets.only(bottom: 10),
+              child: Row(
+                children: <Widget>[
                   Container(
-                    width: 110,
+                    width: 100,
+                    alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[Text('生效日期')],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: InkWell(
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        DatePicker.showDateTimePicker(
+                          context,
+                          showTitleActions: true,
+                          minTime: DateTime.now(),
+                          maxTime: DateTime(2099, 12, 31),
+                          onChanged: (date) {
+                            print('change $date');
+                          },
+                          onConfirm: (date) {
+                            setState(() {
+                              param['eff_date'] = date;
+                            });
+                          },
+                          currentTime: param['eff_date'] ?? DateTime.now(),
+                          locale: LocaleType.zh,
+                        );
+                      },
+                      child: Container(
+                        height: 34,
+                        padding: EdgeInsets.only(left: 10),
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          param['eff_date'] == null ? '' : '${param['eff_date']}'.substring(0, 19),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 100,
+                    alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[Text('失效日期')],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: InkWell(
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        DatePicker.showDateTimePicker(
+                          context,
+                          showTitleActions: true,
+                          minTime: DateTime.now(),
+                          maxTime: DateTime(2099, 12, 31),
+                          onChanged: (date) {
+                            print('change $date');
+                          },
+                          onConfirm: (date) {
+                            setState(() {
+                              param['exp_date'] = date;
+                            });
+                          },
+                          currentTime: param['exp_date'] ?? DateTime.now(),
+                          locale: LocaleType.zh,
+                        );
+                      },
+                      child: Container(
+                        height: 34,
+                        padding: EdgeInsets.only(left: 10),
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(param['exp_date'] == null ? '' : '${param['exp_date']}'.substring(0, 19)),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              height: 34,
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 100,
                     alignment: Alignment.centerRight,
                     child: Text('规则名称'),
                     margin: EdgeInsets.only(right: 10),
@@ -271,11 +314,16 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                     child: TextField(
                       style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(TextEditingValue(
-                          text: '${param['rule_name'] ?? ''}',
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream, offset: '${param['rule_name'] ?? ''}'.length)))),
+                        text: '${param['rule_name'] ?? ''}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['rule_name'] ?? ''}'.length,
+                          ),
+                        ),
+                      )),
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,)),
                       onChanged: (String val) {
                         setState(() {
                           param['rule_name'] = val;
@@ -283,12 +331,15 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                       },
                     ),
                   ),
-                ])),
+                ],
+              ),
+            ),
             Container(
-                margin: EdgeInsets.only(bottom: 10),
-                child: Row(children: <Widget>[
+              margin: EdgeInsets.only(bottom: 10),
+              child: Row(
+                children: <Widget>[
                   Container(
-                    width: 110,
+                    width: 100,
                     alignment: Alignment.centerRight,
                     child: Text('规则备注'),
                     margin: EdgeInsets.only(right: 10),
@@ -298,12 +349,25 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                     child: TextField(
                       style: TextStyle(fontSize: CFFontSize.content),
                       maxLines: 6,
-                      controller: TextEditingController.fromValue(TextEditingValue(
+                      controller: TextEditingController.fromValue(
+                        TextEditingValue(
                           text: '${param['comments'] ?? ''}',
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream, offset: '${param['comments'] ?? ''}'.length)))),
+                          selection: TextSelection.fromPosition(
+                            TextPosition(
+                              affinity: TextAffinity.downstream,
+                              offset: '${param['comments'] ?? ''}'.length,
+                            ),
+                          ),
+                        ),
+                      ),
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 15)),
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(
+                          top: 10,
+                          bottom: 10,
+                          left: 15,
+                        ),
+                      ),
                       onChanged: (String val) {
                         setState(() {
                           param['comments'] = val;
@@ -311,32 +375,36 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                       },
                     ),
                   ),
-                ])),
+                ],
+              ),
+            ),
             Container(
               margin: EdgeInsets.only(bottom: 6),
               child: Row(
                 children: <Widget>[
                   Container(
-                    width: 110,
+                    width: 100,
                     alignment: Alignment.centerRight,
                     child: Text(''),
                     margin: EdgeInsets.only(right: 10),
                   ),
                   Expanded(
-                      flex: 1,
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            height: 34,
-                            child: PrimaryButton(
-                                onPressed: () {
-                                  print(param);
-                                  FocusScope.of(context).requestFocus(FocusNode());
-                                },
-                                child: Text('保存')),
-                          )
-                        ],
-                      )),
+                    flex: 1,
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          height: 34,
+                          child: PrimaryButton(
+                            onPressed: () {
+                              print(param);
+                              FocusScope.of(context).requestFocus(FocusNode());
+                            },
+                            child: Text('保存'),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             )

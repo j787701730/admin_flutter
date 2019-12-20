@@ -105,9 +105,10 @@ class _ShopPluginState extends State<ShopPlugin> {
 
   shopsBox(width) {
     showModalBottomSheet(
-        context: _context,
-        builder: (BuildContext context) {
-          return StatefulBuilder(builder: (context1, state) {
+      context: _context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context1, state) {
             /// 这里的state就是setState
             return Container(
               height: 400,
@@ -118,12 +119,13 @@ class _ShopPluginState extends State<ShopPlugin> {
                     child: Row(
                       children: <Widget>[
                         Expanded(
-                            flex: 1,
-                            child: Text(
-                              '${selectShopsData[key]['shop_name']}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            )),
+                          flex: 1,
+                          child: Text(
+                            '${selectShopsData[key]['shop_name']}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                         InkWell(
                           onTap: () {
                             state(() {
@@ -144,8 +146,10 @@ class _ShopPluginState extends State<ShopPlugin> {
                 }).toList(),
               ),
             );
-          });
-        });
+          },
+        );
+      },
+    );
   }
 
   toTop() {
@@ -176,35 +180,39 @@ class _ShopPluginState extends State<ShopPlugin> {
     return Column(
       children: <Widget>[
         Input(
-            label: '用户名',
-            onChanged: (String val) {
-              setState(() {
-                param['login_name'] = val;
-              });
-            }),
+          label: '用户名',
+          onChanged: (String val) {
+            setState(() {
+              param['login_name'] = val;
+            });
+          },
+        ),
         Input(
-            label: '店铺名称',
-            onChanged: (String val) {
-              setState(() {
-                param['shopName'] = val;
-              });
-            }),
+          label: '店铺名称',
+          onChanged: (String val) {
+            setState(() {
+              param['shopName'] = val;
+            });
+          },
+        ),
         Input(
-            label: '手机',
-            onChanged: (String val) {
-              setState(() {
-                param['user_phone'] = val;
-              });
-            }),
+          label: '手机',
+          onChanged: (String val) {
+            setState(() {
+              param['user_phone'] = val;
+            });
+          },
+        ),
         Select(
-            selectOptions: serviceType,
-            selectedValue: param['serviceType'],
-            label: '服务类型',
-            onChanged: (String newValue) {
-              setState(() {
-                param['serviceType'] = newValue;
-              });
-            })
+          selectOptions: serviceType,
+          selectedValue: param['serviceType'],
+          label: '服务类型',
+          onChanged: (String newValue) {
+            setState(() {
+              param['serviceType'] = newValue;
+            });
+          },
+        )
       ],
     );
   }
@@ -258,73 +266,90 @@ class _ShopPluginState extends State<ShopPlugin> {
                   child: InkWell(
                     onTap: () => selectOrCancel(item),
                     child: Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xffffffff),
-                            border: Border.all(color: Color(0xffdddddd), width: 1),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Color(0xffdddddd), offset: Offset(0.0, 3.0), blurRadius: 3.0, spreadRadius: 3),
-                            ]),
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              child: Center(
-                                child: shopCount == 1
-                                    ? Radio(
-                                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                        value: item['shop_id'],
-                                        groupValue:
-                                            selectShopsData.keys.isEmpty ? '' : selectShopsData.keys.toList()[0],
-                                        onChanged: (val) => selectOrCancel(item))
-                                    : Checkbox(
-                                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                        value: selectShopsData.keys.toList().indexOf(item['shop_id']) != -1,
-                                        onChanged: (val) => selectOrCancel(item)),
+                      decoration: BoxDecoration(
+                        color: Color(0xffffffff),
+                        border: Border.all(
+                          color: Color(0xffdddddd),
+                          width: 1,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xffdddddd),
+                            offset: Offset(0.0, 3.0),
+                            blurRadius: 3.0,
+                            spreadRadius: 3,
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            child: Center(
+                              child: shopCount == 1
+                                  ? Radio(
+                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                      value: item['shop_id'],
+                                      groupValue: selectShopsData.keys.isEmpty ? '' : selectShopsData.keys.toList()[0],
+                                      onChanged: (val) => selectOrCancel(item),
+                                    )
+                                  : Checkbox(
+                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                      value: selectShopsData.keys.toList().indexOf(item['shop_id']) != -1,
+                                      onChanged: (val) => selectOrCancel(item),
+                                    ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              padding: EdgeInsets.only(left: 6, right: 6, top: 8, bottom: 8),
+                              child: Column(
+                                children: columns.map<Widget>((col) {
+                                  return Row(
+                                    children: <Widget>[
+                                      Container(
+                                        width: 80,
+                                        alignment: Alignment.centerRight,
+                                        child: Text('${col['title']}'),
+                                        margin: EdgeInsets.only(right: 10),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(
+                                          child: col['key'] == 'area'
+                                              ? Text(
+                                                  '${item['province_name']} ${item['city_name']} ${item['region_name']}',
+                                                )
+                                              : Text(
+                                                  '${item[col['key']]}',
+                                                ),
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                }).toList(),
                               ),
                             ),
-                            Expanded(
-                                flex: 1,
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 6, right: 6, top: 8, bottom: 8),
-                                  child: Column(
-                                    children: columns.map<Widget>((col) {
-                                      return Row(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 80,
-                                            alignment: Alignment.centerRight,
-                                            child: Text('${col['title']}'),
-                                            margin: EdgeInsets.only(right: 10),
-                                          ),
-                                          Expanded(
-                                              flex: 1,
-                                              child: Container(
-                                                child: col['key'] == 'area'
-                                                    ? Text(
-                                                        '${item['province_name']} ${item['city_name']} ${item['region_name']}')
-                                                    : Text(
-                                                        '${item[col['key']]}',
-                                                      ),
-                                              ))
-                                        ],
-                                      );
-                                    }).toList(),
-                                  ),
-                                ))
-                          ],
-                        )),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 );
               }).toList(),
             ),
             Container(
-              child:
-                  PagePlugin(current: param['currPage'], total: count, pageSize: param['pageCount'], function: getPage),
+              child: PagePlugin(
+                current: param['currPage'],
+                total: count,
+                pageSize: param['pageCount'],
+                function: getPage,
+              ),
             )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: CFFloatingActionButton(
         child: Icon(Icons.add_shopping_cart),
         onPressed: () => shopsBox(width),
       ),

@@ -51,31 +51,32 @@ class _SelectState extends State<Select> {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.all(Radius.circular(4)),
+                borderRadius: BorderRadius.all(Radius.circular(4),),
               ),
               height: 34,
               child: DropdownButton<String>(
-                  isExpanded: true,
-                  elevation: 1,
-                  underline: Container(),
-                  value: widget.selectedValue,
-                  onChanged: (String newValue) {
-                    widget.onChanged(newValue);
-                  },
-                  items: widget.selectOptions.keys.toList().map<DropdownMenuItem<String>>((key) {
-                    return DropdownMenuItem(
-                      value: '$key',
-                      child: Container(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          '${widget.selectOptions[key]}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: CFFontSize.content),
-                        ),
+                isExpanded: true,
+                elevation: 1,
+                underline: Container(),
+                value: widget.selectedValue,
+                onChanged: (String newValue) {
+                  widget.onChanged(newValue);
+                },
+                items: widget.selectOptions.keys.toList().map<DropdownMenuItem<String>>((key) {
+                  return DropdownMenuItem(
+                    value: '$key',
+                    child: Container(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(
+                        '${widget.selectOptions[key]}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: CFFontSize.content),
                       ),
-                    );
-                  }).toList()),
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
           )
         ],

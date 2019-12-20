@@ -118,170 +118,178 @@ class _RebateSaleManState extends State<RebateSaleMan> {
         title: Text('业务员返利'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          // onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        switch (col['key']) {
-                                          case 'right_value':
-                                            con = Text('${item['right_value']} (含)');
-                                            break;
-                                          case 'rate':
-                                            con = Text('${item['rate']} %');
-                                            break;
-                                          case 'option':
-                                            con = Wrap(
-                                              runSpacing: 10,
-                                              spacing: 10,
-                                              children: <Widget>[
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      add(ajaxData.indexOf(item) + 1);
-                                                    },
-                                                    child: Text('添加'),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    type: 'error',
-                                                    onPressed: () {
-                                                      del(ajaxData.indexOf(item));
-                                                    },
-                                                    child: Text('删除'),
-                                                  ),
-                                                )
-                                              ],
-                                            );
-                                            break;
-                                        }
-
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 80,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        // onLoading: _onLoading,
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>((item) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Color(0xffdddddd), width: 1),
+                                ),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    switch (col['key']) {
+                                      case 'right_value':
+                                        con = Text('${item['right_value']} (含)');
+                                        break;
+                                      case 'rate':
+                                        con = Text('${item['rate']} %');
+                                        break;
+                                      case 'option':
+                                        con = Wrap(
+                                          runSpacing: 10,
+                                          spacing: 10,
+                                          children: <Widget>[
+                                            Container(
+                                              height: 30,
+                                              child: PrimaryButton(
+                                                onPressed: () {
+                                                  add(ajaxData.indexOf(item) + 1);
+                                                },
+                                                child: Text('添加'),
                                               ),
-                                              Expanded(flex: 1, child: con)
-                                            ],
-                                          ),
+                                            ),
+                                            Container(
+                                              height: 30,
+                                              child: PrimaryButton(
+                                                type: 'error',
+                                                onPressed: () {
+                                                  del(
+                                                    ajaxData.indexOf(item),
+                                                  );
+                                                },
+                                                child: Text('删除'),
+                                              ),
+                                            )
+                                          ],
                                         );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
-                            ),
+                                        break;
+                                    }
+
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 80,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
+                                          ),
+                                          Expanded(flex: 1, child: con)
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                  ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              child: Wrap(
+                spacing: 10,
+                children: <Widget>[
+                  Container(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        add(ajaxData.length);
+                      },
+                      child: Text('添加'),
                     ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                child: Wrap(
-                  spacing: 10,
-                  children: <Widget>[
-                    Container(
-                      height: 30,
-                      child: PrimaryButton(
-                        onPressed: () {
-                          add(ajaxData.length);
-                        },
-                        child: Text('添加'),
-                      ),
+                  ),
+                  Container(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                      },
+                      child: Text('保存'),
                     ),
-                    Container(
-                      height: 30,
-                      child: PrimaryButton(
-                        onPressed: () {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: Text('保存'),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(top: 10),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      child: Icon(
-                        Icons.lightbulb_outline,
-                        color: CFColors.danger,
-                        size: 24,
-                      ),
-                      margin: EdgeInsets.only(right: 6),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    child: Icon(
+                      Icons.lightbulb_outline,
+                      color: CFColors.danger,
+                      size: 24,
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            '1、第一个最小值要等于0；最后一个最大值要等于999999999；',
-                            style: TextStyle(
-                              color: CFColors.danger,
-                            ),
+                    margin: EdgeInsets.only(right: 6),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          '1、第一个最小值要等于0；最后一个最大值要等于999999999；',
+                          style: TextStyle(
+                            color: CFColors.danger,
                           ),
-                          Text(
-                            '2、每行返利有空行或者空值，该行将无效；',
-                            style: TextStyle(
-                              color: CFColors.danger,
-                            ),
+                        ),
+                        Text(
+                          '2、每行返利有空行或者空值，该行将无效；',
+                          style: TextStyle(
+                            color: CFColors.danger,
                           ),
-                          Text(
-                            '3、返利区间之间的值必须是连续性；',
-                            style: TextStyle(
-                              color: CFColors.danger,
-                            ),
+                        ),
+                        Text(
+                          '3、返利区间之间的值必须是连续性；',
+                          style: TextStyle(
+                            color: CFColors.danger,
                           ),
-                          Text(
-                            '4、返利比例的值在0~100之间并只保留一位小数点。',
-                            style: TextStyle(
-                              color: CFColors.danger,
-                            ),
+                        ),
+                        Text(
+                          '4、返利比例的值在0~100之间并只保留一位小数点。',
+                          style: TextStyle(
+                            color: CFColors.danger,
                           ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

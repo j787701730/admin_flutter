@@ -134,14 +134,15 @@ class _RedPacketState extends State<RedPacket> {
                           ),
                         ),
                         Expanded(
-                            flex: 1,
-                            child: Text(
-                              '红包金额',
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                fontSize: CFFontSize.content,
-                              ),
-                            ))
+                          flex: 1,
+                          child: Text(
+                            '红包金额',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              fontSize: CFFontSize.content,
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -164,12 +165,13 @@ class _RedPacketState extends State<RedPacket> {
                               ),
                             ),
                             Expanded(
-                                flex: 1,
-                                child: Text(
-                                  '$item',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(fontSize: CFFontSize.content),
-                                ))
+                              flex: 1,
+                              child: Text(
+                                '$item',
+                                textAlign: TextAlign.right,
+                                style: TextStyle(fontSize: CFFontSize.content),
+                              ),
+                            )
                           ],
                         ),
                       );
@@ -199,141 +201,151 @@ class _RedPacketState extends State<RedPacket> {
         title: Text('红包管理'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                  label: '创建用户',
-                  onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('create_user_name');
-                      } else {
-                        param['create_user_name'] = val;
-                      }
-                    });
-                  }),
-              Input(
-                  label: '红包标题',
-                  onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('packet_topic');
-                      } else {
-                        param['packet_topic'] = val;
-                      }
-                    });
-                  }),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '创建用户',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('create_user_name');
+                  } else {
+                    param['create_user_name'] = val;
+                  }
+                });
+              },
+            ),
+            Input(
+              label: '红包标题',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('packet_topic');
+                  } else {
+                    param['packet_topic'] = val;
+                  }
+                });
+              },
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                      },
+                      child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(builder: (context) => new CreateRedPacket()),
+                        ).then((val) {
+                          if (val == true) {
                             param['curr_page'] = 1;
                             getData();
-                          },
-                          child: Text('搜索')),
+                          }
+                        });
+                      },
+                      child: Text('新建红包'),
                     ),
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              new MaterialPageRoute(builder: (context) => new CreateRedPacket()),
-                            ).then((val) {
-                              if (val == true) {
-                                param['curr_page'] = 1;
-                                getData();
-                              }
-                            });
-                          },
-                          child: Text('新建红包')),
-                    ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        switch (col['key']) {
-                                          case 'packet_json':
-                                            con = InkWell(
-                                              onTap: () {
-                                                jsonDialog(item);
-                                              },
-                                              child: Text(
-                                                '${item['packet_json']}',
-                                                style: TextStyle(
-                                                  color: Colors.blue,
-                                                ),
-                                              ),
-                                            );
-                                            break;
-                                        }
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 110,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
-                                              ),
-                                              Expanded(flex: 1, child: con)
-                                            ],
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>((item) {
+                              return Container(
+                                decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    switch (col['key']) {
+                                      case 'packet_json':
+                                        con = InkWell(
+                                          onTap: () {
+                                            jsonDialog(item);
+                                          },
+                                          child: Text(
+                                            '${item['packet_json']}',
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                            ),
                                           ),
                                         );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
-              )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                                        break;
+                                    }
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 110,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
+                                          ),
+                                          Expanded(flex: 1, child: con)
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
+              ),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

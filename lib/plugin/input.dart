@@ -71,7 +71,7 @@ class _InputState extends State<Input> {
                     ),
                   )
                 : TextField(
-              style: TextStyle(fontSize: CFFontSize.content),
+                    style: TextStyle(fontSize: CFFontSize.content),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       contentPadding: widget.contentPadding ??

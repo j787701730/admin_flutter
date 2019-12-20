@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:admin_flutter/goods/class_attribute_select.dart';
+import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -105,89 +106,91 @@ class _ClassAttributeState extends State<ClassAttribute> {
         title: Text('${widget.props['className']} 商品分类和商品属性关联'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无项目'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    turnTo({'attrID': item['attr_id'], 'attrOwner': item['attr_owner']});
-                                  },
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                          border: Border.all(color: Color(0xffdddddd), width: 1),
-                                          color: item['attr_owner'] == '自身属性' ? Color(0xffCCFFcc) : Colors.white),
-                                      margin: EdgeInsets.only(bottom: 10),
-                                      padding: EdgeInsets.only(top: 5, bottom: 5),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: columns.map<Widget>((col) {
-                                          Widget con = Text('${item[col['key']] ?? ''}');
-                                          switch (col['key']) {
-                                            case 'attr_object_id':
-                                              con = Text(
-                                                  '${attrObject[item['attr_object_id']]['resource_attr_object_name']}');
-                                              break;
-                                            case 'attr_unit':
-                                              con = item['attr_unit'] == '0'
-                                                  ? Text('')
-                                                  : Text('${attrValuesUnit[item['attr_unit']]['attr_unit_ch_name']}');
-                                              break;
-                                            case 'attr_value_type':
-                                              con = Text(
-                                                  '${attrValuesType[int.tryParse(item['attr_value_type'])]['resource_attr_value_type_ch_name']}');
-                                              break;
-                                            case 'attr_search':
-                                              con = Text('${attrSearch[item['attr_search']]['desc']}');
-                                              break;
-                                          }
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无项目'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>((item) {
+                              return GestureDetector(
+                                onTap: () {
+                                  turnTo({'attrID': item['attr_id'], 'attrOwner': item['attr_owner']});
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Color(0xffdddddd), width: 1),
+                                      color: item['attr_owner'] == '自身属性' ? Color(0xffCCFFcc) : Colors.white),
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: columns.map<Widget>((col) {
+                                      Widget con = Text('${item[col['key']] ?? ''}');
+                                      switch (col['key']) {
+                                        case 'attr_object_id':
+                                          con = Text(
+                                              '${attrObject[item['attr_object_id']]['resource_attr_object_name']}');
+                                          break;
+                                        case 'attr_unit':
+                                          con = item['attr_unit'] == '0'
+                                              ? Text('')
+                                              : Text('${attrValuesUnit[item['attr_unit']]['attr_unit_ch_name']}');
+                                          break;
+                                        case 'attr_value_type':
+                                          con = Text(
+                                              '${attrValuesType[int.tryParse(item['attr_value_type'])]['resource_attr_value_type_ch_name']}');
+                                          break;
+                                        case 'attr_search':
+                                          con = Text('${attrSearch[item['attr_search']]['desc']}');
+                                          break;
+                                      }
 
-                                          return Container(
-                                            margin: EdgeInsets.only(bottom: 6),
-                                            child: Row(
-                                              children: <Widget>[
-                                                Container(
-                                                  width: 110,
-                                                  alignment: Alignment.centerRight,
-                                                  child: Text(
-                                                    '${col['title']}',
-                                                    style: TextStyle(fontSize: 14),
-                                                  ),
-                                                  margin: EdgeInsets.only(right: 10),
-                                                ),
-                                                Expanded(flex: 1, child: con)
-                                              ],
+                                      return Container(
+                                        margin: EdgeInsets.only(bottom: 6),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Container(
+                                              width: 110,
+                                              alignment: Alignment.centerRight,
+                                              child: Text(
+                                                '${col['title']}',
+                                                style: TextStyle(fontSize: 14),
+                                              ),
+                                              margin: EdgeInsets.only(right: 10),
                                             ),
-                                          );
-                                        }).toList(),
-                                      )),
-                                );
-                              }).toList(),
-                            ),
-                    ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                                            Expanded(flex: 1, child: con)
+                                          ],
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                  ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

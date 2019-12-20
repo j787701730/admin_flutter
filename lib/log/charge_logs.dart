@@ -126,7 +126,8 @@ class _ChargeLogsState extends State<ChargeLogs> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['curr_page'] += page;
     getData();
   }
@@ -190,182 +191,190 @@ class _ChargeLogsState extends State<ChargeLogs> {
         title: Text('对账日志'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Select(
-                selectOptions: constractType,
-                selectedValue: param['constract_type'] ?? 'all',
-                label: '对账类型',
-                onChanged: (String newValue) {
-                  setState(() {
-                    if (newValue == 'all') {
-                      param.remove('constract_type');
-                    } else {
-                      param['constract_type'] = newValue;
-                    }
-                  });
-                },
-              ),
-              Select(
-                selectOptions: state,
-                selectedValue: param['state'] ?? 'all',
-                label: '对账结果',
-                onChanged: (String newValue) {
-                  setState(() {
-                    if (newValue == 'all') {
-                      param.remove('state');
-                    } else {
-                      param['state'] = newValue;
-                    }
-                  });
-                },
-              ),
-              RangeInput(
-                label: '交易单量',
-                onChangeL: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('bill_countL');
-                    } else {
-                      param['bill_countL'] = val;
-                    }
-                  });
-                },
-                onChangeR: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('bill_countU');
-                    } else {
-                      param['bill_countU'] = val;
-                    }
-                  });
-                },
-              ),
-              RangeInput(
-                label: '交易总额',
-                onChangeL: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('bill_amountL');
-                    } else {
-                      param['bill_amountL'] = val;
-                    }
-                  });
-                },
-                onChangeR: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('bill_amountU');
-                    } else {
-                      param['bill_amountU'] = val;
-                    }
-                  });
-                },
-              ),
-              DateSelectPlugin(onChanged: getDateTime,label: '操作日期',),
-              Select(
-                selectOptions: selects,
-                selectedValue: defaultVal,
-                onChanged: orderBy,
-                label: "排序",
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Select(
+              selectOptions: constractType,
+              selectedValue: param['constract_type'] ?? 'all',
+              label: '对账类型',
+              onChanged: (String newValue) {
+                setState(() {
+                  if (newValue == 'all') {
+                    param.remove('constract_type');
+                  } else {
+                    param['constract_type'] = newValue;
+                  }
+                });
+              },
+            ),
+            Select(
+              selectOptions: state,
+              selectedValue: param['state'] ?? 'all',
+              label: '对账结果',
+              onChanged: (String newValue) {
+                setState(() {
+                  if (newValue == 'all') {
+                    param.remove('state');
+                  } else {
+                    param['state'] = newValue;
+                  }
+                });
+              },
+            ),
+            RangeInput(
+              label: '交易单量',
+              onChangeL: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('bill_countL');
+                  } else {
+                    param['bill_countL'] = val;
+                  }
+                });
+              },
+              onChangeR: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('bill_countU');
+                  } else {
+                    param['bill_countU'] = val;
+                  }
+                });
+              },
+            ),
+            RangeInput(
+              label: '交易总额',
+              onChangeL: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('bill_amountL');
+                  } else {
+                    param['bill_amountL'] = val;
+                  }
+                });
+              },
+              onChangeR: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('bill_amountU');
+                  } else {
+                    param['bill_amountU'] = val;
+                  }
+                });
+              },
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '操作日期',
+            ),
+            Select(
+              selectOptions: selects,
+              selectedValue: defaultVal,
+              onChanged: orderBy,
+              label: "排序",
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                PrimaryButton(
+                  onPressed: () {
+                    setState(() {
+                      param['curr_page'] = 1;
+                      getData();
+                    });
+                  },
+                  child: Text('搜索'),
+                )
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              child: Wrap(
+                spacing: 10,
+                runSpacing: 10,
                 children: <Widget>[
-                  PrimaryButton(
-                    onPressed: () {
-                      setState(() {
-                        param['curr_page'] = 1;
-                        getData();
-                      });
-                    },
-                    child: Text('搜索'),
-                  )
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        '交易总单量：',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text('${sum['bc']}')
+                    ],
+                    mainAxisSize: MainAxisSize.min,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        '交易总额：',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text('${sum['ba']}元')
+                    ],
+                    mainAxisSize: MainAxisSize.min,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        '手续费总额：',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text('${sum['sa']}元')
+                    ],
+                    mainAxisSize: MainAxisSize.min,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        '入账总额：',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text('${sum['ia']}元')
+                    ],
+                    mainAxisSize: MainAxisSize.min,
+                  ),
                 ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    child: CupertinoActivityIndicator(),
+                  )
+                : logs.isEmpty
+                    ? Container(
+                        alignment: Alignment.topCenter,
+                        child: Text('无数据'),
+                      )
+                    : LogCard(
+                        columns,
+                        logs,
+                        labelWidth: 110.0,
+                      ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                child: Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          '交易总单量：',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text('${sum['bc']}')
-                      ],
-                      mainAxisSize: MainAxisSize.min,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          '交易总额：',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text('${sum['ba']}元')
-                      ],
-                      mainAxisSize: MainAxisSize.min,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          '手续费总额：',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text('${sum['sa']}元')
-                      ],
-                      mainAxisSize: MainAxisSize.min,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          '入账总额：',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text('${sum['ia']}元')
-                      ],
-                      mainAxisSize: MainAxisSize.min,
-                    ),
-                  ],
-                ),
-              ),
-              loading
-                  ? Container(
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : logs.isEmpty
-                      ? Container(
-                          alignment: Alignment.topCenter,
-                          child: Text('无数据'),
-                        )
-                      : LogCard(
-                          columns,
-                          logs,
-                          labelWidth: 110.0,
-                        ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
-              )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

@@ -149,238 +149,239 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: Text('积量汇总'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          // onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                label: '用户',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('login_name');
-                    } else {
-                      param['login_name'] = val;
-                    }
-                  });
-                },
-              ),
-              Input(
-                label: '手机',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('user_phone');
-                    } else {
-                      param['user_phone'] = val;
-                    }
-                  });
-                },
-              ),
-              Select(
-                selectOptions: accumulateType,
-                selectedValue: param['accum_type_id'] ?? 'all',
-                label: '积量类型',
-                onChanged: (val) {
-                  if (val == 'all') {
-                    param.remove('accum_type_id');
-                  } else {
-                    param['accum_type_id'] = val;
-                  }
-                },
-              ),
-              Select(
-                selectOptions: state,
-                selectedValue: param['state'] ?? 'all',
-                label: '状态',
-                onChanged: (val) {
-                  if (val == 'all') {
-                    param.remove('state');
-                  } else {
-                    param['state'] = val;
-                  }
-                },
-              ),
-              RangeInput(
-                label: '剂量值',
-                onChangeL: (val) {
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        // onLoading: _onLoading,
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '用户',
+              onChanged: (String val) {
+                setState(() {
                   if (val == '') {
-                    param.remove('amountL');
+                    param.remove('login_name');
                   } else {
-                    param['amountL'] = val;
+                    param['login_name'] = val;
                   }
-                },
-                onChangeR: (val) {
+                });
+              },
+            ),
+            Input(
+              label: '手机',
+              onChanged: (String val) {
+                setState(() {
                   if (val == '') {
-                    param.remove('amountU');
+                    param.remove('user_phone');
                   } else {
-                    param['amountU'] = val;
+                    param['user_phone'] = val;
                   }
-                },
-              ),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '创建时间',
-              ),
-              DateSelectPlugin(
-                onChanged: getDateTime2,
-                label: '更新时间',
-              ),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                        onPressed: () {
-                          param['curr_page'] = 1;
-                          getData();
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: Text('搜索'),
-                      ),
+                });
+              },
+            ),
+            Select(
+              selectOptions: accumulateType,
+              selectedValue: param['accum_type_id'] ?? 'all',
+              label: '积量类型',
+              onChanged: (val) {
+                if (val == 'all') {
+                  param.remove('accum_type_id');
+                } else {
+                  param['accum_type_id'] = val;
+                }
+              },
+            ),
+            Select(
+              selectOptions: state,
+              selectedValue: param['state'] ?? 'all',
+              label: '状态',
+              onChanged: (val) {
+                if (val == 'all') {
+                  param.remove('state');
+                } else {
+                  param['state'] = val;
+                }
+              },
+            ),
+            RangeInput(
+              label: '剂量值',
+              onChangeL: (val) {
+                if (val == '') {
+                  param.remove('amountL');
+                } else {
+                  param['amountL'] = val;
+                }
+              },
+              onChangeR: (val) {
+                if (val == '') {
+                  param.remove('amountU');
+                } else {
+                  param['amountU'] = val;
+                }
+              },
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '创建时间',
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime2,
+              label: '更新时间',
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Text('搜索'),
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.keys.toList().map<Widget>((key) {
-                                return Container(
-                                  decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  padding: EdgeInsets.all(10),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.only(bottom: 10),
-                                        child: Wrap(
-                                          spacing: 10,
-                                          runSpacing: 10,
-                                          children: <Widget>[
-                                            Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: <Widget>[
-                                                Text(
-                                                  '用户：',
-                                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                                ),
-                                                Text('${ajaxData[key]['login_name']}'),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: <Widget>[
-                                                Text(
-                                                  '手机：',
-                                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                                ),
-                                                Text('${ajaxData[key]['user_phone']}'),
-                                              ],
-                                            )
-                                          ],
-                                        ),
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.keys.toList().map<Widget>((key) {
+                              return Container(
+                                decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      padding: EdgeInsets.only(bottom: 10),
+                                      child: Wrap(
+                                        spacing: 10,
+                                        runSpacing: 10,
+                                        children: <Widget>[
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              Text(
+                                                '用户：',
+                                                style: TextStyle(fontWeight: FontWeight.bold),
+                                              ),
+                                              Text('${ajaxData[key]['login_name']}'),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              Text(
+                                                '手机：',
+                                                style: TextStyle(fontWeight: FontWeight.bold),
+                                              ),
+                                              Text('${ajaxData[key]['user_phone']}'),
+                                            ],
+                                          )
+                                        ],
                                       ),
-                                      Column(
-                                        children: ajaxData[key]['acctRes'].map<Widget>((item) {
-                                          return Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(color: Color(0xffdddddd), width: 1),
-                                            ),
-                                            margin: EdgeInsets.only(bottom: 10),
-                                            padding: EdgeInsets.only(top: 5, bottom: 5),
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: columns.map<Widget>((col) {
-                                                Widget con = Text('${item[col['key']] ?? ''}');
-                                                switch (col['key']) {
-                                                  case "state":
-                                                    con = Text('${state[item['state']]}');
-                                                    break;
-                                                  case 'option':
-                                                    con = Wrap(
-                                                      runSpacing: 10,
-                                                      spacing: 10,
-                                                      children: <Widget>[
-                                                        Container(
-                                                          height: 30,
-                                                          child: PrimaryButton(
-                                                            onPressed: () {
-                                                              turnTo(item);
-                                                            },
-                                                            child: Text('查看'),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    );
-                                                    break;
-                                                }
-                                                return Container(
-                                                  margin: EdgeInsets.only(bottom: 6),
-                                                  child: Row(
+                                    ),
+                                    Column(
+                                      children: ajaxData[key]['acctRes'].map<Widget>((item) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(color: Color(0xffdddddd), width: 1),
+                                          ),
+                                          margin: EdgeInsets.only(bottom: 10),
+                                          padding: EdgeInsets.only(top: 5, bottom: 5),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: columns.map<Widget>((col) {
+                                              Widget con = Text('${item[col['key']] ?? ''}');
+                                              switch (col['key']) {
+                                                case "state":
+                                                  con = Text('${state[item['state']]}');
+                                                  break;
+                                                case 'option':
+                                                  con = Wrap(
+                                                    runSpacing: 10,
+                                                    spacing: 10,
                                                     children: <Widget>[
                                                       Container(
-                                                        width: 80,
-                                                        alignment: Alignment.centerRight,
-                                                        child: Text('${col['title']}'),
-                                                        margin: EdgeInsets.only(right: 10),
+                                                        height: 30,
+                                                        child: PrimaryButton(
+                                                          onPressed: () {
+                                                            turnTo(item);
+                                                          },
+                                                          child: Text('查看'),
+                                                        ),
                                                       ),
-                                                      Expanded(flex: 1, child: con)
                                                     ],
-                                                  ),
-                                                );
-                                              }).toList(),
-                                            ),
-                                          );
-                                        }).toList(),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                  current: param['curr_page'],
-                  total: count,
-                  pageSize: param['page_count'],
-                  function: getPage,
-                ),
+                                                  );
+                                                  break;
+                                              }
+                                              return Container(
+                                                margin: EdgeInsets.only(bottom: 6),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Container(
+                                                      width: 80,
+                                                      alignment: Alignment.centerRight,
+                                                      child: Text('${col['title']}'),
+                                                      margin: EdgeInsets.only(right: 10),
+                                                    ),
+                                                    Expanded(flex: 1, child: con)
+                                                  ],
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    )
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

@@ -218,344 +218,360 @@ class _ShopListState extends State<ShopList> {
         title: Text('店铺列表'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                label: '店铺列表',
-                onChanged: (String val) {
-                  setState(() {
-                    param['shopName'] = val;
-                  });
-                },
-              ),
-              Container(
-                margin: EdgeInsets.only(bottom: 10),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      width: 80,
-                      alignment: Alignment.centerRight,
-                      margin: EdgeInsets.only(right: 10),
-                      child: Text('店铺地址'),
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '店铺列表',
+              onChanged: (String val) {
+                setState(() {
+                  param['shopName'] = val;
+                });
+              },
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 80,
+                    alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(right: 10),
+                    child: Text('店铺地址'),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: CitySelectPlugin(
+                      getArea: getArea,
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: CitySelectPlugin(
-                        getArea: getArea,
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 10),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      width: 80,
-                      alignment: Alignment.centerRight,
-                      margin: EdgeInsets.only(right: 10),
-                      child: Text('服务地址'),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 80,
+                    alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(right: 10),
+                    child: Text('服务地址'),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: CitySelectPlugin(
+                      getArea: getArea2,
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: CitySelectPlugin(
-                        getArea: getArea2,
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
-              Select(
-                selectOptions: order,
-                selectedValue: defaultVal,
-                onChanged: orderBy,
-                label: "排序",
-              ),
-              Container(
-                margin: EdgeInsets.only(bottom: 15),
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            param['page'] = 1;
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+            ),
+            Select(
+              selectOptions: order,
+              selectedValue: defaultVal,
+              onChanged: orderBy,
+              label: "排序",
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 15),
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                      },
+                      child: Text('搜索'),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              loading
-                  ? Container(
-                      height: 200,
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: ajaxData.map<Widget>((item) {
-                          return Container(
-                              padding: EdgeInsets.only(top: 10),
-                              decoration: BoxDecoration(border: Border.all(color: Color(0xffeeeeee), width: 1)),
-                              margin: EdgeInsets.only(bottom: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: columns.map<Widget>((col) {
-                                  Widget con = Text('${item[col['key']] ?? ''}');
-                                  switch (col['key']) {
-                                    case 'login_name':
-                                      con = Wrap(
-                                        crossAxisAlignment: WrapCrossAlignment.center,
-                                        children: <Widget>[
-                                          Text('[店主] ${item['login_name']} '),
-                                          InkWell(
-                                            child: Container(
-                                              child: Text(
-                                                '查看员工',
-                                                style: TextStyle(color: Colors.blue),
-                                              ),
-                                            ),
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) => ShopStaff(
-                                                        {'shop_name': item['shop_name'], 'shop_id': item['shop_id']})),
-                                              );
-                                            },
-                                          )
-                                        ],
-                                      );
-                                      break;
-                                    case 'state':
-                                      con = Align(
-                                        alignment: Alignment.centerLeft,
+            ),
+            loading
+                ? Container(
+                    height: 200,
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: ajaxData.map<Widget>((item) {
+                        return Container(
+                          padding: EdgeInsets.only(top: 10),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xffeeeeee), width: 1),
+                          ),
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: columns.map<Widget>((col) {
+                              Widget con = Text('${item[col['key']] ?? ''}');
+                              switch (col['key']) {
+                                case 'login_name':
+                                  con = Wrap(
+                                    crossAxisAlignment: WrapCrossAlignment.center,
+                                    children: <Widget>[
+                                      Text('[店主] ${item['login_name']} '),
+                                      InkWell(
                                         child: Container(
-                                          width: 60,
-                                          height: 22,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                              color: Color(0xff5cb85c),
-                                              borderRadius: BorderRadius.all(Radius.circular(4))),
                                           child: Text(
-                                            '${shopState[item['state']]}',
-                                            style: TextStyle(color: Colors.white),
+                                            '查看员工',
+                                            style: TextStyle(color: Colors.blue),
                                           ),
                                         ),
-                                      );
-                                      break;
-                                    case 'role_id':
-//                                List userRole = item['role_id'].split(',');
-                                      con = InkWell(
                                         onTap: () {
-                                          setState(() {
-                                            selectRole = item['role_id'].split(',');
-                                            showDialog<void>(
-                                              context: context,
-                                              barrierDismissible: false, // user must tap button!
-                                              builder: (BuildContext context) {
-                                                return StatefulBuilder(builder: (context1, state) {
-                                                  /// 这里的state就是setState
-                                                  return AlertDialog(
-                                                    title: Text(
-                                                      '权限管理',
-                                                      style: TextStyle(fontSize: CFFontSize.topTitle),
-                                                    ),
-                                                    content: SingleChildScrollView(
-                                                      child: ListBody(
-                                                        children: <Widget>[
-                                                          Wrap(
-                                                            spacing: 15,
-                                                            children: roles.keys.toList().map<Widget>((key) {
-                                                              return InkWell(
-                                                                onTap: () {
-                                                                  if (selectRole.indexOf(key) > -1) {
-                                                                    setState(() {
-                                                                      selectRole.remove(key);
-                                                                    });
-                                                                    state(() {
-                                                                      selectRole.remove(key);
-                                                                    });
-                                                                  } else {
-                                                                    setState(() {
-                                                                      selectRole.add(key);
-                                                                    });
-                                                                    state(() {
-                                                                      selectRole.add(key);
-                                                                    });
-                                                                  }
-                                                                },
-                                                                child: Row(
-                                                                  mainAxisSize: MainAxisSize.min,
-                                                                  children: <Widget>[
-                                                                    Checkbox(
-                                                                        materialTapTargetSize:
-                                                                            MaterialTapTargetSize.shrinkWrap,
-                                                                        value: selectRole.indexOf(key) > -1,
-                                                                        onChanged: (val) {
-                                                                          if (selectRole.indexOf(key) > -1) {
-                                                                            setState(() {
-                                                                              selectRole.remove(key);
-                                                                            });
-                                                                            state(() {
-                                                                              selectRole.remove(key);
-                                                                            });
-                                                                          } else {
-                                                                            setState(() {
-                                                                              selectRole.add(key);
-                                                                            });
-                                                                            state(() {
-                                                                              selectRole.add(key);
-                                                                            });
-                                                                          }
-                                                                        }),
-                                                                    Container(
-                                                                      child: Text(
-                                                                        '${roles[key]['role_ch_name']}',
-                                                                        style: TextStyle(fontSize: CFFontSize.content),
-                                                                      ),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              );
-                                                            }).toList(),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    actions: <Widget>[
-                                                      FlatButton(
-                                                        child: Text('取消'),
-                                                        onPressed: () {
-                                                          Navigator.of(context).pop();
-                                                        },
-                                                      ),
-                                                      FlatButton(
-                                                        color: Colors.blue,
-                                                        textColor: Colors.white,
-                                                        child: Text('提交'),
-                                                        onPressed: () {
-                                                          Navigator.of(context).pop();
-                                                        },
-                                                      ),
-                                                    ],
-                                                  );
-                                                }); //
-                                              },
-                                            );
-                                          });
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => ShopStaff(
+                                                  {'shop_name': item['shop_name'], 'shop_id': item['shop_id']}),
+                                            ),
+                                          );
                                         },
-                                        child: Container(
-                                          child: Wrap(
-                                            spacing: 10,
-                                            runSpacing: 10,
-                                            children: item['role_id'].split(',').map<Widget>((role) {
-                                              return Container(
-                                                child: Text(
-                                                  '${roles[role]['role_ch_name']}',
-                                                  style: TextStyle(color: Colors.blue),
-                                                ),
-                                              );
-                                            }).toList(),
-                                          ),
+                                      )
+                                    ],
+                                  );
+                                  break;
+                                case 'state':
+                                  con = Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      width: 60,
+                                      height: 22,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xff5cb85c),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(4),
                                         ),
-                                      );
-                                      break;
-                                    case 'option':
-                                      con = Row(
-                                        children: <Widget>[
-                                          IconButton(
-                                              iconSize: 20,
-                                              color: Colors.blue,
-                                              icon: item['state'] == '1' || item['state'] == '-1'
-                                                  ? Icon(Icons.lock)
-                                                  : Icon(Icons.lock_open),
-                                              onPressed: () {
-                                                showDialog<void>(
-                                                  context: _context,
-                                                  barrierDismissible: false, // user must tap button!
-                                                  builder: (BuildContext context) {
-                                                    return AlertDialog(
-                                                      title: Text(
-                                                        '系统提示',
-                                                        style: TextStyle(fontSize: CFFontSize.topTitle),
-                                                      ),
-                                                      content: SingleChildScrollView(
-                                                        child: ListBody(
-                                                          children: <Widget>[
-                                                            Text(
-                                                              '确定要 ${item['state'] == '1' || item['state'] == '-1' ? '冻结' : '解冻'} ${item['login_name']} 账号?',
-                                                              style: TextStyle(fontSize: CFFontSize.content),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      actions: <Widget>[
-                                                        FlatButton(
-                                                          child: Text('取消'),
-                                                          color: Colors.white,
-                                                          onPressed: () {
-                                                            Navigator.of(context).pop();
-                                                          },
-                                                        ),
-                                                        FlatButton(
-                                                          color: Colors.blue,
-                                                          textColor: Colors.white,
-                                                          child: Text('确定'),
-                                                          onPressed: () {
-                                                            Navigator.of(context).pop();
-                                                          },
-                                                        ),
-                                                      ],
-                                                    );
-                                                  },
-                                                );
-                                              })
-                                        ],
-                                      );
-                                      break;
-                                  }
-
-                                  return Container(
-                                    margin: EdgeInsets.only(bottom: 6),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Container(
-                                          width: 80,
-                                          alignment: Alignment.centerRight,
-                                          child: Text('${col['title']}'),
-                                          margin: EdgeInsets.only(right: 10),
-                                        ),
-                                        Expanded(flex: 1, child: con)
-                                      ],
+                                      ),
+                                      child: Text(
+                                        '${shopState[item['state']]}',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     ),
                                   );
-                                }).toList(),
-                              ));
-                        }).toList(),
-                      ),
+                                  break;
+                                case 'role_id':
+//                                List userRole = item['role_id'].split(',');
+                                  con = InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        selectRole = item['role_id'].split(',');
+                                        showDialog<void>(
+                                          context: context,
+                                          barrierDismissible: false, // user must tap button!
+                                          builder: (BuildContext context) {
+                                            return StatefulBuilder(builder: (context1, state) {
+                                              /// 这里的state就是setState
+                                              return AlertDialog(
+                                                title: Text(
+                                                  '权限管理',
+                                                  style: TextStyle(fontSize: CFFontSize.topTitle),
+                                                ),
+                                                content: SingleChildScrollView(
+                                                  child: ListBody(
+                                                    children: <Widget>[
+                                                      Wrap(
+                                                        spacing: 15,
+                                                        children: roles.keys.toList().map<Widget>((key) {
+                                                          return InkWell(
+                                                            onTap: () {
+                                                              if (selectRole.indexOf(key) > -1) {
+                                                                setState(() {
+                                                                  selectRole.remove(key);
+                                                                });
+                                                                state(() {
+                                                                  selectRole.remove(key);
+                                                                });
+                                                              } else {
+                                                                setState(() {
+                                                                  selectRole.add(key);
+                                                                });
+                                                                state(() {
+                                                                  selectRole.add(key);
+                                                                });
+                                                              }
+                                                            },
+                                                            child: Row(
+                                                              mainAxisSize: MainAxisSize.min,
+                                                              children: <Widget>[
+                                                                Checkbox(
+                                                                    materialTapTargetSize:
+                                                                        MaterialTapTargetSize.shrinkWrap,
+                                                                    value: selectRole.indexOf(key) > -1,
+                                                                    onChanged: (val) {
+                                                                      if (selectRole.indexOf(key) > -1) {
+                                                                        setState(() {
+                                                                          selectRole.remove(key);
+                                                                        });
+                                                                        state(() {
+                                                                          selectRole.remove(key);
+                                                                        });
+                                                                      } else {
+                                                                        setState(() {
+                                                                          selectRole.add(key);
+                                                                        });
+                                                                        state(() {
+                                                                          selectRole.add(key);
+                                                                        });
+                                                                      }
+                                                                    }),
+                                                                Container(
+                                                                  child: Text(
+                                                                    '${roles[key]['role_ch_name']}',
+                                                                    style: TextStyle(fontSize: CFFontSize.content),
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          );
+                                                        }).toList(),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                actions: <Widget>[
+                                                  FlatButton(
+                                                    child: Text('取消'),
+                                                    onPressed: () {
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                  ),
+                                                  FlatButton(
+                                                    color: Colors.blue,
+                                                    textColor: Colors.white,
+                                                    child: Text('提交'),
+                                                    onPressed: () {
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            }); //
+                                          },
+                                        );
+                                      });
+                                    },
+                                    child: Container(
+                                      child: Wrap(
+                                        spacing: 10,
+                                        runSpacing: 10,
+                                        children: item['role_id'].split(',').map<Widget>((role) {
+                                          return Container(
+                                            child: Text(
+                                              '${roles[role]['role_ch_name']}',
+                                              style: TextStyle(color: Colors.blue),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  );
+                                  break;
+                                case 'option':
+                                  con = Row(
+                                    children: <Widget>[
+                                      IconButton(
+                                          iconSize: 20,
+                                          color: Colors.blue,
+                                          icon: item['state'] == '1' || item['state'] == '-1'
+                                              ? Icon(Icons.lock)
+                                              : Icon(Icons.lock_open),
+                                          onPressed: () {
+                                            showDialog<void>(
+                                              context: _context,
+                                              barrierDismissible: false, // user must tap button!
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: Text(
+                                                    '系统提示',
+                                                    style: TextStyle(fontSize: CFFontSize.topTitle),
+                                                  ),
+                                                  content: SingleChildScrollView(
+                                                    child: ListBody(
+                                                      children: <Widget>[
+                                                        Text(
+                                                          '确定要 ${item['state'] == '1' || item['state'] == '-1' ? '冻结' : '解冻'} ${item['login_name']} 账号?',
+                                                          style: TextStyle(fontSize: CFFontSize.content),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  actions: <Widget>[
+                                                    FlatButton(
+                                                      child: Text('取消'),
+                                                      color: Colors.white,
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                    ),
+                                                    FlatButton(
+                                                      color: Colors.blue,
+                                                      textColor: Colors.white,
+                                                      child: Text('确定'),
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          })
+                                    ],
+                                  );
+                                  break;
+                              }
+
+                              return Container(
+                                margin: EdgeInsets.only(bottom: 6),
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: 80,
+                                      alignment: Alignment.centerRight,
+                                      child: Text('${col['title']}'),
+                                      margin: EdgeInsets.only(right: 10),
+                                    ),
+                                    Expanded(flex: 1, child: con)
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        );
+                      }).toList(),
                     ),
-              Container(
-                child: PagePlugin(current: param['page'], total: count, pageSize: param['limit'], function: getPage),
-              )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['page'],
+                total: count,
+                pageSize: param['limit'],
+                function: getPage,
+              ),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

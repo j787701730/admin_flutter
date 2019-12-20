@@ -147,8 +147,10 @@ class _TaskPricingState extends State<TaskPricing> {
                         });
                       }),
                   Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
                         Container(
                           width: 80,
                           alignment: Alignment.centerRight,
@@ -173,14 +175,26 @@ class _TaskPricingState extends State<TaskPricing> {
                             height: 34,
                             child: TextField(
                               style: TextStyle(fontSize: CFFontSize.content),
-                              controller: TextEditingController.fromValue(TextEditingValue(
+                              controller: TextEditingController.fromValue(
+                                TextEditingValue(
                                   text: '${modifyItem['price'] ?? ''}',
-                                  selection: TextSelection.fromPosition(TextPosition(
+                                  selection: TextSelection.fromPosition(
+                                    TextPosition(
                                       affinity: TextAffinity.downstream,
-                                      offset: '${modifyItem['price'] ?? ''}'.length)))),
+                                      offset: '${modifyItem['price'] ?? ''}'.length,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                                border: OutlineInputBorder(),
+                                contentPadding: EdgeInsets.only(
+                                  top: 0,
+                                  bottom: 0,
+                                  left: 15,
+                                  right: 15,
+                                ),
+                              ),
                               onChanged: (String val) {
                                 setState(() {
                                   modifyItem['price'] = val;
@@ -189,10 +203,14 @@ class _TaskPricingState extends State<TaskPricing> {
                             ),
                           ),
                         ),
-                      ])),
+                      ],
+                    ),
+                  ),
                   Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
                         Container(
                           width: 80,
                           alignment: Alignment.centerRight,
@@ -218,14 +236,26 @@ class _TaskPricingState extends State<TaskPricing> {
                             height: 34,
                             child: TextField(
                               style: TextStyle(fontSize: CFFontSize.content),
-                              controller: TextEditingController.fromValue(TextEditingValue(
+                              controller: TextEditingController.fromValue(
+                                TextEditingValue(
                                   text: '${modifyItem['subsidy'] ?? ''}',
-                                  selection: TextSelection.fromPosition(TextPosition(
+                                  selection: TextSelection.fromPosition(
+                                    TextPosition(
                                       affinity: TextAffinity.downstream,
-                                      offset: '${modifyItem['subsidy'] ?? ''}'.length)))),
+                                      offset: '${modifyItem['subsidy'] ?? ''}'.length,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                                border: OutlineInputBorder(),
+                                contentPadding: EdgeInsets.only(
+                                  top: 0,
+                                  bottom: 0,
+                                  left: 15,
+                                  right: 15,
+                                ),
+                              ),
                               onChanged: (String val) {
                                 setState(() {
                                   modifyItem['subsidy'] = val;
@@ -234,7 +264,9 @@ class _TaskPricingState extends State<TaskPricing> {
                             ),
                           ),
                         ),
-                      ]))
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -311,206 +343,213 @@ class _TaskPricingState extends State<TaskPricing> {
         title: Text('任务定价'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          // onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                label: '用户名',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('user_name');
-                    } else {
-                      param['user_name'] = val;
-                    }
-                  });
-                },
-              ),
-              Select(
-                selectOptions: taskType,
-                selectedValue: param['task_type'] ?? 'all',
-                label: '任务类型',
-                onChanged: (val) {
-                  setState(() {
-                    if (val == 'all') {
-                      param.remove('task_type');
-                    } else {
-                      param['task_type'] = val;
-                    }
-                  });
-                },
-              ),
-              RangeInput(
-                label: '定价区间',
-                onChangeL: (val) {
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        // onLoading: _onLoading,
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '用户名',
+              onChanged: (String val) {
+                setState(() {
                   if (val == '') {
-                    param.remove('price_min');
+                    param.remove('user_name');
                   } else {
-                    param['price_min'] = val;
+                    param['user_name'] = val;
                   }
-                },
-                onChangeR: (val) {
-                  if (val == '') {
-                    param.remove('price_max');
+                });
+              },
+            ),
+            Select(
+              selectOptions: taskType,
+              selectedValue: param['task_type'] ?? 'all',
+              label: '任务类型',
+              onChanged: (val) {
+                setState(() {
+                  if (val == 'all') {
+                    param.remove('task_type');
                   } else {
-                    param['price_max'] = val;
+                    param['task_type'] = val;
                   }
-                },
-              ),
-              RangeInput(
-                label: '补贴区间',
-                onChangeL: (val) {
-                  if (val == '') {
-                    param.remove('subsidy_min');
-                  } else {
-                    param['subsidy_min'] = val;
-                  }
-                },
-                onChangeR: (val) {
-                  if (val == '') {
-                    param.remove('subsidy_max');
-                  } else {
-                    param['subsidy_max'] = val;
-                  }
-                },
-              ),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '创建时间',
-              ),
-              Select(
-                selectOptions: selects,
-                selectedValue: defaultVal,
-                label: '排序',
-                onChanged: orderBy,
-              ),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                        onPressed: () {
-                          param['curr_page'] = 1;
-                          getData();
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: Text('搜索'),
-                      ),
+                });
+              },
+            ),
+            RangeInput(
+              label: '定价区间',
+              onChangeL: (val) {
+                if (val == '') {
+                  param.remove('price_min');
+                } else {
+                  param['price_min'] = val;
+                }
+              },
+              onChangeR: (val) {
+                if (val == '') {
+                  param.remove('price_max');
+                } else {
+                  param['price_max'] = val;
+                }
+              },
+            ),
+            RangeInput(
+              label: '补贴区间',
+              onChangeL: (val) {
+                if (val == '') {
+                  param.remove('subsidy_min');
+                } else {
+                  param['subsidy_min'] = val;
+                }
+              },
+              onChangeR: (val) {
+                if (val == '') {
+                  param.remove('subsidy_max');
+                } else {
+                  param['subsidy_max'] = val;
+                }
+              },
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '创建时间',
+            ),
+            Select(
+              selectOptions: selects,
+              selectedValue: defaultVal,
+              label: '排序',
+              onChanged: orderBy,
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Text('搜索'),
                     ),
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                        onPressed: () {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CreateTaskPricing(),
-                            ),
-                          );
-                        },
-                        child: Text('添加任务定价'),
-                      ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CreateTaskPricing(),
+                          ),
+                        );
+                      },
+                      child: Text('添加任务定价'),
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>(
-                                (item) {
-                                  return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>(
-                                        (col) {
-                                          Widget con = Text('${item[col['key']] ?? ''}');
-                                          switch (col['key']) {
-                                            case 'task_type':
-                                              con = Text('${taskType[item['task_type']]}');
-                                              break;
-                                            case 'option':
-                                              con = Wrap(
-                                                runSpacing: 10,
-                                                spacing: 10,
-                                                children: <Widget>[
-                                                  Container(
-                                                    height: 30,
-                                                    child: PrimaryButton(
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          modifyItem = jsonDecode(jsonEncode(item));
-                                                          modifyDialog();
-                                                        });
-                                                      },
-                                                      child: Text('修改'),
-                                                    ),
-                                                  )
-                                                ],
-                                              );
-                                              break;
-                                          }
-
-                                          return Container(
-                                            margin: EdgeInsets.only(bottom: 6),
-                                            child: Row(
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>(
+                              (item) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Color(0xffdddddd), width: 1),
+                                  ),
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: columns.map<Widget>(
+                                      (col) {
+                                        Widget con = Text('${item[col['key']] ?? ''}');
+                                        switch (col['key']) {
+                                          case 'task_type':
+                                            con = Text('${taskType[item['task_type']]}');
+                                            break;
+                                          case 'option':
+                                            con = Wrap(
+                                              runSpacing: 10,
+                                              spacing: 10,
                                               children: <Widget>[
                                                 Container(
-                                                  width: 80,
-                                                  alignment: Alignment.centerRight,
-                                                  child: Text('${col['title']}'),
-                                                  margin: EdgeInsets.only(right: 10),
-                                                ),
-                                                Expanded(flex: 1, child: con),
+                                                  height: 30,
+                                                  child: PrimaryButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        modifyItem = jsonDecode(jsonEncode(item));
+                                                        modifyDialog();
+                                                      });
+                                                    },
+                                                    child: Text('修改'),
+                                                  ),
+                                                )
                                               ],
-                                            ),
-                                          );
-                                        },
-                                      ).toList(),
-                                    ),
-                                  );
-                                },
-                              ).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
+                                            );
+                                            break;
+                                        }
+
+                                        return Container(
+                                          margin: EdgeInsets.only(bottom: 6),
+                                          child: Row(
+                                            children: <Widget>[
+                                              Container(
+                                                width: 80,
+                                                alignment: Alignment.centerRight,
+                                                child: Text('${col['title']}'),
+                                                margin: EdgeInsets.only(right: 10),
+                                              ),
+                                              Expanded(flex: 1, child: con),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ).toList(),
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          ),
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

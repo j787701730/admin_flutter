@@ -152,7 +152,8 @@ class _SmsLogsState extends State<SmsLogs> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['curr_page'] += page;
     getData();
   }
@@ -201,90 +202,97 @@ class _SmsLogsState extends State<SmsLogs> {
         title: Text('短信日志'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Column(
-                children: searchData.keys.map<Widget>((key) {
-                  return Input(
-                      label: '${searchName[key]}',
-                      onChanged: (String val) {
-                        setState(() {
-                          searchData[key] = val;
-                        });
-                      });
-                }).toList(),
-              ),
-              Select(
-                  selectOptions: smsTemplate,
-                  selectedValue: param['template_id'] ?? 'all',
-                  label: '短信模板',
-                  onChanged: (String newValue) {
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Column(
+              children: searchData.keys.map<Widget>((key) {
+                return Input(
+                  label: '${searchName[key]}',
+                  onChanged: (String val) {
                     setState(() {
-                      if (newValue == 'all') {
-                        param.remove('template_id');
-                      } else {
-                        param['template_id'] = newValue;
-                      }
+                      searchData[key] = val;
                     });
-                  }),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '操作日期',
-              ),
-              Select(
-                selectOptions: selects,
-                selectedValue: defaultVal,
-                onChanged: orderBy,
-                label: '排序',
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  PrimaryButton(
-                    onPressed: () {
-                      setState(() {
-                        param['curr_page'] = 1;
-                        getData();
-                      });
-                    },
-                    child: Text('搜索'),
+                  },
+                );
+              }).toList(),
+            ),
+            Select(
+              selectOptions: smsTemplate,
+              selectedValue: param['template_id'] ?? 'all',
+              label: '短信模板',
+              onChanged: (String newValue) {
+                setState(() {
+                  if (newValue == 'all') {
+                    param.remove('template_id');
+                  } else {
+                    param['template_id'] = newValue;
+                  }
+                });
+              },
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '操作日期',
+            ),
+            Select(
+              selectOptions: selects,
+              selectedValue: defaultVal,
+              onChanged: orderBy,
+              label: '排序',
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                PrimaryButton(
+                  onPressed: () {
+                    setState(() {
+                      param['curr_page'] = 1;
+                      getData();
+                    });
+                  },
+                  child: Text('搜索'),
+                )
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 8),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    child: CupertinoActivityIndicator(),
                   )
-                ],
+                : logs.isEmpty
+                    ? Container(
+                        alignment: Alignment.topCenter,
+                        child: Text('无数据'),
+                      )
+                    : LogCard(
+                        columns,
+                        logs,
+                        labelWidth: 110.0,
+                      ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 8),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : logs.isEmpty
-                      ? Container(
-                          alignment: Alignment.topCenter,
-                          child: Text('无数据'),
-                        )
-                      : LogCard(
-                          columns,
-                          logs,
-                          labelWidth: 110.0,
-                        ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
-              )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

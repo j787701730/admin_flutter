@@ -52,7 +52,9 @@ class _CreateTaskPricingState extends State<CreateTaskPricing> {
                     padding: EdgeInsets.only(left: 10, right: 10),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(4),
+                      ),
                     ),
                     height: 30,
                     alignment: Alignment.centerLeft,
@@ -151,12 +153,26 @@ class _CreateTaskPricingState extends State<CreateTaskPricing> {
                   height: 34,
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(TextEditingValue(
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['price'] ?? ''}',
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['price'] ?? ''}'.length)))),
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['price'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 0,
+                        bottom: 0,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (String val) {
                       setState(() {
                         param['price'] = val;
@@ -194,12 +210,26 @@ class _CreateTaskPricingState extends State<CreateTaskPricing> {
                   height: 34,
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(TextEditingValue(
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['subsidy'] ?? ''}',
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['subsidy'] ?? ''}'.length)))),
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['subsidy'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 0,
+                        bottom: 0,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (String val) {
                       setState(() {
                         param['subsidy'] = val;
@@ -233,7 +263,10 @@ class _CreateTaskPricingState extends State<CreateTaskPricing> {
                   children: <Widget>[
                     Container(
                       height: 30,
-                      child: PrimaryButton(onPressed: () {}, child: Text('添加')),
+                      child: PrimaryButton(
+                        onPressed: () {},
+                        child: Text('添加'),
+                      ),
                     )
                   ],
                 ),

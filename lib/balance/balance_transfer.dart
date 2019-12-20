@@ -97,7 +97,8 @@ class _BalanceTransferState extends State<BalanceTransfer> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['currPage'] += page;
     getData();
   }
@@ -111,131 +112,141 @@ class _BalanceTransferState extends State<BalanceTransfer> {
         ),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                  label: '收款账号',
-                  onChanged: (String val) {
-                    setState(() {
-                      param['z_user'] = val;
-                    });
-                  }),
-              Input(
-                  label: '支出账号',
-                  onChanged: (String val) {
-                    setState(() {
-                      param['a_user'] = val;
-                    });
-                  }),
-              Select(
-                  selectOptions: state,
-                  selectedValue: param['state'] ?? 'all',
-                  label: '余额类型',
-                  onChanged: (String newValue) {
-                    setState(() {
-                      param['state'] = newValue;
-                    });
-                  }),
-              Select(
-                  selectOptions: {'0': '转出', '1': '转入'},
-                  selectedValue: param['type'] ?? '0',
-                  label: '转账类型',
-                  onChanged: (String newValue) {
-                    setState(() {
-                      setState(() {
-                        if (newValue == '0') {
-                          param['type'] = '';
-                        } else {
-                          param['type'] = newValue;
-                        }
-                      });
-                    });
-                  }),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            param['currPage'] = 1;
-                            getData();
-                          },
-                          child: Text('搜索')),
-                    ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '收款账号',
+              onChanged: (String val) {
+                setState(() {
+                  param['z_user'] = val;
+                });
+              },
+            ),
+            Input(
+              label: '支出账号',
+              onChanged: (String val) {
+                setState(() {
+                  param['a_user'] = val;
+                });
+              },
+            ),
+            Select(
+              selectOptions: state,
+              selectedValue: param['state'] ?? 'all',
+              label: '余额类型',
+              onChanged: (String newValue) {
+                setState(() {
+                  param['state'] = newValue;
+                });
+              },
+            ),
+            Select(
+              selectOptions: {'0': '转出', '1': '转入'},
+              selectedValue: param['type'] ?? '0',
+              label: '转账类型',
+              onChanged: (String newValue) {
+                setState(() {
+                  setState(() {
+                    if (newValue == '0') {
+                      param['type'] = '';
+                    } else {
+                      param['type'] = newValue;
+                    }
+                  });
+                });
+              },
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                        onPressed: () {
+                          param['currPage'] = 1;
+                          getData();
+                        },
+                        child: Text('搜索'),),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        switch (col['key']) {
-                                          case 'option':
-                                            con = Text('');
-                                            break;
-                                        }
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 80,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
-                                              ),
-                                              Expanded(flex: 1, child: con)
-                                            ],
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>((item) {
+                              return Container(
+                                decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1),),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    switch (col['key']) {
+                                      case 'option':
+                                        con = Text('');
+                                        break;
+                                    }
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 80,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
                                           ),
-                                        );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                    current: param['currPage'], total: count, pageSize: param['pageCount'], function: getPage),
-              )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                                          Expanded(flex: 1, child: con)
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['currPage'],
+                total: count,
+                pageSize: param['pageCount'],
+                function: getPage,
+              ),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

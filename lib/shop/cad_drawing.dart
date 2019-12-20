@@ -208,214 +208,226 @@ class _CadDrawingState extends State<CadDrawing> {
         title: Text('效果图制作'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                labelWidth: 100,
-                label: '用户名',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('user_name');
-                    } else {
-                      param['user_name'] = val;
-                    }
-                  });
-                },
-              ),
-              Input(
-                labelWidth: 100,
-                label: '用户电话',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('user_phone');
-                    } else {
-                      param['user_phone'] = val;
-                    }
-                  });
-                },
-              ),
-              Input(
-                labelWidth: 100,
-                label: '效果图标题',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('sd_title');
-                    } else {
-                      param['sd_title'] = val;
-                    }
-                  });
-                },
-              ),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '创建时间',
-                labelWidth: 100,
-              ),
-              DateSelectPlugin(
-                onChanged: getDateTime2,
-                label: '更新时间',
-                labelWidth: 100,
-              ),
-              Select(
-                selectOptions: state,
-                selectedValue: param['state'] ?? 'all',
-                label: '状态',
-                onChanged: (String newValue) {
-                  setState(() {
-                    if (newValue == 'all') {
-                      param.remove('state');
-                    } else {
-                      param['state'] = newValue;
-                    }
-                  });
-                },
-                labelWidth: 100,
-              ),
-              Select(
-                selectOptions: order,
-                selectedValue: defaultVal,
-                onChanged: orderBy,
-                label: '排序',
-                labelWidth: 100,
-              ),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              labelWidth: 100,
+              label: '用户名',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('user_name');
+                  } else {
+                    param['user_name'] = val;
+                  }
+                });
+              },
+            ),
+            Input(
+              labelWidth: 100,
+              label: '用户电话',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('user_phone');
+                  } else {
+                    param['user_phone'] = val;
+                  }
+                });
+              },
+            ),
+            Input(
+              labelWidth: 100,
+              label: '效果图标题',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('sd_title');
+                  } else {
+                    param['sd_title'] = val;
+                  }
+                });
+              },
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '创建时间',
+              labelWidth: 100,
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime2,
+              label: '更新时间',
+              labelWidth: 100,
+            ),
+            Select(
+              selectOptions: state,
+              selectedValue: param['state'] ?? 'all',
+              label: '状态',
+              onChanged: (String newValue) {
+                setState(() {
+                  if (newValue == 'all') {
+                    param.remove('state');
+                  } else {
+                    param['state'] = newValue;
+                  }
+                });
+              },
+              labelWidth: 100,
+            ),
+            Select(
+              selectOptions: order,
+              selectedValue: defaultVal,
+              onChanged: orderBy,
+              label: '排序',
+              labelWidth: 100,
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                      },
+                      child: Text('搜索'),
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        switch (col['key']) {
-                                          case 'option':
-                                            con = Wrap(
-                                              runSpacing: 10,
-                                              children: <Widget>[
-                                                Container(
-                                                  height: 30,
-                                                  margin: EdgeInsets.only(right: 10),
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        new MaterialPageRoute(
-                                                            builder: (context) => new CadDrawingModify({'item': item})),
-                                                      );
-                                                    },
-                                                    child: Text('修改'),
-                                                  ),
-                                                ),
-                                                '${item['state']}' == '2' &&
-                                                        item['render_pics'] != null &&
-                                                        item['render_pics'].isNotEmpty
-                                                    ? Container(
-                                                        height: 30,
-                                                        margin: EdgeInsets.only(right: 10),
-                                                        child: PrimaryButton(
-                                                          onPressed: () {
-                                                            stateDialog(item);
-                                                          },
-                                                          child: Text('设计完成'),
-                                                        ),
-                                                      )
-                                                    : Container(
-                                                        width: 0,
-                                                      ),
-                                                '${item['state']}' == '1'
-                                                    ? Container(
-                                                        height: 30,
-                                                        margin: EdgeInsets.only(right: 10),
-                                                        child: PrimaryButton(
-                                                          onPressed: () {
-                                                            stateDialog(item);
-                                                          },
-                                                          child: Text('设计中'),
-                                                        ),
-                                                      )
-                                                    : Container(
-                                                        width: 0,
-                                                      )
-                                              ],
-                                            );
-                                            break;
-                                        }
-
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 100,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>((item) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey, width: 1),
+                                ),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    switch (col['key']) {
+                                      case 'option':
+                                        con = Wrap(
+                                          runSpacing: 10,
+                                          children: <Widget>[
+                                            Container(
+                                              height: 30,
+                                              margin: EdgeInsets.only(right: 10),
+                                              child: PrimaryButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    new MaterialPageRoute(
+                                                      builder: (context) => new CadDrawingModify({'item': item}),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Text('修改'),
                                               ),
-                                              Expanded(flex: 1, child: con)
-                                            ],
-                                          ),
+                                            ),
+                                            '${item['state']}' == '2' &&
+                                                    item['render_pics'] != null &&
+                                                    item['render_pics'].isNotEmpty
+                                                ? Container(
+                                                    height: 30,
+                                                    margin: EdgeInsets.only(right: 10),
+                                                    child: PrimaryButton(
+                                                      onPressed: () {
+                                                        stateDialog(item);
+                                                      },
+                                                      child: Text('设计完成'),
+                                                    ),
+                                                  )
+                                                : Container(
+                                                    width: 0,
+                                                  ),
+                                            '${item['state']}' == '1'
+                                                ? Container(
+                                                    height: 30,
+                                                    margin: EdgeInsets.only(right: 10),
+                                                    child: PrimaryButton(
+                                                      onPressed: () {
+                                                        stateDialog(item);
+                                                      },
+                                                      child: Text('设计中'),
+                                                    ),
+                                                  )
+                                                : Container(
+                                                    width: 0,
+                                                  )
+                                          ],
                                         );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
+                                        break;
+                                    }
+
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 100,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
+                                          ),
+                                          Expanded(flex: 1, child: con)
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

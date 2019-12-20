@@ -26,7 +26,6 @@ class _RebateAuthorizeState extends State<RebateAuthorize> {
   bool loading = true;
 
   List columns = [
-    //
     {'title': '厂家名称', 'key': 'factory_name'},
     {'title': '厂家用户', 'key': 'opera_name'},
     {'title': '厂家手机', 'key': 'opera_phone'},
@@ -120,138 +119,147 @@ class _RebateAuthorizeState extends State<RebateAuthorize> {
         title: Text('门店授权'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          // onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                label: '厂家名称',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('factory_name');
-                    } else {
-                      param['factory_name'] = val;
-                    }
-                  });
-                },
-              ),
-              Input(
-                label: '厂家手机',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('opera_phone');
-                    } else {
-                      param['opera_phone'] = val;
-                    }
-                  });
-                },
-              ),
-              Input(
-                label: '店铺名称',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('shop_name');
-                    } else {
-                      param['shop_name'] = val;
-                    }
-                  });
-                },
-              ),
-              Input(
-                label: '店铺手机',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('user_phone');
-                    } else {
-                      param['user_phone'] = val;
-                    }
-                  });
-                },
-              ),
-              DateSelectPlugin(onChanged: getDateTime, label: '操作时间'),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        // onLoading: _onLoading,
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '厂家名称',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('factory_name');
+                  } else {
+                    param['factory_name'] = val;
+                  }
+                });
+              },
+            ),
+            Input(
+              label: '厂家手机',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('opera_phone');
+                  } else {
+                    param['opera_phone'] = val;
+                  }
+                });
+              },
+            ),
+            Input(
+              label: '店铺名称',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('shop_name');
+                  } else {
+                    param['shop_name'] = val;
+                  }
+                });
+              },
+            ),
+            Input(
+              label: '店铺手机',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('user_phone');
+                  } else {
+                    param['user_phone'] = val;
+                  }
+                });
+              },
+            ),
+            DateSelectPlugin(onChanged: getDateTime, label: '操作时间'),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Text('搜索'),
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 80,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
-                                              ),
-                                              Expanded(flex: 1, child: con)
-                                            ],
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>((item) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Color(0xffdddddd), width: 1),
+                                ),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 80,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
                                           ),
-                                        );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
+                                          Expanded(flex: 1, child: con)
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

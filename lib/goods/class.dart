@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:admin_flutter/goods/class_attribute.dart';
 import 'package:admin_flutter/goods/goods_class_data.dart';
+import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -76,23 +77,25 @@ class _GoodsClassState extends State<GoodsClass> {
     List<Widget> widgets = List();
     if (nodes != null && nodes.length > 0) {
       for (Node node in nodes) {
-        widgets.add(GestureDetector(
-          child: ImageText(24.0 * (node.depth - 1), node.object.toString(), node.expand, node.isHasChildren, node),
-          onTap: () {
-            if (node.isHasChildren) {
-              if (node.expand) {
-                //之前是扩展状态，收起列表
-                node.expand = false;
-                _collect(node.nodeId);
-              } else {
-                //之前是收起状态，扩展列表
-                node.expand = true;
-                _expand(node.nodeId);
+        widgets.add(
+          GestureDetector(
+            child: ImageText(24.0 * (node.depth - 1), node.object.toString(), node.expand, node.isHasChildren, node),
+            onTap: () {
+              if (node.isHasChildren) {
+                if (node.expand) {
+                  //之前是扩展状态，收起列表
+                  node.expand = false;
+                  _collect(node.nodeId);
+                } else {
+                  //之前是收起状态，扩展列表
+                  node.expand = true;
+                  _expand(node.nodeId);
+                }
+                setState(() {});
               }
-              setState(() {});
-            }
-          },
-        ));
+            },
+          ),
+        );
       }
     }
     return widgets;
@@ -188,24 +191,25 @@ class _GoodsClassState extends State<GoodsClass> {
         title: Text('商品类目'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              ajaxData.isEmpty
-                  ? CupertinoActivityIndicator()
-                  : Column(
-                      children: _buildNode(expand),
-                    )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            ajaxData.isEmpty
+                ? CupertinoActivityIndicator()
+                : Column(
+                    children: _buildNode(expand),
+                  )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),
@@ -253,8 +257,9 @@ class ImageText extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  new MaterialPageRoute(
-                      builder: (context) => new ClassAttribute({'classID': node.nodeId, 'className': node.object})),
+                  MaterialPageRoute(
+                    builder: (context) => ClassAttribute({'classID': node.nodeId, 'className': node.object}),
+                  ),
                 );
               },
               child: Text(
@@ -272,7 +277,6 @@ class ImageText extends StatelessWidget {
 class Node<T> {
   bool expand; //是否展开
   int depth; //深度
-
   int nodeId; //id
   int fatherId; //父类id
   T object; //

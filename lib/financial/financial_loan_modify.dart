@@ -52,7 +52,7 @@ class _FinancialLoanModifyState extends State<FinancialLoanModify> {
                   child: Row(
                     children: <Widget>[
                       Container(
-                        width: 100,
+                        width: 90,
                         alignment: Alignment.centerRight,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -61,22 +61,24 @@ class _FinancialLoanModifyState extends State<FinancialLoanModify> {
                               '* ',
                               style: TextStyle(color: CFColors.danger),
                             ),
-                            Text('店铺：')
+                            Text('店铺:')
                           ],
                         ),
                         margin: EdgeInsets.only(right: 10),
                       ),
                       Expanded(
-                          flex: 1,
-                          child: Container(
-                            height: 34,
-                            alignment: Alignment.centerLeft,
-                            padding: EdgeInsets.only(left: 10, right: 10),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey, width: 1),
-                                borderRadius: BorderRadius.all(Radius.circular(6))),
-                            child: Text('${param['shop_name'] ?? ''}'),
-                          )),
+                        flex: 1,
+                        child: Container(
+                          height: 34,
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(left: 10, right: 10),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 1),
+                            borderRadius: BorderRadius.all(Radius.circular(6),),
+                          ),
+                          child: Text('${param['shop_name'] ?? ''}'),
+                        ),
+                      ),
                       Container(
                         width: 70,
                         height: 34,
@@ -91,11 +93,12 @@ class _FinancialLoanModifyState extends State<FinancialLoanModify> {
                             }
                             Navigator.push(
                               context,
-                              new MaterialPageRoute(
-                                  builder: (context) => new ShopPlugin(
-                                        shopCount: 1,
-                                        selectShopsData: data,
-                                      )),
+                              MaterialPageRoute(
+                                builder: (context) => ShopPlugin(
+                                  shopCount: 1,
+                                  selectShopsData: data,
+                                ),
+                              ),
                             ).then((val) {
                               if (val != null) {
                                 setState(() {
@@ -111,37 +114,89 @@ class _FinancialLoanModifyState extends State<FinancialLoanModify> {
                     ],
                   ),
                 )
-              : Container(width: 0,),
-          Input(
-            label: '金融金额：',
-            onChanged: (String val) {
-              setState(() {
-                param['amount'] = val;
-              });
-            },
-            labelWidth: 100,
-            require: true,
+              : Container(
+                  width: 0,
+                ),
+          Container(
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: 90,
+                  alignment: Alignment.centerRight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Text(
+                        '* ',
+                        style: TextStyle(color: CFColors.danger, fontSize: CFFontSize.content),
+                      ),
+                      Text(
+                        '金融金额:',
+                        style: TextStyle(fontSize: CFFontSize.content),
+                      )
+                    ],
+                  ),
+                  margin: EdgeInsets.only(right: 10),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    height: 34,
+                    child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
+                      controller: TextEditingController.fromValue(
+                        TextEditingValue(
+                          text: '${param['amount'] ?? ''}',
+                          selection: TextSelection.fromPosition(
+                            TextPosition(
+                              affinity: TextAffinity.downstream,
+                              offset: '${param['amount'] ?? ''}'.length,
+                            ),
+                          ),
+                        ),
+                      ),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(
+                          top: 0,
+                          bottom: 0,
+                          left: 15,
+                          right: 15,
+                        ),
+                      ),
+                      onChanged: (String val) {
+                        setState(() {
+                          param['amount'] = val;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           Select(
             selectOptions: state,
             selectedValue: param['state'] ?? '3',
-            label: '金融状态：',
+            label: '金融状态:',
             onChanged: (String newValue) {
               setState(() {
                 param['state'] = newValue;
               });
             },
-            labelWidth: 100,
+            labelWidth: 90,
             require: true,
           ),
           Input(
-            label: '申请说明：',
+            label: '申请说明:',
             onChanged: (String val) {
               setState(() {
                 param['apply_desc'] = val;
               });
             },
-            labelWidth: 100,
+            labelWidth: 90,
             maxLines: 4,
           ),
           Container(
@@ -149,7 +204,7 @@ class _FinancialLoanModifyState extends State<FinancialLoanModify> {
             child: Row(
               children: <Widget>[
                 Container(
-                  width: 100,
+                  width: 90,
                   alignment: Alignment.centerRight,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -158,69 +213,77 @@ class _FinancialLoanModifyState extends State<FinancialLoanModify> {
                         '* ',
                         style: TextStyle(color: CFColors.danger),
                       ),
-                      Text('申请附件：')
+                      Text('申请附件:')
                     ],
                   ),
                   margin: EdgeInsets.only(right: 10),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          width: width - 80 - 20,
-                          padding: EdgeInsets.only(left: 10, top: 10, bottom: 10),
-                          decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
-                          child: param['apply_files'] == null || param['apply_files'].isEmpty
-                              ? Container(
-                                  height: (width - 100 - 70) / 3,
-                                )
-                              : Wrap(
-                                  spacing: 10,
-                                  runSpacing: 10,
-                                  children: param['apply_files'].map<Widget>((item) {
-                                    return Stack(
-                                      children: <Widget>[
-                                        Container(
-                                          width: (width - 100 - 70) / 3,
-                                          height: (width - 100 - 70) / 3,
-                                          decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
-                                          child: Image.network(
-                                            '$baseUrl${item['file_path']}',
-                                            fit: BoxFit.contain,
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        width: width - 80 - 20,
+                        padding: EdgeInsets.only(left: 10, top: 10, bottom: 10),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: param['apply_files'] == null || param['apply_files'].isEmpty
+                            ? Container(
+                                height: (width - 90 - 70) / 3,
+                              )
+                            : Wrap(
+                                spacing: 10,
+                                runSpacing: 10,
+                                children: param['apply_files'].map<Widget>((item) {
+                                  return Stack(
+                                    children: <Widget>[
+                                      Container(
+                                        width: (width - 90 - 70) / 3,
+                                        height: (width - 90 - 70) / 3,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: Colors.grey, width: 1),
+                                        ),
+                                        child: Image.network(
+                                          '$baseUrl${item['file_path']}',
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: 1,
+                                        right: 1,
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              param['apply_files'].remove(item);
+                                            });
+                                          },
+                                          child: Container(
+                                            width: 20,
+                                            height: 20,
+                                            child: Icon(
+                                              Icons.clear,
+                                              color: CFColors.danger,
+                                              size: 16,
+                                            ),
                                           ),
                                         ),
-                                        Positioned(
-                                            top: 1,
-                                            right: 1,
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  param['apply_files'].remove(item);
-                                                });
-                                              },
-                                              child: Container(
-                                                width: 24,
-                                                height: 24,
-                                                child: Icon(
-                                                  Icons.clear,
-                                                  color: CFColors.danger,
-                                                ),
-                                              ),
-                                            ))
-                                      ],
-                                    );
-                                  }).toList(),
-                                ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                          child: PrimaryButton(onPressed: () {}, child: Text('添加附件')),
-                        )
-                      ],
-                    )),
+                                      ),
+                                    ],
+                                  );
+                                }).toList(),
+                              ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                        child: PrimaryButton(onPressed: () {}, child: Text('添加附件')),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -229,19 +292,23 @@ class _FinancialLoanModifyState extends State<FinancialLoanModify> {
             child: Row(
               children: <Widget>[
                 Container(
-                  width: 100,
+                  width: 90,
                   margin: EdgeInsets.only(right: 10),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: Row(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 30,
-                          child: PrimaryButton(onPressed: () {}, child: Text('保存')),
-                        )
-                      ],
-                    )),
+                  flex: 1,
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 30,
+                        child: PrimaryButton(
+                          onPressed: () {},
+                          child: Text('保存'),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           )

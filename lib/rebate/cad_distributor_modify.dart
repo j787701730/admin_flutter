@@ -127,24 +127,34 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
                     margin: EdgeInsets.only(right: 10),
                   ),
                   Expanded(
-                      flex: 1,
-                      child: TextField(
-                        style: TextStyle(fontSize: CFFontSize.content),
-                        controller: TextEditingController.fromValue(TextEditingValue(
-
-                            text: '${data['amount']}',
-                            
-                            selection: TextSelection.fromPosition(
-                                TextPosition(affinity: TextAffinity.downstream, offset: '${data['amount']}'.length)))),
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
-                        onChanged: (String val) {
-                          setState(() {
-                            data['amount'] = val;
-                          });
-                        },
-                      ))
+                    flex: 1,
+                    child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
+                      controller: TextEditingController.fromValue(TextEditingValue(
+                        text: '${data['amount']}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${data['amount']}'.length,
+                          ),
+                        ),
+                      )),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(
+                          top: 6,
+                          bottom: 6,
+                          left: 15,
+                          right: 15,
+                        ),
+                      ),
+                      onChanged: (String val) {
+                        setState(() {
+                          data['amount'] = val;
+                        });
+                      },
+                    ),
+                  )
                 ],
               ),
             ),
@@ -159,20 +169,22 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
                     margin: EdgeInsets.only(right: 10),
                   ),
                   Expanded(
-                      flex: 1,
-                      child: Row(
-                        children: <Widget>[
-                          Checkbox(
-                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              value: data['if_show'] == '1',
-                              onChanged: (val) {
-                                unFocus();
-                                setState(() {
-                                  data['if_show'] = val ? '1' : '0';
-                                });
-                              })
-                        ],
-                      ))
+                    flex: 1,
+                    child: Row(
+                      children: <Widget>[
+                        Checkbox(
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          value: data['if_show'] == '1',
+                          onChanged: (val) {
+                            unFocus();
+                            setState(() {
+                              data['if_show'] = val ? '1' : '0';
+                            });
+                          },
+                        )
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -196,61 +208,62 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
                     margin: EdgeInsets.only(right: 10),
                   ),
                   Expanded(
-                      flex: 1,
-                      child: Row(
-                        children: <Widget>[
-                          InkWell(
-                            onTap: () {
-                              getImage('logo');
-                              unFocus();
-                            },
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
-                                  width: 80,
-                                  height: 80,
-                                  child: logoLoading
-                                      ? CupertinoActivityIndicator()
-                                      : data['show_logo'] == '' || data['show_logo'] == null
-                                          ? Icon(
-                                              Icons.image,
-                                              color: Colors.grey,
-                                              size: 50,
-                                            )
-                                          : Image.network(
-                                              '$baseUrl${data['show_logo']}',
-                                              fit: BoxFit.contain,
-                                            ),
-                                ),
-                                Positioned(
-                                  right: 1,
-                                  bottom: 1,
-                                  child: InkWell(
-                                    onTap: () {
-                                      unFocus();
-                                      setState(() {
-                                        data['show_logo'] = '';
-                                      });
-                                    },
-                                    child: Container(
-                                      width: 20,
-                                      height: 20,
-                                      color: Color(0xffeeeeee),
-                                      alignment: Alignment.center,
-                                      child: Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                        size: 20,
-                                      ),
+                    flex: 1,
+                    child: Row(
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () {
+                            getImage('logo');
+                            unFocus();
+                          },
+                          child: Stack(
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
+                                width: 80,
+                                height: 80,
+                                child: logoLoading
+                                    ? CupertinoActivityIndicator()
+                                    : data['show_logo'] == '' || data['show_logo'] == null
+                                        ? Icon(
+                                            Icons.image,
+                                            color: Colors.grey,
+                                            size: 50,
+                                          )
+                                        : Image.network(
+                                            '$baseUrl${data['show_logo']}',
+                                            fit: BoxFit.contain,
+                                          ),
+                              ),
+                              Positioned(
+                                right: 1,
+                                bottom: 1,
+                                child: InkWell(
+                                  onTap: () {
+                                    unFocus();
+                                    setState(() {
+                                      data['show_logo'] = '';
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    color: Color(0xffeeeeee),
+                                    alignment: Alignment.center,
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                      size: 20,
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ))
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -272,35 +285,48 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
                     margin: EdgeInsets.only(right: 10),
                   ),
                   Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          TextField(
-                            style: TextStyle(fontSize: CFFontSize.content),
-                            controller: TextEditingController.fromValue(TextEditingValue(
-
-                                text: '${data['show_text']}',
-                                
-                                selection: TextSelection.fromPosition(TextPosition(
-                                    affinity: TextAffinity.downstream, offset: '${data['show_text']}'.length)))),
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
-                            onChanged: (String val) {
-                              setState(() {
-                                data['show_text'] = val;
-                              });
-                            },
+                    flex: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        TextField(
+                          style: TextStyle(fontSize: CFFontSize.content),
+                          controller: TextEditingController.fromValue(
+                            TextEditingValue(
+                              text: '${data['show_text']}',
+                              selection: TextSelection.fromPosition(
+                                TextPosition(
+                                  affinity: TextAffinity.downstream,
+                                  offset: '${data['show_text']}'.length,
+                                ),
+                              ),
+                            ),
                           ),
-                          isChecked && (data['show_text'] == '' || data['show_text'] == null)
-                              ? Text(
-                                  '展示文字不能为空',
-                                  style: TextStyle(color: Colors.red, fontSize: 12),
-                                )
-                              : Container(width: 0,)
-                        ],
-                      ))
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.only(
+                                top: 6,
+                                bottom: 6,
+                                left: 15,
+                                right: 15,
+                              )),
+                          onChanged: (String val) {
+                            setState(() {
+                              data['show_text'] = val;
+                            });
+                          },
+                        ),
+                        isChecked && (data['show_text'] == '' || data['show_text'] == null)
+                            ? Text(
+                                '展示文字不能为空',
+                                style: TextStyle(color: Colors.red, fontSize: 12),
+                              )
+                            : Container(
+                                width: 0,
+                              )
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -322,35 +348,47 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
                     margin: EdgeInsets.only(right: 10),
                   ),
                   Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          TextField(
-                            style: TextStyle(fontSize: CFFontSize.content),
-                            controller: TextEditingController.fromValue(TextEditingValue(
-
-                                text: '${data['show_phone']}',
-                                
-                                selection: TextSelection.fromPosition(TextPosition(
-                                    affinity: TextAffinity.downstream, offset: '${data['show_phone']}'.length)))),
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
-                            onChanged: (String val) {
-                              setState(() {
-                                data['show_phone'] = val;
-                              });
-                            },
+                    flex: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        TextField(
+                          style: TextStyle(fontSize: CFFontSize.content),
+                          controller: TextEditingController.fromValue(TextEditingValue(
+                            text: '${data['show_phone']}',
+                            selection: TextSelection.fromPosition(
+                              TextPosition(
+                                affinity: TextAffinity.downstream,
+                                offset: '${data['show_phone']}'.length,
+                              ),
+                            ),
+                          )),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.only(
+                              top: 6,
+                              bottom: 6,
+                              left: 15,
+                              right: 15,
+                            ),
                           ),
-                          isChecked && (data['show_phone'] == '' || data['show_phone'] == null)
-                              ? Text(
-                                  '展示电话不能为空',
-                                  style: TextStyle(color: Colors.red, fontSize: 12),
-                                )
-                              : Container(width: 0,)
-                        ],
-                      ))
+                          onChanged: (String val) {
+                            setState(() {
+                              data['show_phone'] = val;
+                            });
+                          },
+                        ),
+                        isChecked && (data['show_phone'] == '' || data['show_phone'] == null)
+                            ? Text(
+                                '展示电话不能为空',
+                                style: TextStyle(color: Colors.red, fontSize: 12),
+                              )
+                            : Container(
+                                width: 0,
+                              )
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -379,65 +417,73 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
                     margin: EdgeInsets.only(right: 10),
                   ),
                   Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Stack(
-                            children: <Widget>[
-                              InkWell(
-                                onTap: () {
-                                  getImage('pic');
-                                  unFocus();
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
-                                  height: (width - 100) / 3,
-                                  width: width - 100,
-                                  child: picLoading
-                                      ? CupertinoActivityIndicator()
-                                      : data['show_pic'] == '' || data['show_pic'] == null
-                                          ? Icon(
-                                              Icons.image,
-                                              size: width * 0.15,
-                                              color: Colors.grey,
-                                            )
-                                          : Image.network('$baseUrl${data['show_pic']}'),
-                                ),
-                              ),
-                              Positioned(
-                                right: 1,
-                                bottom: 1,
-                                child: InkWell(
-                                  onTap: () {
-                                    unFocus();
-                                    setState(() {
-                                      data['show_pic'] = '';
-                                    });
-                                  },
-                                  child: Container(
-                                    width: 20,
-                                    height: 20,
-                                    color: Color(0xffeeeeee),
-                                    alignment: Alignment.center,
-                                    child: Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
-                                      size: 20,
-                                    ),
+                    flex: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Stack(
+                          children: <Widget>[
+                            InkWell(
+                              onTap: () {
+                                getImage('pic');
+                                unFocus();
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
                                   ),
                                 ),
+                                height: (width - 100) / 3,
+                                width: width - 100,
+                                child: picLoading
+                                    ? CupertinoActivityIndicator()
+                                    : data['show_pic'] == '' || data['show_pic'] == null
+                                        ? Icon(
+                                            Icons.image,
+                                            size: width * 0.15,
+                                            color: Colors.grey,
+                                          )
+                                        : Image.network('$baseUrl${data['show_pic']}'),
+                              ),
+                            ),
+                            Positioned(
+                              right: 1,
+                              bottom: 1,
+                              child: InkWell(
+                                onTap: () {
+                                  unFocus();
+                                  setState(() {
+                                    data['show_pic'] = '';
+                                  });
+                                },
+                                child: Container(
+                                  width: 20,
+                                  height: 20,
+                                  color: Color(0xffeeeeee),
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        isChecked && (data['show_pic'] == '' || data['show_pic'] == null)
+                            ? Text(
+                                '展示图片不能为空',
+                                style: TextStyle(color: Colors.red, fontSize: 12),
                               )
-                            ],
-                          ),
-                          isChecked && (data['show_pic'] == '' || data['show_pic'] == null)
-                              ? Text(
-                                  '展示图片不能为空',
-                                  style: TextStyle(color: Colors.red, fontSize: 12),
-                                )
-                              : Container(width: 0,)
-                        ],
-                      ))
+                            : Container(
+                                width: 0,
+                              )
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -447,11 +493,12 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
               child: SizedBox(
                 height: 30,
                 child: PrimaryButton(
-                    onPressed: () {
-                      print(data);
-                      unFocus();
-                    },
-                    child: Text('保存')),
+                  onPressed: () {
+                    print(data);
+                    unFocus();
+                  },
+                  child: Text('保存'),
+                ),
               ),
             )
           ],

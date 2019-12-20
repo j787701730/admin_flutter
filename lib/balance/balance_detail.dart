@@ -158,187 +158,193 @@ class _BalanceDetailState extends State<BalanceDetail> {
         title: Text('${widget.props['login_name']} ${widget.props['balance_type_ch_name']} 资金流水详情'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 10,
-                runSpacing: 10,
-                children: <Widget>[
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: ['全部', '收入', '支出'].map<Widget>((item) {
-                      int index = ['全部', '收入', '支出'].indexOf(item) + 1;
-                      return InkWell(
-                        onTap: () {
-                          setState(() {
-                            type = index;
-                            param['currPage'] = 1;
-                            getData();
-                          });
-                        },
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 10,
+              runSpacing: 10,
+              children: <Widget>[
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: ['全部', '收入', '支出'].map<Widget>((item) {
+                    int index = ['全部', '收入', '支出'].indexOf(item) + 1;
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          type = index;
+                          param['currPage'] = 1;
+                          getData();
+                        });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(left: 10, right: 10),
+                        height: 34,
+                        alignment: Alignment.center,
+                        width: 60,
+                        decoration: BoxDecoration(color: type == index ? Colors.green : Colors.white),
+                        child: Text(
+                          '$item',
+                          style: TextStyle(color: type == index ? Colors.white : Colors.black),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                Text('类型: '),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(4),
+                    ),
+                  ),
+                  height: 34,
+                  child: DropdownButton<String>(
+                    elevation: 0,
+                    underline: Container(),
+                    value: balanceTypeID ?? '01',
+                    onChanged: (String newValue) {
+                      setState(() {
+                        param['balanceTypeID'] = newValue.substring(0, newValue.length - 1);
+                        type = int.parse(newValue.substring(newValue.length - 1, newValue.length));
+                        balanceTypeID = newValue;
+                      });
+                    },
+                    items: sourceType.map<DropdownMenuItem<String>>((item) {
+                      return DropdownMenuItem(
+                        value: '${item['type_id']}${item['type']}',
                         child: Container(
-                          padding: EdgeInsets.only(left: 10, right: 10),
-                          height: 34,
-                          alignment: Alignment.center,
-                          width: 60,
-                          decoration: BoxDecoration(color: type == index ? Colors.green : Colors.white),
+                          padding: EdgeInsets.only(left: 10),
                           child: Text(
-                            '$item',
-                            style: TextStyle(color: type == index ? Colors.white : Colors.black),
+                            '${item['type_name']}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       );
                     }).toList(),
                   ),
-                  Text('类型: '),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(4),
-                      ),
-                    ),
-                    height: 34,
-                    child: DropdownButton<String>(
-                        elevation: 0,
-                        underline: Container(),
-                        value: balanceTypeID ?? '01',
-                        onChanged: (String newValue) {
-                          setState(() {
-                            param['balanceTypeID'] = newValue.substring(0, newValue.length - 1);
-                            type = int.parse(newValue.substring(newValue.length - 1, newValue.length));
-                            balanceTypeID = newValue;
-                          });
-                        },
-                        items: sourceType.map<DropdownMenuItem<String>>((item) {
-                          return DropdownMenuItem(
-                            value: '${item['type_id']}${item['type']}',
-                            child: Container(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                '${item['type_name']}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: "时间:",
+                  labelWidth: 50,
+                ),
+                SizedBox(
+                  width: 100,
+                  height: 34,
+                  child: PrimaryButton(
+                    onPressed: () {
+                      if (beginDate == null) {
+                        param.remove('beginDate');
+                      } else {
+                        param['beginDate'] = beginDate.toString().substring(0, 10);
+                      }
+
+                      if (endDate == null) {
+                        param.remove('endDate');
+                      } else {
+                        param['endDate'] = endDate.toString().substring(0, 10);
+                      }
+                      param['currPage'] = 1;
+
+                      if (param['balanceTypeID'] != null && param['balanceTypeID'] == '0') {
+                        param.remove('balanceTypeID');
+                      }
+                      getData();
+                    },
+                    child: Text('搜索'),
+                  ),
+                )
+              ],
+            ),
+            Container(
+              height: 15,
+            ),
+            loading
+                ? CupertinoActivityIndicator()
+                : ajaxData == null || ajaxData.isEmpty
+                    ? Container(
+                        alignment: Alignment.center,
+                        child: Text('无数据'),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: ajaxData.map<Widget>((item) {
+                          return Container(
+                            decoration: BoxDecoration(border: Border.all(color: Color(0xffeeeeee), width: 1),),
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: columns.map<Widget>((col) {
+                                Widget con = Text('${item[col['key']] ?? ''}');
+                                switch (col['key']) {
+                                  case 'balance_type':
+                                    if (item['type'] == '1') {
+                                      if (double.parse('${item['amount']}') < 0) {
+                                        con = Text('收入冲正');
+                                      } else {
+                                        con = Text('收入');
+                                      }
+                                    } else {
+                                      if (double.parse('${item['amount']}') < 0) {
+                                        con = Text('支出冲正');
+                                      } else {
+                                        con = Text('支出');
+                                      }
+                                    }
+                                    break;
+                                }
+
+                                return Container(
+                                  margin: EdgeInsets.only(bottom: 6),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        width: 80,
+                                        alignment: Alignment.centerRight,
+                                        child: Text('${col['title']}'),
+                                        margin: EdgeInsets.only(right: 10),
+                                      ),
+                                      Expanded(flex: 1, child: con)
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
                             ),
                           );
-                        }).toList()),
-                  ),
-                  DateSelectPlugin(
-                    onChanged: getDateTime,
-                    label: "时间:",
-                    labelWidth: 50,
-                  ),
-                  SizedBox(
-                    width: 100,
-                    height: 34,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        if (beginDate == null) {
-                          param.remove('beginDate');
-                        } else {
-                          param['beginDate'] = beginDate.toString().substring(0, 10);
-                        }
-
-                        if (endDate == null) {
-                          param.remove('endDate');
-                        } else {
-                          param['endDate'] = endDate.toString().substring(0, 10);
-                        }
-                        param['currPage'] = 1;
-
-                        if (param['balanceTypeID'] != null && param['balanceTypeID'] == '0') {
-                          param.remove('balanceTypeID');
-                        }
-                        getData();
-                      },
-                      child: Text('搜索'),
-                    ),
-                  )
-                ],
-              ),
-              Container(
-                height: 15,
-              ),
-              loading
-                  ? CupertinoActivityIndicator()
-                  : ajaxData == null || ajaxData.isEmpty
-                      ? Container(
-                          alignment: Alignment.center,
-                          child: Text('无数据'),
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: ajaxData.map<Widget>((item) {
-                            return Container(
-                              decoration: BoxDecoration(border: Border.all(color: Color(0xffeeeeee), width: 1)),
-                              margin: EdgeInsets.only(bottom: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: columns.map<Widget>((col) {
-                                  Widget con = Text('${item[col['key']] ?? ''}');
-                                  switch (col['key']) {
-                                    case 'balance_type':
-                                      if (item['type'] == '1') {
-                                        if (double.parse('${item['amount']}') < 0) {
-                                          con = Text('收入冲正');
-                                        } else {
-                                          con = Text('收入');
-                                        }
-                                      } else {
-                                        if (double.parse('${item['amount']}') < 0) {
-                                          con = Text('支出冲正');
-                                        } else {
-                                          con = Text('支出');
-                                        }
-                                      }
-                                      break;
-                                  }
-
-                                  return Container(
-                                    margin: EdgeInsets.only(bottom: 6),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Container(
-                                          width: 80,
-                                          alignment: Alignment.centerRight,
-                                          child: Text('${col['title']}'),
-                                          margin: EdgeInsets.only(right: 10),
-                                        ),
-                                        Expanded(flex: 1, child: con)
-                                      ],
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-              stat == null
-                  ? Container(
-                      width: 0,
-                    )
-                  : Container(
-                      child: Html(
-                        data: '$stat',
+                        }).toList(),
                       ),
+            stat == null
+                ? Container(
+                    width: 0,
+                  )
+                : Container(
+                    child: Html(
+                      data: '$stat',
                     ),
-              Container(
-                child: PagePlugin(
-                    current: param['currPage'], total: count, pageSize: param['pageCount'], function: getPage),
-              )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['currPage'],
+                total: count,
+                pageSize: param['pageCount'],
+                function: getPage,
+              ),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

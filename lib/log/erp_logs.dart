@@ -177,72 +177,79 @@ class _ErpLogsState extends State<ErpLogs> {
         title: Text('ERP日志'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Column(
-                children: searchData.keys.map<Widget>((key) {
-                  return Input(
-                      label: '${searchName[key]}',
-                      onChanged: (String val) {
-                        setState(() {
-                          searchData[key] = val;
-                        });
-                      });
-                }).toList(),
-              ),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '操作时间',
-              ),
-              Select(
-                selectOptions: selects,
-                selectedValue: defaultVal,
-                label: '排序',
-                onChanged: orderBy,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  PrimaryButton(
-                    onPressed: () {
-                      setState(() {
-                        curr_page = 1;
-                        getData();
-                      });
-                    },
-                    child: Text('搜索'),
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Column(
+              children: searchData.keys.map<Widget>((key) {
+                return Input(
+                  label: '${searchName[key]}',
+                  onChanged: (String val) {
+                    setState(() {
+                      searchData[key] = val;
+                    });
+                  },
+                );
+              }).toList(),
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '操作时间',
+            ),
+            Select(
+              selectOptions: selects,
+              selectedValue: defaultVal,
+              label: '排序',
+              onChanged: orderBy,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                PrimaryButton(
+                  onPressed: () {
+                    setState(() {
+                      curr_page = 1;
+                      getData();
+                    });
+                  },
+                  child: Text('搜索'),
+                )
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 8),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    child: CupertinoActivityIndicator(),
                   )
-                ],
+                : logs.isEmpty
+                    ? Container(
+                        alignment: Alignment.topCenter,
+                        child: Text('无数据'),
+                      )
+                    : LogCard(columns, logs),
+            Container(
+              child: PagePlugin(
+                current: curr_page,
+                total: count,
+                pageSize: page_count,
+                function: getPage,
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 8),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : logs.isEmpty
-                      ? Container(
-                          alignment: Alignment.topCenter,
-                          child: Text('无数据'),
-                        )
-                      : LogCard(columns, logs),
-              Container(
-                child: PagePlugin(current: curr_page, total: count, pageSize: page_count, function: getPage),
-              )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

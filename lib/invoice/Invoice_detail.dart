@@ -74,381 +74,466 @@ class _InvoiceDetailState extends State<InvoiceDetail> {
         title: Text('申请人：${widget.props['login_name']} 申请企业：${widget.props['shop_name']}'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              ajaxData.isEmpty
-                  ? Container(width: 0,)
-                  : Column(
-                      children: <Widget>[
-                        Container(
-                          alignment: Alignment.center,
-                          child: Text('发票信息'),
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            ajaxData.isEmpty
+                ? Container(
+                    width: 0,
+                  )
+                : Column(
+                    children: <Widget>[
+                      Container(
+                        height: 34,
+                        alignment: Alignment.center,
+                        child: Text(
+                          '发票信息',
+                          style: TextStyle(fontSize: CFFontSize.topTitle),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('发票类型:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['invoice_type_name']}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('发票类型:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice_info']['invoice_type_name']}'),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('开票日期:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice']['issue_date'] ?? ''}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('开票日期:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice']['issue_date'] ?? ''}'),
+                            ),
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('发票抬头:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['invoice_header']}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('发票抬头:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice_info']['invoice_header']}'),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('开具类型:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['issue_type_name']}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('开具类型:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice_info']['issue_type_name']}'),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('纳税人识别号:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['tax_no']}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('纳税人识别号:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice_info']['tax_no']}'),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('注册固定电话:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['phone']}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('注册固定电话:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice_info']['phone']}'),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('企业地址:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['address']}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('企业地址:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice_info']['address']}'),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('银行:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['bank_name']}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('银行:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice_info']['bank_name']}'),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('银行账号:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['bank_no']}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('银行账号:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice_info']['bank_no']}'),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('金额:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('￥${ajaxData['invoice']['amount']}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('金额:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('￥${ajaxData['invoice']['amount']}'),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('申请时间:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['create_ate'] ?? ''}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('申请时间:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice_info']['create_ate'] ?? ''}'),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('更新时间:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['update_date'] ?? ''}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('更新时间:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice_info']['update_date'] ?? ''}'),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('邮编:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['postcode']}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('邮编:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice_info']['postcode']}'),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('收件人:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['receiver']}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('收件人:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice_info']['receiver']}'),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('收件人手机:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['telephone']}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('收件人手机:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice_info']['telephone']}'),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('邮箱:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['mail'] ?? ''}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('邮箱:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['mail'] ?? ''}'))
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: 120,
-                                alignment: Alignment.centerRight,
-                                child: Text('收件地址:'),
-                                margin: EdgeInsets.only(right: 10),
-                              ),
-                              Expanded(flex: 1, child: Text('${ajaxData['invoice_info']['addr']}'))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text('收件地址:'),
+                              margin: EdgeInsets.only(right: 10),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text('${ajaxData['invoice_info']['addr']}'),
+                            )
+                          ],
                         ),
-                        widget.props['invoice_state'] == '1'
-                            ? Column(
-                                children: <Widget>[
-                                  Input(
-                                      label: '发票号:',
-                                      require: true,
-                                      labelWidth: 120,
-                                      onChanged: (String val) {
-                                        setState(() {
+                      ),
+                      widget.props['invoice_state'] == '1'
+                          ? Column(
+                              children: <Widget>[
+                                Input(
+                                    label: '发票号:',
+                                    require: true,
+                                    labelWidth: 120,
+                                    onChanged: (String val) {
+                                      setState(() {
 //                              param['loginName'] = val;
-                                        });
-                                      }),
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: 6),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Container(
-                                          width: 120,
-                                          alignment: Alignment.centerRight,
-                                          child: Text('开具备注:'),
-                                          margin: EdgeInsets.only(right: 10),
-                                        ),
-                                        Expanded(
-                                            flex: 1,
-                                            child: TextField(
-                                              style: TextStyle(fontSize: CFFontSize.content),
-                                              maxLines: 4,
-                                              decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
-                                              onChanged: (String val) {
-                                                setState(() {
+                                      });
+                                    }),
+                                Container(
+                                  margin: EdgeInsets.only(bottom: 6),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Container(
+                                        width: 120,
+                                        alignment: Alignment.centerRight,
+                                        child: Text('开具备注:'),
+                                        margin: EdgeInsets.only(right: 10),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: TextField(
+                                          style: TextStyle(fontSize: CFFontSize.content),
+                                          maxLines: 4,
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            contentPadding: EdgeInsets.only(
+                                              top: 6,
+                                              bottom: 6,
+                                              left: 15,
+                                              right: 15,
+                                            ),
+                                          ),
+                                          onChanged: (String val) {
+                                            setState(() {
 //                              param['loginName'] = val;
-                                                });
-                                              },
-                                            ))
-                                      ],
-                                    ),
+                                            });
+                                          },
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                  Container(
-                                      margin: EdgeInsets.only(bottom: 6),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[PrimaryButton(onPressed: () {}, child: Text('确认开票'))],
-                                      ))
-                                ],
-                              )
-                            : Column(
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: 6),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Container(
-                                          width: 120,
-                                          alignment: Alignment.centerRight,
-                                          child: Text('发票号:'),
-                                          margin: EdgeInsets.only(right: 10),
-                                        ),
-                                        Expanded(flex: 1, child: Text('${ajaxData['invoice']['invoice_no']}'))
-                                      ],
-                                    ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(bottom: 6),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      PrimaryButton(
+                                        onPressed: () {},
+                                        child: Text('确认开票'),
+                                      ),
+                                    ],
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: 6),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Container(
-                                          width: 120,
-                                          alignment: Alignment.centerRight,
-                                          child: Text('开具备注:'),
-                                          margin: EdgeInsets.only(right: 10),
-                                        ),
-                                        Expanded(flex: 1, child: Text('${ajaxData['invoice']['comments'] ?? ''}'))
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                        ajaxData['acct_item'].isEmpty
-                            ? Container(width: 0,)
-                            : Container(
-                                child: Text('项目详细数据'),
-                              ),
-                        ajaxData['acct_item'].isEmpty
-                            ? Container(width: 0,)
-                            : Container(
-                                width: MediaQuery.of(context).size.width - 20,
-                                child: DataTable(
-                                  columnSpacing: 10,
-                                  columns: <DataColumn>[
-                                    const DataColumn(
-                                      label: Text('名称'),
-                                    ),
-                                    DataColumn(
-                                      label: const Text('金额(元)'),
-                                    ),
-                                  ],
-                                  rows: ajaxData['acct_item'].map<DataRow>((item) {
-                                    return DataRow(
-                                      cells: <DataCell>[
-                                        DataCell(
-                                          Text('${item['item_type_name']}'),
-                                        ),
-                                        DataCell(
-                                          Text('${item['amount']}'),
-                                        )
-                                      ],
-                                    );
-                                  }).toList(),
+                                )
+                              ],
+                            )
+                          : Column(
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.only(bottom: 6),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        width: 120,
+                                        alignment: Alignment.centerRight,
+                                        child: Text('发票号:'),
+                                        margin: EdgeInsets.only(right: 10),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Text('${ajaxData['invoice']['invoice_no']}'),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(bottom: 6),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Container(
+                                        width: 120,
+                                        alignment: Alignment.centerRight,
+                                        child: Text('开具备注:'),
+                                        margin: EdgeInsets.only(right: 10),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Text('${ajaxData['invoice']['comments'] ?? ''}'),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                      ajaxData['acct_item'].isEmpty
+                          ? Container(
+                              width: 0,
+                            )
+                          : Container(
+                              height: 34,
+                              alignment: Alignment.center,
+                              child: Text(
+                                '项目详细数据',
+                                style: TextStyle(
+                                  fontSize: CFFontSize.topTitle,
                                 ),
                               ),
-                      ],
-                    )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                            ),
+                      ajaxData['acct_item'].isEmpty
+                          ? Container(
+                              width: 0,
+                            )
+                          : Container(
+                              width: MediaQuery.of(context).size.width - 20,
+                              child: DataTable(
+                                columnSpacing: 10,
+                                columns: <DataColumn>[
+                                  DataColumn(
+                                    label: Text('名称'),
+                                  ),
+                                  DataColumn(
+                                    label: Text('金额(元)'),
+                                  ),
+                                ],
+                                rows: ajaxData['acct_item'].map<DataRow>((item) {
+                                  return DataRow(
+                                    cells: <DataCell>[
+                                      DataCell(
+                                        Text('${item['item_type_name']}'),
+                                      ),
+                                      DataCell(
+                                        Text('${item['amount']}'),
+                                      )
+                                    ],
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                    ],
+                  )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

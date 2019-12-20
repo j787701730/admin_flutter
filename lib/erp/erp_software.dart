@@ -152,147 +152,156 @@ class _ErpSoftwareState extends State<ErpSoftware> {
         title: Text('软件包月'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                label: '用户名',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('user_name');
-                    } else {
-                      param['user_name'] = val;
-                    }
-                  });
-                },
-              ),
-              Input(
-                label: '工厂',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('shop_name');
-                    } else {
-                      param['shop_name'] = val;
-                    }
-                  });
-                },
-              ),
-              RangeInput(
-                label: '价格',
-                onChangeL: (val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('payout_amount_min');
-                    } else {
-                      param['payout_amount_min'] = val;
-                    }
-                  });
-                },
-                onChangeR: (val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('payout_amount_max');
-                    } else {
-                      param['payout_amount_max'] = val;
-                    }
-                  });
-                },
-              ),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '时间区间',
-              ),
-              Select(
-                selectOptions: selects,
-                selectedValue: defaultVal,
-                label: '排序',
-                onChanged: orderBy,
-              ),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            param['currPage'] = 1;
-                            getData();
-                          },
-                          child: Text('搜索')),
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '用户名',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('user_name');
+                  } else {
+                    param['user_name'] = val;
+                  }
+                });
+              },
+            ),
+            Input(
+              label: '工厂',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('shop_name');
+                  } else {
+                    param['shop_name'] = val;
+                  }
+                });
+              },
+            ),
+            RangeInput(
+              label: '价格',
+              onChangeL: (val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('payout_amount_min');
+                  } else {
+                    param['payout_amount_min'] = val;
+                  }
+                });
+              },
+              onChangeR: (val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('payout_amount_max');
+                  } else {
+                    param['payout_amount_max'] = val;
+                  }
+                });
+              },
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '时间区间',
+            ),
+            Select(
+              selectOptions: selects,
+              selectedValue: defaultVal,
+              label: '排序',
+              onChanged: orderBy,
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['currPage'] = 1;
+                        getData();
+                      },
+                      child: Text('搜索'),
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? CupertinoActivityIndicator()
-                  : Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: ajaxData.map<Widget>((item) {
-                          return Container(
-                              decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                              margin: EdgeInsets.only(bottom: 10),
-                              padding: EdgeInsets.only(top: 5, bottom: 5),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: columns.map<Widget>((col) {
-                                  Widget con = Text('${item[col['key']] ?? ''}');
-                                  switch (col['key']) {
-                                    case 'payout_nums':
-                                      con = Text('${item['payout_nums']}个月');
-                                      break;
-                                    case 'payout_amount':
-                                      con = Text('${item['payout_amount']}元');
-                                      break;
-                                    case 'pricing_class':
-                                      con = Text('${pricingClass[item['pricing_class']]['class_ch_name']}');
-                                      break;
-                                  }
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? CupertinoActivityIndicator()
+                : Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: ajaxData.map<Widget>((item) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xffdddddd), width: 1),
+                          ),
+                          margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.only(top: 5, bottom: 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: columns.map<Widget>((col) {
+                              Widget con = Text('${item[col['key']] ?? ''}');
+                              switch (col['key']) {
+                                case 'payout_nums':
+                                  con = Text('${item['payout_nums']}个月');
+                                  break;
+                                case 'payout_amount':
+                                  con = Text('${item['payout_amount']}元');
+                                  break;
+                                case 'pricing_class':
+                                  con = Text('${pricingClass[item['pricing_class']]['class_ch_name']}');
+                                  break;
+                              }
 
-                                  return Container(
-                                    margin: EdgeInsets.only(bottom: 6),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Container(
-                                          width: 90,
-                                          alignment: Alignment.centerRight,
-                                          child: Text('${col['title']}:'),
-                                          margin: EdgeInsets.only(right: 8),
-                                        ),
-                                        Expanded(flex: 1, child: con)
-                                      ],
+                              return Container(
+                                margin: EdgeInsets.only(bottom: 6),
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: 90,
+                                      alignment: Alignment.centerRight,
+                                      child: Text('${col['title']}:'),
+                                      margin: EdgeInsets.only(right: 8),
                                     ),
-                                  );
-                                }).toList(),
-                              ));
-                        }).toList(),
-                      ),
+                                    Expanded(flex: 1, child: con)
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        );
+                      }).toList(),
                     ),
-              Container(
-                child: PagePlugin(
-                    current: param['currPage'], total: count, pageSize: param['pageCount'], function: getPage),
-              )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['currPage'],
+                total: count,
+                pageSize: param['pageCount'],
+                function: getPage,
+              ),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

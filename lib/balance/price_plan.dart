@@ -970,7 +970,6 @@ class _PricePlanState extends State<PricePlan> {
                               ],
                             ),
                           ),
-
                           /// 阶梯计价(月)
                           Offstage(
                             offstage: pricingStrategyId == constTemplate['month'] ||

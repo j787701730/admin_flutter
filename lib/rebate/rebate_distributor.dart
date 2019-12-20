@@ -164,195 +164,215 @@ class _RebateDistributorState extends State<RebateDistributor> {
         title: Text('经销商'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          // onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                label: '用户',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('user_name');
-                    } else {
-                      param['user_name'] = val;
-                    }
-                  });
-                },
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        // onLoading: _onLoading,
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '用户',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('user_name');
+                  } else {
+                    param['user_name'] = val;
+                  }
+                });
+              },
+            ),
+            Select(
+                selectOptions: state,
+                selectedValue: param['state'] ?? 'all',
+                label: '状态',
+                onChanged: (val) {
+                  if (val) {
+                    param.remove('state');
+                  } else {
+                    param['state'] = val;
+                  }
+                }),
+            DateSelectPlugin(onChanged: getDateTime, label: '申请时间'),
+            DateSelectPlugin(onChanged: getDateTime2, label: '审核时间'),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        selectDistributor.clear();
+                        getData();
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                      },
+                      child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                        List arr = [];
+                        for (var o in ajaxData) {
+                          arr.add(o['apply_id']);
+                        }
+                        setState(() {
+                          selectDistributor = arr;
+                        });
+                      },
+                      child: Text('全选'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                      },
+                      child: Text('审核成功'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      type: 'error',
+                      onPressed: () {
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                      },
+                      child: Text('审核失败'),
+                    ),
+                  ),
+                ],
               ),
-              Select(
-                  selectOptions: state,
-                  selectedValue: param['state'] ?? 'all',
-                  label: '状态',
-                  onChanged: (val) {
-                    if (val) {
-                      param.remove('state');
-                    } else {
-                      param['state'] = val;
-                    }
-                  }),
-              DateSelectPlugin(onChanged: getDateTime, label: '申请时间'),
-              DateSelectPlugin(onChanged: getDateTime2, label: '审核时间'),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            selectDistributor.clear();
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            List arr = [];
-                            for (var o in ajaxData) {
-                              arr.add(o['apply_id']);
-                            }
-                            setState(() {
-                              selectDistributor = arr;
-                            });
-                          },
-                          child: Text('全选')),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('审核成功')),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          type: 'error',
-                          onPressed: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('审核失败')),
-                    ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
-              ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: ajaxData.map<Widget>((item) {
-                                return Stack(
-                                  children: <Widget>[
-                                    Container(
-                                        decoration:
-                                            BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                        margin: EdgeInsets.only(bottom: 10),
-                                        padding: EdgeInsets.only(top: 5, bottom: 5),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: columns.map<Widget>((col) {
-                                            Widget con = Text('${item[col['key']] ?? ''}');
-                                            switch (col['key']) {
-                                              case 'state':
-                                                con = Text('${state[item['state']]}');
-                                                break;
-                                              case 'user_type':
-                                                con = Container(
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Text('${applyType[item['user_type']]['type_ch_name']}'));
-                                                break;
-                                              case 'option':
-                                                con = Wrap(
-                                                  runSpacing: 10,
-                                                  spacing: 10,
-                                                  children: <Widget>[
-                                                    Container(
-                                                      height: 30,
-                                                      child: PrimaryButton(
-                                                        onPressed: () {},
-                                                        child: Text('修改'),
-                                                      ),
-                                                    )
-                                                  ],
-                                                );
-                                                break;
-                                            }
-
-                                            return Container(
-                                              margin: EdgeInsets.only(bottom: 6),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Container(
-                                                    width: 80,
-                                                    alignment: Alignment.centerRight,
-                                                    child: Text('${col['title']}'),
-                                                    margin: EdgeInsets.only(right: 10),
-                                                  ),
-                                                  Expanded(flex: 1, child: con)
-                                                ],
-                                              ),
-                                            );
-                                          }).toList(),
-                                        )),
-                                    Positioned(
-                                      left: 0,
-                                      top: 0,
-                                      child: Checkbox(
-                                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                          value: selectDistributor.indexOf(item['apply_id']) > -1,
-                                          onChanged: (val) {
-                                            setState(() {
-                                              if (selectDistributor.contains(item['apply_id'])) {
-                                                selectDistributor.remove(item['apply_id']);
-                                              } else {
-                                                selectDistributor.add(item['apply_id']);
-                                              }
-                                            });
-                                          }),
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: ajaxData.map<Widget>((item) {
+                              return Stack(
+                                children: <Widget>[
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Color(0xffdddddd), width: 1),
                                     ),
-                                  ],
-                                );
-                              }).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    padding: EdgeInsets.only(top: 5, bottom: 5),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: columns.map<Widget>((col) {
+                                        Widget con = Text('${item[col['key']] ?? ''}');
+                                        switch (col['key']) {
+                                          case 'state':
+                                            con = Text('${state[item['state']]}');
+                                            break;
+                                          case 'user_type':
+                                            con = Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text('${applyType[item['user_type']]['type_ch_name']}'),
+                                            );
+                                            break;
+                                          case 'option':
+                                            con = Wrap(
+                                              runSpacing: 10,
+                                              spacing: 10,
+                                              children: <Widget>[
+                                                Container(
+                                                  height: 30,
+                                                  child: PrimaryButton(
+                                                    onPressed: () {},
+                                                    child: Text('修改'),
+                                                  ),
+                                                )
+                                              ],
+                                            );
+                                            break;
+                                        }
+
+                                        return Container(
+                                          margin: EdgeInsets.only(bottom: 6),
+                                          child: Row(
+                                            children: <Widget>[
+                                              Container(
+                                                width: 80,
+                                                alignment: Alignment.centerRight,
+                                                child: Text('${col['title']}'),
+                                                margin: EdgeInsets.only(right: 10),
+                                              ),
+                                              Expanded(flex: 1, child: con)
+                                            ],
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 0,
+                                    top: 0,
+                                    child: Checkbox(
+                                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                        value: selectDistributor.indexOf(item['apply_id']) > -1,
+                                        onChanged: (val) {
+                                          setState(() {
+                                            if (selectDistributor.contains(item['apply_id'])) {
+                                              selectDistributor.remove(item['apply_id']);
+                                            } else {
+                                              selectDistributor.add(item['apply_id']);
+                                            }
+                                          });
+                                        }),
+                                  ),
+                                ],
+                              );
+                            }).toList(),
+                          ),
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

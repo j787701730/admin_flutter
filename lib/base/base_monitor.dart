@@ -1,14 +1,15 @@
 import 'dart:async';
 
+import 'package:admin_flutter/base/cpu_chart.dart';
 import 'package:admin_flutter/base/io_chart.dart';
 import 'package:admin_flutter/base/mem_chart.dart';
 import 'package:admin_flutter/base/net_chart.dart';
-import 'package:admin_flutter/base/cpu_chart.dart';
+import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class BaseMonitor extends StatefulWidget {
   @override
@@ -144,296 +145,321 @@ class _BaseMonitorState extends State<BaseMonitor> {
         title: Text('主机监控'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(bottom: 10),
-                child: Wrap(
-                  spacing: 15,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    InkWell(
-                      onTap: () {
-                        DateTime a = DateTime.now();
-                        DateTime b = a.subtract(Duration(hours: 1));
-                        setState(() {
-                          timeFlag = 1;
-                          cpuParam['startTime'] = formatDateTime(b);
-                          cpuParam['endTime'] = formatDateTime(a);
-                          getData();
-                          getData2();
-                          getData3();
-                          getData4();
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
-                        color: timeFlag == 1 ? Colors.blue : Colors.white,
-                        child: Text(
-                          '1小时',
-                          style: TextStyle(
-                            color: timeFlag == 1 ? Colors.white : Colors.black,
-                          ),
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Wrap(
+                spacing: 15,
+                runSpacing: 10,
+                children: <Widget>[
+                  InkWell(
+                    onTap: () {
+                      DateTime a = DateTime.now();
+                      DateTime b = a.subtract(Duration(hours: 1));
+                      setState(() {
+                        timeFlag = 1;
+                        cpuParam['startTime'] = formatDateTime(b);
+                        cpuParam['endTime'] = formatDateTime(a);
+                        getData();
+                        getData2();
+                        getData3();
+                        getData4();
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+                      color: timeFlag == 1 ? Colors.blue : Colors.white,
+                      child: Text(
+                        '1小时',
+                        style: TextStyle(
+                          color: timeFlag == 1 ? Colors.white : Colors.black,
                         ),
                       ),
                     ),
-                    InkWell(
-                        onTap: () {
-                          DateTime a = DateTime.now();
-                          DateTime b = a.subtract(Duration(hours: 3));
-                          setState(() {
-                            timeFlag = 3;
-                            cpuParam['startTime'] = formatDateTime(b);
-                            cpuParam['endTime'] = formatDateTime(a);
-                            getData();
-                            getData2();
-                            getData3();
-                            getData4();
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
-                          color: timeFlag == 3 ? Colors.blue : Colors.white,
-                          child: Text('3小时',
-                              style: TextStyle(
-                                color: timeFlag == 3 ? Colors.white : Colors.black,
-                              )),
-                        )),
-                    InkWell(
-                        onTap: () {
-                          DateTime a = DateTime.now();
-                          DateTime b = a.subtract(Duration(hours: 6));
-                          setState(() {
-                            timeFlag = 6;
-                            cpuParam['startTime'] = formatDateTime(b);
-                            cpuParam['endTime'] = formatDateTime(a);
-                            getData();
-                            getData2();
-                            getData3();
-                            getData4();
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
-                          color: timeFlag == 6 ? Colors.blue : Colors.white,
-                          child: Text('6小时',
-                              style: TextStyle(
-                                color: timeFlag == 6 ? Colors.white : Colors.black,
-                              )),
-                        )),
-                    InkWell(
-                        onTap: () {
-                          DateTime a = DateTime.now();
-                          DateTime b = a.subtract(Duration(hours: 12));
-                          setState(() {
-                            timeFlag = 12;
-                            cpuParam['startTime'] = formatDateTime(b);
-                            cpuParam['endTime'] = formatDateTime(a);
-                            getData();
-                            getData2();
-                            getData3();
-                            getData4();
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
-                          color: timeFlag == 12 ? Colors.blue : Colors.white,
-                          child: Text('12小时',
-                              style: TextStyle(
-                                color: timeFlag == 12 ? Colors.white : Colors.black,
-                              )),
-                        )),
-                    InkWell(
-                        onTap: () {
-                          DateTime a = DateTime.now();
-                          DateTime b = a.subtract(Duration(days: 1));
-                          setState(() {
-                            timeFlag = 24;
-                            cpuParam['startTime'] = formatDateTime(b);
-                            cpuParam['endTime'] = formatDateTime(a);
-                            getData();
-                            getData2();
-                            getData3();
-                            getData4();
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
-                          color: timeFlag == 24 ? Colors.blue : Colors.white,
-                          child: Text('1天',
-                              style: TextStyle(
-                                color: timeFlag == 24 ? Colors.white : Colors.black,
-                              )),
-                        )),
-                    InkWell(
-                        onTap: () {
-                          DateTime a = DateTime.now();
-                          DateTime b = a.subtract(Duration(days: 3));
-                          setState(() {
-                            timeFlag = 24 * 3;
-                            cpuParam['startTime'] = formatDateTime(b);
-                            cpuParam['endTime'] = formatDateTime(a);
-                            getData();
-                            getData2();
-                            getData3();
-                            getData4();
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
-                          color: timeFlag == 24 * 3 ? Colors.blue : Colors.white,
-                          child: Text('3天',
-                              style: TextStyle(
-                                color: timeFlag == 24 * 3 ? Colors.white : Colors.black,
-                              )),
-                        )),
-                    InkWell(
-                        onTap: () {
-                          DateTime a = DateTime.now();
-                          DateTime b = a.subtract(Duration(days: 7));
-                          setState(() {
-                            timeFlag = 24 * 7;
-                            cpuParam['startTime'] = formatDateTime(b);
-                            cpuParam['endTime'] = formatDateTime(a);
-                            getData();
-                            getData2();
-                            getData3();
-                            getData4();
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
-                          color: timeFlag == 24 * 7 ? Colors.blue : Colors.white,
-                          child: Text('7天',
-                              style: TextStyle(
-                                color: timeFlag == 24 * 7 ? Colors.white : Colors.black,
-                              )),
-                        )),
-                    InkWell(
-                        onTap: () {
-                          DateTime a = DateTime.now();
-                          DateTime b = a.subtract(Duration(days: 14));
-                          setState(() {
-                            timeFlag = 24 * 14;
-                            cpuParam['startTime'] = formatDateTime(b);
-                            cpuParam['endTime'] = formatDateTime(a);
-                            getData();
-                            getData2();
-                            getData3();
-                            getData4();
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
-                          color: timeFlag == 24 * 14 ? Colors.blue : Colors.white,
-                          child: Text('14天',
-                              style: TextStyle(
-                                color: timeFlag == 24 * 14 ? Colors.white : Colors.black,
-                              )),
-                        )),
-                  ],
-                ),
-              ),
-              Container(
-                child: Wrap(
-                  spacing: 15,
-                  children: <Widget>[
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          cpuParam['hostID'] = '11';
-                          getData();
-                          getData2();
-                          getData3();
-                          getData4();
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
-                        color: cpuParam['hostID'] == '11' ? Colors.blue : Colors.white,
-                        child: Text(
-                          '主机11',
-                          style: TextStyle(
-                            color: cpuParam['hostID'] == '11' ? Colors.white : Colors.black,
-                          ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      DateTime a = DateTime.now();
+                      DateTime b = a.subtract(Duration(hours: 3));
+                      setState(() {
+                        timeFlag = 3;
+                        cpuParam['startTime'] = formatDateTime(b);
+                        cpuParam['endTime'] = formatDateTime(a);
+                        getData();
+                        getData2();
+                        getData3();
+                        getData4();
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+                      color: timeFlag == 3 ? Colors.blue : Colors.white,
+                      child: Text(
+                        '3小时',
+                        style: TextStyle(
+                          color: timeFlag == 3 ? Colors.white : Colors.black,
                         ),
                       ),
                     ),
-                    InkWell(
-                        onTap: () {
-                          setState(() {
-                            cpuParam['hostID'] = '12';
-                            getData();
-                            getData2();
-                            getData3();
-                            getData4();
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
-                          color: cpuParam['hostID'] == '12' ? Colors.blue : Colors.white,
-                          child: Text('主机12',
-                              style: TextStyle(
-                                color: cpuParam['hostID'] == '12' ? Colors.white : Colors.black,
-                              )),
-                        )),
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 20, bottom: 6),
-                alignment: Alignment.center,
-                child: Text('CPU'),
-              ),
-              ajaxCpu.isEmpty
-                  ? Container(
-                      height: 300,
-                    )
-                  : Container(
-                      child: CpuChart({'ajaxCpu': ajaxCpu}),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      DateTime a = DateTime.now();
+                      DateTime b = a.subtract(Duration(hours: 6));
+                      setState(() {
+                        timeFlag = 6;
+                        cpuParam['startTime'] = formatDateTime(b);
+                        cpuParam['endTime'] = formatDateTime(a);
+                        getData();
+                        getData2();
+                        getData3();
+                        getData4();
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+                      color: timeFlag == 6 ? Colors.blue : Colors.white,
+                      child: Text(
+                        '6小时',
+                        style: TextStyle(
+                          color: timeFlag == 6 ? Colors.white : Colors.black,
+                        ),
+                      ),
                     ),
-              Container(
-                margin: EdgeInsets.only(top: 20, bottom: 6),
-                alignment: Alignment.center,
-                child: Text('内存'),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      DateTime a = DateTime.now();
+                      DateTime b = a.subtract(Duration(hours: 12));
+                      setState(() {
+                        timeFlag = 12;
+                        cpuParam['startTime'] = formatDateTime(b);
+                        cpuParam['endTime'] = formatDateTime(a);
+                        getData();
+                        getData2();
+                        getData3();
+                        getData4();
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+                      color: timeFlag == 12 ? Colors.blue : Colors.white,
+                      child: Text(
+                        '12小时',
+                        style: TextStyle(
+                          color: timeFlag == 12 ? Colors.white : Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      DateTime a = DateTime.now();
+                      DateTime b = a.subtract(Duration(days: 1));
+                      setState(() {
+                        timeFlag = 24;
+                        cpuParam['startTime'] = formatDateTime(b);
+                        cpuParam['endTime'] = formatDateTime(a);
+                        getData();
+                        getData2();
+                        getData3();
+                        getData4();
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+                      color: timeFlag == 24 ? Colors.blue : Colors.white,
+                      child: Text(
+                        '1天',
+                        style: TextStyle(
+                          color: timeFlag == 24 ? Colors.white : Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      DateTime a = DateTime.now();
+                      DateTime b = a.subtract(Duration(days: 3));
+                      setState(() {
+                        timeFlag = 24 * 3;
+                        cpuParam['startTime'] = formatDateTime(b);
+                        cpuParam['endTime'] = formatDateTime(a);
+                        getData();
+                        getData2();
+                        getData3();
+                        getData4();
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+                      color: timeFlag == 24 * 3 ? Colors.blue : Colors.white,
+                      child: Text(
+                        '3天',
+                        style: TextStyle(
+                          color: timeFlag == 24 * 3 ? Colors.white : Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      DateTime a = DateTime.now();
+                      DateTime b = a.subtract(Duration(days: 7));
+                      setState(() {
+                        timeFlag = 24 * 7;
+                        cpuParam['startTime'] = formatDateTime(b);
+                        cpuParam['endTime'] = formatDateTime(a);
+                        getData();
+                        getData2();
+                        getData3();
+                        getData4();
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+                      color: timeFlag == 24 * 7 ? Colors.blue : Colors.white,
+                      child: Text(
+                        '7天',
+                        style: TextStyle(
+                          color: timeFlag == 24 * 7 ? Colors.white : Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      DateTime a = DateTime.now();
+                      DateTime b = a.subtract(Duration(days: 14));
+                      setState(() {
+                        timeFlag = 24 * 14;
+                        cpuParam['startTime'] = formatDateTime(b);
+                        cpuParam['endTime'] = formatDateTime(a);
+                        getData();
+                        getData2();
+                        getData3();
+                        getData4();
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+                      color: timeFlag == 24 * 14 ? Colors.blue : Colors.white,
+                      child: Text(
+                        '14天',
+                        style: TextStyle(
+                          color: timeFlag == 24 * 14 ? Colors.white : Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              ajaxMem.isEmpty
-                  ? Container(
-                      height: 300,
-                    )
-                  : Container(
-                      child: MemChart({'ajaxMem': ajaxMem}),
+            ),
+            Container(
+              child: Wrap(
+                spacing: 15,
+                children: <Widget>[
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        cpuParam['hostID'] = '11';
+                        getData();
+                        getData2();
+                        getData3();
+                        getData4();
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+                      color: cpuParam['hostID'] == '11' ? Colors.blue : Colors.white,
+                      child: Text(
+                        '主机11',
+                        style: TextStyle(
+                          color: cpuParam['hostID'] == '11' ? Colors.white : Colors.black,
+                        ),
+                      ),
                     ),
-              Container(
-                margin: EdgeInsets.only(top: 20, bottom: 6),
-                alignment: Alignment.center,
-                child: Text('磁盘'),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        cpuParam['hostID'] = '12';
+                        getData();
+                        getData2();
+                        getData3();
+                        getData4();
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+                      color: cpuParam['hostID'] == '12' ? Colors.blue : Colors.white,
+                      child: Text(
+                        '主机12',
+                        style: TextStyle(
+                          color: cpuParam['hostID'] == '12' ? Colors.white : Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              ajaxIO.isEmpty
-                  ? Container(
-                      height: 300,
-                    )
-                  : Container(
-                      child: IOChart({'ajaxIO': ajaxIO}),
-                    ),
-              ajaxNet.isEmpty
-                  ? Container(
-                      height: 300,
-                    )
-                  : Container(
-                      child: NETChart({'ajaxNet': ajaxNet}),
-                    ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20, bottom: 6),
+              alignment: Alignment.center,
+              child: Text('CPU'),
+            ),
+            ajaxCpu.isEmpty
+                ? Container(
+                    height: 300,
+                  )
+                : Container(
+                    child: CpuChart({'ajaxCpu': ajaxCpu}),
+                  ),
+            Container(
+              margin: EdgeInsets.only(top: 20, bottom: 6),
+              alignment: Alignment.center,
+              child: Text('内存'),
+            ),
+            ajaxMem.isEmpty
+                ? Container(
+                    height: 300,
+                  )
+                : Container(
+                    child: MemChart({'ajaxMem': ajaxMem}),
+                  ),
+            Container(
+              margin: EdgeInsets.only(top: 20, bottom: 6),
+              alignment: Alignment.center,
+              child: Text('磁盘'),
+            ),
+            ajaxIO.isEmpty
+                ? Container(
+                    height: 300,
+                  )
+                : Container(
+                    child: IOChart({'ajaxIO': ajaxIO}),
+                  ),
+            ajaxNet.isEmpty
+                ? Container(
+                    height: 300,
+                  )
+                : Container(
+                    child: NETChart({'ajaxNet': ajaxNet}),
+                  ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

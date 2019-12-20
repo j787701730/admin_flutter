@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:admin_flutter/goods/class_attribute_select_child.dart';
+import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -90,127 +91,128 @@ class _ClassAttributeSelectState extends State<ClassAttributeSelect> {
         title: Text('${ajaxData.isEmpty ? '' : ajaxData['option'].isEmpty ? '商品属性搜索串' : '商品属性选项'}'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : ajaxData.isEmpty
-                      ? Container(
-                          width: 0,
-                        )
-                      : Column(
-                          children: <Widget>[
-                            Offstage(
-                              offstage: ajaxData['option'].isEmpty,
-                              child: Container(
-                                width: MediaQuery.of(context).size.width - 20,
-                                child: DataTable(
-                                  columnSpacing: 10,
-                                  columns: <DataColumn>[
-                                    const DataColumn(
-                                      label: Text('枚举中文名称'),
-                                    ),
-                                    DataColumn(
-                                      label: const Text('选项图标/图像'),
-                                    ),
-                                    DataColumn(
-                                      label: const Text('排序'),
-                                    ),
-                                  ],
-                                  rows: ajaxData['option'].map<DataRow>((dessert) {
-                                    return DataRow(
-                                      cells: <DataCell>[
-                                        DataCell(
-                                          Row(
-                                            children: <Widget>[
-                                              Text(dessert['attr_option_ch_value']),
-                                              dessert['children'].isNotEmpty
-                                                  ? InkWell(
-                                                      onTap: () {
-                                                        turnTo({'items': dessert['children']});
-                                                      },
-                                                      child: Container(
-                                                        child: Icon(
-                                                          Icons.add,
-                                                          color: Colors.blue,
-                                                        ),
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : ajaxData.isEmpty
+                    ? Container(
+                        width: 0,
+                      )
+                    : Column(
+                        children: <Widget>[
+                          Offstage(
+                            offstage: ajaxData['option'].isEmpty,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width - 20,
+                              child: DataTable(
+                                columnSpacing: 10,
+                                columns: <DataColumn>[
+                                  const DataColumn(
+                                    label: Text('枚举中文名称'),
+                                  ),
+                                  DataColumn(
+                                    label: const Text('选项图标/图像'),
+                                  ),
+                                  DataColumn(
+                                    label: const Text('排序'),
+                                  ),
+                                ],
+                                rows: ajaxData['option'].map<DataRow>((dessert) {
+                                  return DataRow(
+                                    cells: <DataCell>[
+                                      DataCell(
+                                        Row(
+                                          children: <Widget>[
+                                            Text(dessert['attr_option_ch_value']),
+                                            dessert['children'].isNotEmpty
+                                                ? InkWell(
+                                                    onTap: () {
+                                                      turnTo({'items': dessert['children']});
+                                                    },
+                                                    child: Container(
+                                                      child: Icon(
+                                                        Icons.add,
+                                                        color: Colors.blue,
                                                       ),
-                                                    )
-                                                  : Container(
-                                                      width: 0,
-                                                    )
-                                            ],
-                                          ),
+                                                    ),
+                                                  )
+                                                : Container(
+                                                    width: 0,
+                                                  )
+                                          ],
                                         ),
-                                        DataCell(
-                                          Text('${dessert['attr_option_pic_url'] ?? ''}'),
-                                        ),
-                                        DataCell(
-                                          Text('${dessert['attr_option_sort'] ?? ''}'),
-                                        ),
-                                      ],
-                                    );
-                                  }).toList(),
-                                ),
+                                      ),
+                                      DataCell(
+                                        Text('${dessert['attr_option_pic_url'] ?? ''}'),
+                                      ),
+                                      DataCell(
+                                        Text('${dessert['attr_option_sort'] ?? ''}'),
+                                      ),
+                                    ],
+                                  );
+                                }).toList(),
                               ),
                             ),
-                            Offstage(
-                              offstage: ajaxData['search_list'].isEmpty,
-                              child: Container(
-                                width: MediaQuery.of(context).size.width - 20,
-                                child: DataTable(
-                                  columnSpacing: 10,
-                                  columns: <DataColumn>[
-                                    DataColumn(
-                                      label: Text('搜索串描述'),
-                                    ),
-                                    DataColumn(
-                                      label: Text('搜索左值'),
-                                    ),
-                                    DataColumn(
-                                      label: Text('搜索右值'),
-                                    ),
-                                    DataColumn(
-                                      label: Text('排序'),
-                                    ),
-                                  ],
-                                  rows: ajaxData['search_list'].map<DataRow>((dessert) {
-                                    return DataRow(
-                                      cells: <DataCell>[
-                                        DataCell(
-                                          Text(dessert['attr_search_desc']),
-                                        ),
-                                        DataCell(
-                                          Text('${dessert['left_value'] ?? ''}'),
-                                        ),
-                                        DataCell(
-                                          Text('${dessert['right_value'] ?? ''}'),
-                                        ),
-                                        DataCell(
-                                          Text('${dessert['search_sort'] ?? ''}'),
-                                        ),
-                                      ],
-                                    );
-                                  }).toList(),
-                                ),
+                          ),
+                          Offstage(
+                            offstage: ajaxData['search_list'].isEmpty,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width - 20,
+                              child: DataTable(
+                                columnSpacing: 10,
+                                columns: <DataColumn>[
+                                  DataColumn(
+                                    label: Text('搜索串描述'),
+                                  ),
+                                  DataColumn(
+                                    label: Text('搜索左值'),
+                                  ),
+                                  DataColumn(
+                                    label: Text('搜索右值'),
+                                  ),
+                                  DataColumn(
+                                    label: Text('排序'),
+                                  ),
+                                ],
+                                rows: ajaxData['search_list'].map<DataRow>((dessert) {
+                                  return DataRow(
+                                    cells: <DataCell>[
+                                      DataCell(
+                                        Text(dessert['attr_search_desc']),
+                                      ),
+                                      DataCell(
+                                        Text('${dessert['left_value'] ?? ''}'),
+                                      ),
+                                      DataCell(
+                                        Text('${dessert['right_value'] ?? ''}'),
+                                      ),
+                                      DataCell(
+                                        Text('${dessert['search_sort'] ?? ''}'),
+                                      ),
+                                    ],
+                                  );
+                                }).toList(),
                               ),
-                            )
-                          ],
-                        )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                            ),
+                          )
+                        ],
+                      )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

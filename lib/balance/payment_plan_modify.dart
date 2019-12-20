@@ -42,36 +42,40 @@ class _PaymentPlanModifyState extends State<PaymentPlanModify> {
         padding: EdgeInsets.all(10),
         children: <Widget>[
           Select(
-              selectOptions: planType,
-              selectedValue: param['payment_plan_type'],
-              label: '支付方案',
-              onChanged: (val) {
-                setState(() {
-                  param['payment_plan_type'] = val;
-                });
-              }),
+            selectOptions: planType,
+            selectedValue: param['payment_plan_type'],
+            label: '支付方案',
+            onChanged: (val) {
+              setState(() {
+                param['payment_plan_type'] = val;
+              });
+            },
+          ),
           Select(
-              selectOptions: paymentMethod,
-              selectedValue: param['payment_method'],
-              label: '支付方式',
-              onChanged: (val) {
-                setState(() {
-                  param['payment_method'] = val;
-                });
-              }),
+            selectOptions: paymentMethod,
+            selectedValue: param['payment_method'],
+            label: '支付方式',
+            onChanged: (val) {
+              setState(() {
+                param['payment_method'] = val;
+              });
+            },
+          ),
           Select(
-              selectOptions: balanceType,
-              selectedValue: param['balance_type_id'],
-              label: '资金类型',
-              onChanged: (val) {
-                setState(() {
-                  param['balance_type_id'] = val;
-                });
-              }),
+            selectOptions: balanceType,
+            selectedValue: param['balance_type_id'],
+            label: '资金类型',
+            onChanged: (val) {
+              setState(() {
+                param['balance_type_id'] = val;
+              });
+            },
+          ),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              height: 34,
-              child: Row(children: <Widget>[
+            margin: EdgeInsets.only(bottom: 10),
+            height: 34,
+            child: Row(
+              children: <Widget>[
                 Container(
                   width: 80,
                   alignment: Alignment.centerRight,
@@ -82,12 +86,26 @@ class _PaymentPlanModifyState extends State<PaymentPlanModify> {
                   flex: 1,
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(TextEditingValue(
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['balance_sort'] ?? ''}',
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['balance_sort'] ?? ''}'.length)))),
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['balance_sort'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 0,
+                        bottom: 0,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (String val) {
                       setState(() {
                         param['balance_sort'] = val;
@@ -95,10 +113,13 @@ class _PaymentPlanModifyState extends State<PaymentPlanModify> {
                     },
                   ),
                 ),
-              ])),
+              ],
+            ),
+          ),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(children: <Widget>[
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              children: <Widget>[
                 Container(
                   width: 80,
                   alignment: Alignment.centerRight,
@@ -110,13 +131,21 @@ class _PaymentPlanModifyState extends State<PaymentPlanModify> {
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
                     maxLines: 4,
-                    controller: TextEditingController.fromValue(TextEditingValue(
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['comments'] ?? ''}',
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['comments'] ?? ''}'.length)))),
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['comments'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15),
+                    ),
                     onChanged: (String val) {
                       setState(() {
                         param['comments'] = val;
@@ -124,10 +153,13 @@ class _PaymentPlanModifyState extends State<PaymentPlanModify> {
                     },
                   ),
                 ),
-              ])),
+              ],
+            ),
+          ),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(children: <Widget>[
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              children: <Widget>[
                 Container(
                   width: 80,
                   margin: EdgeInsets.only(right: 10),
@@ -139,15 +171,18 @@ class _PaymentPlanModifyState extends State<PaymentPlanModify> {
                       Container(
                         height: 34,
                         child: PrimaryButton(
-                            onPressed: () {
-                              print(param);
-                            },
-                            child: Text('保存')),
+                          onPressed: () {
+                            print(param);
+                          },
+                          child: Text('保存'),
+                        ),
                       )
                     ],
                   ),
                 ),
-              ])),
+              ],
+            ),
+          ),
         ],
       ),
     );

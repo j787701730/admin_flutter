@@ -88,11 +88,11 @@ class _DateSelectPluginState extends State<DateSelectPlugin> {
                     child: Container(
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey, width: 1),
-                          borderRadius: BorderRadius.all(Radius.circular(4))),
+                          borderRadius: BorderRadius.all(Radius.circular(4),)),
                       height: 34,
                       padding: EdgeInsets.only(left: 10),
                       alignment: Alignment.centerLeft,
-                      child: Text(min == null ? '' : min.toString().substring(0, 10)),
+                      child: Text(min == null ? '' : min.toString().substring(0, 10),),
                     ),
                   ),
                 ),
@@ -103,35 +103,36 @@ class _DateSelectPluginState extends State<DateSelectPlugin> {
                   ),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: InkWell(
-                      onTap: () {
-                        showDatePicker(
-                          context: context,
-                          initialDate: max ?? DateTime.now(),
-                          firstDate: DateTime.tryParse('1970-01-01 00:00:00'),
-                          lastDate: DateTime.tryParse('2099-12-31 23:59:59'),
-                        ).then((DateTime val) {
-                          setState(() {
-                            if (!widget.operaNull || val != null) {
-                              max = val;
-                            }
-                            widget.onChanged({'min': min, 'max': max});
-                          });
-                        }).catchError((err) {
-                          print(err);
+                  flex: 1,
+                  child: InkWell(
+                    onTap: () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: max ?? DateTime.now(),
+                        firstDate: DateTime.tryParse('1970-01-01 00:00:00'),
+                        lastDate: DateTime.tryParse('2099-12-31 23:59:59'),
+                      ).then((DateTime val) {
+                        setState(() {
+                          if (!widget.operaNull || val != null) {
+                            max = val;
+                          }
+                          widget.onChanged({'min': min, 'max': max});
                         });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.all(Radius.circular(4))),
-                        height: 34,
-                        padding: EdgeInsets.only(left: 10),
-                        alignment: Alignment.centerLeft,
-                        child: Text(max == null ? '' : max.toString().substring(0, 10)),
-                      ),
-                    ))
+                      }).catchError((err) {
+                        print(err);
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 1),
+                          borderRadius: BorderRadius.all(Radius.circular(4),)),
+                      height: 34,
+                      padding: EdgeInsets.only(left: 10),
+                      alignment: Alignment.centerLeft,
+                      child: Text(max == null ? '' : max.toString().substring(0, 10),),
+                    ),
+                  ),
+                )
               ],
             ),
           )

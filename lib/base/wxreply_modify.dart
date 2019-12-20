@@ -55,14 +55,26 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                   flex: 1,
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(TextEditingValue(
-
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['keyword'] ?? ''}',
-
                         selection: TextSelection.fromPosition(
-                            TextPosition(affinity: TextAffinity.downstream, offset: '${param['keyword']}'.length)))),
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['keyword']}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 6,
+                        bottom: 6,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         param['keyword'] = val;
@@ -119,13 +131,14 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Radio(
-                                value: '0',
-                                groupValue: param['web_bind'] ?? '1',
-                                onChanged: (val) {
-                                  setState(() {
-                                    param['web_bind'] = '0';
-                                  });
-                                }),
+                              value: '0',
+                              groupValue: param['web_bind'] ?? '1',
+                              onChanged: (val) {
+                                setState(() {
+                                  param['web_bind'] = '0';
+                                });
+                              },
+                            ),
                             Text('未绑定')
                           ],
                         ),
@@ -136,11 +149,16 @@ class _WxReplyModifyState extends State<WxReplyModify> {
               ],
             ),
           ),
-          Select(selectOptions: replyType, selectedValue: param['reply_type'] ?? '1', label: '回复类型', onChanged: (String newValue) {
-            setState(() {
-              param['reply_type'] = newValue;
-            });
-          }),
+          Select(
+            selectOptions: replyType,
+            selectedValue: param['reply_type'] ?? '1',
+            label: '回复类型',
+            onChanged: (String newValue) {
+              setState(() {
+                param['reply_type'] = newValue;
+              });
+            },
+          ),
           Offstage(
             offstage: param['reply_type'] != '1',
             child: Container(
@@ -157,18 +175,29 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                     flex: 1,
                     child: TextField(
                       style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(TextEditingValue(
-
+                      controller: TextEditingController.fromValue(
+                        TextEditingValue(
                           text:
                               '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['function_name'] ?? ''}',
-
-                          selection: TextSelection.fromPosition(TextPosition(
+                          selection: TextSelection.fromPosition(
+                            TextPosition(
                               affinity: TextAffinity.downstream,
                               offset:
                                   '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['function_name'] ?? ''}'
-                                      .length)))),
+                                      .length,
+                            ),
+                          ),
+                        ),
+                      ),
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(
+                          top: 6,
+                          bottom: 6,
+                          left: 15,
+                          right: 15,
+                        ),
+                      ),
                       onChanged: (val) {
                         setState(() {
                           param['reply_content'] = jsonEncode({'function_name': val});
@@ -198,17 +227,26 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                       style: TextStyle(fontSize: CFFontSize.content),
                       maxLines: 4,
                       controller: TextEditingController.fromValue(TextEditingValue(
-
-                          text:
-                              '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_content'] ?? ''}',
-
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream,
-                              offset:
-                                  '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_content'] ?? ''}'
-                                      .length)))),
+                        text:
+                            '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_content'] ?? ''}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset:
+                                '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_content'] ?? ''}'
+                                    .length,
+                          ),
+                        ),
+                      )),
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(
+                          top: 6,
+                          bottom: 6,
+                          left: 15,
+                          right: 15,
+                        ),
+                      ),
                       onChanged: (val) {
                         setState(() {
                           param['reply_content'] = jsonEncode({'msg_content': val});
@@ -239,19 +277,29 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                         child: TextField(
                           style: TextStyle(fontSize: CFFontSize.content),
                           maxLines: 4,
-                          controller: TextEditingController.fromValue(TextEditingValue(
-
+                          controller: TextEditingController.fromValue(
+                            TextEditingValue(
                               text:
                                   '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_title'] ?? ''}',
-
-                              selection: TextSelection.fromPosition(TextPosition(
+                              selection: TextSelection.fromPosition(
+                                TextPosition(
                                   affinity: TextAffinity.downstream,
                                   offset:
                                       '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_title'] ?? ''}'
-                                          .length)))),
+                                          .length,
+                                ),
+                              ),
+                            ),
+                          ),
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.only(
+                              top: 6,
+                              bottom: 6,
+                              left: 15,
+                              right: 15,
+                            ),
+                          ),
                           onChanged: (val) {
                             Map temp;
                             if (param['reply_content'] == null) {
@@ -284,19 +332,29 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                         child: TextField(
                           style: TextStyle(fontSize: CFFontSize.content),
                           maxLines: 4,
-                          controller: TextEditingController.fromValue(TextEditingValue(
-
+                          controller: TextEditingController.fromValue(
+                            TextEditingValue(
                               text:
                                   '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_content'] ?? ''}',
-
-                              selection: TextSelection.fromPosition(TextPosition(
+                              selection: TextSelection.fromPosition(
+                                TextPosition(
                                   affinity: TextAffinity.downstream,
                                   offset:
                                       '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_content'] ?? ''}'
-                                          .length)))),
+                                          .length,
+                                ),
+                              ),
+                            ),
+                          ),
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.only(
+                              top: 6,
+                              bottom: 6,
+                              left: 15,
+                              right: 15,
+                            ),
+                          ),
                           onChanged: (val) {
                             Map temp;
                             if (param['reply_content'] == null) {
@@ -328,19 +386,29 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                         flex: 1,
                         child: TextField(
                           style: TextStyle(fontSize: CFFontSize.content),
-                          controller: TextEditingController.fromValue(TextEditingValue(
-
+                          controller: TextEditingController.fromValue(
+                            TextEditingValue(
                               text:
                                   '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['pic_url'] ?? ''}',
-
-                              selection: TextSelection.fromPosition(TextPosition(
+                              selection: TextSelection.fromPosition(
+                                TextPosition(
                                   affinity: TextAffinity.downstream,
                                   offset:
                                       '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['pic_url'] ?? ''}'
-                                          .length)))),
+                                          .length,
+                                ),
+                              ),
+                            ),
+                          ),
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.only(
+                              top: 6,
+                              bottom: 6,
+                              left: 15,
+                              right: 15,
+                            ),
+                          ),
                           onChanged: (val) {
                             Map temp;
                             if (param['reply_content'] == null) {
@@ -380,19 +448,29 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                         flex: 1,
                         child: TextField(
                           style: TextStyle(fontSize: CFFontSize.content),
-                          controller: TextEditingController.fromValue(TextEditingValue(
-
+                          controller: TextEditingController.fromValue(
+                            TextEditingValue(
                               text:
                                   '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_url'] ?? ''}',
-
-                              selection: TextSelection.fromPosition(TextPosition(
+                              selection: TextSelection.fromPosition(
+                                TextPosition(
                                   affinity: TextAffinity.downstream,
                                   offset:
                                       '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_url'] ?? ''}'
-                                          .length)))),
+                                          .length,
+                                ),
+                              ),
+                            ),
+                          ),
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.only(
+                              top: 6,
+                              bottom: 6,
+                              left: 15,
+                              right: 15,
+                            ),
+                          ),
                           onChanged: (val) {
                             Map temp;
                             if (param['reply_content'] == null) {
@@ -428,14 +506,25 @@ class _WxReplyModifyState extends State<WxReplyModify> {
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
                     maxLines: 4,
-                    controller: TextEditingController.fromValue(TextEditingValue(
-
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['comments'] ?? ''}',
-
                         selection: TextSelection.fromPosition(
-                            TextPosition(affinity: TextAffinity.downstream, offset: '${param['comments']}'.length)))),
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['comments']}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15)),
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(
+                          top: 6,
+                          bottom: 6,
+                          left: 15,
+                          right: 15,
+                        )),
                     onChanged: (val) {
                       setState(() {
                         param['comments'] = val;
@@ -452,10 +541,11 @@ class _WxReplyModifyState extends State<WxReplyModify> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 PrimaryButton(
-                    onPressed: () {
-                      print(param);
-                    },
-                    child: Text('确认保存'))
+                  onPressed: () {
+                    print(param);
+                  },
+                  child: Text('确认保存'),
+                )
               ],
             ),
           )

@@ -214,129 +214,130 @@ class _SupplyClassState extends State<SupplyClass> {
         title: Text('供应商分类'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                label: '供应商分类',
-                onChanged: (String val) {},
-                labelWidth: 100,
-              ),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                        onPressed: () {
-                          getData();
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: Text('搜索'),
-                      ),
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '供应商分类',
+              onChanged: (String val) {},
+              labelWidth: 100,
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        getData();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Text('搜索'),
                     ),
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SupplyClassModify(
-                                {'industryClass': industryClass, 'item': null},
-                              ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SupplyClassModify(
+                              {'industryClass': industryClass, 'item': null},
                             ),
-                          );
-                        },
-                        child: Text('新增分类'),
-                      ),
-                    )
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                          ),
+                        );
+                      },
+                      child: Text('新增分类'),
+                    ),
+                  )
+                ],
               ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              children: <Widget>[
-                                Container(
-                                  padding: EdgeInsets.only(
-                                    bottom: 6,
-                                  ),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        alignment: Alignment.center,
-                                        width: width / 5,
-                                        child: Text('排序'),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Center(
-                                          child: Text('供应商分类'),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: width / 5,
-                                        alignment: Alignment.center,
-                                        child: Text('备注'),
-                                      ),
-                                      Container(
-                                        width: 50,
-                                        alignment: Alignment.center,
-                                        child: Text('操作'),
-                                      ),
-                                    ],
-                                  ),
-                                  decoration:
-                                      BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.only(
+                                  bottom: 6,
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: ajaxData.map<Widget>((item) {
-                                    return Column(
-                                      children: <Widget>[
-                                        itemContainer(item, 1),
-                                        item['children'].isEmpty
-                                            ? Container(
-                                                width: 0,
-                                              )
-                                            : Column(
-                                                children: item['children'].map<Widget>((children) {
-                                                  return Container(
-                                                    child: itemContainer(children, 2),
-                                                  );
-                                                }).toList(),
-                                              )
-                                      ],
-                                    );
-                                  }).toList(),
-                                )
-                              ],
-                            ),
-                    ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      alignment: Alignment.center,
+                                      width: width / 5,
+                                      child: Text('排序'),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Center(
+                                        child: Text('供应商分类'),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width / 5,
+                                      alignment: Alignment.center,
+                                      child: Text('备注'),
+                                    ),
+                                    Container(
+                                      width: 50,
+                                      alignment: Alignment.center,
+                                      child: Text('操作'),
+                                    ),
+                                  ],
+                                ),
+                                decoration:
+                                    BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: ajaxData.map<Widget>((item) {
+                                  return Column(
+                                    children: <Widget>[
+                                      itemContainer(item, 1),
+                                      item['children'].isEmpty
+                                          ? Container(
+                                              width: 0,
+                                            )
+                                          : Column(
+                                              children: item['children'].map<Widget>((children) {
+                                                return Container(
+                                                  child: itemContainer(children, 2),
+                                                );
+                                              }).toList(),
+                                            )
+                                    ],
+                                  );
+                                }).toList(),
+                              )
+                            ],
+                          ),
+                  ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

@@ -130,7 +130,9 @@ class _ChargePresentState extends State<ChargePresent> {
   turnTo(item) {
     Navigator.push(
       _context,
-      MaterialPageRoute(builder: (context) => ChargePresentModify(item)),
+      MaterialPageRoute(
+        builder: (context) => ChargePresentModify(item),
+      ),
     );
   }
 
@@ -147,7 +149,10 @@ class _ChargePresentState extends State<ChargePresent> {
           content: SingleChildScrollView(
             child: Container(
 //                width: MediaQuery.of(context).size.width - 100,
-              child: Text('确认删除 ${data['rule_name']} 赠送规则?',style: TextStyle(fontSize: CFFontSize.content),),
+              child: Text(
+                '确认删除 ${data['rule_name']} 赠送规则?',
+                style: TextStyle(fontSize: CFFontSize.content),
+              ),
             ),
           ),
           actions: <Widget>[
@@ -178,213 +183,226 @@ class _ChargePresentState extends State<ChargePresent> {
         title: Text('充值赠送'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          // onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Select(
-                  labelWidth: 110,
-                  selectOptions: balanceType,
-                  selectedValue: param['balance_type'] ?? 'all',
-                  label: '账本类型',
-                  onChanged: (val) {
-                    if (val == 'all') {
-                      param.remove('balance_type');
-                    } else {
-                      param['balance_type'] = val;
-                    }
-                  }),
-              Select(
-                  labelWidth: 110,
-                  selectOptions: chargeType,
-                  selectedValue: param['charge_type'] ?? 'all',
-                  label: '充值类型',
-                  onChanged: (val) {
-                    if (val == 'all') {
-                      param.remove('charge_type');
-                    } else {
-                      param['charge_type'] = val;
-                    }
-                  }),
-              Select(
-                  labelWidth: 110,
-                  selectOptions: userType,
-                  selectedValue: param['user_type'] ?? 'all',
-                  label: '用户类型',
-                  onChanged: (val) {
-                    if (val == 'all') {
-                      param.remove('user_type');
-                    } else {
-                      param['user_type'] = val;
-                    }
-                  }),
-              Select(
-                  labelWidth: 110,
-                  selectOptions: presentType,
-                  selectedValue: param['present_type'] ?? 'all',
-                  label: '赠送类型',
-                  onChanged: (val) {
-                    if (val == 'all') {
-                      param.remove('present_type');
-                    } else {
-                      param['present_type'] = val;
-                    }
-                  }),
-              Select(
-                  labelWidth: 110,
-                  selectOptions: presentBalance,
-                  selectedValue: param['present_balance_type'] ?? 'all',
-                  label: '赠送账本类型',
-                  onChanged: (val) {
-                    if (val == 'all') {
-                      param.remove('present_balance_type');
-                    } else {
-                      param['present_balance_type'] = val;
-                    }
-                  }),
-              DateSelectPlugin(
-                onChanged: getDateTime,
-                label: '有效时间',
-                labelWidth: 110,
-              ),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        // onLoading: _onLoading,
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Select(
+              labelWidth: 100,
+              selectOptions: balanceType,
+              selectedValue: param['balance_type'] ?? 'all',
+              label: '账本类型',
+              onChanged: (val) {
+                if (val == 'all') {
+                  param.remove('balance_type');
+                } else {
+                  param['balance_type'] = val;
+                }
+              },
+            ),
+            Select(
+              labelWidth: 100,
+              selectOptions: chargeType,
+              selectedValue: param['charge_type'] ?? 'all',
+              label: '充值类型',
+              onChanged: (val) {
+                if (val == 'all') {
+                  param.remove('charge_type');
+                } else {
+                  param['charge_type'] = val;
+                }
+              },
+            ),
+            Select(
+              labelWidth: 100,
+              selectOptions: userType,
+              selectedValue: param['user_type'] ?? 'all',
+              label: '用户类型',
+              onChanged: (val) {
+                if (val == 'all') {
+                  param.remove('user_type');
+                } else {
+                  param['user_type'] = val;
+                }
+              },
+            ),
+            Select(
+              labelWidth: 100,
+              selectOptions: presentType,
+              selectedValue: param['present_type'] ?? 'all',
+              label: '赠送类型',
+              onChanged: (val) {
+                if (val == 'all') {
+                  param.remove('present_type');
+                } else {
+                  param['present_type'] = val;
+                }
+              },
+            ),
+            Select(
+              labelWidth: 100,
+              selectOptions: presentBalance,
+              selectedValue: param['present_balance_type'] ?? 'all',
+              label: '赠送账本类型',
+              onChanged: (val) {
+                if (val == 'all') {
+                  param.remove('present_balance_type');
+                } else {
+                  param['present_balance_type'] = val;
+                }
+              },
+            ),
+            DateSelectPlugin(
+              onChanged: getDateTime,
+              label: '有效时间',
+              labelWidth: 100,
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Text('搜索'),
                     ),
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            turnTo(null);
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('添加规则')),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        turnTo(null);
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Text('添加规则'),
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        switch (col['key']) {
-                                          case 'balance_type':
-                                            con = Text('${balanceType[item['balance_type']]}');
-                                            break;
-                                          case 'user_type':
-                                            con = Text('${userType[item['user_type']]}');
-                                            break;
-                                          case 'charge_type':
-                                            con = Text('${chargeType[item['charge_type']]}');
-                                            break;
-                                          case 'present_type':
-                                            con = Text('${presentType[item['present_type']]}');
-                                            break;
-                                          case 'present_balance_type':
-                                            con = Text('${presentBalance[item['present_balance_type']]}');
-                                            break;
-                                          case 'comments':
-                                            con = Container(
-                                              child: Html(data: '${item['comments'] ?? ''}'),
-                                            );
-                                            break;
-                                          case 'option':
-                                            con = Wrap(
-                                              runSpacing: 10,
-                                              spacing: 10,
-                                              children: <Widget>[
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      turnTo(item);
-                                                    },
-                                                    child: Text('修改'),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      delDialog(item);
-                                                    },
-                                                    child: Text('删除'),
-                                                    type: "error",
-                                                  ),
-                                                )
-                                              ],
-                                            );
-                                            break;
-                                        }
-
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 120,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
-                                              ),
-                                              Expanded(flex: 1, child: con)
-                                            ],
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : ajaxData.isEmpty
+                    ? Container(
+                        alignment: Alignment.center,
+                        child: Text('无数据'),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: ajaxData.map<Widget>(
+                          (item) {
+                            return Container(
+                              decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
+                              margin: EdgeInsets.only(bottom: 10),
+                              padding: EdgeInsets.only(top: 5, bottom: 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: columns.map<Widget>((col) {
+                                  Widget con = Text('${item[col['key']] ?? ''}');
+                                  switch (col['key']) {
+                                    case 'balance_type':
+                                      con = Text('${balanceType[item['balance_type']]}');
+                                      break;
+                                    case 'user_type':
+                                      con = Text('${userType[item['user_type']]}');
+                                      break;
+                                    case 'charge_type':
+                                      con = Text('${chargeType[item['charge_type']]}');
+                                      break;
+                                    case 'present_type':
+                                      con = Text('${presentType[item['present_type']]}');
+                                      break;
+                                    case 'present_balance_type':
+                                      con = Text('${presentBalance[item['present_balance_type']]}');
+                                      break;
+                                    case 'comments':
+                                      con = Container(
+                                        child: Html(data: '${item['comments'] ?? ''}'),
+                                      );
+                                      break;
+                                    case 'option':
+                                      con = Wrap(
+                                        runSpacing: 10,
+                                        spacing: 10,
+                                        children: <Widget>[
+                                          Container(
+                                            height: 30,
+                                            child: PrimaryButton(
+                                              onPressed: () {
+                                                turnTo(item);
+                                              },
+                                              child: Text('修改'),
+                                            ),
                                           ),
-                                        );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
+                                          Container(
+                                            height: 30,
+                                            child: PrimaryButton(
+                                              onPressed: () {
+                                                delDialog(item);
+                                              },
+                                              child: Text('删除'),
+                                              type: "error",
+                                            ),
+                                          )
+                                        ],
+                                      );
+                                      break;
+                                  }
+
+                                  return Container(
+                                    margin: EdgeInsets.only(bottom: 6),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          width: 120,
+                                          alignment: Alignment.centerRight,
+                                          child: Text('${col['title']}'),
+                                          margin: EdgeInsets.only(right: 10),
+                                        ),
+                                        Expanded(flex: 1, child: con)
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            );
+                          },
+                        ).toList(),
+                      ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

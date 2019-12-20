@@ -136,7 +136,8 @@ class _BaseCacheState extends State<BaseCache> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['curr_page'] += page;
     getData();
   }
@@ -152,150 +153,162 @@ class _BaseCacheState extends State<BaseCache> {
         title: Text('缓存管理'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Select(selectOptions: type, selectedValue: typeName, label: '关键字', onChanged: (String newValue) {
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Select(
+                        selectOptions: type,
+                        selectedValue: typeName,
+                        label: '关键字',
+                        onChanged: (String newValue) {
                           setState(() {
                             typeName = newValue;
                           });
-                        }),
-                        Container(
-                          child: Wrap(
-                            alignment: WrapAlignment.center,
-                            spacing: 10,
-                            runSpacing: 10,
-                            children: <Widget>[
-                              SizedBox(
-                                height: 30,
-                                child: PrimaryButton(
-                                    onPressed: () {
-                                      param['curr_page'] = 1;
-                                      getData();
-                                    },
-                                    child: Text('搜索')),
+                        },
+                      ),
+                      Container(
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: 10,
+                          runSpacing: 10,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 30,
+                              child: PrimaryButton(
+                                onPressed: () {
+                                  param['curr_page'] = 1;
+                                  getData();
+                                },
+                                child: Text('搜索'),
                               ),
-                              SizedBox(
-                                height: 30,
-                                child: PrimaryButton(
-                                    color: Colors.green,
-                                    onPressed: () {
-                                      print(selectType);
-                                    },
-                                    child: Text('批量清除缓存')),
+                            ),
+                            SizedBox(
+                              height: 30,
+                              child: PrimaryButton(
+                                color: Colors.green,
+                                onPressed: () {
+                                  print(selectType);
+                                },
+                                child: Text('批量清除缓存'),
+                              ),
+                            )
+                          ],
+                        ),
+                        margin: EdgeInsets.only(bottom: 10),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6),
+                        alignment: Alignment.centerRight,
+                        child: NumberBar(count: count),
+                      ),
+                      Container(
+                        child: ajaxData.isEmpty
+                            ? Container(
+                                alignment: Alignment.center,
+                                child: Text('无数据'),
                               )
-                            ],
-                          ),
-                          margin: EdgeInsets.only(bottom: 10),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 6),
-                          alignment: Alignment.centerRight,
-                          child: NumberBar(count: count),
-                        ),
-                        Container(
-                          child: ajaxData.isEmpty
-                              ? Container(
-                                  alignment: Alignment.center,
-                                  child: Text('无数据'),
-                                )
-                              : Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: ajaxData.map<Widget>((item) {
-                                    return Container(
-                                        decoration:
-                                            BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                        margin: EdgeInsets.only(bottom: 10),
-                                        padding: EdgeInsets.only(top: 10, bottom: 10),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: columns.map<Widget>((col) {
-                                            Widget con = Text('${item[col['key']] ?? ''}');
-                                            switch (col['key']) {
-                                              case 'cache_name':
-                                                con = Wrap(
-                                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                                  runSpacing: 10,
-                                                  children: <Widget>[
-                                                    Text('${item[col['key']] ?? ''}'),
-                                                    Checkbox(
-                                                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                                        value: selectType.indexOf(item['id']) > -1,
-                                                        onChanged: (val) {
-                                                          if (selectType.indexOf(item['id']) > -1) {
-                                                            setState(() {
-                                                              selectType.remove(item['id']);
-                                                            });
-                                                          } else {
-                                                            setState(() {
-                                                              selectType.add(item['id']);
-                                                            });
-                                                          }
-                                                        })
-                                                  ],
-                                                );
-                                                break;
-                                              case 'option':
-                                                con = Row(
-                                                  children: <Widget>[
-                                                    Container(
-                                                      height: 30,
-                                                      child: PrimaryButton(
-                                                        onPressed: () {},
-                                                        child: Text('清除缓存'),
-                                                      ),
-                                                    )
-                                                  ],
-                                                );
-                                                break;
-                                            }
-                                            return Container(
-                                              margin: EdgeInsets.only(bottom: 6),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Container(
-                                                    width: 80,
-                                                    alignment: Alignment.centerRight,
-                                                    child: Text('${col['title']}'),
-                                                    margin: EdgeInsets.only(right: 10),
-                                                  ),
-                                                  Expanded(flex: 1, child: con)
-                                                ],
-                                              ),
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: ajaxData.map<Widget>((item) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Color(0xffdddddd), width: 1),
+                                    ),
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: columns.map<Widget>((col) {
+                                        Widget con = Text('${item[col['key']] ?? ''}');
+                                        switch (col['key']) {
+                                          case 'cache_name':
+                                            con = Wrap(
+                                              crossAxisAlignment: WrapCrossAlignment.center,
+                                              runSpacing: 10,
+                                              children: <Widget>[
+                                                Text('${item[col['key']] ?? ''}'),
+                                                Checkbox(
+                                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                  value: selectType.indexOf(item['id']) > -1,
+                                                  onChanged: (val) {
+                                                    if (selectType.indexOf(item['id']) > -1) {
+                                                      setState(() {
+                                                        selectType.remove(item['id']);
+                                                      });
+                                                    } else {
+                                                      setState(() {
+                                                        selectType.add(item['id']);
+                                                      });
+                                                    }
+                                                  },
+                                                )
+                                              ],
                                             );
-                                          }).toList(),
-                                        ));
-                                  }).toList(),
-                                ),
+                                            break;
+                                          case 'option':
+                                            con = Row(
+                                              children: <Widget>[
+                                                Container(
+                                                  height: 30,
+                                                  child: PrimaryButton(
+                                                    onPressed: () {},
+                                                    child: Text('清除缓存'),
+                                                  ),
+                                                )
+                                              ],
+                                            );
+                                            break;
+                                        }
+                                        return Container(
+                                          margin: EdgeInsets.only(bottom: 6),
+                                          child: Row(
+                                            children: <Widget>[
+                                              Container(
+                                                width: 80,
+                                                alignment: Alignment.centerRight,
+                                                child: Text('${col['title']}'),
+                                                margin: EdgeInsets.only(right: 10),
+                                              ),
+                                              Expanded(flex: 1, child: con)
+                                            ],
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                      ),
+                      Container(
+                        child: PagePlugin(
+                          current: param['curr_page'],
+                          total: count,
+                          pageSize: param['page_count'],
+                          function: getPage,
                         ),
-                        Container(
-                          child: PagePlugin(
-                              current: param['curr_page'],
-                              total: count,
-                              pageSize: param['page_count'],
-                              function: getPage),
-                        )
-                      ],
-                    )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                      )
+                    ],
+                  ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

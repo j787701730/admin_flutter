@@ -100,30 +100,41 @@ class _UserPluginState extends State<UserPlugin> {
 
   shopsBox() {
     showModalBottomSheet(
-        context: _context,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext context) {
-          return StatefulBuilder(builder: (context1, state) {
+      context: _context,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context1, state) {
             /// 这里的state就是setState
             return Container(
               height: MediaQuery.of(_context).size.height * 0.6,
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
               padding: EdgeInsets.only(top: 20),
               child: ListView(
                 children: selectUsersData.keys.map<Widget>((key) {
                   return Container(
-                    padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+                    padding: EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      top: 4,
+                      bottom: 4,
+                    ),
                     child: Row(
                       children: <Widget>[
                         Expanded(
-                            flex: 1,
-                            child: Text(
-                              '${selectUsersData[key]['login_name']}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            )),
+                          flex: 1,
+                          child: Text(
+                            '${selectUsersData[key]['login_name']}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                         InkWell(
                           onTap: () {
                             state(() {
@@ -144,8 +155,10 @@ class _UserPluginState extends State<UserPlugin> {
                 }).toList(),
               ),
             );
-          });
-        });
+          },
+        );
+      },
+    );
   }
 
   toTop() {
@@ -167,19 +180,21 @@ class _UserPluginState extends State<UserPlugin> {
     return Column(
       children: <Widget>[
         Input(
-            label: '用户名',
-            onChanged: (String val) {
-              setState(() {
-                param['loginName'] = val;
-              });
-            }),
+          label: '用户名',
+          onChanged: (String val) {
+            setState(() {
+              param['loginName'] = val;
+            });
+          },
+        ),
         Input(
-            label: '手机',
-            onChanged: (String val) {
-              setState(() {
-                param['userPhone'] = val;
-              });
-            }),
+          label: '手机',
+          onChanged: (String val) {
+            setState(() {
+              param['userPhone'] = val;
+            });
+          },
+        ),
         Select(
           selectOptions: serviceType,
           selectedValue: param['roleType'] == '' ? '0' : param['roleType'],
@@ -248,74 +263,85 @@ class _UserPluginState extends State<UserPlugin> {
                 child: InkWell(
                   onTap: () => selectOrCancel(item),
                   child: Container(
-                      decoration: BoxDecoration(
-                          color: Color(0xffffffff),
-                          border: Border.all(color: Color(0xffdddddd), width: 1),
-                          boxShadow: [
-                            new BoxShadow(
-                                color: const Color(0xffdddddd),
-                                offset: new Offset(0.0, 3.0),
-                                blurRadius: 3.0,
-                                spreadRadius: 3),
-                          ]),
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            child: Center(
-                              child: userCount == 1
-                                  ? Radio(
-                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                      value: item['user_id'],
-                                      groupValue: selectUsersData.keys.isEmpty ? '' : selectUsersData.keys.toList()[0],
-                                      onChanged: (val) => selectOrCancel(item))
-                                  : Checkbox(
-                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                      value: selectUsersData.keys.toList().indexOf(item['user_id']) != -1,
-                                      onChanged: (val) => selectOrCancel(item)),
+                    decoration: BoxDecoration(
+                      color: Color(0xffffffff),
+                      border: Border.all(color: Color(0xffdddddd), width: 1),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xffdddddd),
+                          offset: new Offset(0.0, 3.0),
+                          blurRadius: 3.0,
+                          spreadRadius: 3,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          child: Center(
+                            child: userCount == 1
+                                ? Radio(
+                                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                    value: item['user_id'],
+                                    groupValue: selectUsersData.keys.isEmpty ? '' : selectUsersData.keys.toList()[0],
+                                    onChanged: (val) => selectOrCancel(item),
+                                  )
+                                : Checkbox(
+                                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                    value: selectUsersData.keys.toList().indexOf(item['user_id']) != -1,
+                                    onChanged: (val) => selectOrCancel(item),
+                                  ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            padding: EdgeInsets.only(left: 6, right: 6, top: 8, bottom: 8),
+                            child: Column(
+                              children: columns.map<Widget>((col) {
+                                return Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: 60,
+                                      alignment: Alignment.centerRight,
+                                      child: Text('${col['title']}'),
+                                      margin: EdgeInsets.only(right: 10),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Container(
+                                        child: col['key'] == 'area'
+                                            ? Text(
+                                                '${item['province_name']} ${item['city_name']} ${item['region_name']}')
+                                            : Text(
+                                                '${item[col['key']]}',
+                                              ),
+                                      ),
+                                    )
+                                  ],
+                                );
+                              }).toList(),
                             ),
                           ),
-                          Expanded(
-                              flex: 1,
-                              child: Container(
-                                padding: EdgeInsets.only(left: 6, right: 6, top: 8, bottom: 8),
-                                child: Column(
-                                  children: columns.map<Widget>((col) {
-                                    return Row(
-                                      children: <Widget>[
-                                        Container(
-                                          width: 60,
-                                          alignment: Alignment.centerRight,
-                                          child: Text('${col['title']}'),
-                                          margin: EdgeInsets.only(right: 10),
-                                        ),
-                                        Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              child: col['key'] == 'area'
-                                                  ? Text(
-                                                      '${item['province_name']} ${item['city_name']} ${item['region_name']}')
-                                                  : Text(
-                                                      '${item[col['key']]}',
-                                                    ),
-                                            ))
-                                      ],
-                                    );
-                                  }).toList(),
-                                ),
-                              ))
-                        ],
-                      )),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               );
             }).toList(),
           ),
           Container(
-            child:
-                PagePlugin(current: param['currPage'], total: count, pageSize: param['pageCount'], function: getPage),
+            child: PagePlugin(
+              current: param['currPage'],
+              total: count,
+              pageSize: param['pageCount'],
+              function: getPage,
+            ),
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: CFFloatingActionButton(
         child: Icon(Icons.add_shopping_cart),
         onPressed: () => shopsBox(),
       ),

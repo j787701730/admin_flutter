@@ -175,142 +175,145 @@ class _AccountItemState extends State<AccountItem> {
         title: Text('出账日志'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                label: '用户名',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('login_name');
-                    } else {
-                      param['login_name'] = val;
-                    }
-                  });
-                },
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '用户名',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('login_name');
+                  } else {
+                    param['login_name'] = val;
+                  }
+                });
+              },
+            ),
+            Select(
+              selectOptions: billState,
+              selectedValue: param['bill_state'] ?? 'all',
+              label: '对账状态',
+              onChanged: (String newValue) {
+                setState(() {
+                  if (newValue == 'all') {
+                    param.remove('bill_state');
+                  } else {
+                    param['bill_state'] = newValue;
+                  }
+                });
+              },
+            ),
+            DateSelectPlugin(
+              onChanged: getCreateDate,
+              label: '创建时间',
+            ),
+            DateSelectPlugin(
+              onChanged: getUpdateDate,
+              label: '更新时间',
+            ),
+            Select(
+              selectOptions: selects,
+              selectedValue: defaultVal,
+              label: '排序',
+              onChanged: orderBy,
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Text('搜索'),
+                    ),
+                  ),
+                ],
               ),
-              Select(
-                selectOptions: billState,
-                selectedValue: param['bill_state'] ?? 'all',
-                label: '对账状态',
-                onChanged: (String newValue) {
-                  setState(() {
-                    if (newValue == 'all') {
-                      param.remove('bill_state');
-                    } else {
-                      param['bill_state'] = newValue;
-                    }
-                  });
-                },
-              ),
-              DateSelectPlugin(
-                onChanged: getCreateDate,
-                label: '创建时间',
-              ),
-              DateSelectPlugin(
-                onChanged: getUpdateDate,
-                label: '更新时间',
-              ),
-              Select(
-                selectOptions: selects,
-                selectedValue: defaultVal,
-                label: '排序',
-                onChanged: orderBy,
-              ),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                        onPressed: () {
-                          param['curr_page'] = 1;
-                          getData();
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: Text('搜索'),
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : ajaxData.isEmpty
+                    ? Container(
+                        alignment: Alignment.center,
+                        child: Text('无数据'),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: ajaxData.map<Widget>(
+                          (item) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Color(0xffdddddd), width: 1),
+                              ),
+                              margin: EdgeInsets.only(bottom: 10),
+                              padding: EdgeInsets.only(top: 5, bottom: 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: columns.map<Widget>(
+                                  (col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    switch (col['key']) {
+                                      case 'bill_state':
+                                        con = Text('${billState[item['bill_state']]}');
+                                        break;
+                                    }
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 80,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
+                                          ),
+                                          Expanded(flex: 1, child: con)
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ).toList(),
+                              ),
+                            );
+                          },
+                        ).toList(),
                       ),
-                    ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>(
-                                (item) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: Color(0xffdddddd), width: 1),
-                                    ),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>(
-                                        (col) {
-                                          Widget con = Text('${item[col['key']] ?? ''}');
-                                          switch (col['key']) {
-                                            case 'bill_state':
-                                              con = Text('${billState[item['bill_state']]}');
-                                              break;
-                                          }
-                                          return Container(
-                                            margin: EdgeInsets.only(bottom: 6),
-                                            child: Row(
-                                              children: <Widget>[
-                                                Container(
-                                                  width: 80,
-                                                  alignment: Alignment.centerRight,
-                                                  child: Text('${col['title']}'),
-                                                  margin: EdgeInsets.only(right: 10),
-                                                ),
-                                                Expanded(flex: 1, child: con)
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                      ).toList(),
-                                    ),
-                                  );
-                                },
-                              ).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
-              ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

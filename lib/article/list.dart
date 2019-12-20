@@ -236,8 +236,8 @@ class _ArticleListState extends State<ArticleList> {
                 ],
               )
             ],
-          )),
-      floatingActionButton: FloatingActionButton(
+          ),),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

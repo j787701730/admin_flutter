@@ -167,7 +167,7 @@ class _ActivityListState extends State<ActivityList> {
               child: Column(
                 children: item['prizes'].map<Widget>((item) {
                   return Container(
-                    decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
+                    decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1),),
                     padding: EdgeInsets.only(top: 6),
                     margin: EdgeInsets.only(bottom: 10),
                     child: Column(
@@ -321,155 +321,157 @@ class _ActivityListState extends State<ActivityList> {
         title: Text('活动列表'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          // onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                label: '活动名称',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('activity_name');
-                    } else {
-                      param['activity_name'] = val;
-                    }
-                  });
-                },
-              ),
-              Select(
-                  selectOptions: drawType,
-                  selectedValue: param['draw_type'] ?? 'all',
-                  label: '抽奖类型',
-                  onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('draw_type');
-                      } else {
-                        param['draw_type'] = val;
-                      }
-                    });
-                  }),
-              DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
-              DateSelectPlugin(onChanged: getDateTime2, label: '有效时间'),
-              Input(
-                label: '备注',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('comments');
-                    } else {
-                      param['comments'] = val;
-                    }
-                  });
-                },
-              ),
-              Select(
-                selectOptions: selects,
-                selectedValue: defaultVal,
-                label: '排序',
-                onChanged: orderBy,
-              ),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        // onLoading: _onLoading,
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '活动名称',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('activity_name');
+                  } else {
+                    param['activity_name'] = val;
+                  }
+                });
+              },
+            ),
+            Select(
+              selectOptions: drawType,
+              selectedValue: param['draw_type'] ?? 'all',
+              label: '抽奖类型',
+              onChanged: (val) {
+                setState(() {
+                  if (val == 'all') {
+                    param.remove('draw_type');
+                  } else {
+                    param['draw_type'] = val;
+                  }
+                });
+              },
+            ),
+            DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
+            DateSelectPlugin(onChanged: getDateTime2, label: '有效时间'),
+            Input(
+              label: '备注',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('comments');
+                  } else {
+                    param['comments'] = val;
+                  }
+                });
+              },
+            ),
+            Select(
+              selectOptions: selects,
+              selectedValue: defaultVal,
+              label: '排序',
+              onChanged: orderBy,
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Text('搜索'),
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        switch (col['key']) {
-                                          case 'draw_type':
-                                            con = Text('${drawType[item['draw_type']]}');
-                                            break;
-                                          case 'background_pic':
-                                            con = Container(
-                                              alignment: Alignment.centerLeft,
-                                              width: 70,
-                                              height: 70,
-                                              child: Image.network(
-                                                '$baseUrl${item['background_pic']}',
-                                                fit: BoxFit.contain,
-                                              ),
-                                            );
-                                            break;
-                                          case 'activity_rules':
-                                            con = InkWell(
-                                              onTap: () {
-                                                ruleDialog(item);
-                                              },
-                                              child: ConstrainedBox(
-                                                constraints: BoxConstraints(minHeight: 10, maxHeight: 70),
-                                                child: Text(
-                                                  '${item['activity_rules']}',
-                                                  overflow: TextOverflow.ellipsis,
-                                                  maxLines: 3,
-                                                  style: TextStyle(color: Colors.blue),
-                                                ),
-                                              ),
-                                            );
-                                            break;
-                                          case 'prizes':
-                                            con = InkWell(
-                                              onTap: () {
-                                                prizeDialog(item);
-                                              },
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>((item) {
+                              return Container(
+                                  decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1),),
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: columns.map<Widget>((col) {
+                                      Widget con = Text('${item[col['key']] ?? ''}');
+                                      switch (col['key']) {
+                                        case 'draw_type':
+                                          con = Text('${drawType[item['draw_type']]}');
+                                          break;
+                                        case 'background_pic':
+                                          con = Container(
+                                            alignment: Alignment.centerLeft,
+                                            width: 70,
+                                            height: 70,
+                                            child: Image.network(
+                                              '$baseUrl${item['background_pic']}',
+                                              fit: BoxFit.contain,
+                                            ),
+                                          );
+                                          break;
+                                        case 'activity_rules':
+                                          con = InkWell(
+                                            onTap: () {
+                                              ruleDialog(item);
+                                            },
+                                            child: ConstrainedBox(
+                                              constraints: BoxConstraints(minHeight: 10, maxHeight: 70),
                                               child: Text(
-                                                '奖品',
+                                                '${item['activity_rules']}',
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 3,
                                                 style: TextStyle(color: Colors.blue),
                                               ),
-                                            );
-                                            break;
-                                          case 'option':
-                                            con = Wrap(
-                                              runSpacing: 10,
-                                              spacing: 10,
-                                              children: <Widget>[
+                                            ),
+                                          );
+                                          break;
+                                        case 'prizes':
+                                          con = InkWell(
+                                            onTap: () {
+                                              prizeDialog(item);
+                                            },
+                                            child: Text(
+                                              '奖品',
+                                              style: TextStyle(color: Colors.blue),
+                                            ),
+                                          );
+                                          break;
+                                        case 'option':
+                                          con = Wrap(
+                                            runSpacing: 10,
+                                            spacing: 10,
+                                            children: <Widget>[
 //                                                Container(
 //                                                  height: 30,
 //                                                  child: PrimaryButton(
@@ -477,47 +479,48 @@ class _ActivityListState extends State<ActivityList> {
 //                                                    child: Text('修改'),
 //                                                  ),
 //                                                ),
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      closeDialog(item);
-                                                    },
-                                                    child: Text('关闭'),
-                                                    type: 'error',
-                                                  ),
-                                                )
-                                              ],
-                                            );
-                                            break;
-                                        }
-
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
-                                            children: <Widget>[
                                               Container(
-                                                width: 80,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
-                                              ),
-                                              Expanded(flex: 1, child: con)
+                                                height: 30,
+                                                child: PrimaryButton(
+                                                  onPressed: () {
+                                                    closeDialog(item);
+                                                  },
+                                                  child: Text('关闭'),
+                                                  type: 'error',
+                                                ),
+                                              )
                                             ],
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
-              ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                                          );
+                                          break;
+                                      }
+
+                                      return Container(
+                                        margin: EdgeInsets.only(bottom: 6),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Container(
+                                              width: 80,
+                                              alignment: Alignment.centerRight,
+                                              child: Text('${col['title']}'),
+                                              margin: EdgeInsets.only(right: 10),
+                                            ),
+                                            Expanded(flex: 1, child: con)
+                                          ],
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),);
+                            }).toList(),
+                          ),
+                  ),
+            Container(
+              child: PagePlugin(
+                  current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage,),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

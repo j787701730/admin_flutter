@@ -1,9 +1,9 @@
 import 'package:admin_flutter/my_home_page.dart';
+import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
+import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import 'utils.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -83,64 +83,89 @@ class _LoginState extends State<Login> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
-              style: TextStyle(fontSize: CFFontSize.content),
-              decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.person),
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.only(top: 10, bottom: 10),
-                  hintText: "账号"),
-              onChanged: (String val) {
-                setState(() {
-                  loginName = val;
-                });
-              },
+            Container(
+              alignment: Alignment.center,
+              height: 34,
+              margin: EdgeInsets.only(
+                bottom: 10,
+              ),
+              child: Text(
+                '后台管理系统',
+                style: TextStyle(
+                  fontSize: CFFontSize.topTitle,
+                ),
+              ),
             ),
             Container(
-              height: 15,
-            ),
-            TextField(
-              style: TextStyle(fontSize: CFFontSize.content),
-              decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.lock),
+              height: 34,
+              child: TextField(
+                style: TextStyle(fontSize: CFFontSize.content),
+                decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.person,
+                    size: 20,
+                  ),
                   border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.only(top: 10, bottom: 10),
-                  hintText: "密码"),
-              obscureText: true,
-              onChanged: (String val) {
-                setState(() {
-                  password = val;
-                });
-              },
+                  contentPadding: EdgeInsets.only(top: 0, bottom: 0),
+                  hintText: "账号",
+                ),
+                onChanged: (String val) {
+                  setState(() {
+                    loginName = val;
+                  });
+                },
+              ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 15),
+              height: 34,
+              margin: EdgeInsets.only(
+                top: 10,
+                bottom: 10,
+              ),
+              child: TextField(
+                style: TextStyle(fontSize: CFFontSize.content),
+                decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    size: 20,
+                  ),
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.only(top: 0, bottom: 0),
+                  hintText: "密码",
+                ),
+                obscureText: true,
+                onChanged: (String val) {
+                  setState(() {
+                    password = val;
+                  });
+                },
+              ),
+            ),
+            Container(
               width: width - 40,
-              child: FlatButton(
-                  padding: EdgeInsets.only(top: 13, bottom: 13),
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                  onPressed: () {
-                    if (loginName.length < 4) {
-                      Fluttertoast.showToast(
-                        msg: '账号不少于4位',
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                      );
-                    } else if (password.length < 4) {
-                      Fluttertoast.showToast(
-                        msg: '密码不少于4位',
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                      );
-                    } else {
-                      login();
-                    }
-                  },
-                  child: Text(
-                    '登录',
-                    style: TextStyle(fontSize: 16),
-                  )),
+              child: PrimaryButton(
+                onPressed: () {
+                  if (loginName.length < 4) {
+                    Fluttertoast.showToast(
+                      msg: '账号不少于4位',
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                    );
+                  } else if (password.length < 4) {
+                    Fluttertoast.showToast(
+                      msg: '密码不少于4位',
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                    );
+                  } else {
+                    login();
+                  }
+                },
+                child: Text(
+                  '登录',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
             )
           ],
         ),

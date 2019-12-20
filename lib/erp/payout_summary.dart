@@ -141,233 +141,237 @@ class _PayoutSummaryState extends State<PayoutSummary> {
         title: Text('拆单汇总'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
 //          onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                label: '工厂',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('shop_name');
-                    } else {
-                      param['shop_name'] = val;
-                    }
-                  });
-                },
-              ),
-              Input(
-                label: '用户',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('user_name');
-                    } else {
-                      param['user_name'] = val;
-                    }
-                  });
-                },
-              ),
-              RangeInput(
-                label: '价格',
-                onChangeL: (val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('payout_amount_min');
-                    } else {
-                      param['payout_amount_min'] = val;
-                    }
-                  });
-                },
-                onChangeR: (val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('payout_amount_max');
-                    } else {
-                      param['payout_amount_max'] = val;
-                    }
-                  });
-                },
-              ),
-              Select(
-                selectOptions: group,
-                selectedValue: param['group'],
-                label: '卡状态:',
-                onChanged: (String newValue) {
-                  setState(() {
-                    param['group'] = newValue;
-                  });
-                },
-              ),
-              MonthSelectPlugin(
-                onChanged: (val) {
-                  if (val['min'] == null) {
-                    param.remove('payout_month_min');
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '工厂',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('shop_name');
                   } else {
-                    param['payout_month_min'] = val['min'].toString().substring(0, 7);
+                    param['shop_name'] = val;
                   }
-                  if (val['max'] == null) {
-                    param.remove('payout_month_max');
+                });
+              },
+            ),
+            Input(
+              label: '用户',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('user_name');
                   } else {
-                    param['payout_month_max'] = val['max'].toString().substring(0, 7);
+                    param['user_name'] = val;
                   }
-                },
-                label: '时间区间',
-              ),
-              Select(
-                selectOptions: selects,
-                selectedValue: defaultVal,
-                label: '排序',
-                onChanged: orderBy,
-              ),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                        onPressed: () {
-                          param['currPage'] = 1;
-                          getData();
-                        },
-                        child: Text('搜索'),
-                      ),
+                });
+              },
+            ),
+            RangeInput(
+              label: '价格',
+              onChangeL: (val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('payout_amount_min');
+                  } else {
+                    param['payout_amount_min'] = val;
+                  }
+                });
+              },
+              onChangeR: (val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('payout_amount_max');
+                  } else {
+                    param['payout_amount_max'] = val;
+                  }
+                });
+              },
+            ),
+            Select(
+              selectOptions: group,
+              selectedValue: param['group'],
+              label: '卡状态:',
+              onChanged: (String newValue) {
+                setState(() {
+                  param['group'] = newValue;
+                });
+              },
+            ),
+            MonthSelectPlugin(
+              onChanged: (val) {
+                if (val['min'] == null) {
+                  param.remove('payout_month_min');
+                } else {
+                  param['payout_month_min'] = val['min'].toString().substring(0, 7);
+                }
+                if (val['max'] == null) {
+                  param.remove('payout_month_max');
+                } else {
+                  param['payout_month_max'] = val['max'].toString().substring(0, 7);
+                }
+              },
+              label: '时间区间',
+            ),
+            Select(
+              selectOptions: selects,
+              selectedValue: defaultVal,
+              label: '排序',
+              onChanged: orderBy,
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['currPage'] = 1;
+                        getData();
+                      },
+                      child: Text('搜索'),
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              amount.isEmpty
-                  ? Container()
-                  : Container(
-                      margin: EdgeInsets.only(bottom: 6),
-                      alignment: Alignment.centerLeft,
-                      child: Wrap(
-                        spacing: 15,
-                        runSpacing: 10,
-                        children: <Widget>[
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Text(
-                                '数量汇总：',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text('${amount['payout_nums']}平方米')
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Text(
-                                '金额汇总：',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text('${amount['payout_amount']}元')
-                            ],
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            amount.isEmpty
+                ? Container()
+                : Container(
+                    margin: EdgeInsets.only(bottom: 6),
+                    alignment: Alignment.centerLeft,
+                    child: Wrap(
+                      spacing: 15,
+                      runSpacing: 10,
+                      children: <Widget>[
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              '数量汇总：',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text('${amount['payout_nums']}平方米')
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              '金额汇总：',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text('${amount['payout_amount']}元')
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
                           )
-                        ],
-                      ),
-                    ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>(
-                                (item) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: Color(0xffdddddd), width: 1),
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>(
+                              (item) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Color(0xffdddddd),
+                                      width: 1,
                                     ),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>(
-                                        (col) {
-                                          Widget con = Text('${item[col['key']] ?? ''}');
-                                          switch (col['key']) {
-                                            case 'option':
-                                              con = Wrap(
-                                                runSpacing: 10,
-                                                spacing: 10,
-                                                children: <Widget>[
-                                                  Container(
-                                                    height: 30,
-                                                    child: PrimaryButton(
-                                                      onPressed: () {
-                                                        Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) => PayoutSummaryDetail({'item': item}),
-                                                          ),
-                                                        );
-                                                      },
-                                                      child: Text('明细'),
-                                                    ),
-                                                  )
-                                                ],
-                                              );
-                                              break;
-                                          }
-
-                                          return Container(
-                                            margin: EdgeInsets.only(bottom: 6),
-                                            child: Row(
+                                  ),
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: columns.map<Widget>(
+                                      (col) {
+                                        Widget con = Text('${item[col['key']] ?? ''}');
+                                        switch (col['key']) {
+                                          case 'option':
+                                            con = Wrap(
+                                              runSpacing: 10,
+                                              spacing: 10,
                                               children: <Widget>[
                                                 Container(
-                                                  width: 100,
-                                                  alignment: Alignment.centerRight,
-                                                  child: Text('${col['title']}'),
-                                                  margin: EdgeInsets.only(right: 10),
-                                                ),
-                                                Expanded(flex: 1, child: con)
+                                                  height: 30,
+                                                  child: PrimaryButton(
+                                                    onPressed: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) => PayoutSummaryDetail({'item': item}),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Text('明细'),
+                                                  ),
+                                                )
                                               ],
-                                            ),
-                                          );
-                                        },
-                                      ).toList(),
-                                    ),
-                                  );
-                                },
-                              ).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                  current: param['currPage'],
-                  total: count,
-                  pageSize: param['pageCount'],
-                  function: getPage,
-                ),
-              )
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+                                            );
+                                            break;
+                                        }
+
+                                        return Container(
+                                          margin: EdgeInsets.only(bottom: 6),
+                                          child: Row(
+                                            children: <Widget>[
+                                              Container(
+                                                width: 100,
+                                                alignment: Alignment.centerRight,
+                                                child: Text('${col['title']}'),
+                                                margin: EdgeInsets.only(right: 10),
+                                              ),
+                                              Expanded(flex: 1, child: con)
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ).toList(),
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          ),
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['currPage'],
+                total: count,
+                pageSize: param['pageCount'],
+                function: getPage,
+              ),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),

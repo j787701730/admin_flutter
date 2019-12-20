@@ -69,12 +69,22 @@ class _SupplyClassModifyState extends State<SupplyClassModify> {
                     child: TextField(
                       style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(TextEditingValue(
-                          text: '${param['goods-class-name'] ?? ''}',
-                          selection: TextSelection.fromPosition(TextPosition(
-                              affinity: TextAffinity.downstream,
-                              offset: '${param['goods-class-name'] ?? ''}'.length)))),
+                        text: '${param['goods-class-name'] ?? ''}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['goods-class-name'] ?? ''}'.length,
+                          ),
+                        ),
+                      )),
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.only(
+                            top: 0,
+                            bottom: 0,
+                            left: 15,
+                            right: 15,
+                          )),
                       onChanged: (String val) {
                         setState(() {
                           param['goods-class-name'] = val;

@@ -17,7 +17,6 @@ ajaxSimple(String url, data, Function fun) async {
   Directory tempDir = await getTemporaryDirectory();
   String tempPath = tempDir.path;
   CookieJar cookieJar = new PersistCookieJar(dir: tempPath);
-  //  var cookieJar = CookieJar();
   dio.interceptors.add(CookieManager(cookieJar));
   try {
     Response res = await dio.post(
@@ -43,7 +42,7 @@ ajax(String url, data, bool toast, Function fun, Function fun2, BuildContext _co
   Directory tempDir = await getTemporaryDirectory();
   String tempPath = tempDir.path;
   CookieJar cookieJar = new PersistCookieJar(dir: tempPath);
-  //  print(cookieJar.loadForRequest(Uri.parse("http://192.168.1.115")));
+  //  print(cookieJar.loadForRequest(Uri.parse(baseUrl)));
   dio.interceptors.add(CookieManager(cookieJar));
   try {
     Response res = await dio.post(

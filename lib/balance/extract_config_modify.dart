@@ -65,51 +65,52 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                         margin: EdgeInsets.only(right: 10),
                       ),
                       Expanded(
-                          flex: 1,
-                          child: Container(
-                            margin: EdgeInsets.only(right: 10),
-                            padding: EdgeInsets.only(left: 10, right: 10),
-                            decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
-                            height: 30,
-                            alignment: Alignment.centerLeft,
-                            child: Wrap(
-                              children: param['user'].keys.toList().map<Widget>((key) {
-                                return Container(
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.only(right: 20),
-                                        child: Text(
-                                          '${param['user'][key]['login_name']}',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                        flex: 1,
+                        child: Container(
+                          margin: EdgeInsets.only(right: 10),
+                          padding: EdgeInsets.only(left: 10, right: 10),
+                          decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
+                          height: 30,
+                          alignment: Alignment.centerLeft,
+                          child: Wrap(
+                            children: param['user'].keys.toList().map<Widget>((key) {
+                              return Container(
+                                child: Stack(
+                                  children: <Widget>[
+                                    Container(
+                                      padding: EdgeInsets.only(right: 20),
+                                      child: Text(
+                                        '${param['user'][key]['login_name']}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      Positioned(
-                                        top: 0,
-                                        right: 0,
-                                        child: Container(
-                                          color: Color(0xffeeeeee),
-                                          child: InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                param['user'].remove(key);
-                                              });
-                                            },
-                                            child: Icon(
-                                              Icons.clear,
-                                              color: Colors.red,
-                                              size: 20,
-                                            ),
+                                    ),
+                                    Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: Container(
+                                        color: Color(0xffeeeeee),
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              param['user'].remove(key);
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.clear,
+                                            color: Colors.red,
+                                            size: 20,
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         width: 110,
                         height: 30,
@@ -139,8 +140,10 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                 )
               : Container(),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
                 Container(
                   width: 140,
                   alignment: Alignment.centerRight,
@@ -167,13 +170,17 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                         child: TextField(
                           style: TextStyle(fontSize: CFFontSize.content),
                           controller: TextEditingController.fromValue(TextEditingValue(
-                              text: '${param['extract_limit'] ?? ''}',
-                              selection: TextSelection.fromPosition(TextPosition(
-                                  affinity: TextAffinity.downstream,
-                                  offset: '${param['extract_limit'] ?? ''}'.length)))),
+                            text: '${param['extract_limit'] ?? ''}',
+                            selection: TextSelection.fromPosition(
+                              TextPosition(
+                                affinity: TextAffinity.downstream,
+                                offset: '${param['extract_limit'] ?? ''}'.length,
+                              ),
+                            ),
+                          )),
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                              contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,)),
                           onChanged: (String val) {
                             setState(() {
                               param['extract_limit'] = val;
@@ -188,10 +195,14 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                     ],
                   ),
                 ),
-              ])),
+              ],
+            ),
+          ),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
                 Container(
                   width: 140,
                   height: 34,
@@ -218,13 +229,17 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                         child: TextField(
                           style: TextStyle(fontSize: CFFontSize.content),
                           controller: TextEditingController.fromValue(TextEditingValue(
-                              text: '${param['extract_rate'] ?? ''}',
-                              selection: TextSelection.fromPosition(TextPosition(
-                                  affinity: TextAffinity.downstream,
-                                  offset: '${param['extract_rate'] ?? ''}'.length)))),
+                            text: '${param['extract_rate'] ?? ''}',
+                            selection: TextSelection.fromPosition(
+                              TextPosition(
+                                affinity: TextAffinity.downstream,
+                                offset: '${param['extract_rate'] ?? ''}'.length,
+                              ),
+                            ),
+                          )),
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15)),
+                              contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,)),
                           onChanged: (String val) {
                             setState(() {
                               param['extract_rate'] = val;
@@ -239,10 +254,13 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                     ],
                   ),
                 ),
-              ])),
+              ],
+            ),
+          ),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(children: <Widget>[
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              children: <Widget>[
                 Container(
                   width: 140,
                   alignment: Alignment.centerRight,
@@ -254,13 +272,26 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
                     maxLines: 4,
-                    controller: TextEditingController.fromValue(TextEditingValue(
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
                         text: '${param['comments'] ?? ''}',
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream, offset: '${param['comments'] ?? ''}'.length)))),
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['comments'] ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 10,
+                        bottom: 10,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (String val) {
                       setState(() {
                         param['comments'] = val;
@@ -268,10 +299,13 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                     },
                   ),
                 ),
-              ])),
+              ],
+            ),
+          ),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(children: <Widget>[
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              children: <Widget>[
                 Container(
                   width: 140,
                   margin: EdgeInsets.only(right: 10),
@@ -283,15 +317,18 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                       Container(
                         height: 30,
                         child: PrimaryButton(
-                            onPressed: () {
-                              print(param);
-                            },
-                            child: Text('保存')),
+                          onPressed: () {
+                            print(param);
+                          },
+                          child: Text('保存'),
+                        ),
                       )
                     ],
                   ),
                 ),
-              ])),
+              ],
+            ),
+          ),
         ],
       ),
     );

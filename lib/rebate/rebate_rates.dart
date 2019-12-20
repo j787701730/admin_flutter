@@ -103,7 +103,8 @@ class _RebateRatesState extends State<RebateRates> {
     );
   }
 
-  getPage(page) {if (loading) return;
+  getPage(page) {
+    if (loading) return;
     param['curr_page'] += page;
     getData();
   }
@@ -165,7 +166,10 @@ class _RebateRatesState extends State<RebateRates> {
           content: SingleChildScrollView(
             child: Container(
 //                width: MediaQuery.of(context).size.width - 100,
-              child: Text('确认删除 ${data['login_name']} 返利信息?',style: TextStyle(fontSize: CFFontSize.content),),
+              child: Text(
+                '确认删除 ${data['login_name']} 返利信息?',
+                style: TextStyle(fontSize: CFFontSize.content),
+              ),
             ),
           ),
           actions: <Widget>[
@@ -192,7 +196,9 @@ class _RebateRatesState extends State<RebateRates> {
   turnTo(val) {
     Navigator.push(
       _context,
-      MaterialPageRoute(builder: (context) => RebateRatesModify(val)),
+      MaterialPageRoute(
+        builder: (context) => RebateRatesModify(val),
+      ),
     );
   }
 
@@ -203,185 +209,202 @@ class _RebateRatesState extends State<RebateRates> {
         title: Text('返利比例'),
       ),
       body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          // onLoading: _onLoading,
-          child: ListView(
-            controller: _controller,
-            padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Input(
-                label: '用户名',
-                onChanged: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('user_name');
-                    } else {
-                      param['user_name'] = val;
-                    }
-                  });
-                },
-              ),
-              Select(
-                  selectOptions: type,
-                  selectedValue: param['rebate_type'] ?? 'all',
-                  label: '返利类型',
-                  onChanged: (val) {
-                    if (val == 'all') {
-                      param.remove('rebate_type');
-                    } else {
-                      param['rebate_type'] = val;
-                    }
-                  }),
-              RangeInput(
-                  label: '直接返利',
-                  onChangeL: (val) {
-                    if (val == '') {
-                      param.remove('direct_rate_min');
-                    } else {
-                      param['direct_rate_min'] = val;
-                    }
-                  },
-                  onChangeR: (val) {
-                    if (val == '') {
-                      param.remove('direct_rate_max');
-                    } else {
-                      param['direct_rate_max'] = val;
-                    }
-                  }),
-              RangeInput(
-                  label: '间接返利',
-                  onChangeL: (val) {
-                    if (val == '') {
-                      param.remove('invite_rate_min');
-                    } else {
-                      param['invite_rate_min'] = val;
-                    }
-                  },
-                  onChangeR: (val) {
-                    if (val == '') {
-                      param.remove('invite_rate_max');
-                    } else {
-                      param['invite_rate_max'] = val;
-                    }
-                  }),
-              DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
-              Select(selectOptions: selects, selectedValue: defaultVal, label: '排序', onChanged: orderBy),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            getData();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('搜索')),
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        // onLoading: _onLoading,
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+            Input(
+              label: '用户名',
+              onChanged: (String val) {
+                setState(() {
+                  if (val == '') {
+                    param.remove('user_name');
+                  } else {
+                    param['user_name'] = val;
+                  }
+                });
+              },
+            ),
+            Select(
+              selectOptions: type,
+              selectedValue: param['rebate_type'] ?? 'all',
+              label: '返利类型',
+              onChanged: (val) {
+                if (val == 'all') {
+                  param.remove('rebate_type');
+                } else {
+                  param['rebate_type'] = val;
+                }
+              },
+            ),
+            RangeInput(
+              label: '直接返利',
+              onChangeL: (val) {
+                if (val == '') {
+                  param.remove('direct_rate_min');
+                } else {
+                  param['direct_rate_min'] = val;
+                }
+              },
+              onChangeR: (val) {
+                if (val == '') {
+                  param.remove('direct_rate_max');
+                } else {
+                  param['direct_rate_max'] = val;
+                }
+              },
+            ),
+            RangeInput(
+              label: '间接返利',
+              onChangeL: (val) {
+                if (val == '') {
+                  param.remove('invite_rate_min');
+                } else {
+                  param['invite_rate_min'] = val;
+                }
+              },
+              onChangeR: (val) {
+                if (val == '') {
+                  param.remove('invite_rate_max');
+                } else {
+                  param['invite_rate_max'] = val;
+                }
+              },
+            ),
+            DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
+            Select(selectOptions: selects, selectedValue: defaultVal, label: '排序', onChanged: orderBy),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                      },
+                      child: Text('搜索'),
                     ),
-                    SizedBox(
-                      height: 30,
-                      child: PrimaryButton(
-                          onPressed: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            turnTo(null);
-                          },
-                          child: Text('添加返利比例')),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                        turnTo(null);
+                      },
+                      child: Text('添加返利比例'),
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.only(bottom: 10),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6),
-                alignment: Alignment.centerRight,
-                child: NumberBar(count: count),
-              ),
-              loading
-                  ? Container(
-                      alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : Container(
-                      child: ajaxData.isEmpty
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Text('无数据'),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: columns.map<Widget>((col) {
-                                        Widget con = Text('${item[col['key']] ?? ''}');
-                                        switch (col['key']) {
-                                          case 'option':
-                                            con = Wrap(
-                                              runSpacing: 10,
-                                              spacing: 10,
-                                              children: <Widget>[
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      turnTo(item);
-                                                    },
-                                                    child: Text('修改'),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    type: 'error',
-                                                    onPressed: () {
-                                                      delDialog(item);
-                                                    },
-                                                    child: Text('删除'),
-                                                  ),
-                                                )
-                                              ],
-                                            );
-                                            break;
-                                        }
-
-                                        return Container(
-                                          margin: EdgeInsets.only(bottom: 6),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 100,
-                                                alignment: Alignment.centerRight,
-                                                child: Text('${col['title']}'),
-                                                margin: EdgeInsets.only(right: 10),
+              margin: EdgeInsets.only(bottom: 10),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 6),
+              alignment: Alignment.centerRight,
+              child: NumberBar(count: count),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : Container(
+                    child: ajaxData.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: ajaxData.map<Widget>((item) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Color(0xffdddddd), width: 1),
+                                ),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    switch (col['key']) {
+                                      case 'option':
+                                        con = Wrap(
+                                          runSpacing: 10,
+                                          spacing: 10,
+                                          children: <Widget>[
+                                            Container(
+                                              height: 30,
+                                              child: PrimaryButton(
+                                                onPressed: () {
+                                                  turnTo(item);
+                                                },
+                                                child: Text('修改'),
                                               ),
-                                              Expanded(flex: 1, child: con)
-                                            ],
-                                          ),
+                                            ),
+                                            Container(
+                                              height: 30,
+                                              child: PrimaryButton(
+                                                type: 'error',
+                                                onPressed: () {
+                                                  delDialog(item);
+                                                },
+                                                child: Text('删除'),
+                                              ),
+                                            )
+                                          ],
                                         );
-                                      }).toList(),
-                                    ));
-                              }).toList(),
-                            ),
-                    ),
-              Container(
-                child: PagePlugin(
-                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage),
+                                        break;
+                                    }
+
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 100,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
+                                          ),
+                                          Expanded(flex: 1, child: con)
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                  ),
+            Container(
+              child: PagePlugin(
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
               ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),
