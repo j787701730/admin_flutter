@@ -679,7 +679,8 @@ List menuData = [
         "spell_all": "chengchangguize",
         "spell_index": "ccgz",
         "name": "成长规则",
-        "access": [77]
+        "access": [77],
+        "path": "/taskRules"
       },
       {
         "spell_all": "renwuleixing",

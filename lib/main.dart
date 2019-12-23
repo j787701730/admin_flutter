@@ -70,6 +70,7 @@ import 'package:admin_flutter/shop/supply_class.dart';
 import 'package:admin_flutter/task/task_evaluate.dart';
 import 'package:admin_flutter/task/task_list.dart';
 import 'package:admin_flutter/task/task_pricing.dart';
+import 'package:admin_flutter/task/task_rules.dart';
 import 'package:admin_flutter/users/add.dart';
 import 'package:admin_flutter/users/manager.dart';
 import 'package:admin_flutter/users/users__cert.dart';
@@ -168,6 +169,7 @@ class MyApp extends StatelessWidget {
         '/taskPricing': (_) => TaskPricing(), // 任务定价
         '/taskList': (_) => TaskList(), // 任务列表
         '/taskEvaluate': (_) => TaskEvaluate(), // 评价配置
+        '/taskRules': (_) => TaskRules(), // 成长规则
       },
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
