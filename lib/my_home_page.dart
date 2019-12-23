@@ -270,25 +270,26 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       PopupMenuItem(
-                          value: "1",
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.power_settings_new,
-                                size: 20,
-                                color: CFColors.secondary,
+                        value: "1",
+                        child: Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.power_settings_new,
+                              size: 20,
+                              color: CFColors.secondary,
+                            ),
+                            Container(
+                              width: 10,
+                            ),
+                            Text(
+                              "退出",
+                              style: TextStyle(
+                                fontSize: CFFontSize.content,
                               ),
-                              Container(
-                                width: 10,
-                              ),
-                              Text(
-                                "退出",
-                                style: TextStyle(
-                                  fontSize: CFFontSize.content,
-                                ),
-                              )
-                            ],
-                          ))
+                            )
+                          ],
+                        ),
+                      )
                     ],
                     child: Container(
                       width: 56,
@@ -363,7 +364,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ? Container(
                           alignment: Alignment.topCenter,
                           child: Text(
-                            '空空如也',
+                            '无数据',
                             style: TextStyle(
                               fontSize: CFFontSize.content,
                             ),
@@ -375,68 +376,62 @@ class _MyHomePageState extends State<MyHomePage> {
                             FocusScope.of(context).requestFocus(FocusNode());
                           },
                           child: Column(
-                            children: menu.map<Widget>(
-                              (item) {
-                                return access.indexOf(item['access'][0]) == -1
-                                    ? Container(
-                                        width: 0,
-                                      )
-                                    : Container(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Container(
-                                              margin: EdgeInsets.only(bottom: 6),
-                                              child: Center(
-                                                child: Text(
-                                                  '${item['name']}',
-                                                  style: TextStyle(
-                                                    fontSize: CFFontSize.content,
-                                                    color: CFColors.text,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                            children: menu.map<Widget>((item) {
+                              return access.indexOf(item['access'][0]) == -1
+                                  ? Container(
+                                      width: 0,
+                                    )
+                                  : Container(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only(bottom: 6),
+                                            child: Center(
+                                              child: Text(
+                                                '${item['name']}',
+                                                style: TextStyle(
+                                                  fontSize: CFFontSize.content,
+                                                  color: CFColors.text,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                             ),
-                                            Wrap(
-                                              runSpacing: 4,
-                                              children: item['children'].map<Widget>(
-                                                (child) {
-                                                  return access.indexOf(child['access'][0]) == -1
-                                                      ? Container(
-                                                          width: 0,
-                                                        )
-                                                      : InkWell(
-                                                          onTap: () {
-                                                            FocusScope.of(context).requestFocus(FocusNode());
-                                                            if (child['path'] != null) {
-                                                              Navigator.pushNamed(context, child['path']);
-                                                            }
-                                                          },
-                                                          child: Container(
-                                                            padding:
-                                                                EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
-                                                            child: Text(
-                                                              '${child['name']}',
-                                                              style: TextStyle(
-                                                                fontSize: CFFontSize.content,
-                                                                color:
-                                                                    child['path'] == null ? Colors.black : Colors.blue,
-                                                              ),
-                                                            ),
+                                          ),
+                                          Wrap(
+                                            children: item['children'].map<Widget>((child) {
+                                              return access.indexOf(child['access'][0]) == -1
+                                                  ? Container(
+                                                      width: 0,
+                                                    )
+                                                  : InkWell(
+                                                      onTap: () {
+                                                        FocusScope.of(context).requestFocus(FocusNode());
+                                                        if (child['path'] != null) {
+                                                          Navigator.pushNamed(context, child['path']);
+                                                        }
+                                                      },
+                                                      child: Container(
+                                                        padding:
+                                                            EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
+                                                        child: Text(
+                                                          '${child['name']}',
+                                                          style: TextStyle(
+                                                            fontSize: CFFontSize.content,
+                                                            color: child['path'] == null ? Colors.black : Colors.blue,
                                                           ),
-                                                        );
-                                                },
-                                              ).toList(),
-                                            ),
-                                            Container(
-                                              height: 10,
-                                            )
-                                          ],
-                                        ),
-                                      );
-                              },
-                            ).toList(),
+                                                        ),
+                                                      ),
+                                                    );
+                                            }).toList(),
+                                          ),
+                                          Container(
+                                            height: 10,
+                                          )
+                                        ],
+                                      ),
+                                    );
+                            }).toList(),
                           ),
                         )
                 ],

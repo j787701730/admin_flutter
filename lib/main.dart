@@ -67,6 +67,8 @@ import 'package:admin_flutter/shop/cad_user_relation.dart';
 import 'package:admin_flutter/shop/industry_class.dart';
 import 'package:admin_flutter/shop/shop_list.dart';
 import 'package:admin_flutter/shop/supply_class.dart';
+import 'package:admin_flutter/task/task_evaluate.dart';
+import 'package:admin_flutter/task/task_list.dart';
 import 'package:admin_flutter/task/task_pricing.dart';
 import 'package:admin_flutter/users/add.dart';
 import 'package:admin_flutter/users/manager.dart';
@@ -164,6 +166,8 @@ class MyApp extends StatelessWidget {
         '/drawType': (_) => DrawType(), // 抽奖方式
         '/coupon': (_) => Coupon(), // 优惠券
         '/taskPricing': (_) => TaskPricing(), // 任务定价
+        '/taskList': (_) => TaskList(), // 任务列表
+        '/taskEvaluate': (_) => TaskEvaluate(), // 评价配置
       },
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

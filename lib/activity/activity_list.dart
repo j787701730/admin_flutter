@@ -167,7 +167,7 @@ class _ActivityListState extends State<ActivityList> {
               child: Column(
                 children: item['prizes'].map<Widget>((item) {
                   return Container(
-                    decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1),),
+                    decoration: BoxDecoration(border: Border.all(color: Colors.grey, ),),
                     padding: EdgeInsets.only(top: 6),
                     margin: EdgeInsets.only(bottom: 10),
                     child: Column(
@@ -418,7 +418,7 @@ class _ActivityListState extends State<ActivityList> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: ajaxData.map<Widget>((item) {
                               return Container(
-                                  decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1),),
+                                  decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), ),),
                                   margin: EdgeInsets.only(bottom: 10),
                                   padding: EdgeInsets.only(top: 5, bottom: 5),
                                   child: Column(

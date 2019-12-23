@@ -78,7 +78,7 @@ class _RebateRatesModifyState extends State<RebateRatesModify> {
                     margin: EdgeInsets.only(right: 10),
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 1),
+                      border: Border.all(color: Colors.grey, ),
                     ),
                     height: 34,
                     alignment: Alignment.centerLeft,

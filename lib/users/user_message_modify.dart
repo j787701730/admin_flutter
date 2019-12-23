@@ -2,12 +2,9 @@ import 'dart:async';
 
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
+import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:admin_flutter/utils.dart';
-import 'package:cookie_jar/cookie_jar.dart';
-import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class UserMessageModify extends StatefulWidget {
@@ -21,13 +18,11 @@ class UserMessageModify extends StatefulWidget {
 
 class _UserMessageModifyState extends State<UserMessageModify> {
   Map userInfo = {};
-  BuildContext _context;
-  bool loading = false;
+  bool loading = true;
 
   @override
   void initState() {
     super.initState();
-    _context = context;
     Timer(Duration(milliseconds: 200), () {
       getInfo();
     });

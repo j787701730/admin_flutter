@@ -22,6 +22,7 @@ class _SupplyClassState extends State<SupplyClass> {
   bool loading = true;
   Map industryClass = {};
   double width;
+  String searchValue = '';
 
   void _onRefresh() async {
     setState(() {
@@ -87,34 +88,35 @@ class _SupplyClassState extends State<SupplyClass> {
   }
 
   itemContainer(data, level) {
-    return Container(
-      height: 66,
-      child: Row(
-        children: <Widget>[
-          Container(
-            width: width / 5,
-            alignment: Alignment.centerRight,
-            child: Text('${data['sort']}'),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              padding: EdgeInsets.only(left: 10),
-              child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: <Widget>[
-                  level == 1
-                      ? Text('')
-                      : Icon(
-                          Icons.keyboard_arrow_right,
-                          color: CFColors.success,
-                        ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SupplyClassModify({
+    return searchValue == '' || '${data['class_name']}'.contains(searchValue)
+        ? Container(
+            height: 66,
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: width / 5,
+                  alignment: Alignment.centerRight,
+                  child: Text('${data['sort']}'),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: <Widget>[
+                        level == 1
+                            ? Text('')
+                            : Icon(
+                                Icons.keyboard_arrow_right,
+                                color: CFColors.success,
+                              ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SupplyClassModify({
                                   'industryClass': industryClass,
                                   'item': {
                                     'parent-class': '${data['parent_class_id']}',
@@ -122,88 +124,98 @@ class _SupplyClassState extends State<SupplyClass> {
                                     'goods-class-name': '${data['class_name']}',
                                     'class-comment': '${data['comments']}'
                                   }
-                                })),
+                                }),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(top: 6, bottom: 6),
+                            child: Text(
+                              '${data['class_name']}',
+                              style: TextStyle(
+                                color: CFColors.primary,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  width: width / 5,
+                  child: Text('${data['comments'] ?? ''}'),
+                ),
+                Container(
+                  width: 50,
+                  child: InkWell(
+                    onTap: () {
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return StatefulBuilder(
+                            builder: (context1, state) {
+                              /// 这里的state就是setState
+                              return AlertDialog(
+                                title: Text(
+                                  '信息',
+                                  style: TextStyle(fontSize: CFFontSize.topTitle),
+                                ),
+                                content: SingleChildScrollView(
+                                  child: ListBody(
+                                    children: <Widget>[
+                                      Text(
+                                        '确认删除 ${data['class_name']} ?',
+                                        style: TextStyle(fontSize: CFFontSize.content),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text('取消'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  FlatButton(
+                                    color: Colors.blue,
+                                    textColor: Colors.white,
+                                    child: Text('提交'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          ); //
+                        },
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.only(top: 6, bottom: 6),
-                      child: Text(
-                        '${data['class_name']}',
-                        style: TextStyle(
-                          color: CFColors.primary,
-                        ),
+                      width: 44,
+                      height: 44,
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.delete,
+                        color: CFColors.danger,
                       ),
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+              ],
             ),
-          ),
-          Container(
-            width: width / 5,
-            child: Text('${data['comments'] ?? ''}'),
-          ),
-          Container(
-            width: 50,
-            child: InkWell(
-              onTap: () {
-                showDialog<void>(
-                  context: context,
-                  barrierDismissible: false, // user must tap button!
-                  builder: (BuildContext context) {
-                    return StatefulBuilder(builder: (context1, state) {
-                      /// 这里的state就是setState
-                      return AlertDialog(
-                        title: Text(
-                          '信息',
-                          style: TextStyle(fontSize: CFFontSize.topTitle),
-                        ),
-                        content: SingleChildScrollView(
-                          child: ListBody(
-                            children: <Widget>[
-                              Text(
-                                '确认删除 ${data['class_name']} ?',
-                                style: TextStyle(fontSize: CFFontSize.content),
-                              ),
-                            ],
-                          ),
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('取消'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          FlatButton(
-                            color: Colors.blue,
-                            textColor: Colors.white,
-                            child: Text('提交'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      );
-                    }); //
-                  },
-                );
-              },
-              child: Container(
-                width: 44,
-                height: 44,
-                alignment: Alignment.center,
-                child: Icon(
-                  Icons.delete,
-                  color: CFColors.danger,
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.grey,
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
-    );
+          )
+        : Container();
   }
 
   @override
@@ -226,7 +238,9 @@ class _SupplyClassState extends State<SupplyClass> {
           children: <Widget>[
             Input(
               label: '供应商分类',
-              onChanged: (String val) {},
+              onChanged: (String val) {
+                searchValue = val;
+              },
               labelWidth: 100,
             ),
             Container(
@@ -253,7 +267,10 @@ class _SupplyClassState extends State<SupplyClass> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => SupplyClassModify(
-                              {'industryClass': industryClass, 'item': null},
+                              {
+                                'industryClass': industryClass,
+                                'item': null,
+                              },
                             ),
                           ),
                         );
@@ -307,8 +324,13 @@ class _SupplyClassState extends State<SupplyClass> {
                                     ),
                                   ],
                                 ),
-                                decoration:
-                                    BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,

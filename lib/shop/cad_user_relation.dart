@@ -136,7 +136,7 @@ class _CadUserRelationState extends State<CadUserRelation> {
   delDialog(item) {
     return showDialog<void>(
       context: _context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
@@ -332,8 +332,8 @@ class _CadUserRelationState extends State<CadUserRelation> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          new MaterialPageRoute(
-                            builder: (context) => new CreateCadUserRelation(null),
+                          MaterialPageRoute(
+                            builder: (context) => CreateCadUserRelation(null),
                           ),
                         );
                       },
@@ -365,7 +365,9 @@ class _CadUserRelationState extends State<CadUserRelation> {
                             children: ajaxData.map<Widget>((item) {
                               return Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Color(0xffdddddd), width: 1),
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
                                 ),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(top: 5, bottom: 5),
@@ -385,8 +387,8 @@ class _CadUserRelationState extends State<CadUserRelation> {
                                                 onPressed: () {
                                                   Navigator.push(
                                                     context,
-                                                    new MaterialPageRoute(
-                                                      builder: (context) => new CreateCadUserRelation({'item': item}),
+                                                    MaterialPageRoute(
+                                                      builder: (context) => CreateCadUserRelation({'item': item}),
                                                     ),
                                                   );
                                                 },

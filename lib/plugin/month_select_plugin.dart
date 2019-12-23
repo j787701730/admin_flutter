@@ -86,7 +86,7 @@ class _MonthSelectPluginState extends State<MonthSelectPlugin> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: 1),
+                        border: Border.all(color: Colors.grey, ),
                         borderRadius: BorderRadius.all(
                           Radius.circular(4),
                         ),
@@ -124,7 +124,7 @@ class _MonthSelectPluginState extends State<MonthSelectPlugin> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: 1),
+                        border: Border.all(color: Colors.grey, ),
                         borderRadius: BorderRadius.all(
                           Radius.circular(4),
                         ),

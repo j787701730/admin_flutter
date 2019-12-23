@@ -333,7 +333,9 @@ class _CadDrawingState extends State<CadDrawing> {
                             children: ajaxData.map<Widget>((item) {
                               return Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey, width: 1),
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
                                 ),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(top: 5, bottom: 5),
@@ -353,8 +355,8 @@ class _CadDrawingState extends State<CadDrawing> {
                                                 onPressed: () {
                                                   Navigator.push(
                                                     context,
-                                                    new MaterialPageRoute(
-                                                      builder: (context) => new CadDrawingModify({'item': item}),
+                                                    MaterialPageRoute(
+                                                      builder: (context) => CadDrawingModify({'item': item}),
                                                     ),
                                                   );
                                                 },

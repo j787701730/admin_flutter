@@ -276,7 +276,7 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: ajaxData.keys.toList().map<Widget>((key) {
                               return Container(
-                                decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1)),
+                                decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), )),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.all(10),
                                 child: Column(
@@ -315,7 +315,7 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
                                       children: ajaxData[key]['acctRes'].map<Widget>((item) {
                                         return Container(
                                           decoration: BoxDecoration(
-                                            border: Border.all(color: Color(0xffdddddd), width: 1),
+                                            border: Border.all(color: Color(0xffdddddd), ),
                                           ),
                                           margin: EdgeInsets.only(bottom: 10),
                                           padding: EdgeInsets.only(top: 5, bottom: 5),

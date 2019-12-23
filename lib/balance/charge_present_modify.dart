@@ -233,7 +233,7 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                         padding: EdgeInsets.only(left: 10),
                         alignment: Alignment.centerLeft,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 1),
+                          border: Border.all(color: Colors.grey, ),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(

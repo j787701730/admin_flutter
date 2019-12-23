@@ -69,7 +69,7 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                         child: Container(
                           margin: EdgeInsets.only(right: 10),
                           padding: EdgeInsets.only(left: 10, right: 10),
-                          decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
+                          decoration: BoxDecoration(border: Border.all(color: Colors.grey, )),
                           height: 30,
                           alignment: Alignment.centerLeft,
                           child: Wrap(

@@ -665,13 +665,15 @@ List menuData = [
         "spell_all": "renwuliebiao",
         "spell_index": "rwlb",
         "name": "任务列表",
-        "access": [71]
+        "access": [71],
+        "path": '/taskList'
       },
       {
         "spell_all": "pingjiapeizhi",
         "spell_index": "pjpz",
         "name": "评价配置",
-        "access": [75]
+        "access": [75],
+        "path": "/taskEvaluate"
       },
       {
         "spell_all": "chengchangguize",

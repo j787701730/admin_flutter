@@ -395,7 +395,7 @@ class _RebateListState extends State<RebateList> {
                     width: 15,
                     decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(color: Color(0xffff4400), width: 1),
+                        bottom: BorderSide(color: Color(0xffff4400), ),
                       ),
                     ),
                   ),
@@ -410,9 +410,9 @@ class _RebateListState extends State<RebateList> {
                       decoration: BoxDecoration(
                         border: Border(
                           top: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 2),
-                          left: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1),
-                          right: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1),
-                          bottom: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1),
+                          left: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, ),
+                          right: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, ),
+                          bottom: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, ),
                         ),
                       ),
                       height: 34,
@@ -436,9 +436,9 @@ class _RebateListState extends State<RebateList> {
                       decoration: BoxDecoration(
                         border: Border(
                           top: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 2),
-                          left: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1),
-                          right: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 1),
-                          bottom: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 1),
+                          left: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, ),
+                          right: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, ),
+                          bottom: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, ),
                         ),
                       ),
                       child: Center(
@@ -456,7 +456,7 @@ class _RebateListState extends State<RebateList> {
                       width: 15,
                       decoration: BoxDecoration(
                         border: Border(
-                          bottom: BorderSide(color: Color(0xffff4400), width: 1),
+                          bottom: BorderSide(color: Color(0xffff4400), ),
                         ),
                       ),
                     ),
@@ -490,7 +490,7 @@ class _RebateListState extends State<RebateList> {
                                       children: logs.map<Widget>((item) {
                                         return Container(
                                           decoration: BoxDecoration(
-                                            border: Border.all(color: Color(0xffdddddd), width: 1),
+                                            border: Border.all(color: Color(0xffdddddd), ),
                                           ),
                                           margin: EdgeInsets.only(bottom: 10),
                                           padding: EdgeInsets.only(top: 5, bottom: 5),
@@ -550,7 +550,7 @@ class _RebateListState extends State<RebateList> {
                                       children: logs2.map<Widget>((item) {
                                         return Container(
                                           decoration: BoxDecoration(
-                                            border: Border.all(color: Color(0xffdddddd), width: 1),
+                                            border: Border.all(color: Color(0xffdddddd), ),
                                           ),
                                           margin: EdgeInsets.only(bottom: 10),
                                           padding: EdgeInsets.only(top: 5, bottom: 5),

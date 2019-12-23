@@ -47,7 +47,7 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 1),
+                      border: Border.all(color: Colors.grey, ),
                     ),
                     child: Text(param['sd_title']),
                   ),
@@ -70,7 +70,7 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 1),
+                      border: Border.all(color: Colors.grey, ),
                     ),
                     child: Text(param['user_name']),
                   ),
@@ -93,7 +93,7 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 1),
+                      border: Border.all(color: Colors.grey, ),
                     ),
                     child: Text(param['user_phone']),
                   ),
@@ -116,7 +116,7 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 1),
+                      border: Border.all(color: Colors.grey, ),
                     ),
                     child: Text(param['user_address']),
                   ),
@@ -139,7 +139,7 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 1),
+                      border: Border.all(color: Colors.grey, ),
                     ),
                     child: Text(param['sd_desc']),
                   ),
@@ -182,7 +182,7 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 1),
+                      border: Border.all(color: Colors.grey, ),
                     ),
                     child: Wrap(
                       runSpacing: 10,
@@ -192,7 +192,7 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                           width: 100,
                           height: 100,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
+                            border: Border.all(color: Colors.grey, ),
                           ),
                           child: Image.network('$baseUrl${item['file_path']}'),
                         );

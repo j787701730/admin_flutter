@@ -84,7 +84,7 @@ class _MaintainState extends State<Maintain> {
                           height: 34,
                           padding: EdgeInsets.only(left: 10),
                           alignment: Alignment.centerLeft,
-                          decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
+                          decoration: BoxDecoration(border: Border.all(color: Colors.grey, )),
                           child: Text('${param['efftime']}'.substring(0, 19)),
                         )),
                   )

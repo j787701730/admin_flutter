@@ -1,41 +1,36 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:admin_flutter/base/agreement_content.dart';
-import 'package:admin_flutter/plugin/number_bar.dart';
-import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class Agreement extends StatefulWidget {
+class TaskListLog extends StatefulWidget {
+  final props;
+
+  TaskListLog(this.props);
+
   @override
-  _AgreementState createState() => _AgreementState();
+  _TaskListLogState createState() => _TaskListLogState();
 }
 
-class _AgreementState extends State<Agreement> {
+class _TaskListLogState extends State<TaskListLog> {
   BuildContext _context;
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
-  Map param = {"curr_page": 1, "page_count": 15};
   List ajaxData = [];
-  int count = 0;
   bool loading = true;
 
   List columns = [
-    {'title': '协议中文名称', 'key': 'agreement_ch_name'},
-    {'title': '协议英文名称', 'key': 'agreement_en_name'},
-    {'title': '协议内容', 'key': 'agreement_id'},
-    {'title': '创建时间', 'key': 'create_date'},
-    {'title': '更新时间', 'key': 'update_date'},
-//    {'title': '操作', 'key': 'option'},
+    {'title': '操作者', 'key': 'login_name'},
+    {'title': '修改主题', 'key': 'action_name'},
+    {'title': '修改内容', 'key': 'content'},
+    {'title': '修改时间', 'key': 'create_date'},
   ];
 
   void _onRefresh() async {
     setState(() {
-      param['curr_page'] = 1;
       getData(isRefresh: true);
     });
   }
@@ -60,12 +55,11 @@ class _AgreementState extends State<Agreement> {
     setState(() {
       loading = true;
     });
-    ajax('Adminrelas-WebSysConfig-getAgreementAjax', {'param': jsonEncode(param)}, true, (res) {
+    ajax('Adminrelas-TaskManage-getTaskLog', {'taskID': widget.props['task_id']}, true, (res) {
       if (mounted) {
         setState(() {
           loading = false;
           ajaxData = res['data'] ?? [];
-          count = int.tryParse('${res['count'] ?? 0}');
           toTop();
         });
         if (isRefresh) {
@@ -89,23 +83,11 @@ class _AgreementState extends State<Agreement> {
     );
   }
 
-  getPage(page) {
-    param['curr_page'] += page;
-    getData();
-  }
-
-  agreementContent(item) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AgreementContent(item)),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('网站协议'),
+        title: Text('${widget.props['task_name']} 任务日志'),
       ),
       body: SmartRefresher(
         enablePullDown: true,
@@ -118,11 +100,6 @@ class _AgreementState extends State<Agreement> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(bottom: 6),
-              alignment: Alignment.centerRight,
-              child: NumberBar(count: count),
-            ),
             loading
                 ? Container(
                     alignment: Alignment.center,
@@ -138,47 +115,23 @@ class _AgreementState extends State<Agreement> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: ajaxData.map<Widget>((item) {
                               return Container(
-                                decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), )),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
+                                ),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(top: 5, bottom: 5),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: columns.map<Widget>((col) {
                                     Widget con = Text('${item[col['key']] ?? ''}');
-                                    switch (col['key']) {
-                                      case 'agreement_id':
-                                        con = InkWell(
-                                          onTap: () {
-                                            agreementContent(item);
-                                          },
-                                          child: Text(
-                                            '查看',
-                                            style: TextStyle(color: Colors.blue),
-                                          ),
-                                        );
-                                        break;
-                                      case 'option':
-                                        con = Wrap(
-                                          runSpacing: 10,
-                                          spacing: 10,
-                                          children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {},
-                                                child: Text('修改'),
-                                              ),
-                                            )
-                                          ],
-                                        );
-                                        break;
-                                    }
                                     return Container(
                                       margin: EdgeInsets.only(bottom: 6),
                                       child: Row(
                                         children: <Widget>[
                                           Container(
-                                            width: 120,
+                                            width: 80,
                                             alignment: Alignment.centerRight,
                                             child: Text('${col['title']}'),
                                             margin: EdgeInsets.only(right: 10),
@@ -193,14 +146,6 @@ class _AgreementState extends State<Agreement> {
                             }).toList(),
                           ),
                   ),
-            Container(
-              child: PagePlugin(
-                current: param['curr_page'],
-                total: count,
-                pageSize: param['page_count'],
-                function: getPage,
-              ),
-            ),
           ],
         ),
       ),

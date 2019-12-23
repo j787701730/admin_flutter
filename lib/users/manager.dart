@@ -446,6 +446,48 @@ class _UsersManagerState extends State<UsersManager> {
     getData();
   }
 
+  operaDialog(item) {
+    return showDialog<void>(
+      context: _context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            '系统提示',
+            style: TextStyle(fontSize: CFFontSize.topTitle),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  '确定要 ${item['user_state'].toString() == '0' ? '冻结' : '解冻'} ${item['login_name']} 账号?',
+                  style: TextStyle(fontSize: CFFontSize.content),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('取消'),
+              color: Colors.white,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: Text('确定'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -467,12 +509,13 @@ class _UsersManagerState extends State<UsersManager> {
             Column(
               children: searchData.keys.map<Widget>((key) {
                 return Input(
-                    label: '${searchName[key]}',
-                    onChanged: (String val) {
-                      setState(() {
-                        searchData[key] = val;
-                      });
+                  label: '${searchName[key]}',
+                  onChanged: (String val) {
+                    setState(() {
+                      searchData[key] = val;
                     });
+                  },
+                );
               }).toList(),
             ),
             DateSelectPlugin(
@@ -614,7 +657,9 @@ class _UsersManagerState extends State<UsersManager> {
                                             height: 30,
                                             margin: EdgeInsets.only(right: 10),
                                             child: PrimaryButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                operaDialog(item);
+                                              },
                                               padding: EdgeInsets.only(left: 0),
                                               child: Text('冻结'),
                                             ),
@@ -624,7 +669,9 @@ class _UsersManagerState extends State<UsersManager> {
                                             height: 30,
                                             margin: EdgeInsets.only(right: 10),
                                             child: PrimaryButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                operaDialog(item);
+                                              },
                                               child: Text('解冻'),
                                             ),
                                           );

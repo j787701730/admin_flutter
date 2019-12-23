@@ -92,7 +92,7 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                     padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
                     height: 34,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 1),
+                      border: Border.all(color: Colors.grey, ),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     alignment: Alignment.centerLeft,
@@ -195,7 +195,7 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                     margin: EdgeInsets.only(right: 10),
                     padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 1),
+                      border: Border.all(color: Colors.grey, ),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     height: widget.props == null ? 340 : 50,

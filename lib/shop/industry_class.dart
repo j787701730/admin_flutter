@@ -22,6 +22,7 @@ class _IndustryClassState extends State<IndustryClass> {
   bool loading = true;
   Map industryClass = {};
   double width;
+  String searchValue = '';
 
   void _onRefresh() async {
     setState(() {
@@ -53,7 +54,7 @@ class _IndustryClassState extends State<IndustryClass> {
       if (mounted) {
         setState(() {
           loading = false;
-          ajaxData = res['data'];
+          ajaxData = res['data'] ?? [];
           toTop();
         });
         industryClass = {'0': '顶级分类'};
@@ -94,131 +95,141 @@ class _IndustryClassState extends State<IndustryClass> {
   }
 
   itemContainer(data, level) {
-    return Container(
-      height: 66,
-      child: Row(
-        children: <Widget>[
-          Container(
-            width: width / 5,
-            alignment: Alignment.centerRight,
-            child: Text('${data['sort']}'),
-          ),
-          Container(
-            width: 60,
-            child: data['icon'] == ''
-                ? Text('')
-                : Container(
-                    margin: EdgeInsets.only(top: 8, bottom: 8),
-                    width: 50,
-                    height: 50,
-                    child: Image.network(
-                      '${baseUrl}Public/images/store/${data['icon']}',
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
+    return searchValue == '' || '${data['class_name']}'.contains(searchValue)
+        ? Container(
+            height: 66,
+            child: Row(
               children: <Widget>[
-                level == 1
-                    ? Text('')
-                    : Icon(
-                        Icons.keyboard_arrow_right,
-                        color: CFColors.success,
-                      ),
-                InkWell(
-                  onTap: () {
-                    turnTo({
-                      'industryClass': industryClass,
-                      'item': {
-                        'parent-class': '${data['parent_class_id']}',
-                        'class-sort': '${data['sort']}',
-                        'goods-class-name': '${data['class_name']}',
-                        'upload-icon': '${data['icon']}',
-                        'class-comment': '${data['comments']}'
-                      }
-                    });
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(top: 6, bottom: 6),
-                    child: Text(
-                      '${data['class_name']}',
-                      style: TextStyle(
-                        color: CFColors.primary,
+                Container(
+                  width: width / 5,
+                  alignment: Alignment.centerRight,
+                  child: Text('${data['sort']}'),
+                ),
+                Container(
+                  width: 60,
+                  child: data['icon'] == ''
+                      ? Text('')
+                      : Container(
+                          margin: EdgeInsets.only(top: 8, bottom: 8),
+                          width: 50,
+                          height: 50,
+                          child: Image.network(
+                            '${baseUrl}Public/images/store/${data['icon']}',
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: <Widget>[
+                      level == 1
+                          ? Text('')
+                          : Icon(
+                              Icons.keyboard_arrow_right,
+                              color: CFColors.success,
+                            ),
+                      InkWell(
+                        onTap: () {
+                          turnTo({
+                            'industryClass': industryClass,
+                            'item': {
+                              'parent-class': '${data['parent_class_id']}',
+                              'class-sort': '${data['sort']}',
+                              'goods-class-name': '${data['class_name']}',
+                              'upload-icon': '${data['icon']}',
+                              'class-comment': '${data['comments']}'
+                            }
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(top: 6, bottom: 6),
+                          child: Text(
+                            '${data['class_name']}',
+                            style: TextStyle(
+                              color: CFColors.primary,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  width: width / 5,
+                  child: Text('${data['comments'] ?? ''}'),
+                ),
+                Container(
+                  width: 50,
+                  child: InkWell(
+                    onTap: () {
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return StatefulBuilder(
+                            builder: (context1, state) {
+                              /// 这里的state就是setState
+                              return AlertDialog(
+                                title: Text(
+                                  '信息',
+                                  style: TextStyle(fontSize: CFFontSize.topTitle),
+                                ),
+                                content: SingleChildScrollView(
+                                  child: ListBody(
+                                    children: <Widget>[
+                                      Text(
+                                        '确认删除 ${data['class_name']} ?',
+                                        style: TextStyle(fontSize: CFFontSize.content),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text('取消'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  FlatButton(
+                                    color: Colors.blue,
+                                    textColor: Colors.white,
+                                    child: Text('提交'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                    child: Container(
+                      width: 44,
+                      height: 44,
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.delete,
+                        color: CFColors.danger,
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
-          ),
-          Container(
-            width: width / 5,
-            child: Text('${data['comments'] ?? ''}'),
-          ),
-          Container(
-            width: 50,
-            child: InkWell(
-              onTap: () {
-                showDialog<void>(
-                  context: context,
-                  barrierDismissible: false, // user must tap button!
-                  builder: (BuildContext context) {
-                    return StatefulBuilder(builder: (context1, state) {
-                      /// 这里的state就是setState
-                      return AlertDialog(
-                        title: Text(
-                          '信息',
-                          style: TextStyle(fontSize: CFFontSize.topTitle),
-                        ),
-                        content: SingleChildScrollView(
-                          child: ListBody(
-                            children: <Widget>[
-                              Text(
-                                '确认删除 ${data['class_name']} ?',
-                                style: TextStyle(fontSize: CFFontSize.content),
-                              ),
-                            ],
-                          ),
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('取消'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          FlatButton(
-                            color: Colors.blue,
-                            textColor: Colors.white,
-                            child: Text('提交'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      );
-                    }); //
-                  },
-                );
-              },
-              child: Container(
-                width: 44,
-                height: 44,
-                alignment: Alignment.center,
-                child: Icon(
-                  Icons.delete,
-                  color: CFColors.danger,
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.grey,
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
-    );
+          )
+        : Container();
   }
 
   @override
@@ -239,7 +250,11 @@ class _IndustryClassState extends State<IndustryClass> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(label: '行业分类', onChanged: (String val) {}),
+            Input(
+                label: '行业分类',
+                onChanged: (String val) {
+                  searchValue = val;
+                }),
             Container(
               child: Wrap(
                 alignment: WrapAlignment.center,

@@ -288,7 +288,7 @@ class _RebateDistributorState extends State<RebateDistributor> {
                                 children: <Widget>[
                                   Container(
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: Color(0xffdddddd), width: 1),
+                                      border: Border.all(color: Color(0xffdddddd), ),
                                     ),
                                     margin: EdgeInsets.only(bottom: 10),
                                     padding: EdgeInsets.only(top: 5, bottom: 5),
