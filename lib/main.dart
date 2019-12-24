@@ -53,6 +53,11 @@ import 'package:admin_flutter/log/sms_logs.dart';
 import 'package:admin_flutter/log/wx_logs.dart';
 import 'package:admin_flutter/login.dart';
 import 'package:admin_flutter/my_home_page.dart';
+import 'package:admin_flutter/opt/board_cut_config_type.dart';
+import 'package:admin_flutter/opt/board_cut_configs.dart';
+import 'package:admin_flutter/opt/board_cut_user_grant.dart';
+import 'package:admin_flutter/opt/opt_config.dart';
+import 'package:admin_flutter/opt/opt_list.dart';
 import 'package:admin_flutter/rebate/rebate_authorize.dart';
 import 'package:admin_flutter/rebate/rebate_city_sales.dart';
 import 'package:admin_flutter/rebate/cad_distributor.dart';
@@ -170,6 +175,11 @@ class MyApp extends StatelessWidget {
         '/taskList': (_) => TaskList(), // 任务列表
         '/taskEvaluate': (_) => TaskEvaluate(), // 评价配置
         '/taskRules': (_) => TaskRules(), // 成长规则
+        '/optList': (_) => OptList(), // 优化数据
+        '/optConfig': (_) => OptConfig(), // 异形造型
+        '/boardCutConfigType': (_) => BoardCutConfigType(), // 开料配置类型
+        '/boardCutConfigs': (_) => BoardCutConfigs(), // 开料配置
+        '/boardCutUserGrant': (_) => BoardCutUserGrant(), // 用户收费开料配置
       },
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

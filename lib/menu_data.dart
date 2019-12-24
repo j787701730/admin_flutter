@@ -770,31 +770,36 @@ List menuData = [
         "spell_all": "youhuashuju",
         "spell_index": "yhsj",
         "name": "优化数据",
-        "access": [89]
+        "access": [89],
+        "path": "/optList"
       },
       {
         "spell_all": "yixingzaoxing",
         "spell_index": "yxzx",
         "name": "异形造型",
-        "access": [105]
+        "access": [105],
+        "path": '/optConfig'
       },
       {
         "spell_all": "",
         "spell_index": "",
         "name": "开料配置类型",
-        "access": [130]
+        "access": [130],
+        "path": "/boardCutConfigType"
       },
       {
         "spell_all": "",
         "spell_index": "",
         "name": "开料配置",
-        "access": [131]
+        "access": [131],
+        "path": '/boardCutConfigs'
       },
       {
         "spell_all": "",
         "spell_index": "",
         "name": "用户收费开料配置",
-        "access": [132]
+        "access": [132],
+        "path": "/boardCutUserGrant"
       }
     ]
   },
