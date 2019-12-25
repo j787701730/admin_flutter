@@ -61,6 +61,10 @@ class _MyHomePageState extends State<MyHomePage> {
       } else {
         checkLogin();
       }
+    }, netError: (val) {
+      setState(() {
+        isAjax = false;
+      });
     });
   }
 

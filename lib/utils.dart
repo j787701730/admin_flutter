@@ -12,7 +12,7 @@ import 'package:path_provider/path_provider.dart';
 
 final baseUrl = 'http://192.168.1.115/';
 
-ajaxSimple(String url, data, Function fun) async {
+ajaxSimple(String url, data, Function fun, {Function netError}) async {
   var dio = Dio();
   Directory tempDir = await getTemporaryDirectory();
   String tempPath = tempDir.path;
@@ -31,12 +31,39 @@ ajaxSimple(String url, data, Function fun) async {
     );
     fun(res.data);
   } on DioError catch (e) {
-    print(e);
+    if (netError != null) {
+      netError(e);
+    }
+//    print(e);
+    Fluttertoast.showToast(
+      msg: '$e',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+    );
+    if (e.response != null) {
+//        print(e.response.data);
+//        print(e.response.headers);
+//        print(e.response.request);
+//        print(e.response.statusCode);
+      //  this.data,
+      //  this.headers,
+      //  this.request,
+      //  this.isRedirect,
+      //  this.statusCode,
+      //  this.statusMessage,
+      //  this.redirects,
+      //  this.extra,
+    } else {
+      // Something happened in setting up or sending the request that triggered an Error
+//       print(e.request.connectTimeout);
+//       print(e.message);
+    }
+
     // Toast.show('$e', _context, duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
   }
 }
 
-ajax(String url, data, bool toast, Function fun, Function fun2, BuildContext _context) async {
+ajax(String url, data, bool toast, Function fun, Function fun2, BuildContext _context, {Function netError}) async {
   var dio = Dio();
   //  var cookieJar = CookieJar();
   Directory tempDir = await getTemporaryDirectory();
@@ -95,6 +122,9 @@ ajax(String url, data, bool toast, Function fun, Function fun2, BuildContext _co
   } on DioError catch (e) {
     // The request was made and the server responded with a status code
     // that falls out of the range of 2xx and is also not 304.
+    if (netError != null) {
+      netError(e);
+    }
     if (e.response != null) {
       //  print(e.response.data);
       //  print(e.response.headers);
