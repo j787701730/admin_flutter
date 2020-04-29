@@ -6,6 +6,7 @@ import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class _BalanceManualState extends State<BalanceManual> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
+  bool isExpandedFlag = false;
 
   List columns = [
     {'title': '用户', 'key': 'login_name'},
@@ -125,57 +127,66 @@ class _BalanceManualState extends State<BalanceManual> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '用户名',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('login_name');
-                  } else {
-                    param['login_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '操作者',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('full_name');
-                  } else {
-                    param['full_name'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: balanceType,
-              selectedValue: param['balance_type_id'] ?? '0',
-              label: '余额类型:',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == '0') {
-                    param.remove('balance_type_id');
-                  } else {
-                    param['balance_type_id'] = newValue;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: manualType,
-              selectedValue: param['manual_type'] ?? '0',
-              label: '调账类型:',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == '0') {
-                    param.remove('manual_type');
-                  } else {
-                    param['manual_type'] = newValue;
-                  }
-                });
-              },
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '用户名',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('login_name');
+                      } else {
+                        param['login_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '操作者',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('full_name');
+                      } else {
+                        param['full_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: balanceType,
+                  selectedValue: param['balance_type_id'] ?? '0',
+                  label: '余额类型:',
+                  onChanged: (String newValue) {
+                    setState(() {
+                      if (newValue == '0') {
+                        param.remove('balance_type_id');
+                      } else {
+                        param['balance_type_id'] = newValue;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: manualType,
+                  selectedValue: param['manual_type'] ?? '0',
+                  label: '调账类型:',
+                  onChanged: (String newValue) {
+                    setState(() {
+                      if (newValue == '0') {
+                        param.remove('manual_type');
+                      } else {
+                        param['manual_type'] = newValue;
+                      }
+                    });
+                  },
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -191,6 +202,18 @@ class _BalanceManualState extends State<BalanceManual> {
                         getData();
                       },
                       child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],

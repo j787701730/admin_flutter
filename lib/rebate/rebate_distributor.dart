@@ -7,6 +7,7 @@ import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _RebateDistributorState extends State<RebateDistributor> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '用户', 'key': 'login_name'},
     {'title': '联系人', 'key': 'user_name'},
@@ -174,31 +175,40 @@ class _RebateDistributorState extends State<RebateDistributor> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '用户',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_name');
-                  } else {
-                    param['user_name'] = val;
-                  }
-                });
-              },
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '用户',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('user_name');
+                      } else {
+                        param['user_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                    selectOptions: state,
+                    selectedValue: param['state'] ?? 'all',
+                    label: '状态',
+                    onChanged: (val) {
+                      if (val) {
+                        param.remove('state');
+                      } else {
+                        param['state'] = val;
+                      }
+                    }),
+                DateSelectPlugin(onChanged: getDateTime, label: '申请时间'),
+                DateSelectPlugin(onChanged: getDateTime2, label: '审核时间'),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
-            Select(
-                selectOptions: state,
-                selectedValue: param['state'] ?? 'all',
-                label: '状态',
-                onChanged: (val) {
-                  if (val) {
-                    param.remove('state');
-                  } else {
-                    param['state'] = val;
-                  }
-                }),
-            DateSelectPlugin(onChanged: getDateTime, label: '申请时间'),
-            DateSelectPlugin(onChanged: getDateTime2, label: '审核时间'),
             Container(
               child: Wrap(
                 alignment: WrapAlignment.center,
@@ -260,6 +270,18 @@ class _RebateDistributorState extends State<RebateDistributor> {
                       child: Text('审核失败'),
                     ),
                   ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
+                  ),
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),
@@ -288,7 +310,9 @@ class _RebateDistributorState extends State<RebateDistributor> {
                                 children: <Widget>[
                                   Container(
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: Color(0xffdddddd), ),
+                                      border: Border.all(
+                                        color: Color(0xffdddddd),
+                                      ),
                                     ),
                                     margin: EdgeInsets.only(bottom: 10),
                                     padding: EdgeInsets.only(top: 5, bottom: 5),

@@ -6,6 +6,7 @@ import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _DrawTypeState extends State<DrawType> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '中文名称', 'key': 'type_ch_name'},
     {'title': '英文名称', 'key': 'type_en_name'},
@@ -132,47 +133,56 @@ class _DrawTypeState extends State<DrawType> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '中文名称',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('type_ch_name');
-                  } else {
-                    param['type_ch_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '英文名称',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('type_en_name');
-                  } else {
-                    param['type_en_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '备注',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('comments');
-                  } else {
-                    param['comments'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '中文名称',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('type_ch_name');
+                      } else {
+                        param['type_ch_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '英文名称',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('type_en_name');
+                      } else {
+                        param['type_en_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '备注',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('comments');
+                      } else {
+                        param['comments'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -183,12 +193,25 @@ class _DrawTypeState extends State<DrawType> {
                   SizedBox(
                     height: 30,
                     child: PrimaryButton(
-                        onPressed: () {
-                          param['curr_page'] = 1;
-                          getData();
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: Text('搜索'),),
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
                   ),
                 ],
               ),
@@ -214,64 +237,69 @@ class _DrawTypeState extends State<DrawType> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: ajaxData.map<Widget>((item) {
                               return Container(
-                                  decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), ),),
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: columns.map<Widget>((col) {
-                                      Widget con = Text('${item[col['key']] ?? ''}');
-                                      switch (col['key']) {
-                                        case 'state':
-                                          con = '${item[col['key']]}' == '1' ? Text('在用') : Text('停用');
-                                          break;
-                                        case 'if_charge':
-                                          con = Container(
-                                            alignment: Alignment.centerLeft,
-                                            child: '${item[col['key']]}' == '1'
-                                                ? Icon(
-                                                    Icons.close,
-                                                    color: Colors.red,
-                                                  )
-                                                : Icon(
-                                                    Icons.check,
-                                                    color: Colors.green,
-                                                  ),
-                                          );
-                                          break;
-                                        case 'option':
-                                          con = Wrap(
-                                            runSpacing: 10,
-                                            spacing: 10,
-                                            children: <Widget>[
-                                              Container(
-                                                height: 30,
-                                                child: PrimaryButton(
-                                                  onPressed: () {},
-                                                  child: Text(''),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    switch (col['key']) {
+                                      case 'state':
+                                        con = '${item[col['key']]}' == '1' ? Text('在用') : Text('停用');
+                                        break;
+                                      case 'if_charge':
+                                        con = Container(
+                                          alignment: Alignment.centerLeft,
+                                          child: '${item[col['key']]}' == '1'
+                                              ? Icon(
+                                                  Icons.close,
+                                                  color: Colors.red,
+                                                )
+                                              : Icon(
+                                                  Icons.check,
+                                                  color: Colors.green,
                                                 ),
-                                              )
-                                            ],
-                                          );
-                                          break;
-                                      }
-
-                                      return Container(
-                                        margin: EdgeInsets.only(bottom: 6),
-                                        child: Row(
+                                        );
+                                        break;
+                                      case 'option':
+                                        con = Wrap(
+                                          runSpacing: 10,
+                                          spacing: 10,
                                           children: <Widget>[
                                             Container(
-                                              width: 80,
-                                              alignment: Alignment.centerRight,
-                                              child: Text('${col['title']}'),
-                                              margin: EdgeInsets.only(right: 10),
-                                            ),
-                                            Expanded(flex: 1, child: con)
+                                              height: 30,
+                                              child: PrimaryButton(
+                                                onPressed: () {},
+                                                child: Text(''),
+                                              ),
+                                            )
                                           ],
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),);
+                                        );
+                                        break;
+                                    }
+
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 80,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
+                                          ),
+                                          Expanded(flex: 1, child: con)
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
                             }).toList(),
                           ),
                   ),

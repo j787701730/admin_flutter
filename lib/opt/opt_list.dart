@@ -8,6 +8,7 @@ import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/plugin/user_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _OptListState extends State<OptList> {
   int count = 0;
   bool loading = true;
   Map selectUser = {};
-
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '订单号', 'key': 'order_no'},
     {'title': '用户', 'key': 'user_name'},
@@ -184,122 +185,131 @@ class _OptListState extends State<OptList> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '订单号',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('order_no');
-                  } else {
-                    param['order_no'] = val;
-                  }
-                });
-              },
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 80,
-                    alignment: Alignment.centerRight,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[Text('用户')],
-                    ),
-                    margin: EdgeInsets.only(right: 10),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      margin: EdgeInsets.only(right: 10),
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4),
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '订单号',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('order_no');
+                      } else {
+                        param['order_no'] = val;
+                      }
+                    });
+                  },
+                ),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        width: 80,
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[Text('用户')],
                         ),
+                        margin: EdgeInsets.only(right: 10),
                       ),
-                      height: 30,
-                      alignment: Alignment.centerLeft,
-                      child: Wrap(
-                        children: selectUser.keys.toList().map<Widget>((key) {
-                          return Container(
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  padding: EdgeInsets.only(right: 20),
-                                  child: Text(
-                                    '${selectUser[key]['login_name']}',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  child: Container(
-                                    color: Color(0xffeeeeee),
-                                    child: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          selectUser.remove(key);
-                                        });
-                                      },
-                                      child: Icon(
-                                        Icons.clear,
-                                        color: Colors.red,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 70,
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => UserPlugin(
-                              userCount: 1,
-                              selectUsersData: jsonDecode(
-                                jsonEncode(selectUser),
-                              ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          margin: EdgeInsets.only(right: 10),
+                          padding: EdgeInsets.only(left: 10, right: 10),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(4),
                             ),
                           ),
-                        ).then((val) {
-                          if (val != null) {
-                            setState(() {
-                              selectUser = jsonDecode(jsonEncode(val));
+                          height: 30,
+                          alignment: Alignment.centerLeft,
+                          child: Wrap(
+                            children: selectUser.keys.toList().map<Widget>((key) {
+                              return Container(
+                                child: Stack(
+                                  children: <Widget>[
+                                    Container(
+                                      padding: EdgeInsets.only(right: 20),
+                                      child: Text(
+                                        '${selectUser[key]['login_name']}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: Container(
+                                        color: Color(0xffeeeeee),
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              selectUser.remove(key);
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.clear,
+                                            color: Colors.red,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 70,
+                        height: 30,
+                        child: PrimaryButton(
+                          onPressed: () {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UserPlugin(
+                                  userCount: 1,
+                                  selectUsersData: jsonDecode(
+                                    jsonEncode(selectUser),
+                                  ),
+                                ),
+                              ),
+                            ).then((val) {
+                              if (val != null) {
+                                setState(() {
+                                  selectUser = jsonDecode(jsonEncode(val));
+                                });
+                              }
                             });
-                          }
-                        });
-                      },
-                      child: Text('选择'),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '时间区间',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+                          },
+                          child: Text('选择'),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '时间区间',
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -316,6 +326,18 @@ class _OptListState extends State<OptList> {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
                       child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],

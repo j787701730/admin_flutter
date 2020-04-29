@@ -9,6 +9,7 @@ import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/range_input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
   Map ajaxData = {};
   int count = 0;
   bool loading = true;
+  bool isExpandedFlag = false;
 
   List columns = [
     {'title': '积量类型', 'key': 'type_ch_name'},
@@ -162,78 +164,87 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '用户',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('login_name');
-                  } else {
-                    param['login_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '手机',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_phone');
-                  } else {
-                    param['user_phone'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: accumulateType,
-              selectedValue: param['accum_type_id'] ?? 'all',
-              label: '积量类型',
-              onChanged: (val) {
-                if (val == 'all') {
-                  param.remove('accum_type_id');
-                } else {
-                  param['accum_type_id'] = val;
-                }
-              },
-            ),
-            Select(
-              selectOptions: state,
-              selectedValue: param['state'] ?? 'all',
-              label: '状态',
-              onChanged: (val) {
-                if (val == 'all') {
-                  param.remove('state');
-                } else {
-                  param['state'] = val;
-                }
-              },
-            ),
-            RangeInput(
-              label: '剂量值',
-              onChangeL: (val) {
-                if (val == '') {
-                  param.remove('amountL');
-                } else {
-                  param['amountL'] = val;
-                }
-              },
-              onChangeR: (val) {
-                if (val == '') {
-                  param.remove('amountU');
-                } else {
-                  param['amountU'] = val;
-                }
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '创建时间',
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime2,
-              label: '更新时间',
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '用户',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('login_name');
+                      } else {
+                        param['login_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '手机',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('user_phone');
+                      } else {
+                        param['user_phone'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: accumulateType,
+                  selectedValue: param['accum_type_id'] ?? 'all',
+                  label: '积量类型',
+                  onChanged: (val) {
+                    if (val == 'all') {
+                      param.remove('accum_type_id');
+                    } else {
+                      param['accum_type_id'] = val;
+                    }
+                  },
+                ),
+                Select(
+                  selectOptions: state,
+                  selectedValue: param['state'] ?? 'all',
+                  label: '状态',
+                  onChanged: (val) {
+                    if (val == 'all') {
+                      param.remove('state');
+                    } else {
+                      param['state'] = val;
+                    }
+                  },
+                ),
+                RangeInput(
+                  label: '剂量值',
+                  onChangeL: (val) {
+                    if (val == '') {
+                      param.remove('amountL');
+                    } else {
+                      param['amountL'] = val;
+                    }
+                  },
+                  onChangeR: (val) {
+                    if (val == '') {
+                      param.remove('amountU');
+                    } else {
+                      param['amountU'] = val;
+                    }
+                  },
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '创建时间',
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime2,
+                  label: '更新时间',
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -250,6 +261,18 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
                       child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],
@@ -276,7 +299,10 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: ajaxData.keys.toList().map<Widget>((key) {
                               return Container(
-                                decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), )),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                  color: Color(0xffdddddd),
+                                )),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.all(10),
                                 child: Column(
@@ -315,7 +341,9 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
                                       children: ajaxData[key]['acctRes'].map<Widget>((item) {
                                         return Container(
                                           decoration: BoxDecoration(
-                                            border: Border.all(color: Color(0xffdddddd), ),
+                                            border: Border.all(
+                                              color: Color(0xffdddddd),
+                                            ),
                                           ),
                                           margin: EdgeInsets.only(bottom: 10),
                                           padding: EdgeInsets.only(top: 5, bottom: 5),

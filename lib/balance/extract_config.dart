@@ -27,6 +27,7 @@ class _ExtractConfigState extends State<ExtractConfig> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
+  bool isExpandedFlag = false;
 
   List columns = [
     {'title': '用户', 'key': 'login_name'},
@@ -190,62 +191,71 @@ class _ExtractConfigState extends State<ExtractConfig> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '用户',
-              labelWidth: 130,
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_name');
-                  } else {
-                    param['user_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '电话号码',
-              labelWidth: 130,
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_phone');
-                  } else {
-                    param['user_phone'] = val;
-                  }
-                });
-              },
-            ),
-            RangeInput(
-                label: '月免手续费额度',
-                labelWidth: 130,
-                onChangeL: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('extract_limit_l');
-                    } else {
-                      param['extract_limit_l'] = val;
-                    }
-                  });
-                },
-                onChangeR: (String val) {
-                  setState(() {
-                    if (val == '') {
-                      param.remove('extract_limit_r');
-                    } else {
-                      param['extract_limit_r'] = val;
-                    }
-                  });
-                }),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '创建时间',
-              labelWidth: 130,
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime2,
-              label: '更新时间',
-              labelWidth: 130,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '用户',
+                  labelWidth: 130,
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('user_name');
+                      } else {
+                        param['user_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '电话号码',
+                  labelWidth: 130,
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('user_phone');
+                      } else {
+                        param['user_phone'] = val;
+                      }
+                    });
+                  },
+                ),
+                RangeInput(
+                    label: '月免手续费额度',
+                    labelWidth: 130,
+                    onChangeL: (String val) {
+                      setState(() {
+                        if (val == '') {
+                          param.remove('extract_limit_l');
+                        } else {
+                          param['extract_limit_l'] = val;
+                        }
+                      });
+                    },
+                    onChangeR: (String val) {
+                      setState(() {
+                        if (val == '') {
+                          param.remove('extract_limit_r');
+                        } else {
+                          param['extract_limit_r'] = val;
+                        }
+                      });
+                    }),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '创建时间',
+                  labelWidth: 130,
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime2,
+                  label: '更新时间',
+                  labelWidth: 130,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -273,6 +283,18 @@ class _ExtractConfigState extends State<ExtractConfig> {
                       child: Text('提现配置'),
                     ),
                   ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
+                  ),
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),
@@ -297,7 +319,10 @@ class _ExtractConfigState extends State<ExtractConfig> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: ajaxData.map<Widget>((item) {
                               return Container(
-                                decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), )),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                  color: Color(0xffdddddd),
+                                )),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(top: 5, bottom: 5),
                                 child: Column(

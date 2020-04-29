@@ -8,6 +8,7 @@ import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class _SmsLogsState extends State<SmsLogs> {
     {'title': '出参参数', 'key': 'err_msg'},
     {'title': '创建时间', 'key': 'create_date'},
   ];
+  bool isExpandedFlag = false;
 
   Map smsTemplate = {
     'all': '全部',
@@ -212,55 +214,85 @@ class _SmsLogsState extends State<SmsLogs> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Column(
-              children: searchData.keys.map<Widget>((key) {
-                return Input(
-                  label: '${searchName[key]}',
-                  onChanged: (String val) {
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Column(
+                  children: searchData.keys.map<Widget>((key) {
+                    return Input(
+                      label: '${searchName[key]}',
+                      onChanged: (String val) {
+                        setState(() {
+                          searchData[key] = val;
+                        });
+                      },
+                    );
+                  }).toList(),
+                ),
+                Select(
+                  selectOptions: smsTemplate,
+                  selectedValue: param['template_id'] ?? 'all',
+                  label: '短信模板',
+                  onChanged: (String newValue) {
                     setState(() {
-                      searchData[key] = val;
+                      if (newValue == 'all') {
+                        param.remove('template_id');
+                      } else {
+                        param['template_id'] = newValue;
+                      }
                     });
                   },
-                );
-              }).toList(),
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '操作日期',
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  onChanged: orderBy,
+                  label: '排序',
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
-            Select(
-              selectOptions: smsTemplate,
-              selectedValue: param['template_id'] ?? 'all',
-              label: '短信模板',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == 'all') {
-                    param.remove('template_id');
-                  } else {
-                    param['template_id'] = newValue;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '操作日期',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              onChanged: orderBy,
-              label: '排序',
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                PrimaryButton(
-                  onPressed: () {
-                    setState(() {
-                      param['curr_page'] = 1;
-                      getData();
-                    });
-                  },
-                  child: Text('搜索'),
-                )
-              ],
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                      },
+                      child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
+                  ),
+                ],
+              ),
+              margin: EdgeInsets.only(bottom: 10),
             ),
             Container(
               margin: EdgeInsets.only(bottom: 8),

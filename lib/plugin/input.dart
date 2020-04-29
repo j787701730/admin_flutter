@@ -1,4 +1,5 @@
 import 'package:admin_flutter/style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Input extends StatefulWidget {
@@ -9,21 +10,32 @@ class Input extends StatefulWidget {
   final bool require; // 是否必填 显示*
   final int maxLines;
   final Padding contentPadding; // TextField contentPadding
+  final value;
 
-  Input(
-      {@required this.label,
-      this.labelWidth,
-      this.placeholder,
-      @required this.onChanged,
-      this.require = false,
-      this.maxLines = 1,
-      this.contentPadding});
+  Input({
+    @required this.label,
+    this.labelWidth,
+    this.placeholder,
+    @required this.onChanged,
+    this.require = false,
+    this.maxLines = 1,
+    this.contentPadding,
+    this.value = '',
+  });
 
   @override
   _InputState createState() => _InputState();
 }
 
 class _InputState extends State<Input> {
+  String value = '';
+
+  @override
+  void initState() {
+    super.initState();
+    value = widget.value;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -52,6 +64,17 @@ class _InputState extends State<Input> {
                     alignment: Alignment.centerLeft,
                     height: 34.0,
                     child: TextField(
+                      controller: TextEditingController.fromValue(
+                        TextEditingValue(
+                          text: '${value ?? ''}',
+                          selection: TextSelection.fromPosition(
+                            TextPosition(
+                              affinity: TextAffinity.downstream,
+                              offset: '${value ?? ''}'.length,
+                            ),
+                          ),
+                        ),
+                      ),
                       style: TextStyle(fontSize: CFFontSize.content),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -66,6 +89,9 @@ class _InputState extends State<Input> {
                       ),
                       maxLines: widget.maxLines,
                       onChanged: (String val) {
+                        setState(() {
+                          value = val;
+                        });
                         widget.onChanged(val);
                       },
                     ),

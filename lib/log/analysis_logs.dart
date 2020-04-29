@@ -33,7 +33,7 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
     {'title': '调用次数', 'key': 'log_times'},
     {'title': '调用日期', 'key': 'log_day'},
   ];
-
+  bool isExpandedFlag = false;
   Map url = {
     "all": "全部",
     "1": "商品明细 (/CS-getGoodsDetail)",
@@ -327,63 +327,93 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Select(
-              selectOptions: logSource,
-              selectedValue: param['log_source'] ?? 'all',
-              label: '日志来源',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == 'all') {
-                    param.remove('log_source');
-                    param2.remove('log_source');
-                  } else {
-                    param['log_source'] = newValue;
-                    param2['log_source'] = newValue;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: url,
-              selectedValue: param['url_id'] ?? 'all',
-              label: '接口名称',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == 'all') {
-                    param.remove('url_id');
-                    param2.remove('url_id');
-                  } else {
-                    param['url_id'] = newValue;
-                    param2['url_id'] = newValue;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '操作日期',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                PrimaryButton(
-                  onPressed: () {
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Select(
+                  selectOptions: logSource,
+                  selectedValue: param['log_source'] ?? 'all',
+                  label: '日志来源',
+                  onChanged: (String newValue) {
                     setState(() {
-                      param['curr_page'] = 1;
-                      param2['curr_page'] = 1;
-                      getData();
-                      getData2();
+                      if (newValue == 'all') {
+                        param.remove('log_source');
+                        param2.remove('log_source');
+                      } else {
+                        param['log_source'] = newValue;
+                        param2['log_source'] = newValue;
+                      }
                     });
                   },
-                  child: Text('搜索'),
-                )
-              ],
+                ),
+                Select(
+                  selectOptions: url,
+                  selectedValue: param['url_id'] ?? 'all',
+                  label: '接口名称',
+                  onChanged: (String newValue) {
+                    setState(() {
+                      if (newValue == 'all') {
+                        param.remove('url_id');
+                        param2.remove('url_id');
+                      } else {
+                        param['url_id'] = newValue;
+                        param2['url_id'] = newValue;
+                      }
+                    });
+                  },
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '操作日期',
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        param2['curr_page'] = 1;
+                        getData();
+                        getData2();
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                      },
+                      child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
+                  ),
+                ],
+              ),
+              margin: EdgeInsets.only(bottom: 10),
             ),
             Container(
               margin: EdgeInsets.only(bottom: 10),

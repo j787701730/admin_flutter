@@ -26,6 +26,7 @@ class _BoardCutConfigsState extends State<BoardCutConfigs> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
+  bool isExpandedFlag = false;
   Map type = {
     "all": "全部",
     "1": "机台配置",
@@ -204,59 +205,68 @@ class _BoardCutConfigsState extends State<BoardCutConfigs> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '配置名称',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('config_name');
-                  } else {
-                    param['config_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '品牌',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('brand');
-                  } else {
-                    param['brand'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: type,
-              selectedValue: param['type_id'] ?? 'all',
-              label: '配置类型',
-              onChanged: (val) {
-                if (val == 'all') {
-                  param.remove('type_id');
-                } else {
-                  param['type_id'] = val;
-                }
-              },
-            ),
-            Select(
-              selectOptions: ifCharge,
-              selectedValue: param['if_charge'] ?? 'all',
-              label: '是否收费',
-              onChanged: (val) {
-                if (val == 'all') {
-                  param.remove('if_charge');
-                } else {
-                  param['if_charge'] = val;
-                }
-              },
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '配置名称',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('config_name');
+                      } else {
+                        param['config_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '品牌',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('brand');
+                      } else {
+                        param['brand'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: type,
+                  selectedValue: param['type_id'] ?? 'all',
+                  label: '配置类型',
+                  onChanged: (val) {
+                    if (val == 'all') {
+                      param.remove('type_id');
+                    } else {
+                      param['type_id'] = val;
+                    }
+                  },
+                ),
+                Select(
+                  selectOptions: ifCharge,
+                  selectedValue: param['if_charge'] ?? 'all',
+                  label: '是否收费',
+                  onChanged: (val) {
+                    if (val == 'all') {
+                      param.remove('if_charge');
+                    } else {
+                      param['if_charge'] = val;
+                    }
+                  },
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -283,6 +293,18 @@ class _BoardCutConfigsState extends State<BoardCutConfigs> {
                         turnTo(null);
                       },
                       child: Text('新增'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],

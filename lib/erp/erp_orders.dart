@@ -7,6 +7,7 @@ import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _ErpOrdersState extends State<ErpOrders> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '订单号', 'key': 'order_no'},
     {'title': '店铺名称', 'key': 'shop_name'},
@@ -164,36 +165,45 @@ class _ErpOrdersState extends State<ErpOrders> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '订单编号',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('order_no');
-                  } else {
-                    param['order_no'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '门店名称',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('store_name');
-                  } else {
-                    param['store_name'] = val;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '订单编号',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('order_no');
+                      } else {
+                        param['order_no'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '门店名称',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('store_name');
+                      } else {
+                        param['store_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -210,6 +220,18 @@ class _ErpOrdersState extends State<ErpOrders> {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
                       child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],

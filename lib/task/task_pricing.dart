@@ -33,7 +33,7 @@ class _TaskPricingState extends State<TaskPricing> {
     "all": '全部',
     "104": "设计任务",
   };
-
+  bool isExpandedFlag = false;
   Map taskType2 = {
     "104": "设计任务",
   };
@@ -353,75 +353,84 @@ class _TaskPricingState extends State<TaskPricing> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '用户名',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_name');
-                  } else {
-                    param['user_name'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: taskType,
-              selectedValue: param['task_type'] ?? 'all',
-              label: '任务类型',
-              onChanged: (val) {
-                setState(() {
-                  if (val == 'all') {
-                    param.remove('task_type');
-                  } else {
-                    param['task_type'] = val;
-                  }
-                });
-              },
-            ),
-            RangeInput(
-              label: '定价区间',
-              onChangeL: (val) {
-                if (val == '') {
-                  param.remove('price_min');
-                } else {
-                  param['price_min'] = val;
-                }
-              },
-              onChangeR: (val) {
-                if (val == '') {
-                  param.remove('price_max');
-                } else {
-                  param['price_max'] = val;
-                }
-              },
-            ),
-            RangeInput(
-              label: '补贴区间',
-              onChangeL: (val) {
-                if (val == '') {
-                  param.remove('subsidy_min');
-                } else {
-                  param['subsidy_min'] = val;
-                }
-              },
-              onChangeR: (val) {
-                if (val == '') {
-                  param.remove('subsidy_max');
-                } else {
-                  param['subsidy_max'] = val;
-                }
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '创建时间',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '用户名',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('user_name');
+                      } else {
+                        param['user_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: taskType,
+                  selectedValue: param['task_type'] ?? 'all',
+                  label: '任务类型',
+                  onChanged: (val) {
+                    setState(() {
+                      if (val == 'all') {
+                        param.remove('task_type');
+                      } else {
+                        param['task_type'] = val;
+                      }
+                    });
+                  },
+                ),
+                RangeInput(
+                  label: '定价区间',
+                  onChangeL: (val) {
+                    if (val == '') {
+                      param.remove('price_min');
+                    } else {
+                      param['price_min'] = val;
+                    }
+                  },
+                  onChangeR: (val) {
+                    if (val == '') {
+                      param.remove('price_max');
+                    } else {
+                      param['price_max'] = val;
+                    }
+                  },
+                ),
+                RangeInput(
+                  label: '补贴区间',
+                  onChangeL: (val) {
+                    if (val == '') {
+                      param.remove('subsidy_min');
+                    } else {
+                      param['subsidy_min'] = val;
+                    }
+                  },
+                  onChangeR: (val) {
+                    if (val == '') {
+                      param.remove('subsidy_max');
+                    } else {
+                      param['subsidy_max'] = val;
+                    }
+                  },
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '创建时间',
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -455,6 +464,18 @@ class _TaskPricingState extends State<TaskPricing> {
                       child: Text('添加任务定价'),
                     ),
                   ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
+                  ),
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),
@@ -481,7 +502,9 @@ class _TaskPricingState extends State<TaskPricing> {
                               (item) {
                                 return Container(
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Color(0xffdddddd), ),
+                                    border: Border.all(
+                                      color: Color(0xffdddddd),
+                                    ),
                                   ),
                                   margin: EdgeInsets.only(bottom: 10),
                                   padding: EdgeInsets.only(top: 5, bottom: 5),

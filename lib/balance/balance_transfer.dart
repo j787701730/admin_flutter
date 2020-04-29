@@ -5,6 +5,7 @@ import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _BalanceTransferState extends State<BalanceTransfer> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
+  bool isExpandedFlag = false;
 
   List columns = [
     {'title': '创建日期', 'key': 'create_date'},
@@ -122,47 +124,56 @@ class _BalanceTransferState extends State<BalanceTransfer> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '收款账号',
-              onChanged: (String val) {
-                setState(() {
-                  param['z_user'] = val;
-                });
-              },
-            ),
-            Input(
-              label: '支出账号',
-              onChanged: (String val) {
-                setState(() {
-                  param['a_user'] = val;
-                });
-              },
-            ),
-            Select(
-              selectOptions: state,
-              selectedValue: param['state'] ?? 'all',
-              label: '余额类型',
-              onChanged: (String newValue) {
-                setState(() {
-                  param['state'] = newValue;
-                });
-              },
-            ),
-            Select(
-              selectOptions: {'0': '转出', '1': '转入'},
-              selectedValue: param['type'] ?? '0',
-              label: '转账类型',
-              onChanged: (String newValue) {
-                setState(() {
-                  setState(() {
-                    if (newValue == '0') {
-                      param['type'] = '';
-                    } else {
-                      param['type'] = newValue;
-                    }
-                  });
-                });
-              },
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '收款账号',
+                  onChanged: (String val) {
+                    setState(() {
+                      param['z_user'] = val;
+                    });
+                  },
+                ),
+                Input(
+                  label: '支出账号',
+                  onChanged: (String val) {
+                    setState(() {
+                      param['a_user'] = val;
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: state,
+                  selectedValue: param['state'] ?? 'all',
+                  label: '余额类型',
+                  onChanged: (String newValue) {
+                    setState(() {
+                      param['state'] = newValue;
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: {'0': '转出', '1': '转入'},
+                  selectedValue: param['type'] ?? '0',
+                  label: '转账类型',
+                  onChanged: (String newValue) {
+                    setState(() {
+                      setState(() {
+                        if (newValue == '0') {
+                          param['type'] = '';
+                        } else {
+                          param['type'] = newValue;
+                        }
+                      });
+                    });
+                  },
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -173,11 +184,24 @@ class _BalanceTransferState extends State<BalanceTransfer> {
                   SizedBox(
                     height: 30,
                     child: PrimaryButton(
-                        onPressed: () {
-                          param['currPage'] = 1;
-                          getData();
-                        },
-                        child: Text('搜索'),),
+                      onPressed: () {
+                        param['currPage'] = 1;
+                        getData();
+                      },
+                      child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
                   ),
                 ],
               ),
@@ -203,7 +227,9 @@ class _BalanceTransferState extends State<BalanceTransfer> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: ajaxData.map<Widget>((item) {
                               return Container(
-                                decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1),),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Color(0xffdddddd), width: 1),
+                                ),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(top: 5, bottom: 5),
                                 child: Column(

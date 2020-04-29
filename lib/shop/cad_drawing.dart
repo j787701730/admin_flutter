@@ -27,6 +27,7 @@ class _CadDrawingState extends State<CadDrawing> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
+  bool isExpandedFlag = false;
 
   List columns = [
     {'title': '用户名', 'key': 'user_name'},
@@ -218,76 +219,87 @@ class _CadDrawingState extends State<CadDrawing> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              labelWidth: 100,
-              label: '用户名',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_name');
-                  } else {
-                    param['user_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              labelWidth: 100,
-              label: '用户电话',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_phone');
-                  } else {
-                    param['user_phone'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              labelWidth: 100,
-              label: '效果图标题',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('sd_title');
-                  } else {
-                    param['sd_title'] = val;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '创建时间',
-              labelWidth: 100,
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime2,
-              label: '更新时间',
-              labelWidth: 100,
-            ),
-            Select(
-              selectOptions: state,
-              selectedValue: param['state'] ?? 'all',
-              label: '状态',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == 'all') {
-                    param.remove('state');
-                  } else {
-                    param['state'] = newValue;
-                  }
-                });
-              },
-              labelWidth: 100,
-            ),
-            Select(
-              selectOptions: order,
-              selectedValue: defaultVal,
-              onChanged: orderBy,
-              label: '排序',
-              labelWidth: 100,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(
+                children: <Widget>[
+                  Input(
+                    labelWidth: 100,
+                    label: '用户名',
+                    onChanged: (String val) {
+                      setState(() {
+                        if (val == '') {
+                          param.remove('user_name');
+                        } else {
+                          param['user_name'] = val;
+                        }
+                      });
+                    },
+                  ),
+                  Input(
+                    labelWidth: 100,
+                    label: '用户电话',
+                    onChanged: (String val) {
+                      setState(() {
+                        if (val == '') {
+                          param.remove('user_phone');
+                        } else {
+                          param['user_phone'] = val;
+                        }
+                      });
+                    },
+                  ),
+                  Input(
+                    labelWidth: 100,
+                    label: '效果图标题',
+                    onChanged: (String val) {
+                      setState(() {
+                        if (val == '') {
+                          param.remove('sd_title');
+                        } else {
+                          param['sd_title'] = val;
+                        }
+                      });
+                    },
+                  ),
+                  DateSelectPlugin(
+                    onChanged: getDateTime,
+                    label: '创建时间',
+                    labelWidth: 100,
+                  ),
+                  DateSelectPlugin(
+                    onChanged: getDateTime2,
+                    label: '更新时间',
+                    labelWidth: 100,
+                  ),
+                  Select(
+                    selectOptions: state,
+                    selectedValue: param['state'] ?? 'all',
+                    label: '状态',
+                    onChanged: (String newValue) {
+                      setState(() {
+                        if (newValue == 'all') {
+                          param.remove('state');
+                        } else {
+                          param['state'] = newValue;
+                        }
+                      });
+                    },
+                    labelWidth: 100,
+                  ),
+                  Select(
+                    selectOptions: order,
+                    selectedValue: defaultVal,
+                    onChanged: orderBy,
+                    label: '排序',
+                    labelWidth: 100,
+                  ),
+                ],
+              ),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -306,6 +318,18 @@ class _CadDrawingState extends State<CadDrawing> {
                         );
                       },
                       child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],

@@ -8,6 +8,7 @@ import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/range_input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _ChargeLogsState extends State<ChargeLogs> {
   int count = 0;
   BuildContext _context;
   ScrollController _controller;
+  bool isExpandedFlag = false;
 
   List columns = [
     {'title': '对账类型', 'key': 'charge_type_ch_name'},
@@ -201,99 +203,129 @@ class _ChargeLogsState extends State<ChargeLogs> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Select(
-              selectOptions: constractType,
-              selectedValue: param['constract_type'] ?? 'all',
-              label: '对账类型',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == 'all') {
-                    param.remove('constract_type');
-                  } else {
-                    param['constract_type'] = newValue;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: state,
-              selectedValue: param['state'] ?? 'all',
-              label: '对账结果',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == 'all') {
-                    param.remove('state');
-                  } else {
-                    param['state'] = newValue;
-                  }
-                });
-              },
-            ),
-            RangeInput(
-              label: '交易单量',
-              onChangeL: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('bill_countL');
-                  } else {
-                    param['bill_countL'] = val;
-                  }
-                });
-              },
-              onChangeR: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('bill_countU');
-                  } else {
-                    param['bill_countU'] = val;
-                  }
-                });
-              },
-            ),
-            RangeInput(
-              label: '交易总额',
-              onChangeL: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('bill_amountL');
-                  } else {
-                    param['bill_amountL'] = val;
-                  }
-                });
-              },
-              onChangeR: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('bill_amountU');
-                  } else {
-                    param['bill_amountU'] = val;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '操作日期',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              onChanged: orderBy,
-              label: "排序",
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                PrimaryButton(
-                  onPressed: () {
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Select(
+                  selectOptions: constractType,
+                  selectedValue: param['constract_type'] ?? 'all',
+                  label: '对账类型',
+                  onChanged: (String newValue) {
                     setState(() {
-                      param['curr_page'] = 1;
-                      getData();
+                      if (newValue == 'all') {
+                        param.remove('constract_type');
+                      } else {
+                        param['constract_type'] = newValue;
+                      }
                     });
                   },
-                  child: Text('搜索'),
-                )
-              ],
+                ),
+                Select(
+                  selectOptions: state,
+                  selectedValue: param['state'] ?? 'all',
+                  label: '对账结果',
+                  onChanged: (String newValue) {
+                    setState(() {
+                      if (newValue == 'all') {
+                        param.remove('state');
+                      } else {
+                        param['state'] = newValue;
+                      }
+                    });
+                  },
+                ),
+                RangeInput(
+                  label: '交易单量',
+                  onChangeL: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('bill_countL');
+                      } else {
+                        param['bill_countL'] = val;
+                      }
+                    });
+                  },
+                  onChangeR: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('bill_countU');
+                      } else {
+                        param['bill_countU'] = val;
+                      }
+                    });
+                  },
+                ),
+                RangeInput(
+                  label: '交易总额',
+                  onChangeL: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('bill_amountL');
+                      } else {
+                        param['bill_amountL'] = val;
+                      }
+                    });
+                  },
+                  onChangeR: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('bill_amountU');
+                      } else {
+                        param['bill_amountU'] = val;
+                      }
+                    });
+                  },
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '操作日期',
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  onChanged: orderBy,
+                  label: "排序",
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                      },
+                      child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
+                  ),
+                ],
+              ),
+              margin: EdgeInsets.only(bottom: 10),
             ),
             Container(
               margin: EdgeInsets.only(bottom: 6),

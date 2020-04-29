@@ -9,6 +9,7 @@ import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/range_input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _FinancialLoanState extends State<FinancialLoan> {
   int count = 0;
   Map stat = {};
   bool loading = true;
-
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '店铺', 'key': 'shop_name'},
     {'title': '电话号码', 'key': 'user_phone'},
@@ -197,99 +198,108 @@ class _FinancialLoanState extends State<FinancialLoan> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '店铺',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('shop_name');
-                  } else {
-                    param['shop_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '电话号码',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_phone');
-                  } else {
-                    param['user_phone'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              label: '状态',
-              selectOptions: state,
-              selectedValue: param['state'] ?? 'all',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == 'all') {
-                    param.remove('state');
-                  } else {
-                    param['state'] = newValue;
-                  }
-                });
-              },
-            ),
-            RangeInput(
-              label: '金融额度',
-              onChangeL: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('amount_l');
-                  } else {
-                    param['amount_l'] = val;
-                  }
-                });
-              },
-              onChangeR: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('amount_r');
-                  } else {
-                    param['amount_r'] = val;
-                  }
-                });
-              },
-            ),
-            RangeInput(
-              label: '信用分',
-              onChangeL: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('credit_score_l');
-                  } else {
-                    param['credit_score_l'] = val;
-                  }
-                });
-              },
-              onChangeR: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('credit_score_r');
-                  } else {
-                    param['credit_score_r'] = val;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '创建时间',
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime2,
-              label: '审核时间',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '店铺',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('shop_name');
+                      } else {
+                        param['shop_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '电话号码',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('user_phone');
+                      } else {
+                        param['user_phone'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  label: '状态',
+                  selectOptions: state,
+                  selectedValue: param['state'] ?? 'all',
+                  onChanged: (String newValue) {
+                    setState(() {
+                      if (newValue == 'all') {
+                        param.remove('state');
+                      } else {
+                        param['state'] = newValue;
+                      }
+                    });
+                  },
+                ),
+                RangeInput(
+                  label: '金融额度',
+                  onChangeL: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('amount_l');
+                      } else {
+                        param['amount_l'] = val;
+                      }
+                    });
+                  },
+                  onChangeR: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('amount_r');
+                      } else {
+                        param['amount_r'] = val;
+                      }
+                    });
+                  },
+                ),
+                RangeInput(
+                  label: '信用分',
+                  onChangeL: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('credit_score_l');
+                      } else {
+                        param['credit_score_l'] = val;
+                      }
+                    });
+                  },
+                  onChangeR: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('credit_score_r');
+                      } else {
+                        param['credit_score_r'] = val;
+                      }
+                    });
+                  },
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '创建时间',
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime2,
+                  label: '审核时间',
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -316,7 +326,19 @@ class _FinancialLoanState extends State<FinancialLoan> {
                       },
                       child: Text('创建丰收贷'),
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
+                  ),
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),

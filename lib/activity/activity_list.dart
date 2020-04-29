@@ -26,7 +26,7 @@ class _ActivityListState extends State<ActivityList> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-
+  bool isExpandedFlag = false;
   Map drawType = {
     'all': '全部',
     '1': '转盘抽奖',
@@ -167,7 +167,11 @@ class _ActivityListState extends State<ActivityList> {
               child: Column(
                 children: item['prizes'].map<Widget>((item) {
                   return Container(
-                    decoration: BoxDecoration(border: Border.all(color: Colors.grey, ),),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
+                    ),
                     padding: EdgeInsets.only(top: 6),
                     margin: EdgeInsets.only(bottom: 10),
                     child: Column(
@@ -331,51 +335,60 @@ class _ActivityListState extends State<ActivityList> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '活动名称',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('activity_name');
-                  } else {
-                    param['activity_name'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: drawType,
-              selectedValue: param['draw_type'] ?? 'all',
-              label: '抽奖类型',
-              onChanged: (val) {
-                setState(() {
-                  if (val == 'all') {
-                    param.remove('draw_type');
-                  } else {
-                    param['draw_type'] = val;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
-            DateSelectPlugin(onChanged: getDateTime2, label: '有效时间'),
-            Input(
-              label: '备注',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('comments');
-                  } else {
-                    param['comments'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '活动名称',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('activity_name');
+                      } else {
+                        param['activity_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: drawType,
+                  selectedValue: param['draw_type'] ?? 'all',
+                  label: '抽奖类型',
+                  onChanged: (val) {
+                    setState(() {
+                      if (val == 'all') {
+                        param.remove('draw_type');
+                      } else {
+                        param['draw_type'] = val;
+                      }
+                    });
+                  },
+                ),
+                DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
+                DateSelectPlugin(onChanged: getDateTime2, label: '有效时间'),
+                Input(
+                  label: '备注',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('comments');
+                      } else {
+                        param['comments'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -392,6 +405,18 @@ class _ActivityListState extends State<ActivityList> {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
                       child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],
@@ -418,60 +443,64 @@ class _ActivityListState extends State<ActivityList> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: ajaxData.map<Widget>((item) {
                               return Container(
-                                  decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), ),),
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: columns.map<Widget>((col) {
-                                      Widget con = Text('${item[col['key']] ?? ''}');
-                                      switch (col['key']) {
-                                        case 'draw_type':
-                                          con = Text('${drawType[item['draw_type']]}');
-                                          break;
-                                        case 'background_pic':
-                                          con = Container(
-                                            alignment: Alignment.centerLeft,
-                                            width: 70,
-                                            height: 70,
-                                            child: Image.network(
-                                              '$baseUrl${item['background_pic']}',
-                                              fit: BoxFit.contain,
-                                            ),
-                                          );
-                                          break;
-                                        case 'activity_rules':
-                                          con = InkWell(
-                                            onTap: () {
-                                              ruleDialog(item);
-                                            },
-                                            child: ConstrainedBox(
-                                              constraints: BoxConstraints(minHeight: 10, maxHeight: 70),
-                                              child: Text(
-                                                '${item['activity_rules']}',
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 3,
-                                                style: TextStyle(color: Colors.blue),
-                                              ),
-                                            ),
-                                          );
-                                          break;
-                                        case 'prizes':
-                                          con = InkWell(
-                                            onTap: () {
-                                              prizeDialog(item);
-                                            },
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    switch (col['key']) {
+                                      case 'draw_type':
+                                        con = Text('${drawType[item['draw_type']]}');
+                                        break;
+                                      case 'background_pic':
+                                        con = Container(
+                                          alignment: Alignment.centerLeft,
+                                          width: 70,
+                                          height: 70,
+                                          child: Image.network(
+                                            '$baseUrl${item['background_pic']}',
+                                            fit: BoxFit.contain,
+                                          ),
+                                        );
+                                        break;
+                                      case 'activity_rules':
+                                        con = InkWell(
+                                          onTap: () {
+                                            ruleDialog(item);
+                                          },
+                                          child: ConstrainedBox(
+                                            constraints: BoxConstraints(minHeight: 10, maxHeight: 70),
                                             child: Text(
-                                              '奖品',
+                                              '${item['activity_rules']}',
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 3,
                                               style: TextStyle(color: Colors.blue),
                                             ),
-                                          );
-                                          break;
-                                        case 'option':
-                                          con = Wrap(
-                                            runSpacing: 10,
-                                            spacing: 10,
-                                            children: <Widget>[
+                                          ),
+                                        );
+                                        break;
+                                      case 'prizes':
+                                        con = InkWell(
+                                          onTap: () {
+                                            prizeDialog(item);
+                                          },
+                                          child: Text(
+                                            '奖品',
+                                            style: TextStyle(color: Colors.blue),
+                                          ),
+                                        );
+                                        break;
+                                      case 'option':
+                                        con = Wrap(
+                                          runSpacing: 10,
+                                          spacing: 10,
+                                          children: <Widget>[
 //                                                Container(
 //                                                  height: 30,
 //                                                  child: PrimaryButton(
@@ -479,43 +508,48 @@ class _ActivityListState extends State<ActivityList> {
 //                                                    child: Text('修改'),
 //                                                  ),
 //                                                ),
-                                              Container(
-                                                height: 30,
-                                                child: PrimaryButton(
-                                                  onPressed: () {
-                                                    closeDialog(item);
-                                                  },
-                                                  child: Text('关闭'),
-                                                  type: 'error',
-                                                ),
-                                              )
-                                            ],
-                                          );
-                                          break;
-                                      }
-
-                                      return Container(
-                                        margin: EdgeInsets.only(bottom: 6),
-                                        child: Row(
-                                          children: <Widget>[
                                             Container(
-                                              width: 80,
-                                              alignment: Alignment.centerRight,
-                                              child: Text('${col['title']}'),
-                                              margin: EdgeInsets.only(right: 10),
-                                            ),
-                                            Expanded(flex: 1, child: con)
+                                              height: 30,
+                                              child: PrimaryButton(
+                                                onPressed: () {
+                                                  closeDialog(item);
+                                                },
+                                                child: Text('关闭'),
+                                                type: 'error',
+                                              ),
+                                            )
                                           ],
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),);
+                                        );
+                                        break;
+                                    }
+
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 80,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
+                                          ),
+                                          Expanded(flex: 1, child: con)
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
                             }).toList(),
                           ),
                   ),
             Container(
               child: PagePlugin(
-                  current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage,),
+                current: param['curr_page'],
+                total: count,
+                pageSize: param['page_count'],
+                function: getPage,
+              ),
             ),
           ],
         ),

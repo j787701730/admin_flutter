@@ -371,9 +371,12 @@ class _ShopListState extends State<ShopList> {
     );
   }
 
+  bool isExpandedFlag = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('店铺列表'),
       ),
@@ -385,82 +388,95 @@ class _ShopListState extends State<ShopList> {
         onRefresh: _onRefresh,
         child: ListView(
           controller: _controller,
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(15),
           children: <Widget>[
-            Input(
-              label: '店铺列表',
-              onChanged: (String val) {
-                setState(() {
-                  param['shopName'] = val;
-                });
-              },
-            ),
-            Input(
-              label: '公司名称',
-              onChanged: (String val) {
-                setState(() {
-                  param['company_name'] = val;
-                });
-              },
-            ),
-            Input(
-              label: '信用代码',
-              onChanged: (String val) {
-                setState(() {
-                  param['tax_no'] = val;
-                });
-              },
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(
                 children: <Widget>[
-                  Container(
-                    width: 80,
-                    alignment: Alignment.centerRight,
-                    margin: EdgeInsets.only(right: 10),
-                    child: Text('店铺地址'),
+                  Input(
+                    label: '店铺列表',
+                    onChanged: (String val) {
+                      setState(() {
+                        param['shopName'] = val;
+                      });
+                    },
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: CitySelectPlugin(
-                      getArea: getArea,
+                  Input(
+                    label: '公司名称',
+                    onChanged: (String val) {
+                      setState(() {
+                        param['company_name'] = val;
+                      });
+                    },
+                  ),
+                  Input(
+                    label: '信用代码',
+                    onChanged: (String val) {
+                      setState(() {
+                        param['tax_no'] = val;
+                      });
+                    },
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          width: 80,
+                          alignment: Alignment.centerRight,
+                          margin: EdgeInsets.only(right: 10),
+                          child: Text('店铺地址'),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: CitySelectPlugin(
+                            getArea: getArea,
+                          ),
+                        )
+                      ],
                     ),
-                  )
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          width: 80,
+                          alignment: Alignment.centerRight,
+                          margin: EdgeInsets.only(right: 10),
+                          child: Text('服务地址'),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: CitySelectPlugin(
+                            getArea: getArea2,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  DateSelectPlugin(
+                    onChanged: getDateTime,
+                    label: '创建时间',
+                  ),
+                  Select(
+                    selectOptions: order,
+                    selectedValue: defaultVal,
+                    onChanged: orderBy,
+                    label: "排序",
+                  ),
                 ],
               ),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 80,
-                    alignment: Alignment.centerRight,
-                    margin: EdgeInsets.only(right: 10),
-                    child: Text('服务地址'),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: CitySelectPlugin(
-                      getArea: getArea2,
-                    ),
-                  )
-                ],
+              margin: EdgeInsets.only(
+                bottom: 15,
               ),
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '创建时间',
-            ),
-            Select(
-              selectOptions: order,
-              selectedValue: defaultVal,
-              onChanged: orderBy,
-              label: "排序",
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 15),
               child: Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 10,
@@ -477,6 +493,18 @@ class _ShopListState extends State<ShopList> {
                         );
                       },
                       child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],

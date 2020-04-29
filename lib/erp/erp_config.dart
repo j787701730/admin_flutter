@@ -27,7 +27,7 @@ class _ErpConfigState extends State<ErpConfig> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '店铺名称', 'key': 'shop_name'},
     {'title': '电话号码', 'key': 'user_phone'},
@@ -235,43 +235,52 @@ class _ErpConfigState extends State<ErpConfig> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '店铺名称',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('shop_name');
-                  } else {
-                    param['shop_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '电话号码',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_phone');
-                  } else {
-                    param['user_phone'] = val;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '创建时间',
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime2,
-              label: '更新时间',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '店铺名称',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('shop_name');
+                      } else {
+                        param['shop_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '电话号码',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('user_phone');
+                      } else {
+                        param['user_phone'] = val;
+                      }
+                    });
+                  },
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '创建时间',
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime2,
+                  label: '更新时间',
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -297,6 +306,18 @@ class _ErpConfigState extends State<ErpConfig> {
                         turnTo(null);
                       },
                       child: Text('新增'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],

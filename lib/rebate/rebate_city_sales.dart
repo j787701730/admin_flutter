@@ -25,7 +25,7 @@ class _RebateCitySalesState extends State<RebateCitySales> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '用户名', 'key': 'login_name'},
     {'title': '联系人', 'key': 'user_name'},
@@ -128,53 +128,62 @@ class _RebateCitySalesState extends State<RebateCitySales> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '用户名',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('login_name');
-                  } else {
-                    param['login_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '联系人',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_name');
-                  } else {
-                    param['user_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '联系电话',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_phone');
-                  } else {
-                    param['user_phone'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: state,
-              selectedValue: param['state'] ?? 'all',
-              label: '状态',
-              onChanged: (val) {
-                if (val == 'all') {
-                  param.remove('state');
-                } else {
-                  param['state'] = val;
-                }
-              },
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '用户名',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('login_name');
+                      } else {
+                        param['login_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '联系人',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('user_name');
+                      } else {
+                        param['user_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '联系电话',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('user_phone');
+                      } else {
+                        param['user_phone'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: state,
+                  selectedValue: param['state'] ?? 'all',
+                  label: '状态',
+                  onChanged: (val) {
+                    if (val == 'all') {
+                      param.remove('state');
+                    } else {
+                      param['state'] = val;
+                    }
+                  },
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -222,6 +231,18 @@ class _RebateCitySalesState extends State<RebateCitySales> {
                       child: Text('不通过'),
                     ),
                   ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
+                  ),
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),
@@ -249,7 +270,9 @@ class _RebateCitySalesState extends State<RebateCitySales> {
                                 children: <Widget>[
                                   Container(
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: Color(0xffdddddd), ),
+                                      border: Border.all(
+                                        color: Color(0xffdddddd),
+                                      ),
                                     ),
                                     margin: EdgeInsets.only(bottom: 10),
                                     padding: EdgeInsets.only(top: 5, bottom: 5),

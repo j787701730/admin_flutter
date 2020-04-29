@@ -28,7 +28,7 @@ class _RebateRatesState extends State<RebateRates> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '用户名', 'key': 'login_name'},
     {'title': '返利类型', 'key': 'type_ch_name'},
@@ -219,66 +219,85 @@ class _RebateRatesState extends State<RebateRates> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '用户名',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_name');
-                  } else {
-                    param['user_name'] = val;
-                  }
-                });
-              },
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(
+                children: <Widget>[
+                  Input(
+                    label: '用户名',
+                    onChanged: (String val) {
+                      setState(() {
+                        if (val == '') {
+                          param.remove('user_name');
+                        } else {
+                          param['user_name'] = val;
+                        }
+                      });
+                    },
+                  ),
+                  Select(
+                    selectOptions: type,
+                    selectedValue: param['rebate_type'] ?? 'all',
+                    label: '返利类型',
+                    onChanged: (val) {
+                      if (val == 'all') {
+                        param.remove('rebate_type');
+                      } else {
+                        param['rebate_type'] = val;
+                      }
+                    },
+                  ),
+                  RangeInput(
+                    label: '直接返利',
+                    onChangeL: (val) {
+                      if (val == '') {
+                        param.remove('direct_rate_min');
+                      } else {
+                        param['direct_rate_min'] = val;
+                      }
+                    },
+                    onChangeR: (val) {
+                      if (val == '') {
+                        param.remove('direct_rate_max');
+                      } else {
+                        param['direct_rate_max'] = val;
+                      }
+                    },
+                  ),
+                  RangeInput(
+                    label: '间接返利',
+                    onChangeL: (val) {
+                      if (val == '') {
+                        param.remove('invite_rate_min');
+                      } else {
+                        param['invite_rate_min'] = val;
+                      }
+                    },
+                    onChangeR: (val) {
+                      if (val == '') {
+                        param.remove('invite_rate_max');
+                      } else {
+                        param['invite_rate_max'] = val;
+                      }
+                    },
+                  ),
+                  DateSelectPlugin(
+                    onChanged: getDateTime,
+                    label: '创建时间',
+                  ),
+                  Select(
+                    selectOptions: selects,
+                    selectedValue: defaultVal,
+                    label: '排序',
+                    onChanged: orderBy,
+                  ),
+                ],
+              ),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
-            Select(
-              selectOptions: type,
-              selectedValue: param['rebate_type'] ?? 'all',
-              label: '返利类型',
-              onChanged: (val) {
-                if (val == 'all') {
-                  param.remove('rebate_type');
-                } else {
-                  param['rebate_type'] = val;
-                }
-              },
-            ),
-            RangeInput(
-              label: '直接返利',
-              onChangeL: (val) {
-                if (val == '') {
-                  param.remove('direct_rate_min');
-                } else {
-                  param['direct_rate_min'] = val;
-                }
-              },
-              onChangeR: (val) {
-                if (val == '') {
-                  param.remove('direct_rate_max');
-                } else {
-                  param['direct_rate_max'] = val;
-                }
-              },
-            ),
-            RangeInput(
-              label: '间接返利',
-              onChangeL: (val) {
-                if (val == '') {
-                  param.remove('invite_rate_min');
-                } else {
-                  param['invite_rate_min'] = val;
-                }
-              },
-              onChangeR: (val) {
-                if (val == '') {
-                  param.remove('invite_rate_max');
-                } else {
-                  param['invite_rate_max'] = val;
-                }
-              },
-            ),
-            DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
-            Select(selectOptions: selects, selectedValue: defaultVal, label: '排序', onChanged: orderBy),
             Container(
               child: Wrap(
                 alignment: WrapAlignment.center,
@@ -310,6 +329,18 @@ class _RebateRatesState extends State<RebateRates> {
                       child: Text('添加返利比例'),
                     ),
                   ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
+                  ),
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),
@@ -335,7 +366,9 @@ class _RebateRatesState extends State<RebateRates> {
                             children: ajaxData.map<Widget>((item) {
                               return Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Color(0xffdddddd), ),
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
                                 ),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(top: 5, bottom: 5),

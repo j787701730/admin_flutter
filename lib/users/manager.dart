@@ -147,6 +147,7 @@ class _UsersManagerState extends State<UsersManager> {
 
   DateTime create_date_min;
   DateTime create_date_max;
+  bool isExpandedFlag = false;
 
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
@@ -506,34 +507,60 @@ class _UsersManagerState extends State<UsersManager> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Column(
-              children: searchData.keys.map<Widget>((key) {
-                return Input(
-                  label: '${searchName[key]}',
-                  onChanged: (String val) {
-                    setState(() {
-                      searchData[key] = val;
-                    });
-                  },
-                );
-              }).toList(),
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Column(
+                  children: searchData.keys.map<Widget>((key) {
+                    return Input(
+                      label: '${searchName[key]}',
+                      onChanged: (String val) {
+                        setState(() {
+                          searchData[key] = val;
+                        });
+                      },
+                    );
+                  }).toList(),
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '操作日期',
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '操作日期',
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 10,
+              runSpacing: 10,
               children: <Widget>[
-                PrimaryButton(
-                  onPressed: () {
-                    setState(() {
-                      param['curr_page'] = 1;
-                      getData();
-                    });
-                  },
-                  child: Text('搜索'),
-                )
+                SizedBox(
+                  height: 30,
+                  child: PrimaryButton(
+                    onPressed: () {
+                      setState(() {
+                        param['curr_page'] = 1;
+                        getData();
+                      });
+                    },
+                    child: Text('搜索'),
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                  child: PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                  ),
+                ),
               ],
             ),
             Container(

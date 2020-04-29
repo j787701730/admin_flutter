@@ -27,6 +27,7 @@ class _CouponState extends State<Coupon> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
+  bool isExpandedFlag = false;
   Map state = {"all": "全部", "0": "失效", "1": "生效"};
   Map couponType = {"all": "全部", "1": "满减", "2": "抵扣", "3": "折扣"};
   Map goodsType = {
@@ -286,8 +287,14 @@ class _CouponState extends State<Coupon> {
                                 ),
                               )),
                               decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),),
+                                border: OutlineInputBorder(),
+                                contentPadding: EdgeInsets.only(
+                                  top: 0,
+                                  bottom: 0,
+                                  left: 15,
+                                  right: 15,
+                                ),
+                              ),
                               onChanged: (String val) {
                                 setState(() {
                                   modifyItem['limit_nums'] = val;
@@ -329,18 +336,26 @@ class _CouponState extends State<Coupon> {
                             height: 34,
                             child: TextField(
                               style: TextStyle(fontSize: CFFontSize.content),
-                              controller: TextEditingController.fromValue(TextEditingValue(
-                                text: '${modifyItem['left_nums'] ?? ''}',
-                                selection: TextSelection.fromPosition(
-                                  TextPosition(
-                                    affinity: TextAffinity.downstream,
-                                    offset: '${modifyItem['left_nums'] ?? ''}'.length,
+                              controller: TextEditingController.fromValue(
+                                TextEditingValue(
+                                  text: '${modifyItem['left_nums'] ?? ''}',
+                                  selection: TextSelection.fromPosition(
+                                    TextPosition(
+                                      affinity: TextAffinity.downstream,
+                                      offset: '${modifyItem['left_nums'] ?? ''}'.length,
+                                    ),
                                   ),
                                 ),
-                              ),),
+                              ),
                               decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),),
+                                border: OutlineInputBorder(),
+                                contentPadding: EdgeInsets.only(
+                                  top: 0,
+                                  bottom: 0,
+                                  left: 15,
+                                  right: 15,
+                                ),
+                              ),
                               onChanged: (String val) {
                                 setState(() {
                                   modifyItem['left_nums'] = val;
@@ -394,95 +409,104 @@ class _CouponState extends State<Coupon> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '店铺',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('shop_name');
-                  } else {
-                    param['shop_name'] = val;
-                  }
-                });
-              },
-              labelWidth: 90,
-            ),
-            Select(
-              selectOptions: couponType,
-              selectedValue: param['coupon_type'] ?? 'all',
-              label: '优惠券类型',
-              onChanged: (val) {
-                setState(() {
-                  if (val == 'all') {
-                    param.remove('coupon_type');
-                  } else {
-                    param['coupon_type'] = val;
-                  }
-                });
-              },
-              labelWidth: 90,
-            ),
-            Select(
-              selectOptions: couponType,
-              selectedValue: param['goods_type'] ?? 'all',
-              label: '商品类型',
-              onChanged: (val) {
-                setState(() {
-                  if (val == 'all') {
-                    param.remove('goods_type');
-                  } else {
-                    param['goods_type'] = val;
-                  }
-                });
-              },
-              labelWidth: 90,
-            ),
-            Select(
-              selectOptions: couponSource,
-              selectedValue: param['coupon_source'] ?? 'all',
-              label: '优惠券来源',
-              onChanged: (val) {
-                setState(() {
-                  if (val == 'all') {
-                    param.remove('coupon_source');
-                  } else {
-                    param['coupon_source'] = val;
-                  }
-                });
-              },
-              labelWidth: 90,
-            ),
-            Select(
-              selectOptions: state,
-              selectedValue: param['state'] ?? 'all',
-              label: '状态',
-              onChanged: (val) {
-                setState(() {
-                  if (val == 'all') {
-                    param.remove('state');
-                  } else {
-                    param['state'] = val;
-                  }
-                });
-              },
-              labelWidth: 90,
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '创建时间',
-              labelWidth: 90,
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime2,
-              label: '有效时间',
-              labelWidth: 90,
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
-              labelWidth: 90,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '店铺',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('shop_name');
+                      } else {
+                        param['shop_name'] = val;
+                      }
+                    });
+                  },
+                  labelWidth: 90,
+                ),
+                Select(
+                  selectOptions: couponType,
+                  selectedValue: param['coupon_type'] ?? 'all',
+                  label: '优惠券类型',
+                  onChanged: (val) {
+                    setState(() {
+                      if (val == 'all') {
+                        param.remove('coupon_type');
+                      } else {
+                        param['coupon_type'] = val;
+                      }
+                    });
+                  },
+                  labelWidth: 90,
+                ),
+                Select(
+                  selectOptions: couponType,
+                  selectedValue: param['goods_type'] ?? 'all',
+                  label: '商品类型',
+                  onChanged: (val) {
+                    setState(() {
+                      if (val == 'all') {
+                        param.remove('goods_type');
+                      } else {
+                        param['goods_type'] = val;
+                      }
+                    });
+                  },
+                  labelWidth: 90,
+                ),
+                Select(
+                  selectOptions: couponSource,
+                  selectedValue: param['coupon_source'] ?? 'all',
+                  label: '优惠券来源',
+                  onChanged: (val) {
+                    setState(() {
+                      if (val == 'all') {
+                        param.remove('coupon_source');
+                      } else {
+                        param['coupon_source'] = val;
+                      }
+                    });
+                  },
+                  labelWidth: 90,
+                ),
+                Select(
+                  selectOptions: state,
+                  selectedValue: param['state'] ?? 'all',
+                  label: '状态',
+                  onChanged: (val) {
+                    setState(() {
+                      if (val == 'all') {
+                        param.remove('state');
+                      } else {
+                        param['state'] = val;
+                      }
+                    });
+                  },
+                  labelWidth: 90,
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '创建时间',
+                  labelWidth: 90,
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime2,
+                  label: '有效时间',
+                  labelWidth: 90,
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                  labelWidth: 90,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -514,6 +538,18 @@ class _CouponState extends State<Coupon> {
                       child: Text('创建优惠券'),
                     ),
                   ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
+                  ),
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),
@@ -538,7 +574,11 @@ class _CouponState extends State<Coupon> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: ajaxData.map<Widget>((item) {
                               return Container(
-                                  decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), ),),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Color(0xffdddddd),
+                                    ),
+                                  ),
                                   margin: EdgeInsets.only(bottom: 10),
                                   padding: EdgeInsets.only(top: 5, bottom: 5),
                                   child: Column(

@@ -29,6 +29,7 @@ class _RebateListState extends State<RebateList> {
   Map amount = {};
   BuildContext _context;
   ScrollController _controller;
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '收益用户', 'key': 'user_name'},
     {'title': '关联流水', 'key': 'rela_id'},
@@ -232,105 +233,137 @@ class _RebateListState extends State<RebateList> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-                label: '收益用户',
-                onChanged: (val) {
-                  if (val == '') {
-                    param.remove('user_name');
-                    param2.remove('user_name');
-                  } else {
-                    param['user_name'] = val;
-                    param2['user_name'] = val;
-                  }
-                }),
-            Input(
-                label: '消费用户',
-                onChanged: (val) {
-                  if (val == '') {
-                    param.remove('login_name');
-                    param2.remove('login_name');
-                  } else {
-                    param['login_name'] = val;
-                    param2['login_name'] = val;
-                  }
-                }),
-            RangeInput(
-                label: '返利区间',
-                onChangeL: (val) {
-                  if (val == '') {
-                    param.remove('amountL');
-                    param2.remove('amountL');
-                  } else {
-                    param['amountL'] = val;
-                    param2['amountL'] = val;
-                  }
-                },
-                onChangeR: (val) {
-                  if (val == '') {
-                    param.remove('amountU');
-                    param2.remove('amountU');
-                  } else {
-                    param['amountU'] = val;
-                    param2['amountU'] = val;
-                  }
-                }),
-            RangeInput(
-                label: '间接返利',
-                onChangeL: (val) {
-                  if (val == '') {
-                    param.remove('invite_rate_min');
-                    param2.remove('invite_rate_min');
-                  } else {
-                    param['invite_rate_min'] = val;
-                    param2['invite_rate_min'] = val;
-                  }
-                },
-                onChangeR: (val) {
-                  if (val == '') {
-                    param.remove('invite_rate_max');
-                    param2.remove('invite_rate_max');
-                  } else {
-                    param['invite_rate_max'] = val;
-                    param2['invite_rate_max'] = val;
-                  }
-                }),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '操作日期',
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '收益用户',
+                  onChanged: (val) {
+                    if (val == '') {
+                      param.remove('user_name');
+                      param2.remove('user_name');
+                    } else {
+                      param['user_name'] = val;
+                      param2['user_name'] = val;
+                    }
+                  },
+                ),
+                Input(
+                  label: '消费用户',
+                  onChanged: (val) {
+                    if (val == '') {
+                      param.remove('login_name');
+                      param2.remove('login_name');
+                    } else {
+                      param['login_name'] = val;
+                      param2['login_name'] = val;
+                    }
+                  },
+                ),
+                RangeInput(
+                  label: '返利区间',
+                  onChangeL: (val) {
+                    if (val == '') {
+                      param.remove('amountL');
+                      param2.remove('amountL');
+                    } else {
+                      param['amountL'] = val;
+                      param2['amountL'] = val;
+                    }
+                  },
+                  onChangeR: (val) {
+                    if (val == '') {
+                      param.remove('amountU');
+                      param2.remove('amountU');
+                    } else {
+                      param['amountU'] = val;
+                      param2['amountU'] = val;
+                    }
+                  },
+                ),
+                RangeInput(
+                  label: '间接返利',
+                  onChangeL: (val) {
+                    if (val == '') {
+                      param.remove('invite_rate_min');
+                      param2.remove('invite_rate_min');
+                    } else {
+                      param['invite_rate_min'] = val;
+                      param2['invite_rate_min'] = val;
+                    }
+                  },
+                  onChangeR: (val) {
+                    if (val == '') {
+                      param.remove('invite_rate_max');
+                      param2.remove('invite_rate_max');
+                    } else {
+                      param['invite_rate_max'] = val;
+                      param2['invite_rate_max'] = val;
+                    }
+                  },
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '操作日期',
+                ),
+                Select(
+                  selectOptions: type,
+                  selectedValue: param['rebate_type'] ?? 'all',
+                  label: '返利类型',
+                  onChanged: (val) {
+                    if (val == 'all') {
+                      param.remove('rebate_type');
+                      param2.remove('rebate_type');
+                    } else {
+                      param['rebate_type'] = val;
+                      param2['rebate_type'] = val;
+                    }
+                  },
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
-            Select(
-                selectOptions: type,
-                selectedValue: param['rebate_type'] ?? 'all',
-                label: '返利类型',
-                onChanged: (val) {
-                  if (val == 'all') {
-                    param.remove('rebate_type');
-                    param2.remove('rebate_type');
-                  } else {
-                    param['rebate_type'] = val;
-                    param2['rebate_type'] = val;
-                  }
-                }),
+
 //              Select(
 //                selectOptions: selects,
 //                selectedValue: defaultVal,
 //                label: '排序',
 //                onChanged: orderBy,
 //              ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 10,
+              runSpacing: 10,
               children: <Widget>[
-                PrimaryButton(
-                  onPressed: () {
-                    setState(() {
-                      param['curr_page'] = 1;
-                      param2['curr_page'] = 1;
-                      getData();
-                      getData2();
-                    });
-                  },
-                  child: Text('搜索'),
-                )
+                SizedBox(
+                  height: 30,
+                  child: PrimaryButton(
+                    onPressed: () {
+                      setState(() {
+                        param['curr_page'] = 1;
+                        param2['curr_page'] = 1;
+                        getData();
+                        getData2();
+                      });
+                    },
+                    child: Text('搜索'),
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                  child: PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                  ),
+                ),
               ],
             ),
             amount.isEmpty
@@ -395,7 +428,9 @@ class _RebateListState extends State<RebateList> {
                     width: 15,
                     decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(color: Color(0xffff4400), ),
+                        bottom: BorderSide(
+                          color: Color(0xffff4400),
+                        ),
                       ),
                     ),
                   ),
@@ -410,9 +445,15 @@ class _RebateListState extends State<RebateList> {
                       decoration: BoxDecoration(
                         border: Border(
                           top: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, width: 2),
-                          left: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, ),
-                          right: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, ),
-                          bottom: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, ),
+                          left: BorderSide(
+                            color: tabType == 1 ? Color(0xffff4400) : Colors.transparent,
+                          ),
+                          right: BorderSide(
+                            color: tabType == 1 ? Color(0xffff4400) : Colors.transparent,
+                          ),
+                          bottom: BorderSide(
+                            color: tabType == 2 ? Color(0xffff4400) : Colors.transparent,
+                          ),
                         ),
                       ),
                       height: 34,
@@ -436,9 +477,15 @@ class _RebateListState extends State<RebateList> {
                       decoration: BoxDecoration(
                         border: Border(
                           top: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, width: 2),
-                          left: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, ),
-                          right: BorderSide(color: tabType == 2 ? Color(0xffff4400) : Colors.transparent, ),
-                          bottom: BorderSide(color: tabType == 1 ? Color(0xffff4400) : Colors.transparent, ),
+                          left: BorderSide(
+                            color: tabType == 2 ? Color(0xffff4400) : Colors.transparent,
+                          ),
+                          right: BorderSide(
+                            color: tabType == 2 ? Color(0xffff4400) : Colors.transparent,
+                          ),
+                          bottom: BorderSide(
+                            color: tabType == 1 ? Color(0xffff4400) : Colors.transparent,
+                          ),
                         ),
                       ),
                       child: Center(
@@ -456,7 +503,9 @@ class _RebateListState extends State<RebateList> {
                       width: 15,
                       decoration: BoxDecoration(
                         border: Border(
-                          bottom: BorderSide(color: Color(0xffff4400), ),
+                          bottom: BorderSide(
+                            color: Color(0xffff4400),
+                          ),
                         ),
                       ),
                     ),
@@ -490,7 +539,9 @@ class _RebateListState extends State<RebateList> {
                                       children: logs.map<Widget>((item) {
                                         return Container(
                                           decoration: BoxDecoration(
-                                            border: Border.all(color: Color(0xffdddddd), ),
+                                            border: Border.all(
+                                              color: Color(0xffdddddd),
+                                            ),
                                           ),
                                           margin: EdgeInsets.only(bottom: 10),
                                           padding: EdgeInsets.only(top: 5, bottom: 5),
@@ -550,7 +601,9 @@ class _RebateListState extends State<RebateList> {
                                       children: logs2.map<Widget>((item) {
                                         return Container(
                                           decoration: BoxDecoration(
-                                            border: Border.all(color: Color(0xffdddddd), ),
+                                            border: Border.all(
+                                              color: Color(0xffdddddd),
+                                            ),
                                           ),
                                           margin: EdgeInsets.only(bottom: 10),
                                           padding: EdgeInsets.only(top: 5, bottom: 5),

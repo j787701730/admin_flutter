@@ -27,7 +27,7 @@ class _FinancialDetailState extends State<FinancialDetail> {
   Map sumData = {};
   int count = 0;
   bool loading = true;
-
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '订单编号', 'key': 'order_no'},
     {'title': '支付金额', 'key': 'pay_amount'},
@@ -272,29 +272,40 @@ class _FinancialDetailState extends State<FinancialDetail> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Column(
-              children: searchOptions.keys.map<Widget>((key) {
-                return Input(
-                  label: searchOptions[key],
-                  onChanged: (val) {
-                    if (val == '') {
-                      param.remove(key);
-                    } else {
-                      param[key] = val;
-                    }
-                  },
-                );
-              }).toList(),
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '创建时间',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(
+                children: <Widget>[
+                  Column(
+                    children: searchOptions.keys.map<Widget>((key) {
+                      return Input(
+                        label: searchOptions[key],
+                        onChanged: (val) {
+                          if (val == '') {
+                            param.remove(key);
+                          } else {
+                            param[key] = val;
+                          }
+                        },
+                      );
+                    }).toList(),
+                  ),
+                  DateSelectPlugin(
+                    onChanged: getDateTime,
+                    label: '创建时间',
+                  ),
+                  Select(
+                    selectOptions: selects,
+                    selectedValue: defaultVal,
+                    label: '排序',
+                    onChanged: orderBy,
+                  ),
+                ],
+              ),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -311,6 +322,18 @@ class _FinancialDetailState extends State<FinancialDetail> {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
                       child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],
@@ -429,7 +452,9 @@ class _FinancialDetailState extends State<FinancialDetail> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: ajaxData.map<Widget>((item) {
                                   return Container(
-                                    decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1),),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey, width: 1),
+                                    ),
                                     margin: EdgeInsets.only(bottom: 10),
                                     padding: EdgeInsets.only(top: 5, bottom: 5),
                                     child: Column(

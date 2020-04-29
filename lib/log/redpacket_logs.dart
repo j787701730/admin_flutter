@@ -9,6 +9,7 @@ import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/range_input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class _RedPacketLogsState extends State<RedPacketLogs> {
     {'title': '红包(份)', 'key': 'nums'},
     {'title': '时间', 'key': 'receive_date'},
   ];
-
+  bool isExpandedFlag = false;
   DateTime create_date_min;
   DateTime create_date_max;
   bool loading = true;
@@ -180,82 +181,113 @@ class _RedPacketLogsState extends State<RedPacketLogs> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Column(
-              children: searchData.keys.map<Widget>((key) {
-                return Input(
-                  label: '${searchName[key]}',
-                  onChanged: (String val) {
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Column(
+                  children: searchData.keys.map<Widget>((key) {
+                    return Input(
+                      label: '${searchName[key]}',
+                      onChanged: (String val) {
+                        setState(() {
+                          searchData[key] = val;
+                        });
+                      },
+                    );
+                  }).toList(),
+                ),
+                RangeInput(
+                  label: '领取金额',
+                  onChangeL: (String val) {
                     setState(() {
-                      searchData[key] = val;
+                      if (val == '') {
+                        param.remove('receive_amount_min');
+                      } else {
+                        param['receive_amount_min'] = val;
+                      }
                     });
                   },
-                );
-              }).toList(),
-            ),
-            RangeInput(
-              label: '领取金额',
-              onChangeL: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('receive_amount_min');
-                  } else {
-                    param['receive_amount_min'] = val;
-                  }
-                });
-              },
-              onChangeR: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('receive_amount_max');
-                  } else {
-                    param['receive_amount_max'] = val;
-                  }
-                });
-              },
-            ),
-            RangeInput(
-              label: '领取数量',
-              onChangeL: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('num_min');
-                  } else {
-                    param['num_min'] = val;
-                  }
-                });
-              },
-              onChangeR: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('num_max');
-                  } else {
-                    param['num_max'] = val;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '操作日期',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              onChanged: orderBy,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                PrimaryButton(
-                  onPressed: () {
+                  onChangeR: (String val) {
                     setState(() {
-                      param['curr_page'] = 1;
-                      getData();
+                      if (val == '') {
+                        param.remove('receive_amount_max');
+                      } else {
+                        param['receive_amount_max'] = val;
+                      }
                     });
                   },
-                  child: Text('搜索'),
-                )
-              ],
+                ),
+                RangeInput(
+                  label: '领取数量',
+                  onChangeL: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('num_min');
+                      } else {
+                        param['num_min'] = val;
+                      }
+                    });
+                  },
+                  onChangeR: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('num_max');
+                      } else {
+                        param['num_max'] = val;
+                      }
+                    });
+                  },
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '操作日期',
+                ),
+                Select(
+                  label: '排序',
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+            ),
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                      },
+                      child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
+                  ),
+                ],
+              ),
+              margin: EdgeInsets.only(bottom: 10),
             ),
             Container(
               margin: EdgeInsets.only(bottom: 8),

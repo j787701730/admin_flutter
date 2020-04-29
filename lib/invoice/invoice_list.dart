@@ -9,6 +9,7 @@ import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/range_input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _InvoiceListState extends State<InvoiceList> {
   List ajaxData = [];
   int count = 0;
   bool loading = false;
-
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '用户', 'key': 'login_name'},
     {'title': '企业名称', 'key': 'shop_name'},
@@ -176,70 +177,79 @@ class _InvoiceListState extends State<InvoiceList> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '用户名',
-              onChanged: (String val) {
-                if (val == '') {
-                  param.remove('user_name');
-                } else {
-                  param['user_name'] = val;
-                }
-              },
-            ),
-            Input(
-              label: '开具人员',
-              onChanged: (String val) {
-                if (val == '') {
-                  param.remove('issue_user');
-                } else {
-                  param['issue_user'] = val;
-                }
-              },
-            ),
-            Select(
-              selectOptions: invoiceState,
-              selectedValue: param['invoice_state'] ?? 'all',
-              label: '发票状态',
-              onChanged: (val) {
-                setState(() {
-                  if (val == 'all') {
-                    param.remove('invoice_state');
-                  } else {
-                    param['invoice_state'] = val;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '申请时间',
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime2,
-              label: '开具时间',
-            ),
-            RangeInput(
-              label: '金额区间',
-              onChangeL: (val) {
-                if (val == '') {
-                  param.remove('amount_min');
-                } else {
-                  param['amount_min'] = val;
-                }
-              },
-              onChangeR: (val) {
-                if (val == '') {
-                  param.remove('amount_max');
-                } else {
-                  param['amount_max'] = val;
-                }
-              },
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '用户名',
+                  onChanged: (String val) {
+                    if (val == '') {
+                      param.remove('user_name');
+                    } else {
+                      param['user_name'] = val;
+                    }
+                  },
+                ),
+                Input(
+                  label: '开具人员',
+                  onChanged: (String val) {
+                    if (val == '') {
+                      param.remove('issue_user');
+                    } else {
+                      param['issue_user'] = val;
+                    }
+                  },
+                ),
+                Select(
+                  selectOptions: invoiceState,
+                  selectedValue: param['invoice_state'] ?? 'all',
+                  label: '发票状态',
+                  onChanged: (val) {
+                    setState(() {
+                      if (val == 'all') {
+                        param.remove('invoice_state');
+                      } else {
+                        param['invoice_state'] = val;
+                      }
+                    });
+                  },
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '申请时间',
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime2,
+                  label: '开具时间',
+                ),
+                RangeInput(
+                  label: '金额区间',
+                  onChangeL: (val) {
+                    if (val == '') {
+                      param.remove('amount_min');
+                    } else {
+                      param['amount_min'] = val;
+                    }
+                  },
+                  onChangeR: (val) {
+                    if (val == '') {
+                      param.remove('amount_max');
+                    } else {
+                      param['amount_max'] = val;
+                    }
+                  },
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               margin: EdgeInsets.only(
@@ -260,6 +270,18 @@ class _InvoiceListState extends State<InvoiceList> {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
                       child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],

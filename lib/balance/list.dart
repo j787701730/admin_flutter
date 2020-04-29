@@ -29,6 +29,7 @@ class _BalanceListState extends State<BalanceList> {
   int count = 0;
   Map balanceCheckParam = {'userId': '', 'acctBalanceID': ''};
   bool loading = false;
+  bool isExpandedFlag = false;
 
   void _onRefresh() async {
     setState(() {
@@ -195,109 +196,118 @@ class _BalanceListState extends State<BalanceList> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '用户名',
-              onChanged: (String val) {
-                if (val == '') {
-                  param.remove('login_name');
-                } else {
-                  param['login_name'] = val;
-                }
-              },
-            ),
-            Input(
-              label: '手机',
-              onChanged: (String val) {
-                if (val == '') {
-                  param.remove('user_phone');
-                } else {
-                  param['user_phone'] = val;
-                }
-              },
-            ),
-            Select(
-              selectOptions: balanceType,
-              selectedValue: param['balance_type_id'] ?? '0',
-              label: '余额类型',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == '0') {
-                    param.remove('balance_type_id');
-                  } else {
-                    param['balance_type_id'] = newValue;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: state,
-              selectedValue: param['state'] ?? 'all',
-              label: '状态',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == 'all') {
-                    param.remove('state');
-                  } else {
-                    param['state'] = newValue;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: balanceCheckOptions,
-              selectedValue: param['balance_check'] ?? 'all',
-              label: '稽核结果',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == 'all') {
-                    param.remove('balance_check');
-                  } else {
-                    param['balance_check'] = newValue;
-                  }
-                });
-              },
-            ),
-            RangeInput(
-              label: '余额范围',
-              onChangeL: (val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('amountL');
-                  } else {
-                    param['amountL'] = val;
-                  }
-                });
-              },
-              onChangeR: (val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('amountU');
-                  } else {
-                    param['amountU'] = val;
-                  }
-                });
-              },
-            ),
-            RangeInput(
-              label: '预占金额',
-              onChangeL: (val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('pre_amountL');
-                  } else {
-                    param['pre_amountL'] = val;
-                  }
-                });
-              },
-              onChangeR: (val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('pre_amountU');
-                  } else {
-                    param['pre_amountU'] = val;
-                  }
-                });
-              },
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '用户名',
+                  onChanged: (String val) {
+                    if (val == '') {
+                      param.remove('login_name');
+                    } else {
+                      param['login_name'] = val;
+                    }
+                  },
+                ),
+                Input(
+                  label: '手机',
+                  onChanged: (String val) {
+                    if (val == '') {
+                      param.remove('user_phone');
+                    } else {
+                      param['user_phone'] = val;
+                    }
+                  },
+                ),
+                Select(
+                  selectOptions: balanceType,
+                  selectedValue: param['balance_type_id'] ?? '0',
+                  label: '余额类型',
+                  onChanged: (String newValue) {
+                    setState(() {
+                      if (newValue == '0') {
+                        param.remove('balance_type_id');
+                      } else {
+                        param['balance_type_id'] = newValue;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: state,
+                  selectedValue: param['state'] ?? 'all',
+                  label: '状态',
+                  onChanged: (String newValue) {
+                    setState(() {
+                      if (newValue == 'all') {
+                        param.remove('state');
+                      } else {
+                        param['state'] = newValue;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: balanceCheckOptions,
+                  selectedValue: param['balance_check'] ?? 'all',
+                  label: '稽核结果',
+                  onChanged: (String newValue) {
+                    setState(() {
+                      if (newValue == 'all') {
+                        param.remove('balance_check');
+                      } else {
+                        param['balance_check'] = newValue;
+                      }
+                    });
+                  },
+                ),
+                RangeInput(
+                  label: '余额范围',
+                  onChangeL: (val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('amountL');
+                      } else {
+                        param['amountL'] = val;
+                      }
+                    });
+                  },
+                  onChangeR: (val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('amountU');
+                      } else {
+                        param['amountU'] = val;
+                      }
+                    });
+                  },
+                ),
+                RangeInput(
+                  label: '预占金额',
+                  onChangeL: (val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('pre_amountL');
+                      } else {
+                        param['pre_amountL'] = val;
+                      }
+                    });
+                  },
+                  onChangeR: (val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('pre_amountU');
+                      } else {
+                        param['pre_amountU'] = val;
+                      }
+                    });
+                  },
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Wrap(
               alignment: WrapAlignment.center,
@@ -335,7 +345,19 @@ class _BalanceListState extends State<BalanceList> {
                     },
                     child: Text('新用户手工账'),
                   ),
-                )
+                ),
+                SizedBox(
+                  height: 30,
+                  child: PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                  ),
+                ),
               ],
             ),
             Container(

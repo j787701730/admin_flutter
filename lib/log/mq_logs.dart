@@ -8,6 +8,7 @@ import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +85,7 @@ class _MQLogsState extends State<MQLogs> {
   }
 
   String defaultVal = 'all';
-
+  bool isExpandedFlag = false;
   Map selects = {
     'all': '无',
     'msg_id': '队列标识 升序',
@@ -195,41 +196,71 @@ class _MQLogsState extends State<MQLogs> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Column(
-              children: searchData.keys.map<Widget>((key) {
-                return Input(
-                  label: searchName[key],
-                  onChanged: (String val) {
-                    setState(() {
-                      searchData[key] = val;
-                    });
-                  },
-                );
-              }).toList(),
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Column(
+                  children: searchData.keys.map<Widget>((key) {
+                    return Input(
+                      label: searchName[key],
+                      onChanged: (String val) {
+                        setState(() {
+                          searchData[key] = val;
+                        });
+                      },
+                    );
+                  }).toList(),
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '消息时间',
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '消息时间',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                PrimaryButton(
-                  onPressed: () {
-                    setState(() {
-                      param['curr_page'] = 1;
-                      getData();
-                    });
-                  },
-                  child: Text('搜索'),
-                )
-              ],
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(
+                          FocusNode(),
+                        );
+                      },
+                      child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
+                  ),
+                ],
+              ),
+              margin: EdgeInsets.only(bottom: 10),
             ),
             Container(
               margin: EdgeInsets.only(bottom: 8),

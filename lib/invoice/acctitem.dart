@@ -7,6 +7,7 @@ import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _AccountItemState extends State<AccountItem> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '用户', 'key': 'login_name'},
     {'title': '出账状态', 'key': 'bill_state'},
@@ -185,45 +186,54 @@ class _AccountItemState extends State<AccountItem> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '用户名',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('login_name');
-                  } else {
-                    param['login_name'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: billState,
-              selectedValue: param['bill_state'] ?? 'all',
-              label: '对账状态',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == 'all') {
-                    param.remove('bill_state');
-                  } else {
-                    param['bill_state'] = newValue;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getCreateDate,
-              label: '创建时间',
-            ),
-            DateSelectPlugin(
-              onChanged: getUpdateDate,
-              label: '更新时间',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '用户名',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('login_name');
+                      } else {
+                        param['login_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: billState,
+                  selectedValue: param['bill_state'] ?? 'all',
+                  label: '对账状态',
+                  onChanged: (String newValue) {
+                    setState(() {
+                      if (newValue == 'all') {
+                        param.remove('bill_state');
+                      } else {
+                        param['bill_state'] = newValue;
+                      }
+                    });
+                  },
+                ),
+                DateSelectPlugin(
+                  onChanged: getCreateDate,
+                  label: '创建时间',
+                ),
+                DateSelectPlugin(
+                  onChanged: getUpdateDate,
+                  label: '更新时间',
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -240,6 +250,18 @@ class _AccountItemState extends State<AccountItem> {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
                       child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],

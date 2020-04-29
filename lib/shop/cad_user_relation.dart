@@ -27,6 +27,7 @@ class _CadUserRelationState extends State<CadUserRelation> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
+  bool isExpandedFlag = false;
 
   List columns = [
     {'title': '发送店铺', 'key': 'a_shop_name'},
@@ -217,95 +218,106 @@ class _CadUserRelationState extends State<CadUserRelation> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '发送店铺',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('a_shop_name');
-                  } else {
-                    param['a_shop_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '发送电话',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('a_user_phone');
-                  } else {
-                    param['a_user_phone'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '接收店铺',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('z_shop_name');
-                  } else {
-                    param['z_shop_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '接收电话',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('z_user_phone');
-                  } else {
-                    param['z_user_phone'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: ifDefault,
-              selectedValue: param['if_default'] ?? 'all',
-              label: '状态',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == 'all') {
-                    param.remove('if_default');
-                  } else {
-                    param['if_default'] = newValue;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: relationSource,
-              selectedValue: param['rela_source'] ?? 'all',
-              label: '数据来源',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == 'all') {
-                    param.remove('rela_source');
-                  } else {
-                    param['rela_source'] = newValue;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '创建时间',
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime2,
-              label: '有效时间',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(
+                children: <Widget>[
+                  Input(
+                    label: '发送店铺',
+                    onChanged: (String val) {
+                      setState(() {
+                        if (val == '') {
+                          param.remove('a_shop_name');
+                        } else {
+                          param['a_shop_name'] = val;
+                        }
+                      });
+                    },
+                  ),
+                  Input(
+                    label: '发送电话',
+                    onChanged: (String val) {
+                      setState(() {
+                        if (val == '') {
+                          param.remove('a_user_phone');
+                        } else {
+                          param['a_user_phone'] = val;
+                        }
+                      });
+                    },
+                  ),
+                  Input(
+                    label: '接收店铺',
+                    onChanged: (String val) {
+                      setState(() {
+                        if (val == '') {
+                          param.remove('z_shop_name');
+                        } else {
+                          param['z_shop_name'] = val;
+                        }
+                      });
+                    },
+                  ),
+                  Input(
+                    label: '接收电话',
+                    onChanged: (String val) {
+                      setState(() {
+                        if (val == '') {
+                          param.remove('z_user_phone');
+                        } else {
+                          param['z_user_phone'] = val;
+                        }
+                      });
+                    },
+                  ),
+                  Select(
+                    selectOptions: ifDefault,
+                    selectedValue: param['if_default'] ?? 'all',
+                    label: '状态',
+                    onChanged: (String newValue) {
+                      setState(() {
+                        if (newValue == 'all') {
+                          param.remove('if_default');
+                        } else {
+                          param['if_default'] = newValue;
+                        }
+                      });
+                    },
+                  ),
+                  Select(
+                    selectOptions: relationSource,
+                    selectedValue: param['rela_source'] ?? 'all',
+                    label: '数据来源',
+                    onChanged: (String newValue) {
+                      setState(() {
+                        if (newValue == 'all') {
+                          param.remove('rela_source');
+                        } else {
+                          param['rela_source'] = newValue;
+                        }
+                      });
+                    },
+                  ),
+                  DateSelectPlugin(
+                    onChanged: getDateTime,
+                    label: '创建时间',
+                  ),
+                  DateSelectPlugin(
+                    onChanged: getDateTime2,
+                    label: '有效时间',
+                  ),
+                  Select(
+                    selectOptions: selects,
+                    selectedValue: defaultVal,
+                    label: '排序',
+                    onChanged: orderBy,
+                  ),
+                ],
+              ),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -339,7 +351,19 @@ class _CadUserRelationState extends State<CadUserRelation> {
                       },
                       child: Text('新增CAD用户关系'),
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
+                  ),
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),

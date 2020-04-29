@@ -8,6 +8,7 @@ import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/range_input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class _ErpPayoutState extends State<ErpPayout> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '订单号', 'key': 'order_no'},
     {'title': '工厂', 'key': 'shop_name'},
@@ -157,72 +159,81 @@ class _ErpPayoutState extends State<ErpPayout> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '订单号',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('order_no');
-                  } else {
-                    param['order_no'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '工厂',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('shop_name');
-                  } else {
-                    param['shop_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '用户',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_name');
-                  } else {
-                    param['user_name'] = val;
-                  }
-                });
-              },
-            ),
-            RangeInput(
-              label: '价格',
-              onChangeL: (val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('payout_amount_min');
-                  } else {
-                    param['payout_amount_min'] = val;
-                  }
-                });
-              },
-              onChangeR: (val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('payout_amount_max');
-                  } else {
-                    param['payout_amount_max'] = val;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '付款时间',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '订单号',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('order_no');
+                      } else {
+                        param['order_no'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '工厂',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('shop_name');
+                      } else {
+                        param['shop_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '用户',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('user_name');
+                      } else {
+                        param['user_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                RangeInput(
+                  label: '价格',
+                  onChangeL: (val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('payout_amount_min');
+                      } else {
+                        param['payout_amount_min'] = val;
+                      }
+                    });
+                  },
+                  onChangeR: (val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('payout_amount_max');
+                      } else {
+                        param['payout_amount_max'] = val;
+                      }
+                    });
+                  },
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '付款时间',
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -238,6 +249,18 @@ class _ErpPayoutState extends State<ErpPayout> {
                         getData();
                       },
                       child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],

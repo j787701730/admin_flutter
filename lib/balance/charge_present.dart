@@ -27,6 +27,7 @@ class _ChargePresentState extends State<ChargePresent> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
+  bool isExpandedFlag = false;
 
   Map balanceType = {"all": '全部', "1": "商城现金", "3": "云端计费", "5": "经销商"};
 
@@ -193,75 +194,84 @@ class _ChargePresentState extends State<ChargePresent> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Select(
-              labelWidth: 100,
-              selectOptions: balanceType,
-              selectedValue: param['balance_type'] ?? 'all',
-              label: '账本类型',
-              onChanged: (val) {
-                if (val == 'all') {
-                  param.remove('balance_type');
-                } else {
-                  param['balance_type'] = val;
-                }
-              },
-            ),
-            Select(
-              labelWidth: 100,
-              selectOptions: chargeType,
-              selectedValue: param['charge_type'] ?? 'all',
-              label: '充值类型',
-              onChanged: (val) {
-                if (val == 'all') {
-                  param.remove('charge_type');
-                } else {
-                  param['charge_type'] = val;
-                }
-              },
-            ),
-            Select(
-              labelWidth: 100,
-              selectOptions: userType,
-              selectedValue: param['user_type'] ?? 'all',
-              label: '用户类型',
-              onChanged: (val) {
-                if (val == 'all') {
-                  param.remove('user_type');
-                } else {
-                  param['user_type'] = val;
-                }
-              },
-            ),
-            Select(
-              labelWidth: 100,
-              selectOptions: presentType,
-              selectedValue: param['present_type'] ?? 'all',
-              label: '赠送类型',
-              onChanged: (val) {
-                if (val == 'all') {
-                  param.remove('present_type');
-                } else {
-                  param['present_type'] = val;
-                }
-              },
-            ),
-            Select(
-              labelWidth: 100,
-              selectOptions: presentBalance,
-              selectedValue: param['present_balance_type'] ?? 'all',
-              label: '赠送账本类型',
-              onChanged: (val) {
-                if (val == 'all') {
-                  param.remove('present_balance_type');
-                } else {
-                  param['present_balance_type'] = val;
-                }
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '有效时间',
-              labelWidth: 100,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Select(
+                  labelWidth: 100,
+                  selectOptions: balanceType,
+                  selectedValue: param['balance_type'] ?? 'all',
+                  label: '账本类型',
+                  onChanged: (val) {
+                    if (val == 'all') {
+                      param.remove('balance_type');
+                    } else {
+                      param['balance_type'] = val;
+                    }
+                  },
+                ),
+                Select(
+                  labelWidth: 100,
+                  selectOptions: chargeType,
+                  selectedValue: param['charge_type'] ?? 'all',
+                  label: '充值类型',
+                  onChanged: (val) {
+                    if (val == 'all') {
+                      param.remove('charge_type');
+                    } else {
+                      param['charge_type'] = val;
+                    }
+                  },
+                ),
+                Select(
+                  labelWidth: 100,
+                  selectOptions: userType,
+                  selectedValue: param['user_type'] ?? 'all',
+                  label: '用户类型',
+                  onChanged: (val) {
+                    if (val == 'all') {
+                      param.remove('user_type');
+                    } else {
+                      param['user_type'] = val;
+                    }
+                  },
+                ),
+                Select(
+                  labelWidth: 100,
+                  selectOptions: presentType,
+                  selectedValue: param['present_type'] ?? 'all',
+                  label: '赠送类型',
+                  onChanged: (val) {
+                    if (val == 'all') {
+                      param.remove('present_type');
+                    } else {
+                      param['present_type'] = val;
+                    }
+                  },
+                ),
+                Select(
+                  labelWidth: 100,
+                  selectOptions: presentBalance,
+                  selectedValue: param['present_balance_type'] ?? 'all',
+                  label: '赠送账本类型',
+                  onChanged: (val) {
+                    if (val == 'all') {
+                      param.remove('present_balance_type');
+                    } else {
+                      param['present_balance_type'] = val;
+                    }
+                  },
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '有效时间',
+                  labelWidth: 100,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -290,6 +300,18 @@ class _ChargePresentState extends State<ChargePresent> {
                       child: Text('添加规则'),
                     ),
                   ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
+                  ),
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),
@@ -314,7 +336,10 @@ class _ChargePresentState extends State<ChargePresent> {
                         children: ajaxData.map<Widget>(
                           (item) {
                             return Container(
-                              decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), )),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                color: Color(0xffdddddd),
+                              )),
                               margin: EdgeInsets.only(bottom: 10),
                               padding: EdgeInsets.only(top: 5, bottom: 5),
                               child: Column(

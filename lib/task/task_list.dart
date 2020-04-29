@@ -27,6 +27,7 @@ class _TaskListState extends State<TaskList> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
+  bool isExpandedFlag = false;
   Map state = {
     "all": "全部",
     "1": "待接单",
@@ -240,85 +241,94 @@ class _TaskListState extends State<TaskList> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '任务标题',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('task_name');
-                  } else {
-                    param['task_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '任务编号',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('task_id');
-                  } else {
-                    param['task_id'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: state,
-              selectedValue: param['state'] ?? 'all',
-              label: '任务状态',
-              onChanged: (val) {
-                setState(() {
-                  if (val == 'all') {
-                    param.remove('state');
-                  } else {
-                    param['state'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: state,
-              selectedValue: param['task_type'] ?? 'all',
-              label: '任务类型',
-              onChanged: (val) {
-                setState(() {
-                  if (val == 'all') {
-                    param.remove('task_type');
-                  } else {
-                    param['task_type'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: state,
-              selectedValue: param['evaluate_state'] ?? 'all',
-              label: '评价状态',
-              onChanged: (val) {
-                setState(() {
-                  if (val == 'all') {
-                    param.remove('evaluate_state');
-                  } else {
-                    param['evaluate_state'] = val;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '创建时间',
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime2,
-              label: '需求时间',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '任务标题',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('task_name');
+                      } else {
+                        param['task_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '任务编号',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('task_id');
+                      } else {
+                        param['task_id'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: state,
+                  selectedValue: param['state'] ?? 'all',
+                  label: '任务状态',
+                  onChanged: (val) {
+                    setState(() {
+                      if (val == 'all') {
+                        param.remove('state');
+                      } else {
+                        param['state'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: state,
+                  selectedValue: param['task_type'] ?? 'all',
+                  label: '任务类型',
+                  onChanged: (val) {
+                    setState(() {
+                      if (val == 'all') {
+                        param.remove('task_type');
+                      } else {
+                        param['task_type'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: state,
+                  selectedValue: param['evaluate_state'] ?? 'all',
+                  label: '评价状态',
+                  onChanged: (val) {
+                    setState(() {
+                      if (val == 'all') {
+                        param.remove('evaluate_state');
+                      } else {
+                        param['evaluate_state'] = val;
+                      }
+                    });
+                  },
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime,
+                  label: '创建时间',
+                ),
+                DateSelectPlugin(
+                  onChanged: getDateTime2,
+                  label: '需求时间',
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -329,12 +339,25 @@ class _TaskListState extends State<TaskList> {
                   SizedBox(
                     height: 30,
                     child: PrimaryButton(
-                        onPressed: () {
-                          param['curr_page'] = 1;
-                          getData();
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: Text('搜索')),
+                      onPressed: () {
+                        param['curr_page'] = 1;
+                        getData();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                    ),
                   ),
                 ],
               ),

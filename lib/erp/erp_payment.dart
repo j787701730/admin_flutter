@@ -26,7 +26,7 @@ class _ErpPaymentState extends State<ErpPayment> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '订单编号', 'key': 'order_no'},
     {'title': '店铺名称', 'key': 'shop_name'},
@@ -236,31 +236,40 @@ class _ErpPaymentState extends State<ErpPayment> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Column(
-              children: searchInputs.keys.toList().map<Widget>((item) {
-                return Input(
-                  label: '${searchInputs[item]}',
-                  onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('$item');
-                      } else {
-                        param['$item'] = val;
-                      }
-                    });
-                  },
-                );
-              }).toList(),
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Column(
+                  children: searchInputs.keys.toList().map<Widget>((item) {
+                    return Input(
+                      label: '${searchInputs[item]}',
+                      onChanged: (String val) {
+                        setState(() {
+                          if (val == '') {
+                            param.remove('$item');
+                          } else {
+                            param['$item'] = val;
+                          }
+                        });
+                      },
+                    );
+                  }).toList(),
+                ),
+                DateSelectPlugin(
+                  onChanged: getCreateDate,
+                  label: '收款时间',
+                ),
+                DateSelectPlugin(
+                  onChanged: getPaymentDate,
+                  label: '创建时间',
+                ),
+                Select(selectOptions: selects, selectedValue: defaultVal, label: '排序', onChanged: orderBy),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
-            DateSelectPlugin(
-              onChanged: getCreateDate,
-              label: '收款时间',
-            ),
-            DateSelectPlugin(
-              onChanged: getPaymentDate,
-              label: '创建时间',
-            ),
-            Select(selectOptions: selects, selectedValue: defaultVal, label: '排序', onChanged: orderBy),
             Container(
               child: Wrap(
                 alignment: WrapAlignment.center,
@@ -276,6 +285,18 @@ class _ErpPaymentState extends State<ErpPayment> {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
                       child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],

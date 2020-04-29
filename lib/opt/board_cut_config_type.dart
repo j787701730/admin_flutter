@@ -26,7 +26,7 @@ class _BoardCutConfigTypeState extends State<BoardCutConfigType> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '类型中文名', 'key': 'type_ch_name'},
     {'title': '类型英文名', 'key': 'type_en_name'},
@@ -185,47 +185,56 @@ class _BoardCutConfigTypeState extends State<BoardCutConfigType> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '类型中文名',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('type_ch_name');
-                  } else {
-                    param['type_ch_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '类型英文名',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('type_en_name');
-                  } else {
-                    param['type_en_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '排序',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('sort');
-                  } else {
-                    param['sort'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '类型中文名',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('type_ch_name');
+                      } else {
+                        param['type_ch_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '类型英文名',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('type_en_name');
+                      } else {
+                        param['type_en_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '排序',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('sort');
+                      } else {
+                        param['sort'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: selects,
+                  selectedValue: defaultVal,
+                  label: '排序',
+                  onChanged: orderBy,
+                ),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -252,6 +261,18 @@ class _BoardCutConfigTypeState extends State<BoardCutConfigType> {
                         turnTo(null);
                       },
                       child: Text('新增'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],

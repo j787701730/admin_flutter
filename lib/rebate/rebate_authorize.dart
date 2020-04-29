@@ -6,6 +6,7 @@ import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _RebateAuthorizeState extends State<RebateAuthorize> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-
+  bool isExpandedFlag = false;
   List columns = [
     {'title': '厂家名称', 'key': 'factory_name'},
     {'title': '厂家用户', 'key': 'opera_name'},
@@ -129,55 +130,64 @@ class _RebateAuthorizeState extends State<RebateAuthorize> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '厂家名称',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('factory_name');
-                  } else {
-                    param['factory_name'] = val;
-                  }
-                });
-              },
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '厂家名称',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('factory_name');
+                      } else {
+                        param['factory_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '厂家手机',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('opera_phone');
+                      } else {
+                        param['opera_phone'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '店铺名称',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('shop_name');
+                      } else {
+                        param['shop_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '店铺手机',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('user_phone');
+                      } else {
+                        param['user_phone'] = val;
+                      }
+                    });
+                  },
+                ),
+                DateSelectPlugin(onChanged: getDateTime, label: '操作时间'),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
-            Input(
-              label: '厂家手机',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('opera_phone');
-                  } else {
-                    param['opera_phone'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '店铺名称',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('shop_name');
-                  } else {
-                    param['shop_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '店铺手机',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_phone');
-                  } else {
-                    param['user_phone'] = val;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(onChanged: getDateTime, label: '操作时间'),
             Container(
               child: Wrap(
                 alignment: WrapAlignment.center,
@@ -193,6 +203,18 @@ class _RebateAuthorizeState extends State<RebateAuthorize> {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
                       child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],
@@ -220,7 +242,9 @@ class _RebateAuthorizeState extends State<RebateAuthorize> {
                             children: ajaxData.map<Widget>((item) {
                               return Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Color(0xffdddddd), ),
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
                                 ),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(top: 5, bottom: 5),

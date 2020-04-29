@@ -26,7 +26,7 @@ class _UserPrizesState extends State<UserPrizes> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-
+  bool isExpandedFlag = false;
   Map state = {
     'all': '全部',
     '0': '待兑奖',
@@ -212,72 +212,81 @@ class _UserPrizesState extends State<UserPrizes> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '用户名称',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('login_name');
-                  } else {
-                    param['login_name'] = val;
-                  }
-                });
-              },
+            AnimatedCrossFade(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              firstChild: Container(),
+              secondChild: Column(children: <Widget>[
+                Input(
+                  label: '用户名称',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('login_name');
+                      } else {
+                        param['login_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '活动名称',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('activity_name');
+                      } else {
+                        param['activity_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Input(
+                  label: '奖项名称',
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('prize_name');
+                      } else {
+                        param['prize_name'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: prizeType,
+                  selectedValue: param['draw_type'] ?? 'all',
+                  label: '抽奖类型',
+                  onChanged: (val) {
+                    setState(() {
+                      if (val == 'all') {
+                        param.remove('draw_type');
+                      } else {
+                        param['draw_type'] = val;
+                      }
+                    });
+                  },
+                ),
+                Select(
+                  selectOptions: state,
+                  selectedValue: param['state'] ?? 'all',
+                  label: '兑奖状态',
+                  onChanged: (val) {
+                    setState(() {
+                      if (val == 'all') {
+                        param.remove('state');
+                      } else {
+                        param['state'] = val;
+                      }
+                    });
+                  },
+                ),
+                DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
+                Select(selectOptions: selects, selectedValue: defaultVal, label: '排序', onChanged: orderBy),
+              ]),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
-            Input(
-              label: '活动名称',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('activity_name');
-                  } else {
-                    param['activity_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '奖项名称',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('prize_name');
-                  } else {
-                    param['prize_name'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: prizeType,
-              selectedValue: param['draw_type'] ?? 'all',
-              label: '抽奖类型',
-              onChanged: (val) {
-                setState(() {
-                  if (val == 'all') {
-                    param.remove('draw_type');
-                  } else {
-                    param['draw_type'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: state,
-              selectedValue: param['state'] ?? 'all',
-              label: '兑奖状态',
-              onChanged: (val) {
-                setState(() {
-                  if (val == 'all') {
-                    param.remove('state');
-                  } else {
-                    param['state'] = val;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
-            Select(selectOptions: selects, selectedValue: defaultVal, label: '排序', onChanged: orderBy),
             Container(
               child: Wrap(
                 alignment: WrapAlignment.center,
@@ -293,6 +302,18 @@ class _UserPrizesState extends State<UserPrizes> {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
                       child: Text('搜索'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: PrimaryButton(
+                      color: CFColors.success,
+                      onPressed: () {
+                        setState(() {
+                          isExpandedFlag = !isExpandedFlag;
+                        });
+                      },
+                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                     ),
                   ),
                 ],
@@ -319,7 +340,11 @@ class _UserPrizesState extends State<UserPrizes> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: ajaxData.map<Widget>((item) {
                               return Container(
-                                decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), ),),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
+                                ),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(top: 5, bottom: 5),
                                 child: Column(

@@ -189,6 +189,7 @@ class _BalancePricingState extends State<BalancePricing> {
                             Widget con = Text('${item[col['key']] ?? ''}');
                             switch (col['key']) {
                               case 'pricing_class':
+                                print(item[col['key']]);
                                 con = Text('${pricingClass[item[col['key']]]['class_ch_name']}');
                                 break;
                               case 'pricing_strategy_id':
