@@ -21,6 +21,7 @@ import 'package:admin_flutter/base/base_monitor.dart';
 import 'package:admin_flutter/base/base_wxreply.dart';
 import 'package:admin_flutter/base/cache.dart';
 import 'package:admin_flutter/base/maintain.dart';
+import 'package:admin_flutter/base/shop-menus.dart';
 import 'package:admin_flutter/base/sitemap.dart';
 import 'package:admin_flutter/erp/added_services.dart';
 import 'package:admin_flutter/erp/erp_config.dart';
@@ -143,6 +144,7 @@ class MyApp extends StatelessWidget {
         '/baseMonitor': (_) => BaseMonitor(), // 主机监控
         '/maintain': (_) => Maintain(), // 网站维护
         '/agreement': (_) => Agreement(), // 网站协议
+        '/shopMenus': (_) => ShopMenus(), // 菜单设置
         '/cadDistributor': (_) => CADDistributor(), // CAD经销商
         '/rebateList': (_) => RebateList(), // 返利流水
         '/rebateRates': (_) => RebateRates(), // 返利比例

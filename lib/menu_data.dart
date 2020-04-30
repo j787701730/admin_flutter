@@ -471,7 +471,8 @@ List menuData = [
         "spell_all": "caidanshezhi",
         "spell_index": "cdsz",
         "name": "菜单设置",
-        "access": [102]
+        "access": [102],
+        "path": '/shopMenus'
       },
       {
         "spell_all": "wangzhandaohang",
