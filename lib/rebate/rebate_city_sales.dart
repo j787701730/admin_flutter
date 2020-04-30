@@ -25,7 +25,7 @@ class _RebateCitySalesState extends State<RebateCitySales> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '用户名', 'key': 'login_name'},
     {'title': '联系人', 'key': 'user_name'},

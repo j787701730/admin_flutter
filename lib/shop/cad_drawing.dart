@@ -27,7 +27,7 @@ class _CadDrawingState extends State<CadDrawing> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
 
   List columns = [
     {'title': '用户名', 'key': 'user_name'},

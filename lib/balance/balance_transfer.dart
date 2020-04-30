@@ -24,7 +24,7 @@ class _BalanceTransferState extends State<BalanceTransfer> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
 
   List columns = [
     {'title': '创建日期', 'key': 'create_date'},

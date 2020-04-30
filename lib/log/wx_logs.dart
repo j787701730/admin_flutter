@@ -39,7 +39,7 @@ class _WXLogsState extends State<WXLogs> {
     {'title': '错误码', 'key': 'create_date'},
     {'title': '返回信息', 'key': 'update_date'},
   ];
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
 
   DateTime create_date_min;
   DateTime create_date_max;

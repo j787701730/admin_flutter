@@ -37,7 +37,7 @@ class _ErpLogsState extends State<ErpLogs> {
     {'title': 'IP地址', 'key': 'ip'},
     {'title': '操作时间', 'key': 'create_date'},
   ];
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
 
   DateTime create_date_min;
   DateTime create_date_max;

@@ -27,7 +27,7 @@ class _ErpConfigState extends State<ErpConfig> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '店铺名称', 'key': 'shop_name'},
     {'title': '电话号码', 'key': 'user_phone'},

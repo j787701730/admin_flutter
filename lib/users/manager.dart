@@ -147,7 +147,7 @@ class _UsersManagerState extends State<UsersManager> {
 
   DateTime create_date_min;
   DateTime create_date_max;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
 
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 

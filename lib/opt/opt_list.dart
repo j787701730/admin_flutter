@@ -28,7 +28,7 @@ class _OptListState extends State<OptList> {
   int count = 0;
   bool loading = true;
   Map selectUser = {};
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '订单号', 'key': 'order_no'},
     {'title': '用户', 'key': 'user_name'},

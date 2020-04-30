@@ -29,7 +29,7 @@ class _RebateListState extends State<RebateList> {
   Map amount = {};
   BuildContext _context;
   ScrollController _controller;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '收益用户', 'key': 'user_name'},
     {'title': '关联流水', 'key': 'rela_id'},

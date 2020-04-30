@@ -26,7 +26,7 @@ class _ActivityListState extends State<ActivityList> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   Map drawType = {
     'all': '全部',
     '1': '转盘抽奖',

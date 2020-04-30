@@ -28,7 +28,7 @@ class _ErpSoftwareState extends State<ErpSoftware> {
   List ajaxData = [];
   int count = 0;
   bool loading = false;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '用户', 'key': 'user_name'},
     {'title': '工厂', 'key': 'shop_name'},

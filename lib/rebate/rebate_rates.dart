@@ -28,7 +28,7 @@ class _RebateRatesState extends State<RebateRates> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '用户名', 'key': 'login_name'},
     {'title': '返利类型', 'key': 'type_ch_name'},

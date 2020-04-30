@@ -371,7 +371,7 @@ class _ShopListState extends State<ShopList> {
     );
   }
 
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
 
   @override
   Widget build(BuildContext context) {

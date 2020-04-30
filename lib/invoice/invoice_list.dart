@@ -28,7 +28,7 @@ class _InvoiceListState extends State<InvoiceList> {
   List ajaxData = [];
   int count = 0;
   bool loading = false;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '用户', 'key': 'login_name'},
     {'title': '企业名称', 'key': 'shop_name'},

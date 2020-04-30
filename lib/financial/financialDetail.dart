@@ -27,7 +27,7 @@ class _FinancialDetailState extends State<FinancialDetail> {
   Map sumData = {};
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '订单编号', 'key': 'order_no'},
     {'title': '支付金额', 'key': 'pay_amount'},

@@ -29,7 +29,7 @@ class _FinancialLoanState extends State<FinancialLoan> {
   int count = 0;
   Map stat = {};
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '店铺', 'key': 'shop_name'},
     {'title': '电话号码', 'key': 'user_phone'},

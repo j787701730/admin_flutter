@@ -26,7 +26,7 @@ class _RebateDistributorState extends State<RebateDistributor> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '用户', 'key': 'login_name'},
     {'title': '联系人', 'key': 'user_name'},

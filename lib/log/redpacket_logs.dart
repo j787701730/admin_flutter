@@ -34,7 +34,7 @@ class _RedPacketLogsState extends State<RedPacketLogs> {
     {'title': '红包(份)', 'key': 'nums'},
     {'title': '时间', 'key': 'receive_date'},
   ];
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   DateTime create_date_min;
   DateTime create_date_max;
   bool loading = true;

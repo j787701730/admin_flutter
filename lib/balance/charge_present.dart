@@ -27,7 +27,7 @@ class _ChargePresentState extends State<ChargePresent> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
 
   Map balanceType = {"all": '全部', "1": "商城现金", "3": "云端计费", "5": "经销商"};
 

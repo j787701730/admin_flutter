@@ -27,7 +27,7 @@ class _CadAdminsState extends State<CadAdmins> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
 
   List columns = [
     {'title': '店铺名称', 'key': 'name'},

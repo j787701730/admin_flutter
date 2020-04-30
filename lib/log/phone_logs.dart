@@ -40,7 +40,7 @@ class _PhoneLogsState extends State<PhoneLogs> {
     {'title': '通话费用(元)', 'key': 'fee'},
     {'title': '创建时间', 'key': 'create_date'},
   ];
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   DateTime create_date_min;
   DateTime create_date_max;
   bool loading = true;

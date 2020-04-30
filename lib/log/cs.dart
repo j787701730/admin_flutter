@@ -26,7 +26,7 @@ class _CsLogsState extends State<CsLogs> {
   List logs = [];
   int count = 0;
   BuildContext _context;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   ScrollController _controller;
   Map searchData = {'user_name': '', 'ip': '', 'err_code': '', 'url': ''};
   Map searchName = {'user_name': '用户', 'ip': 'IP地址', 'err_code': '错误码', 'url': '访问路径'};

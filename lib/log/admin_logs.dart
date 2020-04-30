@@ -39,7 +39,7 @@ class _AdminLogsState extends State<AdminLogs> {
   ];
 
   Map operaType = {'1': '后台登入', '2': '操作模块'};
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
 
   DateTime create_date_min;
   DateTime create_date_max;

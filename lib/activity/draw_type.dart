@@ -25,7 +25,7 @@ class _DrawTypeState extends State<DrawType> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '中文名称', 'key': 'type_ch_name'},
     {'title': '英文名称', 'key': 'type_en_name'},

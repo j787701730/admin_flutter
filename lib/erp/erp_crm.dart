@@ -26,7 +26,7 @@ class _ErpCrmState extends State<ErpCrm> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '客户名称', 'key': 'z_name'},
     {'title': '店铺名称', 'key': 'shop_name'},

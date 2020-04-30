@@ -76,6 +76,9 @@ import 'package:admin_flutter/task/task_evaluate.dart';
 import 'package:admin_flutter/task/task_list.dart';
 import 'package:admin_flutter/task/task_pricing.dart';
 import 'package:admin_flutter/task/task_rules.dart';
+import 'package:admin_flutter/user-manage/staff-add.dart';
+import 'package:admin_flutter/user-manage/staff-department.dart';
+import 'package:admin_flutter/user-manage/staff-group.dart';
 import 'package:admin_flutter/users/add.dart';
 import 'package:admin_flutter/users/manager.dart';
 import 'package:admin_flutter/users/users__cert.dart';
@@ -104,6 +107,9 @@ class MyApp extends StatelessWidget {
         '/home': (_) => MyHomePage(),
         '/login': (_) => Login(),
         '/articleList': (_) => ArticleList(), // 文章列表
+        '/staffDepartment': (_) => StaffDepartment(), // 组织架构
+        '/staffGroup': (_) => StaffGroup(), // 岗位架构
+        '/staffAdd': (_) => StaffAdd(), // 员工添加
         '/csLogs': (_) => CsLogs(), // 软件日志
         '/erpLogs': (_) => ErpLogs(), // Erp日志
         '/mqLogs': (_) => MQLogs(), // 消息日志

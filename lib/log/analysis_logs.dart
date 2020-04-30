@@ -33,7 +33,7 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
     {'title': '调用次数', 'key': 'log_times'},
     {'title': '调用日期', 'key': 'log_day'},
   ];
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   Map url = {
     "all": "全部",
     "1": "商品明细 (/CS-getGoodsDetail)",

@@ -25,7 +25,7 @@ class _RebateAuthorizeState extends State<RebateAuthorize> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '厂家名称', 'key': 'factory_name'},
     {'title': '厂家用户', 'key': 'opera_name'},

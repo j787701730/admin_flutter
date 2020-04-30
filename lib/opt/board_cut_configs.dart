@@ -26,7 +26,7 @@ class _BoardCutConfigsState extends State<BoardCutConfigs> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   Map type = {
     "all": "全部",
     "1": "机台配置",

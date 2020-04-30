@@ -54,19 +54,22 @@ List menuData = [
         "spell_all": "zuzhijiagou",
         "spell_index": "zzjg",
         "name": "组织架构",
-        "access": [7]
+        "access": [7],
+        "path": '/staffDepartment'
       },
       {
         "spell_all": "gangweijiagou",
         "spell_index": "gwjg",
         "name": "岗位架构",
-        "access": [8]
+        "access": [8],
+        "path": '/staffGroup'
       },
       {
         "spell_all": "tianjiayuangong",
         "spell_index": "tjyg",
         "name": "添加员工",
-        "access": [44]
+        "access": [44],
+        "path": '/staffAdd'
       }
     ]
   },

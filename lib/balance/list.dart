@@ -29,7 +29,7 @@ class _BalanceListState extends State<BalanceList> {
   int count = 0;
   Map balanceCheckParam = {'userId': '', 'acctBalanceID': ''};
   bool loading = false;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
 
   void _onRefresh() async {
     setState(() {

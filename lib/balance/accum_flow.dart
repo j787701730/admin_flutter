@@ -28,7 +28,7 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
   Map ajaxData = {};
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
 
   List columns = [
     {'title': '积量类型', 'key': 'type_ch_name'},

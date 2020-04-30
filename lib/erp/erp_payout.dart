@@ -27,7 +27,7 @@ class _ErpPayoutState extends State<ErpPayout> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '订单号', 'key': 'order_no'},
     {'title': '工厂', 'key': 'shop_name'},

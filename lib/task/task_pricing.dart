@@ -33,7 +33,7 @@ class _TaskPricingState extends State<TaskPricing> {
     "all": '全部',
     "104": "设计任务",
   };
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   Map taskType2 = {
     "104": "设计任务",
   };

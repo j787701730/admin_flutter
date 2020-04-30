@@ -34,7 +34,7 @@ class _PayoutSummaryState extends State<PayoutSummary> {
     '2': '季度',
     '3': '年份',
   };
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '工厂', 'key': 'shop_name'},
     {'title': '用户', 'key': 'user_name'},

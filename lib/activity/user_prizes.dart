@@ -26,7 +26,7 @@ class _UserPrizesState extends State<UserPrizes> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   Map state = {
     'all': '全部',
     '0': '待兑奖',

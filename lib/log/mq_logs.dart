@@ -85,7 +85,7 @@ class _MQLogsState extends State<MQLogs> {
   }
 
   String defaultVal = 'all';
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   Map selects = {
     'all': '无',
     'msg_id': '队列标识 升序',

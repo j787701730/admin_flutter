@@ -26,7 +26,7 @@ class _AccountItemState extends State<AccountItem> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '用户', 'key': 'login_name'},
     {'title': '出账状态', 'key': 'bill_state'},

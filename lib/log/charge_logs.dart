@@ -26,7 +26,7 @@ class _ChargeLogsState extends State<ChargeLogs> {
   int count = 0;
   BuildContext _context;
   ScrollController _controller;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
 
   List columns = [
     {'title': '对账类型', 'key': 'charge_type_ch_name'},

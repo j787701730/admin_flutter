@@ -27,7 +27,7 @@ class _CadUserRelationState extends State<CadUserRelation> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
 
   List columns = [
     {'title': '发送店铺', 'key': 'a_shop_name'},

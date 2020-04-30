@@ -26,7 +26,7 @@ class _BoardCutConfigTypeState extends State<BoardCutConfigType> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '类型中文名', 'key': 'type_ch_name'},
     {'title': '类型英文名', 'key': 'type_en_name'},

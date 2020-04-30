@@ -27,7 +27,7 @@ class _TaskListState extends State<TaskList> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   Map state = {
     "all": "全部",
     "1": "待接单",

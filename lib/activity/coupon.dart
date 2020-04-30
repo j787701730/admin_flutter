@@ -27,7 +27,7 @@ class _CouponState extends State<Coupon> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
   Map state = {"all": "全部", "0": "失效", "1": "生效"};
   Map couponType = {"all": "全部", "1": "满减", "2": "抵扣", "3": "折扣"};
   Map goodsType = {

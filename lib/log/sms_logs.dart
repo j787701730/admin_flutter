@@ -36,7 +36,7 @@ class _SmsLogsState extends State<SmsLogs> {
     {'title': '出参参数', 'key': 'err_msg'},
     {'title': '创建时间', 'key': 'create_date'},
   ];
-  bool isExpandedFlag = false;
+  bool isExpandedFlag = true;
 
   Map smsTemplate = {
     'all': '全部',
