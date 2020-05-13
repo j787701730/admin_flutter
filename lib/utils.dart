@@ -186,3 +186,15 @@ jsonMsg(data) {
   }
   return str;
 }
+
+// 格式化文件大小
+fileFormatSize(size) {
+  int i;
+  size = double.parse('$size');
+  var unit = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+  for (i = 0; i < unit.length && size >= 1024; i++) {
+    size /= 1024;
+  }
+//  return (math.round(size * 100) / 100 || 0) + unit[i];
+  return '${(double.tryParse('$size') * 100).round() / 100}${unit[i]}';
+}

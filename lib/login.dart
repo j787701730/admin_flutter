@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
     _context = context;
   }
 
-  login() async {
+  login() {
     ajax('Adminrelas-Index-loginCheck', {"psw": password, "username": loginName}, true, (res) {
       if (res.runtimeType != String && res['err_code'] == 0) {
         getAccess();
@@ -43,7 +43,7 @@ class _LoginState extends State<Login> {
     }, () {}, _context);
   }
 
-  getAccess() async {
+  getAccess() {
     ajax('Adminrelas-Manage-getTest', {}, true, (res) {
       if (res.runtimeType != String && res['err_code'] == 0) {
 //        Navigator.pop(_context, {'islogin': true, 'access': res['data']});

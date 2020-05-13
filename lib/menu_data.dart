@@ -258,13 +258,15 @@ List menuData = [
         "spell_all": "yunpanliebiao",
         "spell_index": "yplb",
         "name": "云盘列表",
-        "access": [30]
+        "access": [30],
+        "path": "/shopsZone"
       },
       {
         "spell_all": "kongjianwenjian",
         "spell_index": "kjwj",
         "name": "空间文件",
-        "access": [48]
+        "access": [48],
+        "path":"/zoneFiles"
       }
     ]
   },
@@ -465,7 +467,8 @@ List menuData = [
         "spell_all": "gengduogongju",
         "spell_index": "gdgj",
         "name": "更多工具",
-        "access": [86]
+        "access": [86],
+        "path": "/phoneMenus"
       },
       {
         "spell_all": "caidanshezhi",
@@ -690,7 +693,8 @@ List menuData = [
         "spell_all": "renwuleixing",
         "spell_index": "rwlx",
         "name": "任务类型",
-        "access": [82]
+        "access": [82],
+        "path": "/taskTypeList"
       }
     ]
   },

@@ -21,6 +21,7 @@ import 'package:admin_flutter/base/base_monitor.dart';
 import 'package:admin_flutter/base/base_wxreply.dart';
 import 'package:admin_flutter/base/cache.dart';
 import 'package:admin_flutter/base/maintain.dart';
+import 'package:admin_flutter/base/phone-menus.dart';
 import 'package:admin_flutter/base/shop-menus.dart';
 import 'package:admin_flutter/base/sitemap.dart';
 import 'package:admin_flutter/erp/added_services.dart';
@@ -72,7 +73,10 @@ import 'package:admin_flutter/shop/cad_drawing.dart';
 import 'package:admin_flutter/shop/cad_user_relation.dart';
 import 'package:admin_flutter/shop/industry_class.dart';
 import 'package:admin_flutter/shop/shop_list.dart';
+import 'package:admin_flutter/shop/shops-zone.dart';
 import 'package:admin_flutter/shop/supply_class.dart';
+import 'package:admin_flutter/shop/zone-files.dart';
+import 'package:admin_flutter/task/task-type-list.dart';
 import 'package:admin_flutter/task/task_evaluate.dart';
 import 'package:admin_flutter/task/task_list.dart';
 import 'package:admin_flutter/task/task_pricing.dart';
@@ -97,7 +101,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         platform: TargetPlatform.iOS,
         textTheme: TextTheme(
-          subhead: TextStyle(
+//          subhead: TextStyle(
+//            textBaseline: TextBaseline.alphabetic, // TextField hintText 居中
+//          ),
+          subtitle1: TextStyle(
             textBaseline: TextBaseline.alphabetic, // TextField hintText 居中
           ),
         ),
@@ -160,7 +167,8 @@ class MyApp extends StatelessWidget {
         '/goodsClass': (_) => GoodsClass(), // 商品类目
         '/goodsAttr': (_) => GoodsAttribute(), // 类目属性
         '/baseCache': (_) => BaseCache(), // 缓存管理
-        '/baseWxreply': (_) => BaseWxreply(), // 缓存管理
+        '/baseWxreply': (_) => BaseWxreply(), // 微信回复
+        '/phoneMenus': (_) => PhoneMenus(), // 更多工具
         '/baseSitemap': (_) => BaseSitemap(), // 网站导航
         '/balanceCharge': (_) => BalanceCharge(), // 充值流水
         '/chargeSummary': (_) => ChargeSummary(), // 充值汇总
@@ -183,11 +191,14 @@ class MyApp extends StatelessWidget {
         '/taskList': (_) => TaskList(), // 任务列表
         '/taskEvaluate': (_) => TaskEvaluate(), // 评价配置
         '/taskRules': (_) => TaskRules(), // 成长规则
+        '/taskTypeList': (_) => TaskTypeList(), // 任务类型
         '/optList': (_) => OptList(), // 优化数据
         '/optConfig': (_) => OptConfig(), // 异形造型
         '/boardCutConfigType': (_) => BoardCutConfigType(), // 开料配置类型
         '/boardCutConfigs': (_) => BoardCutConfigs(), // 开料配置
         '/boardCutUserGrant': (_) => BoardCutUserGrant(), // 用户收费开料配置
+        '/shopsZone': (_) => ShopsZone(), // 云盘列表
+        '/zoneFiles': (_) => ZoneFiles(), // 空间文件
       },
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
