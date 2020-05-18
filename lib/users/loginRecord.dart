@@ -123,18 +123,10 @@ class _LoginRecordState extends State<LoginRecord> {
                           return Container(
                             margin: EdgeInsets.only(bottom: 15),
                             child: Container(
-                              decoration:
-                                  BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1), boxShadow: [
-                                BoxShadow(
-                                    color: Color(0xffdddddd),
-                                    offset: Offset(0.0, 3.0),
-                                    blurRadius: 3.0,
-                                    spreadRadius: 3),
-                              ]),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Color(0xffdddddd), width: 1),
+                              ),
                               child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xffffffff),
-                                ),
                                 padding: EdgeInsets.only(left: 6, right: 6, top: 8, bottom: 8),
                                 child: Column(
                                   children: columns.map<Widget>((col) {

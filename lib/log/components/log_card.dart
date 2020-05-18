@@ -96,14 +96,13 @@ class LogCard extends StatelessWidget {
         return Container(
           margin: EdgeInsets.only(bottom: 15),
           child: Container(
-            decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), width: 1), boxShadow: [
-              new BoxShadow(
-                  color: const Color(0xffdddddd), offset: new Offset(0.0, 3.0), blurRadius: 3.0, spreadRadius: 3),
-            ]),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xffffffff),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Color(0xffdddddd),
+                width: 1,
               ),
+            ),
+            child: Container(
               padding: EdgeInsets.only(left: 6, right: 6, top: 8, bottom: 8),
               child: Column(
                 children: columns.map<Widget>((col) {

@@ -264,16 +264,7 @@ class _UserPluginState extends State<UserPlugin> {
                   onTap: () => selectOrCancel(item),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color(0xffffffff),
                       border: Border.all(color: Color(0xffdddddd), width: 1),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xffdddddd),
-                          offset: new Offset(0.0, 3.0),
-                          blurRadius: 3.0,
-                          spreadRadius: 3,
-                        ),
-                      ],
                     ),
                     child: Row(
                       children: <Widget>[

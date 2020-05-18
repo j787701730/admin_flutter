@@ -381,7 +381,7 @@ class _UsersManagerState extends State<UsersManager> {
     ajax('Adminrelas-userManager-userList', {'param': jsonEncode(param)}, true, (res) {
       if (mounted) {
         setState(() {
-          logs = res['data'];
+          logs = res['data'] ?? [];
           count = int.tryParse('${res['count'] ?? 0}');
           toTop();
           loading = false;
@@ -582,19 +582,8 @@ class _UsersManagerState extends State<UsersManager> {
                             child: Container(
                               decoration: BoxDecoration(
                                 border: Border.all(color: Color(0xffdddddd), width: 1),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0xffdddddd),
-                                    offset: Offset(0.0, 3.0),
-                                    blurRadius: 3.0,
-                                    spreadRadius: 3,
-                                  ),
-                                ],
                               ),
                               child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xffffffff),
-                                ),
                                 padding: EdgeInsets.only(left: 6, right: 6, top: 8, bottom: 8),
                                 child: Column(
                                   children: columns.map<Widget>((col) {
@@ -638,7 +627,7 @@ class _UsersManagerState extends State<UsersManager> {
                                               return Container(
                                                 margin: EdgeInsets.only(right: 10),
                                                 child: Text(
-                                                  '${userType[t]['type_ch_name']}',
+                                                  '${userType[t] == null ? '' : userType[t]['type_ch_name']}',
                                                   style: TextStyle(color: Colors.blue),
                                                 ),
                                               );
@@ -737,10 +726,10 @@ class _UsersManagerState extends State<UsersManager> {
 
                                         con = Wrap(
                                           runSpacing: 10,
-                                          spacing: 10,
                                           children: <Widget>[
                                             Container(
                                               height: 30,
+                                              margin: EdgeInsets.only(right: 10),
                                               child: PrimaryButton(
                                                 onPressed: () {
                                                   Navigator.push(
