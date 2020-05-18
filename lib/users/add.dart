@@ -240,7 +240,14 @@ class _UsersAddState extends State<UsersAdd> {
                   padding: EdgeInsets.only(left: 15),
                   margin: EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
-                      color: Color(0xffF2F2F2), border: Border(bottom: BorderSide(color: Color(0xffdddddd), width: 1))),
+//                    color: Color(0xffF2F2F2),
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Color(0xffdddddd),
+                        width: 1,
+                      ),
+                    ),
+                  ),
                   child: Text('用户信息'),
                 ),
                 Container(
@@ -318,7 +325,14 @@ class _UsersAddState extends State<UsersAdd> {
                   padding: EdgeInsets.only(left: 15),
                   margin: EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
-                      color: Color(0xffF2F2F2), border: Border(bottom: BorderSide(color: Color(0xffdddddd), width: 1))),
+//                    color: Color(0xffF2F2F2),
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Color(0xffdddddd),
+                        width: 1,
+                      ),
+                    ),
+                  ),
                   child: Text('店铺信息'),
                 ),
                 Container(
@@ -638,7 +652,14 @@ class _UsersAddState extends State<UsersAdd> {
                   padding: EdgeInsets.only(left: 15),
                   margin: EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
-                      color: Color(0xffF2F2F2), border: Border(bottom: BorderSide(color: Color(0xffdddddd), width: 1))),
+//                    color: Color(0xffF2F2F2),
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Color(0xffdddddd),
+                        width: 1,
+                      ),
+                    ),
+                  ),
                   child: Text('有效时间'),
                 ),
                 Container(
@@ -805,7 +826,11 @@ class _UsersAddState extends State<UsersAdd> {
                   padding: EdgeInsets.only(left: 15),
                   margin: EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
-                      color: Color(0xffF2F2F2), border: Border(bottom: BorderSide(color: Color(0xffdddddd), width: 1))),
+//                    color: Color(0xffF2F2F2),
+                    border: Border(
+                      bottom: BorderSide(color: Color(0xffdddddd), width: 1),
+                    ),
+                  ),
                   child: Text('注册礼物'),
                 ),
                 Container(

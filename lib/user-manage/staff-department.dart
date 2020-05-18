@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:admin_flutter/cf-provider.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
@@ -9,6 +10,7 @@ import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class StaffDepartment extends StatefulWidget {
@@ -261,7 +263,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
         title: Text('${selectDepartment['name']} 组织架构'),
         leading: IconButton(
           icon: const BackButtonIcon(),
-          color: Colors.white,
+          color: context.watch<CFProvider>().themeMode == ThemeMode.dark ? CFColors.dark : Colors.white,
           tooltip: MaterialLocalizations.of(context).backButtonTooltip,
           onPressed: () {
             Navigator.maybePop(context);
@@ -271,7 +273,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
       drawer: Container(
         width: width * 0.85,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.watch<CFProvider>().themeMode == ThemeMode.dark ? CFColors.dark : Colors.white,
         ),
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top,
@@ -279,7 +281,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
         child: ListView.separated(
           itemBuilder: (context, index) {
             return Container(
-              color: department[index]['id'] == param['dep_id'] ? CFColors.white : Color(0xfff5f5f5),
+//              color: department[index]['id'] == param['dep_id'] ? CFColors.white : Color(0xfff5f5f5),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -295,7 +297,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
                           setState(() {
                             param['dep_id'] = department[index]['id'];
                             param['curr_page'] = 1;
-                            selectDepartment = jsonDecode(jsonEncode(department[index]['name']));
+                            selectDepartment = jsonDecode(jsonEncode(department[index]));
                             Navigator.of(context).pop();
                             getData();
                           });

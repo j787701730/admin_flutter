@@ -376,7 +376,6 @@ class _ShopListState extends State<ShopList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('店铺列表'),
       ),

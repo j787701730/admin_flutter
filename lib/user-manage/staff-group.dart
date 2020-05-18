@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:admin_flutter/cf-provider.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class StaffGroup extends StatefulWidget {
@@ -222,7 +224,7 @@ class _StaffGroupState extends State<StaffGroup> {
         title: Text('${selectGroup['name']} 岗位架构'),
         leading: IconButton(
           icon: const BackButtonIcon(),
-          color: Colors.white,
+          color: context.watch<CFProvider>().themeMode == ThemeMode.dark ? CFColors.dark : Colors.white,
           tooltip: MaterialLocalizations.of(context).backButtonTooltip,
           onPressed: () {
             Navigator.maybePop(context);
@@ -232,7 +234,7 @@ class _StaffGroupState extends State<StaffGroup> {
       drawer: Container(
         width: width * 0.85,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.watch<CFProvider>().themeMode == ThemeMode.dark ? CFColors.dark : Colors.white,
         ),
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top,
@@ -240,7 +242,7 @@ class _StaffGroupState extends State<StaffGroup> {
         child: ListView.separated(
           itemBuilder: (context, index) {
             return Container(
-              color: department[index]['id'] == selectGroup['id'] ? CFColors.white : Color(0xfff5f5f5),
+//              color: department[index]['id'] == selectGroup['id'] ? CFColors.white : Color(0xfff5f5f5),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -427,10 +429,11 @@ class _StaffGroupState extends State<StaffGroup> {
                                                                 horizontal: 4,
                                                               ),
                                                               decoration: BoxDecoration(
-                                                                  color:
-                                                                      '${item3['ck']}' == '1' && '${item3['kp']}' == '1'
-                                                                          ? Color(0xffFFFCED)
-                                                                          : Colors.white),
+//                                                                  color:
+//                                                                      '${item3['ck']}' == '1' && '${item3['kp']}' == '1'
+//                                                                          ? Color(0xffFFFCED)
+//                                                                          : Colors.white,
+                                                              ),
                                                               child: InkWell(
                                                                 onTap: () {
                                                                   setState(() {

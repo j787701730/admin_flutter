@@ -45,7 +45,6 @@ class _UserMessageModifyState extends State<UserMessageModify> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('${widget.props['login_name']} 信息修改'),
       ),

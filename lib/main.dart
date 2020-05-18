@@ -24,6 +24,7 @@ import 'package:admin_flutter/base/maintain.dart';
 import 'package:admin_flutter/base/phone-menus.dart';
 import 'package:admin_flutter/base/shop-menus.dart';
 import 'package:admin_flutter/base/sitemap.dart';
+import 'package:admin_flutter/cf-provider.dart';
 import 'package:admin_flutter/erp/added_services.dart';
 import 'package:admin_flutter/erp/erp_config.dart';
 import 'package:admin_flutter/erp/erp_crm.dart';
@@ -60,9 +61,9 @@ import 'package:admin_flutter/opt/board_cut_configs.dart';
 import 'package:admin_flutter/opt/board_cut_user_grant.dart';
 import 'package:admin_flutter/opt/opt_config.dart';
 import 'package:admin_flutter/opt/opt_list.dart';
+import 'package:admin_flutter/rebate/cad_distributor.dart';
 import 'package:admin_flutter/rebate/rebate_authorize.dart';
 import 'package:admin_flutter/rebate/rebate_city_sales.dart';
-import 'package:admin_flutter/rebate/cad_distributor.dart';
 import 'package:admin_flutter/rebate/rebate_distributor.dart';
 import 'package:admin_flutter/rebate/rebate_list.dart';
 import 'package:admin_flutter/rebate/rebate_rates.dart';
@@ -88,31 +89,97 @@ import 'package:admin_flutter/users/add.dart';
 import 'package:admin_flutter/users/manager.dart';
 import 'package:admin_flutter/users/users__cert.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:admin_flutter/app-settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CFProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
+}
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeData _buildDarkTheme() {
+    final ThemeData base = ThemeData(
+      brightness: Brightness.dark,
+      cupertinoOverrideTheme: CupertinoThemeData(
+        brightness: Brightness.dark,
+      ),
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      platform: TargetPlatform.iOS,
+      textTheme: TextTheme(
+        subtitle2: TextStyle(
+          textBaseline: TextBaseline.alphabetic,
+        ),
+      ),
+    );
+    return base;
+  }
+
+  ThemeData _buildLightTheme() {
+    final ThemeData base = ThemeData(
+      brightness: Brightness.light,
+      cupertinoOverrideTheme: CupertinoThemeData(
+        brightness: Brightness.light,
+      ),
+      primarySwatch: Colors.blue,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      platform: TargetPlatform.iOS,
+      textTheme: TextTheme(
+        subtitle2: TextStyle(
+          textBaseline: TextBaseline.alphabetic,
+        ),
+      ),
+    );
+    return base;
+  }
+
+  int themeMode;
+
+  _getThemeMode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int themeMode = prefs.getInt('themeMode') ?? 0;
+    context.read<CFProvider>().changeThemeMode(themeMode);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getThemeMode();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '后台管理系统',
-      theme: ThemeData(
-        platform: TargetPlatform.iOS,
-        textTheme: TextTheme(
-//          subhead: TextStyle(
-//            textBaseline: TextBaseline.alphabetic, // TextField hintText 居中
-//          ),
-          subtitle1: TextStyle(
-            textBaseline: TextBaseline.alphabetic, // TextField hintText 居中
-          ),
-        ),
-      ),
+      themeMode: context.watch<CFProvider>().themeMode,
+      theme: _buildLightTheme(),
+      darkTheme: _buildDarkTheme(),
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+      home: ColorFiltered(
+        colorFilter: ColorFilter.mode(
+          context.watch<CFProvider>().colorFilter,
+          BlendMode.color,
+        ),
+        child: MyHomePage(),
+      ),
       routes: <String, WidgetBuilder>{
         '/home': (_) => MyHomePage(),
+        '/AppSettings': (_) => AppSettings(),
         '/login': (_) => Login(),
         '/articleList': (_) => ArticleList(), // 文章列表
         '/staffDepartment': (_) => StaffDepartment(), // 组织架构

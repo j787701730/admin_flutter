@@ -238,6 +238,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('后台管理系统'),
+          centerTitle: true,
           actions: <Widget>[
             isLogin
                 ? PopupMenuButton(
@@ -307,6 +308,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 : Container(
                     width: 0,
                   ),
+            InkWell(
+              child: Container(
+                width: 56,
+                child: Center(
+                  child: Icon(
+                    Icons.settings,
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, '/AppSettings');
+              },
+            ),
           ],
         ),
         body: !isLogin
@@ -335,7 +349,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   Container(
                     height: 34,
                     decoration: BoxDecoration(
-                      color: Color(0xffeeeeee),
                       borderRadius: BorderRadius.all(
                         Radius.circular(44),
                       ),
@@ -350,7 +363,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           Icons.search,
                         ),
                         border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
+                          borderSide: BorderSide(),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
                         ),
                         contentPadding: EdgeInsets.only(
                           top: 6,
@@ -396,7 +412,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 '${item['name']}',
                                                 style: TextStyle(
                                                   fontSize: CFFontSize.content,
-                                                  color: CFColors.text,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -420,10 +435,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                                             EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
                                                         child: Text(
                                                           '${child['name']}',
-                                                          style: TextStyle(
-                                                            fontSize: CFFontSize.content,
-                                                            color: child['path'] == null ? Colors.black : Colors.blue,
-                                                          ),
+                                                          style: child['path'] == null
+                                                              ? TextStyle(
+                                                                  fontSize: CFFontSize.content,
+                                                                )
+                                                              : TextStyle(
+                                                                  fontSize: CFFontSize.content,
+                                                                  color: Colors.blue,
+                                                                ),
                                                         ),
                                                       ),
                                                     );

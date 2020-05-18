@@ -51,6 +51,10 @@ dependencies:
   flutter_luban: ^0.1.9+2
   # 屏幕适配
   # flutter_screenutil: 0.6.1
+  # 状态管理
+  provider: 4.1.2
+  # 缓存
+  shared_preferences: 0.5.7+2
 
 dev_dependencies:
 #  flutter_test:

@@ -211,16 +211,8 @@ class _UsersCertState extends State<UsersCert> {
                       children: ajaxData.map<Widget>((item) {
                         return Container(
                             decoration: BoxDecoration(
-                                border: Border.all(color: Color(0xffdddddd), width: 1),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey,
-                                    blurRadius: 4,
-                                    spreadRadius: -3,
-                                    offset: Offset(0, 5),
-                                  ),
-                                ]),
+                              border: Border.all(color: Color(0xffdddddd), width: 1),
+                            ),
                             margin: EdgeInsets.only(bottom: 10),
                             padding: EdgeInsets.only(top: 5, bottom: 5),
                             child: Column(
