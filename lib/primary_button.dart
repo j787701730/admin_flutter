@@ -44,7 +44,7 @@ class CFFloatingActionButton extends FloatingActionButton {
     child,
     tooltip,
     foregroundColor,
-    backgroundColor = const Color.fromARGB(55, 0, 0, 0),
+    backgroundColor,
     focusColor,
     hoverColor,
     splashColor,

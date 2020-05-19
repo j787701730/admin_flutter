@@ -594,11 +594,6 @@ class _StaffAddState extends State<StaffAdd> {
                                                             padding: EdgeInsets.symmetric(
                                                               horizontal: 4,
                                                             ),
-                                                            decoration: BoxDecoration(
-                                                                color:
-                                                                    '${item3['ck']}' == '1' && '${item3['kp']}' == '1'
-                                                                        ? Color(0xffFFFCED)
-                                                                        : Colors.white),
                                                             child: Row(
                                                               mainAxisSize: MainAxisSize.min,
                                                               children: <Widget>[
