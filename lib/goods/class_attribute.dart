@@ -136,8 +136,9 @@ class _ClassAttributeState extends State<ClassAttribute> {
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
-                                      border: Border.all(color: Color(0xffdddddd), width: 1),
-                                      color: item['attr_owner'] == '自身属性' ? Color(0xffCCFFcc) : Colors.white),
+                                    border: Border.all(color: Color(0xffdddddd), width: 1),
+                                    color: item['attr_owner'] == '自身属性' ? Colors.green : Colors.transparent,
+                                  ),
                                   margin: EdgeInsets.only(bottom: 10),
                                   padding: EdgeInsets.only(top: 5, bottom: 5),
                                   child: Column(

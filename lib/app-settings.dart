@@ -39,6 +39,13 @@ class _AppSettingsState extends State<AppSettings> {
             },
           ),
           Divider(),
+          ListTile(
+            title: Text('${context.watch<CFProvider>().colorFilter == Colors.white ? '正常模式' : '灰度模式'}'),
+            onTap: () {
+              context.read<CFProvider>().changeColorFilter();
+            },
+          ),
+          Divider(),
         ],
       ),
     );
