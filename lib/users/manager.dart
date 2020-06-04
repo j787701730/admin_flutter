@@ -198,7 +198,7 @@ class _UsersManagerState extends State<UsersManager> {
           return AlertDialog(
             title: Text(
               '${selectRow['login_name']} 用户类型修改',
-              style: TextStyle(fontSize: CFFontSize.topTitle),
+
             ),
             contentPadding: EdgeInsets.all(10),
             content: SingleChildScrollView(
@@ -455,7 +455,7 @@ class _UsersManagerState extends State<UsersManager> {
         return AlertDialog(
           title: Text(
             '系统提示',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: ListBody(

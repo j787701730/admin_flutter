@@ -107,7 +107,7 @@ class _ErpPaymentState extends State<ErpPayment> {
         return AlertDialog(
           title: Text(
             '参数解析',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: ListBody(

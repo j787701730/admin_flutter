@@ -124,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
         return AlertDialog(
           title: Text(
             '修改密码',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: Column(

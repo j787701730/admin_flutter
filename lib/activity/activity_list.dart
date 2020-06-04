@@ -115,7 +115,6 @@ class _ActivityListState extends State<ActivityList> {
         return AlertDialog(
           title: Text(
             '${item['activity_name']} 抽奖规则',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -159,7 +158,6 @@ class _ActivityListState extends State<ActivityList> {
         return AlertDialog(
           title: Text(
             '${item['activity_name']} 奖品',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -236,7 +234,6 @@ class _ActivityListState extends State<ActivityList> {
         return AlertDialog(
           title: Text(
             '提示',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
           ),
           content: SingleChildScrollView(
             child: Container(

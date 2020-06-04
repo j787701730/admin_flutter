@@ -110,7 +110,6 @@ class _PhoneMenusState extends State<PhoneMenus> {
         return AlertDialog(
           title: Text(
             '信息',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -151,7 +150,7 @@ class _PhoneMenusState extends State<PhoneMenus> {
           return AlertDialog(
             title: Text(
               '移动',
-              style: TextStyle(fontSize: CFFontSize.topTitle),
+
             ),
             content: Container(
               height: 50,
@@ -217,7 +216,7 @@ class _PhoneMenusState extends State<PhoneMenus> {
         return AlertDialog(
           title: Text(
             '信息',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: Container(

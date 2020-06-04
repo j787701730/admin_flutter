@@ -142,7 +142,6 @@ class _ExtractConfigState extends State<ExtractConfig> {
         return AlertDialog(
           title: Text(
             '信息',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
           ),
           content: SingleChildScrollView(
             child: Container(

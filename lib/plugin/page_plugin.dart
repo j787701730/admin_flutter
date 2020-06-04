@@ -19,24 +19,34 @@ class PagePlugin extends StatelessWidget {
           width: (total / pageSize).ceil() > 1.0 ? 10 : 0,
         ),
         current > 1
-            ? PrimaryButton(
-                onPressed: () {
-                  function(-1);
-                },
-                child: Text('上一页'),
+            ? Container(
+                height: 30,
+                child: PrimaryButton(
+                  onPressed: () {
+                    function(-1);
+                  },
+                  child: Text('上一页'),
+                ),
               )
-            : Container(width: 0,),
+            : Container(
+                width: 0,
+              ),
         Container(
           width: current == 1 || current == (total / pageSize).ceil() ? 0 : 10,
         ),
         current < (total / pageSize).ceil()
-            ? PrimaryButton(
-                onPressed: () {
-                  function(1);
-                },
-                child: Text('下一页'),
+            ? Container(
+                height: 30,
+                child: PrimaryButton(
+                  onPressed: () {
+                    function(1);
+                  },
+                  child: Text('下一页'),
+                ),
               )
-            : Container(width: 0,)
+            : Container(
+                width: 0,
+              )
       ],
     );
   }

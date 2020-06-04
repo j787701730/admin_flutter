@@ -142,7 +142,7 @@ class _CadUserRelationState extends State<CadUserRelation> {
         return AlertDialog(
           title: Text(
             '提示',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: ListBody(

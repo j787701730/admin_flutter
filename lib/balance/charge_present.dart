@@ -145,7 +145,6 @@ class _ChargePresentState extends State<ChargePresent> {
         return AlertDialog(
           title: Text(
             '信息',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
           ),
           content: SingleChildScrollView(
             child: Container(

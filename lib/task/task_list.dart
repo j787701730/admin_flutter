@@ -128,7 +128,7 @@ class _TaskListState extends State<TaskList> {
         return AlertDialog(
           title: Text(
             '信息',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: Container(

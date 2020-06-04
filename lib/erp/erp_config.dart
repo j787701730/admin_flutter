@@ -114,7 +114,7 @@ class _ErpConfigState extends State<ErpConfig> {
           return AlertDialog(
             title: Text(
               '信息',
-              style: TextStyle(fontSize: CFFontSize.topTitle),
+
             ),
             content: SingleChildScrollView(
               child: ListBody(

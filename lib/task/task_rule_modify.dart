@@ -133,7 +133,7 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
           return AlertDialog(
             title: Text(
               '等级图片',
-              style: TextStyle(fontSize: CFFontSize.topTitle),
+
             ),
             content: SingleChildScrollView(
               child: Container(

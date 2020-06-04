@@ -109,7 +109,7 @@ class _CadAdminsState extends State<CadAdmins> {
         return AlertDialog(
           title: Text(
             '${data['name']} 修改',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: ListBody(
@@ -168,7 +168,7 @@ class _CadAdminsState extends State<CadAdmins> {
         return AlertDialog(
           title: Text(
             '提示',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: ListBody(

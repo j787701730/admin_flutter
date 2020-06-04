@@ -109,7 +109,7 @@ class _RedPacketState extends State<RedPacket> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('红包列表', style: TextStyle(fontSize: CFFontSize.topTitle)),
+          title: Text('红包列表',),
           content: Container(
             width: MediaQuery.of(context).size.width - 100,
             child: SingleChildScrollView(

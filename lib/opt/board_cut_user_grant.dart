@@ -138,7 +138,7 @@ class _BoardCutUserGrantState extends State<BoardCutUserGrant> {
         return AlertDialog(
           title: Text(
             '信息',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: Container(

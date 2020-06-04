@@ -118,7 +118,7 @@ class _StaffGroupState extends State<StaffGroup> {
         return AlertDialog(
           title: Text(
             '信息',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -158,7 +158,7 @@ class _StaffGroupState extends State<StaffGroup> {
         return AlertDialog(
           title: Text(
             '信息',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: Container(

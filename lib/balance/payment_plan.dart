@@ -208,7 +208,6 @@ class _PaymentPlanState extends State<PaymentPlan> {
         return AlertDialog(
           title: Text(
             '提示',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -250,7 +249,6 @@ class _PaymentPlanState extends State<PaymentPlan> {
         return AlertDialog(
           title: Text(
             '修改支付方案类型',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
           ),
           content: SingleChildScrollView(
             child: Container(

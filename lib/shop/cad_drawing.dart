@@ -166,7 +166,7 @@ class _CadDrawingState extends State<CadDrawing> {
         return AlertDialog(
           title: Text(
             '提示',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: ListBody(

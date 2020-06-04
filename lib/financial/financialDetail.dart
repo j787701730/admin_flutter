@@ -130,7 +130,7 @@ class _FinancialDetailState extends State<FinancialDetail> {
         return AlertDialog(
           title: Text(
             '${item['order_no']} 详情',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: ListBody(

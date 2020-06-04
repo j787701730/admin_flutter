@@ -123,7 +123,7 @@ class _BalanceExtractState extends State<BalanceExtract> {
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('信息', style: TextStyle(fontSize: CFFontSize.topTitle)),
+            title: Text('信息',),
             content: Container(
               width: MediaQuery.of(context).size.width - 100,
               child: SingleChildScrollView(
@@ -165,7 +165,6 @@ class _BalanceExtractState extends State<BalanceExtract> {
         return AlertDialog(
           title: Text(
             '确定${type == '1' ? '' : ' 取消'} ${item['login_name']} 提现?',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
           ),
           content: Container(
             width: MediaQuery.of(context).size.width - 100,

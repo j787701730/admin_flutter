@@ -160,7 +160,7 @@ class _SupplyClassState extends State<SupplyClass> {
                               return AlertDialog(
                                 title: Text(
                                   '信息',
-                                  style: TextStyle(fontSize: CFFontSize.topTitle),
+
                                 ),
                                 content: SingleChildScrollView(
                                   child: ListBody(

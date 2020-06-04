@@ -219,7 +219,7 @@ class _ShopListState extends State<ShopList> {
         return AlertDialog(
           title: Text(
             '系统提示',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: ListBody(
@@ -285,7 +285,7 @@ class _ShopListState extends State<ShopList> {
           return AlertDialog(
             title: Text(
               '权限管理',
-              style: TextStyle(fontSize: CFFontSize.topTitle),
+
             ),
             content: SingleChildScrollView(
               child: ListBody(

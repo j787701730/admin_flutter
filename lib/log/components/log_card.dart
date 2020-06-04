@@ -1,8 +1,7 @@
-import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:html/dom.dart' as dom;
+import 'package:flutter_html/style.dart';
 
 class LogCard extends StatelessWidget {
   /// 项目的列信息
@@ -39,40 +38,42 @@ class LogCard extends StatelessWidget {
         return AlertDialog(
           title: Text(
             '参数解析',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
           ),
           content: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 Container(
-                  height: 1,
                   width: MediaQuery.of(_context).size.width - 100,
+                  child: Html(
+                    data: jsonMsg(data),
+                    style: {
+                      'p': Style(
+                        padding: EdgeInsets.zero,
+                      ),
+                      'em': Style(
+                        color: Color(0xff204a87),
+                        fontStyle: FontStyle.normal,
+                        fontSize: FontSize.smaller,
+                      ),
+                      'span': Style(
+                        color: Color(0xff204a87),
+                        fontStyle: FontStyle.normal,
+                        fontSize: FontSize.smaller,
+                      ),
+                      'strong': Style(
+                        color: Color(0xff4e9a06),
+                        fontStyle: FontStyle.normal,
+                        fontSize: FontSize.smaller,
+                      ),
+                      'i': Style(
+                        color: Color(0xff333333),
+                        fontStyle: FontStyle.normal,
+                        fontSize: FontSize.smaller,
+                      ),
+                    },
+                    shrinkWrap: true,
+                  ),
                 ),
-                Html(
-                  data: jsonMsg(data.replaceAll(RegExp(r"\n", multiLine: true), '')),
-                  customTextStyle: (dom.Node node, TextStyle baseStyle) {
-                    if (node is dom.Element) {
-                      switch (node.localName) {
-                        case "em":
-                          return baseStyle.merge(TextStyle(
-                            color: Color(0xff204a87),
-                            fontStyle: FontStyle.normal,
-                          ));
-                        case "strong":
-                          return baseStyle.merge(TextStyle(
-                            color: Color(0xff4e9a06),
-                            fontStyle: FontStyle.normal,
-                          ));
-                        case "i":
-                          return baseStyle.merge(TextStyle(
-                            color: Color(0xff333333),
-                            fontStyle: FontStyle.normal,
-                          ));
-                      }
-                    }
-                    return baseStyle;
-                  },
-                )
               ],
             ),
           ),

@@ -257,7 +257,6 @@ class _ChargeCardState extends State<ChargeCard> {
                               return AlertDialog(
                                 title: Text(
                                   '充值卡制作',
-                                  style: TextStyle(fontSize: CFFontSize.topTitle),
                                 ),
                                 content: SingleChildScrollView(
                                   child: ListBody(
@@ -351,17 +350,25 @@ class _ChargeCardState extends State<ChargeCard> {
                                             ),
                                             Expanded(
                                               flex: 1,
-                                              child: TextField(
-                                                style: TextStyle(fontSize: CFFontSize.content),
-                                                controller: TextEditingController(text: setCardCount),
-                                                decoration: InputDecoration(
-                                                    border: OutlineInputBorder(),
-                                                    contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15,right: 15,)),
-                                                onChanged: (String val) {
-                                                  setState(() {
-                                                    setCardCount = val;
-                                                  });
-                                                },
+                                              child: Container(
+                                                height: 34,
+                                                child: TextField(
+                                                  style: TextStyle(fontSize: CFFontSize.content),
+                                                  controller: TextEditingController(text: setCardCount),
+                                                  decoration: InputDecoration(
+                                                      border: OutlineInputBorder(),
+                                                      contentPadding: EdgeInsets.only(
+                                                        top: 6,
+                                                        bottom: 6,
+                                                        left: 15,
+                                                        right: 15,
+                                                      )),
+                                                  onChanged: (String val) {
+                                                    setState(() {
+                                                      setCardCount = val;
+                                                    });
+                                                  },
+                                                ),
                                               ),
                                             )
                                           ],
@@ -431,7 +438,6 @@ class _ChargeCardState extends State<ChargeCard> {
                                 return AlertDialog(
                                   title: Text(
                                     '赠送充值卡',
-                                    style: TextStyle(fontSize: CFFontSize.topTitle),
                                   ),
                                   content: SingleChildScrollView(
                                     child: ListBody(

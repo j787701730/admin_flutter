@@ -130,7 +130,7 @@ class _TaskPricingState extends State<TaskPricing> {
         return AlertDialog(
           title: Text(
             '${modifyItem['user_name']} 任务定价修改',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
+
           ),
           content: SingleChildScrollView(
             child: Container(

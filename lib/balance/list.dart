@@ -134,7 +134,6 @@ class _BalanceListState extends State<BalanceList> {
         return AlertDialog(
           title: Text(
             '系统提示',
-            style: TextStyle(fontSize: CFFontSize.topTitle),
           ),
           content: SingleChildScrollView(
             child: ListBody(

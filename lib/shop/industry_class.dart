@@ -174,7 +174,7 @@ class _IndustryClassState extends State<IndustryClass> {
                               return AlertDialog(
                                 title: Text(
                                   '信息',
-                                  style: TextStyle(fontSize: CFFontSize.topTitle),
+
                                 ),
                                 content: SingleChildScrollView(
                                   child: ListBody(
