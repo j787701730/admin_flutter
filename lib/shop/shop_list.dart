@@ -555,23 +555,26 @@ class _ShopListState extends State<ShopList> {
                                       );
                                       break;
                                     case 'state':
-                                      con = Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Container(
-                                          width: 60,
-                                          height: 22,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xff5cb85c),
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(4),
+                                      con = Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 60,
+                                            height: 26,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xff5cb85c),
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(4),
+                                              ),
+                                            ),
+                                            child: Text(
+                                              '${shopState[item['state']]}',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
                                             ),
                                           ),
-                                          child: Text(
-                                            '${shopState[item['state']]}',
-                                            style: TextStyle(color: Colors.white),
-                                          ),
-                                        ),
+                                        ],
                                       );
                                       break;
                                     case 'role_id':

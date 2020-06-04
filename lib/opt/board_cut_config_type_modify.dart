@@ -262,7 +262,6 @@ class _BoardCutConfigTypeModifyState extends State<BoardCutConfigTypeModify> {
                   child: Row(
                     children: <Widget>[
                       Container(
-                        height: 34,
                         child: PrimaryButton(
                           onPressed: () {},
                           child: Text('保存'),

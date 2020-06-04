@@ -145,7 +145,6 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                 ),
                 widget.props == null
                     ? Container(
-                        height: 34,
                         width: 70,
                         child: PrimaryButton(
                           onPressed: () {
@@ -255,7 +254,6 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                 widget.props == null
                     ? Container(
                         width: 70,
-                        height: 34,
                         child: PrimaryButton(
                           onPressed: () {
                             Navigator.push(

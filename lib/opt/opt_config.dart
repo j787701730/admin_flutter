@@ -168,17 +168,14 @@ class _OptConfigState extends State<OptConfig> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 34,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
-                  )
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
+                  ),
                 ],
               ),
             ),

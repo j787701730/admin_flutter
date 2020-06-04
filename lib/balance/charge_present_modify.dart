@@ -143,7 +143,12 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                       ),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),
+                        contentPadding: EdgeInsets.only(
+                          top: 0,
+                          bottom: 0,
+                          left: 15,
+                          right: 15,
+                        ),
                       ),
                       onChanged: (String val) {
                         setState(() {
@@ -181,7 +186,12 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                       ),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),
+                        contentPadding: EdgeInsets.only(
+                          top: 0,
+                          bottom: 0,
+                          left: 15,
+                          right: 15,
+                        ),
                       ),
                       onChanged: (String val) {
                         setState(() {
@@ -233,7 +243,9 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                         padding: EdgeInsets.only(left: 10),
                         alignment: Alignment.centerLeft,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, ),
+                          border: Border.all(
+                            color: Colors.grey,
+                          ),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
@@ -323,7 +335,13 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                         ),
                       )),
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,)),
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.only(
+                            top: 0,
+                            bottom: 0,
+                            left: 15,
+                            right: 15,
+                          )),
                       onChanged: (String val) {
                         setState(() {
                           param['rule_name'] = val;
@@ -392,16 +410,13 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                     flex: 1,
                     child: Row(
                       children: <Widget>[
-                        Container(
-                          height: 34,
-                          child: PrimaryButton(
-                            onPressed: () {
-                              print(param);
-                              FocusScope.of(context).requestFocus(FocusNode());
-                            },
-                            child: Text('保存'),
-                          ),
-                        )
+                        PrimaryButton(
+                          onPressed: () {
+                            print(param);
+                            FocusScope.of(context).requestFocus(FocusNode());
+                          },
+                          child: Text('保存'),
+                        ),
                       ],
                     ),
                   ),

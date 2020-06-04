@@ -224,21 +224,22 @@ class _TaskRulesState extends State<TaskRules> {
 //                                  ),
 //                                ),
                                   height: 34,
-                                  child: RichText(
-                                    text: TextSpan(
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: '${item['role_ch_name']}',
+                                  child: Row(
+                                    children: <Widget>[
+                                      Text(
+                                        '${item['role_ch_name']}',
+                                        style: TextStyle(
+                                          color: Colors.blue,
                                         ),
-                                        TextSpan(
-                                            text: '(${item['comments']})',
-                                            style: TextStyle(
-                                              fontSize: CFFontSize.tabBar,
-                                              color: Color(0xff999999),
-                                            )),
-                                      ],
-                                      style: TextStyle(color: Colors.blue, fontSize: CFFontSize.content),
-                                    ),
+                                      ),
+                                      Text(
+                                        '(${item['comments']})',
+                                        style: TextStyle(
+                                          color: Color(0xff999999),
+                                          fontSize: CFFontSize.tabBar,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               );

@@ -229,6 +229,7 @@ class _ChargeCardState extends State<ChargeCard> {
               child: Wrap(
                 spacing: 10,
                 runSpacing: 10,
+                alignment: WrapAlignment.center,
                 children: <Widget>[
                   PrimaryButton(
                     onPressed: () {

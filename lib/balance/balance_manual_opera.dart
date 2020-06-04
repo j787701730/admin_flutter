@@ -444,7 +444,6 @@ class _BalanceManualOperaState extends State<BalanceManualOpera> {
                             ),
                             Container(
                               margin: EdgeInsets.only(top: 10),
-                              height: 34,
                               child: PrimaryButton(
                                 onPressed: () {
                                   FocusScope.of(context).requestFocus(FocusNode());

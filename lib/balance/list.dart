@@ -347,9 +347,6 @@ class _BalanceListState extends State<BalanceList> {
                 ),
               ],
             ),
-            Container(
-              height: 15,
-            ),
             loading
                 ? CupertinoActivityIndicator()
                 : ajaxData.isEmpty
@@ -374,40 +371,34 @@ class _BalanceListState extends State<BalanceList> {
                                       spacing: 10,
                                       children: <Widget>[
                                         Text('用户: ${ajaxData[key]['login_name']}(${ajaxData[key]['user_phone']})'),
-                                        SizedBox(
-                                          height: 26,
-                                          child: PrimaryButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                balanceCheckParam = {'userId': '$key', 'acctBalanceID': '0'};
-                                                balanceCheck();
-                                              });
-                                            },
-                                            child: Text(
-                                              '用户稽核',
-                                            ),
+                                        PrimaryButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              balanceCheckParam = {'userId': '$key', 'acctBalanceID': '0'};
+                                              balanceCheck();
+                                            });
+                                          },
+                                          child: Text(
+                                            '用户稽核',
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: 26,
-                                          child: PrimaryButton(
-                                            onPressed: () {
-                                              Map data = {
-                                                'user': {
-                                                  '$key': {
-                                                    'user_id': '$key',
-                                                    'login_name': '${ajaxData[key]['login_name']}',
-                                                  }
-                                                },
-                                                'manualType': '5',
-                                                'manualState': '1',
-                                                'manualTypeFlag': true
-                                              };
-                                              turnTo(data);
-                                            },
-                                            child: Text(
-                                              '手工账',
-                                            ),
+                                        PrimaryButton(
+                                          onPressed: () {
+                                            Map data = {
+                                              'user': {
+                                                '$key': {
+                                                  'user_id': '$key',
+                                                  'login_name': '${ajaxData[key]['login_name']}',
+                                                }
+                                              },
+                                              'manualType': '5',
+                                              'manualState': '1',
+                                              'manualTypeFlag': true
+                                            };
+                                            turnTo(data);
+                                          },
+                                          child: Text(
+                                            '手工账',
                                           ),
                                         ),
                                       ],
@@ -501,99 +492,88 @@ class _BalanceListState extends State<BalanceList> {
                                                           runSpacing: 6,
                                                           spacing: 6,
                                                           children: <Widget>[
-                                                            Container(
-                                                              height: 26,
-                                                              child: PrimaryButton(
-                                                                onPressed: () {
-                                                                  Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                      builder: (context) => BalanceDetail({
-                                                                        'login_name': '${ajaxData[key]['login_name']}',
-                                                                        'balance_type_ch_name':
-                                                                            '${item['balance_type_ch_name']}',
-                                                                        'acct_balance_id': '${item['acct_balance_id']}',
-                                                                      }),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                                child: Text('查看'),
-                                                                padding: pad,
-                                                              ),
+                                                            PrimaryButton(
+                                                              onPressed: () {
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                    builder: (context) => BalanceDetail({
+                                                                      'login_name': '${ajaxData[key]['login_name']}',
+                                                                      'balance_type_ch_name':
+                                                                          '${item['balance_type_ch_name']}',
+                                                                      'acct_balance_id': '${item['acct_balance_id']}',
+                                                                    }),
+                                                                  ),
+                                                                );
+                                                              },
+                                                              child: Text('查看'),
+                                                              padding: pad,
                                                             ),
-                                                            Container(
-                                                              height: 26,
-                                                              child: PrimaryButton(
-                                                                  onPressed: () {
-                                                                    setState(() {
-                                                                      balanceCheckParam = {
-                                                                        'userId': '$key',
-                                                                        'acctBalanceID': '${item['acct_balance_id']}'
-                                                                      };
-                                                                      balanceCheck();
-                                                                    });
-                                                                  },
-                                                                  padding: pad,
-                                                                  child: Text('稽核')),
+                                                            PrimaryButton(
+                                                              onPressed: () {
+                                                                setState(() {
+                                                                  balanceCheckParam = {
+                                                                    'userId': '$key',
+                                                                    'acctBalanceID': '${item['acct_balance_id']}'
+                                                                  };
+                                                                  balanceCheck();
+                                                                });
+                                                              },
+                                                              padding: pad,
+                                                              child: Text('稽核'),
                                                             ),
                                                             '${item['balance_type_id']}' != '6'
-                                                                ? Container(
-                                                                    height: 26,
-                                                                    child: PrimaryButton(
-                                                                      onPressed: () {
-                                                                        Map data = {
-                                                                          'user': {
-                                                                            '$key': {
-                                                                              'user_id': '$key',
-                                                                              'login_name':
-                                                                                  '${ajaxData[key]['login_name']}',
-                                                                            }
-                                                                          },
-                                                                          'manualType': '${item['balance_type_id']}',
-                                                                          'manualState': '1'
-                                                                        };
-                                                                        Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                            builder: (context) =>
-                                                                                BalanceManualOpera(data),
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                      padding: pad,
-                                                                      child: Text('手工帐调增'),
-                                                                    ),
+                                                                ? PrimaryButton(
+                                                                    onPressed: () {
+                                                                      Map data = {
+                                                                        'user': {
+                                                                          '$key': {
+                                                                            'user_id': '$key',
+                                                                            'login_name':
+                                                                                '${ajaxData[key]['login_name']}',
+                                                                          }
+                                                                        },
+                                                                        'manualType': '${item['balance_type_id']}',
+                                                                        'manualState': '1'
+                                                                      };
+                                                                      Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                          builder: (context) =>
+                                                                              BalanceManualOpera(data),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                    padding: pad,
+                                                                    child: Text('手工帐调增'),
                                                                   )
                                                                 : Container(
                                                                     width: 0,
                                                                   ),
                                                             '${item['balance_type_id']}' != '6'
-                                                                ? Container(
-                                                                    height: 26,
-                                                                    child: PrimaryButton(
-                                                                      onPressed: () {
-                                                                        Map data = {
-                                                                          'user': {
-                                                                            '$key': {
-                                                                              'user_id': '$key',
-                                                                              'login_name':
-                                                                                  '${ajaxData[key]['login_name']}'
-                                                                            },
+                                                                ? PrimaryButton(
+                                                                    onPressed: () {
+                                                                      Map data = {
+                                                                        'user': {
+                                                                          '$key': {
+                                                                            'user_id': '$key',
+                                                                            'login_name':
+                                                                                '${ajaxData[key]['login_name']}'
                                                                           },
-                                                                          'manualType': '${item['balance_type_id']}',
-                                                                          'manualState': '2'
-                                                                        };
-                                                                        Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                            builder: (context) =>
-                                                                                BalanceManualOpera(data),
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                      padding: pad,
-                                                                      child: Text('手工帐调减'),
-                                                                    ),
+                                                                        },
+                                                                        'manualType': '${item['balance_type_id']}',
+                                                                        'manualState': '2'
+                                                                      };
+                                                                      Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                          builder: (context) =>
+                                                                              BalanceManualOpera(data),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                    padding: pad,
+                                                                    child: Text('手工帐调减'),
                                                                   )
                                                                 : Container(
                                                                     width: 0,
@@ -603,22 +583,19 @@ class _BalanceListState extends State<BalanceList> {
                                                       } else {
                                                         con = Row(
                                                           children: <Widget>[
-                                                            SizedBox(
-                                                              height: 26,
-                                                              child: PrimaryButton(
-                                                                onPressed: () {
-                                                                  Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                      builder: (context) => BalanceRedBagDetail(
-                                                                        {'item': item},
-                                                                      ),
+                                                            PrimaryButton(
+                                                              onPressed: () {
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                    builder: (context) => BalanceRedBagDetail(
+                                                                      {'item': item},
                                                                     ),
-                                                                  );
-                                                                },
-                                                                padding: pad,
-                                                                child: Text('详情'),
-                                                              ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                              padding: pad,
+                                                              child: Text('详情'),
                                                             )
                                                           ],
                                                         );

@@ -413,12 +413,9 @@ class _BoardCutConfigsModifyState extends State<BoardCutConfigsModify> {
                   flex: 1,
                   child: Row(
                     children: <Widget>[
-                      Container(
-                        height: 34,
-                        child: PrimaryButton(
-                          onPressed: () {},
-                          child: Text('保存'),
-                        ),
+                      PrimaryButton(
+                        onPressed: () {},
+                        child: Text('保存'),
                       ),
                     ],
                   ),
