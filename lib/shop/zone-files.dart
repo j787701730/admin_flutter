@@ -234,26 +234,17 @@ class _ZoneFilesState extends State<ZoneFiles> {
                                           runSpacing: 10,
                                           spacing: 10,
                                           children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {},
-                                                child: Text('修改'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {},
+                                              child: Text('修改'),
                                             ),
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {},
-                                                child: Text('${item['state'].toString() == '1' ? '下架' : '上架'}'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {},
+                                              child: Text('${item['state'].toString() == '1' ? '下架' : '上架'}'),
                                             ),
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {},
-                                                child: Text('${item['state'].toString() == '1' ? '冻结' : '解冻'}'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {},
+                                              child: Text('${item['state'].toString() == '1' ? '冻结' : '解冻'}'),
                                             ),
                                           ],
                                         );

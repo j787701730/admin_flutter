@@ -260,29 +260,23 @@ class _InvoiceListState extends State<InvoiceList> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        print(param);
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      print(param);
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      color: CFColors.success,
-                      onPressed: () {
-                        setState(() {
-                          isExpandedFlag = !isExpandedFlag;
-                        });
-                      },
-                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                    ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),
@@ -332,24 +326,21 @@ class _InvoiceListState extends State<InvoiceList> {
                                         case 'option':
                                           con = Row(
                                             children: <Widget>[
-                                              SizedBox(
-                                                height: 30,
-                                                child: PrimaryButton(
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) => InvoiceDetail({
-                                                          'invoice_id': '${item['invoice_id']}',
-                                                          'login_name': '${item['login_name']}',
-                                                          'shop_name': '${item['shop_name']}',
-                                                          'invoice_state': '${item['invoice_state']}',
-                                                        }),
-                                                      ),
-                                                    );
-                                                  },
-                                                  child: Text(item['invoice_state'] == '1' ? '开票' : '查看'),
-                                                ),
+                                              PrimaryButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => InvoiceDetail({
+                                                        'invoice_id': '${item['invoice_id']}',
+                                                        'login_name': '${item['login_name']}',
+                                                        'shop_name': '${item['shop_name']}',
+                                                        'invoice_state': '${item['invoice_state']}',
+                                                      }),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Text(item['invoice_state'] == '1' ? '开票' : '查看'),
                                               ),
                                             ],
                                           );

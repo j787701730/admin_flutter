@@ -175,14 +175,12 @@ class _BalanceChargeState extends State<BalanceCharge> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(
-                        height: 30,
-                        child: PrimaryButton(
-                            onPressed: () {
-                              param['curr_page'] = 1;
-                              getData();
-                            },
-                            child: Text('搜索'),),
+                      PrimaryButton(
+                        onPressed: () {
+                          param['curr_page'] = 1;
+                          getData();
+                        },
+                        child: Text('搜索'),
                       ),
                     ],
                   ),

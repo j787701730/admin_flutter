@@ -142,27 +142,21 @@ class _BalancePricingState extends State<BalancePricing> {
               spacing: 10,
               runSpacing: 10,
               children: <Widget>[
-                SizedBox(
-                  height: 30,
-                  child: PrimaryButton(
-                    onPressed: () {
-                      param['currPage'] = 1;
-                      getData();
-                    },
-                    child: Text('搜索'),
-                  ),
+                PrimaryButton(
+                  onPressed: () {
+                    param['currPage'] = 1;
+                    getData();
+                  },
+                  child: Text('搜索'),
                 ),
-                SizedBox(
-                  height: 30,
-                  child: PrimaryButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PricePlan(null)),
-                      );
-                    },
-                    child: Text('添加新用户定价计划'),
-                  ),
+                PrimaryButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PricePlan(null)),
+                    );
+                  },
+                  child: Text('添加新用户定价计划'),
                 ),
               ],
             ),
@@ -201,77 +195,71 @@ class _BalancePricingState extends State<BalancePricing> {
                                 con = Wrap(
                                   spacing: 10,
                                   children: <Widget>[
-                                    SizedBox(
-                                      height: 30,
-                                      child: PrimaryButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => PricePlan(
-                                                {
-                                                  'item': {
-                                                    'login_name': '${item['login_name']}',
-                                                    'pricing_id': '${item['pricing_id']}'
-                                                  }
-                                                },
-                                              ),
+                                    PrimaryButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => PricePlan(
+                                              {
+                                                'item': {
+                                                  'login_name': '${item['login_name']}',
+                                                  'pricing_id': '${item['pricing_id']}'
+                                                }
+                                              },
                                             ),
-                                          );
-                                        },
-                                        child: Text('修改'),
-                                      ),
+                                          ),
+                                        );
+                                      },
+                                      child: Text('修改'),
                                     ),
-                                    SizedBox(
-                                      height: 30,
-                                      child: PrimaryButton(
-                                        onPressed: () {
-                                          showDialog<void>(
-                                            context: _context,
-                                            barrierDismissible: false, // user must tap button!
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: Text(
-                                                  '系统提示',
+                                    PrimaryButton(
+                                      onPressed: () {
+                                        showDialog<void>(
+                                          context: _context,
+                                          barrierDismissible: false, // user must tap button!
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                '系统提示',
+                                              ),
+                                              content: SingleChildScrollView(
+                                                child: ListBody(
+                                                  children: <Widget>[
+                                                    Text(
+                                                      '确定删除 ${item['login_name']} 的定价计划?',
+                                                      style: TextStyle(fontSize: CFFontSize.content),
+                                                    ),
+                                                  ],
                                                 ),
-                                                content: SingleChildScrollView(
-                                                  child: ListBody(
-                                                    children: <Widget>[
-                                                      Text(
-                                                        '确定删除 ${item['login_name']} 的定价计划?',
-                                                        style: TextStyle(fontSize: CFFontSize.content),
-                                                      ),
-                                                    ],
-                                                  ),
+                                              ),
+                                              actions: <Widget>[
+                                                FlatButton(
+                                                  child: Text('取消'),
+                                                  color: Colors.white,
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
                                                 ),
-                                                actions: <Widget>[
-                                                  FlatButton(
-                                                    child: Text('取消'),
-                                                    color: Colors.white,
-                                                    onPressed: () {
-                                                      Navigator.of(context).pop();
-                                                    },
-                                                  ),
-                                                  FlatButton(
-                                                    color: Colors.blue,
-                                                    textColor: Colors.white,
-                                                    child: Text('确定'),
-                                                    onPressed: () {
-                                                      Navigator.of(context).pop();
+                                                FlatButton(
+                                                  color: Colors.blue,
+                                                  textColor: Colors.white,
+                                                  child: Text('确定'),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
 //                                                      ajax('Adminrelas-Balance-balanceCheck', balanceCheckParam, true, (
 //                                                          data) {
 //
 //                                                      }, () {}, _context);
-                                                    },
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        },
-                                        child: Text('删除'),
-                                        type: 'error',
-                                      ),
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Text('删除'),
+                                      type: 'error',
                                     ),
                                   ],
                                 );

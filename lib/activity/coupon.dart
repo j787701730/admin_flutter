@@ -597,37 +597,28 @@ class _CouponState extends State<Coupon> {
                                             runSpacing: 10,
                                             spacing: 10,
                                             children: <Widget>[
-                                              Container(
-                                                height: 30,
-                                                child: PrimaryButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      modifyItem = jsonDecode(jsonEncode(item));
-                                                      modifyDialog();
-                                                    });
-                                                  },
-                                                  child: Text('修改'),
-                                                ),
+                                              PrimaryButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    modifyItem = jsonDecode(jsonEncode(item));
+                                                    modifyDialog();
+                                                  });
+                                                },
+                                                child: Text('修改'),
                                               ),
                                               '${item['state']}' == '1'
-                                                  ? Container(
-                                                      height: 30,
-                                                      child: PrimaryButton(
-                                                        onPressed: () {
-                                                          stateDialog(item);
-                                                        },
-                                                        child: Text('关闭'),
-                                                        type: 'error',
-                                                      ),
+                                                  ? PrimaryButton(
+                                                      onPressed: () {
+                                                        stateDialog(item);
+                                                      },
+                                                      child: Text('关闭'),
+                                                      type: 'error',
                                                     )
-                                                  : Container(
-                                                      height: 30,
-                                                      child: PrimaryButton(
-                                                        onPressed: () {
-                                                          stateDialog(item);
-                                                        },
-                                                        child: Text('开启'),
-                                                      ),
+                                                  : PrimaryButton(
+                                                      onPressed: () {
+                                                        stateDialog(item);
+                                                      },
+                                                      child: Text('开启'),
                                                     ),
                                             ],
                                           );

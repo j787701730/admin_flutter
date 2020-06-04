@@ -354,14 +354,11 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
                                                     runSpacing: 10,
                                                     spacing: 10,
                                                     children: <Widget>[
-                                                      Container(
-                                                        height: 30,
-                                                        child: PrimaryButton(
-                                                          onPressed: () {
-                                                            turnTo(item);
-                                                          },
-                                                          child: Text('查看'),
-                                                        ),
+                                                      PrimaryButton(
+                                                        onPressed: () {
+                                                          turnTo(item);
+                                                        },
+                                                        child: Text('查看'),
                                                       ),
                                                     ],
                                                   );

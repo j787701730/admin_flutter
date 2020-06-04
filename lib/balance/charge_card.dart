@@ -230,33 +230,200 @@ class _ChargeCardState extends State<ChargeCard> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        setState(() {
-                          param['curr_page'] = 1;
-                          getData();
-                        });
-                      },
-                      child: Text(
-                        '搜索',
-                      ),
+                  PrimaryButton(
+                    onPressed: () {
+                      setState(() {
+                        param['curr_page'] = 1;
+                        getData();
+                      });
+                    },
+                    child: Text(
+                      '搜索',
                     ),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        showDialog<void>(
-                          context: context,
-                          barrierDismissible: false, // user must tap button!
-                          builder: (BuildContext context) {
-                            return StatefulBuilder(builder: (context1, state) {
+                  PrimaryButton(
+                    onPressed: () {
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return StatefulBuilder(builder: (context1, state) {
+                            /// 这里的state就是setState
+                            return AlertDialog(
+                              title: Text(
+                                '充值卡制作',
+                              ),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: <Widget>[
+                                    Container(
+                                      width: width - 100,
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 90,
+                                            alignment: Alignment.centerRight,
+                                            child: Text(
+                                              '卡类型:',
+                                              style: TextStyle(fontSize: CFFontSize.content),
+                                            ),
+                                            margin: EdgeInsets.only(right: 10),
+                                          ),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(color: Colors.grey),
+                                                  borderRadius: BorderRadius.all(Radius.circular(4))),
+                                              height: 34,
+                                              child: DropdownButton<String>(
+                                                isExpanded: true,
+                                                elevation: 1,
+                                                underline: Container(),
+                                                value: selectCardType,
+                                                onChanged: (String newValue) {
+                                                  setState(() {
+                                                    selectCardType = newValue;
+                                                  });
+
+                                                  state(() {
+                                                    selectCardType = newValue;
+                                                  });
+                                                },
+                                                items: cardType.keys.toList().map<DropdownMenuItem<String>>((item) {
+                                                  return DropdownMenuItem(
+                                                    value: '$item',
+                                                    child: Container(
+                                                      padding: EdgeInsets.only(left: 10),
+                                                      child: Text(
+                                                        '${cardType[item]['type_ch_name']}',
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(fontSize: CFFontSize.content),
+                                                      ),
+                                                    ),
+                                                  );
+                                                }).toList(),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width - 100,
+                                      child: Select(
+                                        selectOptions: cardValue,
+                                        selectedValue: selectCardValue,
+                                        label: '面值类型:',
+                                        onChanged: (String newValue) {
+                                          setState(() {
+                                            selectCardValue = newValue;
+                                          });
+
+                                          state(() {
+                                            selectCardValue = newValue;
+                                          });
+                                        },
+                                        labelWidth: 90,
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width - 100,
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 90,
+                                            alignment: Alignment.centerRight,
+                                            child: Text(
+                                              '生成数量:',
+                                              style: TextStyle(fontSize: CFFontSize.content),
+                                            ),
+                                            margin: EdgeInsets.only(right: 10),
+                                          ),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Container(
+                                              height: 34,
+                                              child: TextField(
+                                                style: TextStyle(fontSize: CFFontSize.content),
+                                                controller: TextEditingController(text: setCardCount),
+                                                decoration: InputDecoration(
+                                                    border: OutlineInputBorder(),
+                                                    contentPadding: EdgeInsets.only(
+                                                      top: 6,
+                                                      bottom: 6,
+                                                      left: 15,
+                                                      right: 15,
+                                                    )),
+                                                onChanged: (String val) {
+                                                  setState(() {
+                                                    setCardCount = val;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('取消'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                FlatButton(
+                                  color: Colors.blue,
+                                  textColor: Colors.white,
+                                  child: Text('提交'),
+                                  onPressed: () {
+                                    print([selectCardType, selectCardValue, setCardCount]);
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          }); //
+                        },
+                      );
+                    },
+                    color: Colors.green,
+                    child: Text(
+                      '制作充值卡',
+                    ),
+                  ),
+                  PrimaryButton(
+                    onPressed: () {},
+                    child: Text(
+                      '批量激活',
+                    ),
+                  ),
+                  PrimaryButton(
+                    type: 'error',
+                    onPressed: () {},
+                    child: Text(
+                      '批量作废',
+                    ),
+                  ),
+                  PrimaryButton(
+                    onPressed: () {
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return StatefulBuilder(
+                            builder: (context1, state) {
                               /// 这里的state就是setState
                               return AlertDialog(
                                 title: Text(
-                                  '充值卡制作',
+                                  '赠送充值卡',
                                 ),
                                 content: SingleChildScrollView(
                                   child: ListBody(
@@ -267,10 +434,10 @@ class _ChargeCardState extends State<ChargeCard> {
                                         child: Row(
                                           children: <Widget>[
                                             Container(
-                                              width: 90,
+                                              width: 60,
                                               alignment: Alignment.centerRight,
                                               child: Text(
-                                                '卡类型:',
+                                                '用户:',
                                                 style: TextStyle(fontSize: CFFontSize.content),
                                               ),
                                               margin: EdgeInsets.only(right: 10),
@@ -278,102 +445,79 @@ class _ChargeCardState extends State<ChargeCard> {
                                             Expanded(
                                               flex: 1,
                                               child: Container(
+                                                height: 30,
+                                                alignment: Alignment.centerLeft,
+                                                padding: EdgeInsets.only(left: 10, right: 10),
                                                 decoration: BoxDecoration(
-                                                    border: Border.all(color: Colors.grey),
-                                                    borderRadius: BorderRadius.all(Radius.circular(4))),
-                                                height: 34,
-                                                child: DropdownButton<String>(
-                                                  isExpanded: true,
-                                                  elevation: 1,
-                                                  underline: Container(),
-                                                  value: selectCardType,
-                                                  onChanged: (String newValue) {
-                                                    setState(() {
-                                                      selectCardType = newValue;
-                                                    });
-
-                                                    state(() {
-                                                      selectCardType = newValue;
-                                                    });
-                                                  },
-                                                  items: cardType.keys.toList().map<DropdownMenuItem<String>>((item) {
-                                                    return DropdownMenuItem(
-                                                      value: '$item',
-                                                      child: Container(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Text(
-                                                          '${cardType[item]['type_ch_name']}',
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow.ellipsis,
-                                                          style: TextStyle(fontSize: CFFontSize.content),
-                                                        ),
+                                                    border: Border.all(color: Color(0xffdddddd), width: 1)),
+                                                child: Wrap(
+                                                  children: selectUser.keys.toList().map<Widget>((key) {
+                                                    return Container(
+                                                      child: Stack(
+                                                        children: <Widget>[
+                                                          Container(
+                                                            padding: EdgeInsets.only(right: 20),
+                                                            child: Text(
+                                                              '${selectUser[key]['login_name']}',
+                                                              maxLines: 1,
+                                                              overflow: TextOverflow.ellipsis,
+                                                            ),
+                                                          ),
+                                                          Positioned(
+                                                            top: 0,
+                                                            right: 0,
+                                                            child: Container(
+                                                              color: Color(0xffeeeeee),
+                                                              child: InkWell(
+                                                                onTap: () {
+                                                                  setState(() {
+                                                                    selectUser.remove(key);
+                                                                  });
+                                                                },
+                                                                child: Icon(
+                                                                  Icons.clear,
+                                                                  color: Colors.red,
+                                                                  size: 20,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ],
                                                       ),
                                                     );
                                                   }).toList(),
                                                 ),
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        width: width - 100,
-                                        child: Select(
-                                          selectOptions: cardValue,
-                                          selectedValue: selectCardValue,
-                                          label: '面值类型:',
-                                          onChanged: (String newValue) {
-                                            setState(() {
-                                              selectCardValue = newValue;
-                                            });
-
-                                            state(() {
-                                              selectCardValue = newValue;
-                                            });
-                                          },
-                                          labelWidth: 90,
-                                        ),
-                                      ),
-                                      Container(
-                                        width: width - 100,
-                                        margin: EdgeInsets.only(bottom: 10),
-                                        child: Row(
-                                          children: <Widget>[
-                                            Container(
-                                              width: 90,
-                                              alignment: Alignment.centerRight,
-                                              child: Text(
-                                                '生成数量:',
-                                                style: TextStyle(fontSize: CFFontSize.content),
-                                              ),
-                                              margin: EdgeInsets.only(right: 10),
                                             ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: Container(
-                                                height: 34,
-                                                child: TextField(
-                                                  style: TextStyle(fontSize: CFFontSize.content),
-                                                  controller: TextEditingController(text: setCardCount),
-                                                  decoration: InputDecoration(
-                                                      border: OutlineInputBorder(),
-                                                      contentPadding: EdgeInsets.only(
-                                                        top: 6,
-                                                        bottom: 6,
-                                                        left: 15,
-                                                        right: 15,
-                                                      )),
-                                                  onChanged: (String val) {
-                                                    setState(() {
-                                                      setCardCount = val;
-                                                    });
-                                                  },
-                                                ),
+                                            Container(
+                                              margin: EdgeInsets.only(left: 10),
+                                              child: PrimaryButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => UserPlugin(
+                                                        userCount: 1,
+                                                        selectUsersData: selectUser,
+                                                      ),
+                                                    ),
+                                                  ).then((val) {
+                                                    if (val != null) {
+                                                      setState(() {
+                                                        selectUser = jsonDecode(jsonEncode(val));
+                                                      });
+                                                      state(() {
+                                                        selectUser = jsonDecode(jsonEncode(val));
+                                                      });
+                                                    }
+                                                  });
+                                                },
+                                                child: Text('选择用户'),
                                               ),
-                                            )
+                                            ),
                                           ],
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -389,182 +533,20 @@ class _ChargeCardState extends State<ChargeCard> {
                                     textColor: Colors.white,
                                     child: Text('提交'),
                                     onPressed: () {
-                                      print([selectCardType, selectCardValue, setCardCount]);
                                       Navigator.of(context).pop();
                                     },
                                   ),
                                 ],
                               );
-                            }); //
-                          },
-                        );
-                      },
-                      color: Colors.green,
-                      child: Text(
-                        '制作充值卡',
-                      ),
+                            },
+                          ); //
+                        },
+                      );
+                    },
+                    child: Text(
+                      '赠送充值卡',
                     ),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {},
-                      child: Text(
-                        '批量激活',
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      type: 'error',
-                      onPressed: () {},
-                      child: Text(
-                        '批量作废',
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        showDialog<void>(
-                          context: context,
-                          barrierDismissible: false, // user must tap button!
-                          builder: (BuildContext context) {
-                            return StatefulBuilder(
-                              builder: (context1, state) {
-                                /// 这里的state就是setState
-                                return AlertDialog(
-                                  title: Text(
-                                    '赠送充值卡',
-                                  ),
-                                  content: SingleChildScrollView(
-                                    child: ListBody(
-                                      children: <Widget>[
-                                        Container(
-                                          width: width - 100,
-                                          margin: EdgeInsets.only(bottom: 10),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 60,
-                                                alignment: Alignment.centerRight,
-                                                child: Text(
-                                                  '用户:',
-                                                  style: TextStyle(fontSize: CFFontSize.content),
-                                                ),
-                                                margin: EdgeInsets.only(right: 10),
-                                              ),
-                                              Expanded(
-                                                flex: 1,
-                                                child: Container(
-                                                  height: 30,
-                                                  alignment: Alignment.centerLeft,
-                                                  padding: EdgeInsets.only(left: 10, right: 10),
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: Color(0xffdddddd), width: 1)),
-                                                  child: Wrap(
-                                                    children: selectUser.keys.toList().map<Widget>((key) {
-                                                      return Container(
-                                                        child: Stack(
-                                                          children: <Widget>[
-                                                            Container(
-                                                              padding: EdgeInsets.only(right: 20),
-                                                              child: Text(
-                                                                '${selectUser[key]['login_name']}',
-                                                                maxLines: 1,
-                                                                overflow: TextOverflow.ellipsis,
-                                                              ),
-                                                            ),
-                                                            Positioned(
-                                                              top: 0,
-                                                              right: 0,
-                                                              child: Container(
-                                                                color: Color(0xffeeeeee),
-                                                                child: InkWell(
-                                                                  onTap: () {
-                                                                    setState(() {
-                                                                      selectUser.remove(key);
-                                                                    });
-                                                                  },
-                                                                  child: Icon(
-                                                                    Icons.clear,
-                                                                    color: Colors.red,
-                                                                    size: 20,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      );
-                                                    }).toList(),
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                margin: EdgeInsets.only(left: 10),
-                                                child: SizedBox(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) => UserPlugin(
-                                                            userCount: 1,
-                                                            selectUsersData: selectUser,
-                                                          ),
-                                                        ),
-                                                      ).then((val) {
-                                                        if (val != null) {
-                                                          setState(() {
-                                                            selectUser = jsonDecode(jsonEncode(val));
-                                                          });
-                                                          state(() {
-                                                            selectUser = jsonDecode(jsonEncode(val));
-                                                          });
-                                                        }
-                                                      });
-                                                    },
-                                                    child: Text('选择用户'),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  actions: <Widget>[
-                                    FlatButton(
-                                      child: Text('取消'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                    FlatButton(
-                                      color: Colors.blue,
-                                      textColor: Colors.white,
-                                      child: Text('提交'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            ); //
-                          },
-                        );
-                      },
-                      child: Text(
-                        '赠送充值卡',
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),
@@ -600,27 +582,21 @@ class _ChargeCardState extends State<ChargeCard> {
                                   if (item['state'] == '-1') {
                                     con = Row(
                                       children: <Widget>[
-                                        SizedBox(
-                                          height: 30,
-                                          child: PrimaryButton(
-                                            onPressed: () {},
-                                            child: Text('激活'),
-                                            type: 'error',
-                                          ),
-                                        )
+                                        PrimaryButton(
+                                          onPressed: () {},
+                                          child: Text('激活'),
+                                          type: 'error',
+                                        ),
                                       ],
                                     );
                                   } else if (item['state'] == '0') {
                                     con = Row(
                                       children: <Widget>[
-                                        SizedBox(
-                                          height: 30,
-                                          child: PrimaryButton(
-                                            onPressed: () {},
-                                            child: Text('作废'),
-                                            type: 'error',
-                                          ),
-                                        )
+                                        PrimaryButton(
+                                          onPressed: () {},
+                                          child: Text('作废'),
+                                          type: 'error',
+                                        ),
                                       ],
                                     );
                                   }

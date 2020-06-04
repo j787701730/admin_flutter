@@ -412,23 +412,17 @@ class _TaskListState extends State<TaskList> {
                                           runSpacing: 10,
                                           spacing: 10,
                                           children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  topDialog(item);
-                                                },
-                                                child: Text('${item['top'].toString() == '1' ? '取消置顶' : '置顶'}'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                topDialog(item);
+                                              },
+                                              child: Text('${item['top'].toString() == '1' ? '取消置顶' : '置顶'}'),
                                             ),
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  turnTo(item);
-                                                },
-                                                child: Text('日志'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                turnTo(item);
+                                              },
+                                              child: Text('日志'),
                                             ),
                                           ],
                                         );

@@ -254,7 +254,9 @@ class _AccumulateFlowDetailState extends State<AccumulateFlowDetail> {
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.all(Radius.circular(4),),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(4),
+                            ),
                           ),
                           height: 34,
                           child: DropdownButton<String>(
@@ -298,16 +300,13 @@ class _AccumulateFlowDetailState extends State<AccumulateFlowDetail> {
                     max: param['endDate'],
                     operaNull: true,
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['currPage'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['currPage'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
                 ],
               ),
@@ -334,7 +333,9 @@ class _AccumulateFlowDetailState extends State<AccumulateFlowDetail> {
                             children: ajaxData.map<Widget>((item) {
                               return Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Color(0xffdddddd), ),
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
                                 ),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(top: 5, bottom: 5),
@@ -363,13 +364,10 @@ class _AccumulateFlowDetailState extends State<AccumulateFlowDetail> {
                                           runSpacing: 10,
                                           spacing: 10,
                                           children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {},
-                                                child: Text(''),
-                                              ),
-                                            )
+                                            PrimaryButton(
+                                              onPressed: () {},
+                                              child: Text(''),
+                                            ),
                                           ],
                                         );
                                         break;

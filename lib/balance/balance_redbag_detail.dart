@@ -129,25 +129,22 @@ class _BalanceRedBagDetailState extends State<BalanceRedBagDetail> {
                                 case 'option':
                                   con = Wrap(
                                     children: <Widget>[
-                                      SizedBox(
-                                        height: 30,
-                                        child: PrimaryButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => BalanceDetail({
-                                                  'login_name': '${widget.props['item']['login_name']}',
-                                                  'balance_type_ch_name':
-                                                      '${widget.props['item']['balance_type_ch_name']}',
-                                                  'acct_balance_id': '${widget.props['item']['acct_balance_id']}',
-                                                }),
-                                              ),
-                                            );
-                                          },
-                                          child: Text('详情'),
-                                        ),
-                                      )
+                                      PrimaryButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => BalanceDetail({
+                                                'login_name': '${widget.props['item']['login_name']}',
+                                                'balance_type_ch_name':
+                                                    '${widget.props['item']['balance_type_ch_name']}',
+                                                'acct_balance_id': '${widget.props['item']['acct_balance_id']}',
+                                              }),
+                                            ),
+                                          );
+                                        },
+                                        child: Text('详情'),
+                                      ),
                                     ],
                                   );
                                   break;

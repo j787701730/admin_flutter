@@ -730,21 +730,15 @@ class _UsersManagerState extends State<UsersManager> {
                                             ),
                                             btn,
                                             item['erp_open_id '] == '1'
-                                                ? Container(
-                                                    height: 30,
-                                                    child: PrimaryButton(
-                                                      onPressed: () {},
-                                                      child: Text('ERP解绑'),
-                                                    ),
+                                                ? PrimaryButton(
+                                                    onPressed: () {},
+                                                    child: Text('ERP解绑'),
                                                   )
                                                 : Container(width: 0),
                                             (0 >= int.tryParse(item['shop_id']) && int.tryParse(item['staff_id']) < 1)
-                                                ? Container(
-                                                    height: 30,
-                                                    child: PrimaryButton(
-                                                      onPressed: () {},
-                                                      child: Text('升级为企业用户'),
-                                                    ),
+                                                ? PrimaryButton(
+                                                    onPressed: () {},
+                                                    child: Text('升级为企业用户'),
                                                   )
                                                 : Container(width: 0),
                                             btn2

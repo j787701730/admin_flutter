@@ -103,15 +103,13 @@ class _CreateRedPacketState extends State<CreateRedPacket> {
                   flex: 1,
                   child: Row(
                     children: <Widget>[
-                      SizedBox(
-                        height: 30,
-                        child: PrimaryButton(
-                            onPressed: () {
-                              print(param);
-                              Navigator.pop(context, true);
-                            },
-                            child: Text('确认创建')),
-                      )
+                      PrimaryButton(
+                        onPressed: () {
+                          print(param);
+                          Navigator.pop(context, true);
+                        },
+                        child: Text('确认创建'),
+                      ),
                     ],
                   ),
                 )

@@ -364,27 +364,23 @@ class _CadDrawingState extends State<CadDrawing> {
                                       case 'option':
                                         con = Wrap(
                                           runSpacing: 10,
+                                          spacing: 10,
                                           children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              margin: EdgeInsets.only(right: 10),
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) => CadDrawingModify({'item': item}),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Text('修改'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => CadDrawingModify({'item': item}),
+                                                  ),
+                                                );
+                                              },
+                                              child: Text('修改'),
                                             ),
                                             '${item['state']}' == '2' &&
                                                     item['render_pics'] != null &&
                                                     item['render_pics'].isNotEmpty
                                                 ? Container(
-                                                    height: 30,
                                                     margin: EdgeInsets.only(right: 10),
                                                     child: PrimaryButton(
                                                       onPressed: () {
@@ -398,7 +394,6 @@ class _CadDrawingState extends State<CadDrawing> {
                                                   ),
                                             '${item['state']}' == '1'
                                                 ? Container(
-                                                    height: 30,
                                                     margin: EdgeInsets.only(right: 10),
                                                     child: PrimaryButton(
                                                       onPressed: () {

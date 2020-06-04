@@ -322,15 +322,12 @@ class _BalanceExtractState extends State<BalanceExtract> {
                                           } else if (item['state'] == "2") {
                                             con = Wrap(
                                               children: <Widget>[
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      transferQuery(item);
-                                                    },
-                                                    child: Text('查看'),
-                                                  ),
-                                                )
+                                                PrimaryButton(
+                                                  onPressed: () {
+                                                    transferQuery(item);
+                                                  },
+                                                  child: Text('查看'),
+                                                ),
                                               ],
                                             );
                                           } else {

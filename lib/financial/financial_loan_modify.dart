@@ -74,7 +74,9 @@ class _FinancialLoanModifyState extends State<FinancialLoanModify> {
                           padding: EdgeInsets.only(left: 10, right: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.all(Radius.circular(6),),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(6),
+                            ),
                           ),
                           child: Text('${param['shop_name'] ?? ''}'),
                         ),
@@ -277,9 +279,9 @@ class _FinancialLoanModifyState extends State<FinancialLoanModify> {
                                 }).toList(),
                               ),
                       ),
-                      SizedBox(
-                        height: 30,
-                        child: PrimaryButton(onPressed: () {}, child: Text('添加附件')),
+                      PrimaryButton(
+                        onPressed: () {},
+                        child: Text('添加附件'),
                       )
                     ],
                   ),
@@ -299,13 +301,10 @@ class _FinancialLoanModifyState extends State<FinancialLoanModify> {
                   flex: 1,
                   child: Row(
                     children: <Widget>[
-                      SizedBox(
-                        height: 30,
-                        child: PrimaryButton(
-                          onPressed: () {},
-                          child: Text('保存'),
-                        ),
-                      )
+                      PrimaryButton(
+                        onPressed: () {},
+                        child: Text('保存'),
+                      ),
                     ],
                   ),
                 ),

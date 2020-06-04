@@ -274,13 +274,10 @@ class _RebateCitySalesState extends State<RebateCitySales> {
                                               runSpacing: 10,
                                               spacing: 10,
                                               children: <Widget>[
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {},
-                                                    child: Text('修改'),
-                                                  ),
-                                                )
+                                                PrimaryButton(
+                                                  onPressed: () {},
+                                                  child: Text('修改'),
+                                                ),
                                               ],
                                             );
                                             break;

@@ -500,15 +500,12 @@ class _TaskEvaluateState extends State<TaskEvaluate> {
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Container(
-                        height: 30,
-                        child: PrimaryButton(
-                          onPressed: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('保存'),
-                        ),
-                      )
+                      PrimaryButton(
+                        onPressed: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
+                        child: Text('保存'),
+                      ),
                     ],
                   ),
           ],

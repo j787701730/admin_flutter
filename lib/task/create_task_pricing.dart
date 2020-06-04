@@ -56,7 +56,7 @@ class _CreateTaskPricingState extends State<CreateTaskPricing> {
                         Radius.circular(4),
                       ),
                     ),
-                    height: 30,
+                    height: 32,
                     alignment: Alignment.centerLeft,
                     child: Wrap(
                       children: param['user'].keys.toList().map<Widget>((key) {

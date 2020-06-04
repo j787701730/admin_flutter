@@ -493,7 +493,7 @@ class _ActivityListState extends State<ActivityList> {
                                           spacing: 10,
                                           children: <Widget>[
 //                                                Container(
-//                                                  height: 30,
+//                                                  height: 32,
 //                                                  child: PrimaryButton(
 //                                                    onPressed: () {},
 //                                                    child: Text('修改'),

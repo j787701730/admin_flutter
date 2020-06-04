@@ -265,13 +265,10 @@ class _DrawTypeState extends State<DrawType> {
                                           runSpacing: 10,
                                           spacing: 10,
                                           children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {},
-                                                child: Text(''),
-                                              ),
-                                            )
+                                            PrimaryButton(
+                                              onPressed: () {},
+                                              child: Text(''),
+                                            ),
                                           ],
                                         );
                                         break;
