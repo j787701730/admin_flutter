@@ -487,14 +487,11 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
                   flex: 1,
                   child: Row(
                     children: <Widget>[
-                      Container(
-                        height: 30,
-                        child: PrimaryButton(
-                          onPressed: () {
-                            print(param);
-                          },
-                          child: Text('保存'),
-                        ),
+                      PrimaryButton(
+                        onPressed: () {
+                          print(param);
+                        },
+                        child: Text('保存'),
                       )
                     ],
                   ),

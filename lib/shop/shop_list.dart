@@ -219,7 +219,6 @@ class _ShopListState extends State<ShopList> {
         return AlertDialog(
           title: Text(
             '系统提示',
-
           ),
           content: SingleChildScrollView(
             child: ListBody(
@@ -285,7 +284,6 @@ class _ShopListState extends State<ShopList> {
           return AlertDialog(
             title: Text(
               '权限管理',
-
             ),
             content: SingleChildScrollView(
               child: ListBody(
@@ -481,30 +479,24 @@ class _ShopListState extends State<ShopList> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(
-                          FocusNode(),
-                        );
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(
+                        FocusNode(),
+                      );
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      color: CFColors.success,
-                      onPressed: () {
-                        setState(() {
-                          isExpandedFlag = !isExpandedFlag;
-                        });
-                      },
-                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                    ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),
@@ -609,15 +601,12 @@ class _ShopListState extends State<ShopList> {
                                     case 'option':
                                       con = Row(
                                         children: <Widget>[
-                                          Container(
-                                            height: 30,
-                                            child: PrimaryButton(
-                                              type: item['state'] == '1' || item['state'] == '-1' ? 'error' : null,
-                                              onPressed: () {
-                                                operaDialog(item);
-                                              },
-                                              child: Text(item['state'] == '1' || item['state'] == '-1' ? '冻结' : '解冻'),
-                                            ),
+                                          PrimaryButton(
+                                            type: item['state'] == '1' || item['state'] == '-1' ? 'error' : null,
+                                            onPressed: () {
+                                              operaDialog(item);
+                                            },
+                                            child: Text(item['state'] == '1' || item['state'] == '-1' ? '冻结' : '解冻'),
                                           ),
                                         ],
                                       );

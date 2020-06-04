@@ -120,7 +120,6 @@ class _BoardCutConfigsState extends State<BoardCutConfigs> {
         return AlertDialog(
           title: Text(
             '信息',
-
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -274,38 +273,29 @@ class _BoardCutConfigsState extends State<BoardCutConfigs> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        turnTo(null);
-                      },
-                      child: Text('新增'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      turnTo(null);
+                    },
+                    child: Text('新增'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      color: CFColors.success,
-                      onPressed: () {
-                        setState(() {
-                          isExpandedFlag = !isExpandedFlag;
-                        });
-                      },
-                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                    ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),
@@ -354,25 +344,19 @@ class _BoardCutConfigsState extends State<BoardCutConfigs> {
                                           runSpacing: 10,
                                           spacing: 10,
                                           children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  FocusScope.of(context).requestFocus(FocusNode());
-                                                  turnTo(item);
-                                                },
-                                                child: Text('修改'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                FocusScope.of(context).requestFocus(FocusNode());
+                                                turnTo(item);
+                                              },
+                                              child: Text('修改'),
                                             ),
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                type: 'error',
-                                                onPressed: () {
-                                                  delDialog(item);
-                                                },
-                                                child: Text('删除'),
-                                              ),
+                                            PrimaryButton(
+                                              type: 'error',
+                                              onPressed: () {
+                                                delDialog(item);
+                                              },
+                                              child: Text('删除'),
                                             ),
                                           ],
                                         );

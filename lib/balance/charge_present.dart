@@ -278,38 +278,29 @@ class _ChargePresentState extends State<ChargePresent> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        turnTo(null);
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('添加规则'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      turnTo(null);
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('添加规则'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      color: CFColors.success,
-                      onPressed: () {
-                        setState(() {
-                          isExpandedFlag = !isExpandedFlag;
-                        });
-                      },
-                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                    ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),
@@ -371,25 +362,19 @@ class _ChargePresentState extends State<ChargePresent> {
                                         runSpacing: 10,
                                         spacing: 10,
                                         children: <Widget>[
-                                          Container(
-                                            height: 30,
-                                            child: PrimaryButton(
-                                              onPressed: () {
-                                                turnTo(item);
-                                              },
-                                              child: Text('修改'),
-                                            ),
+                                          PrimaryButton(
+                                            onPressed: () {
+                                              turnTo(item);
+                                            },
+                                            child: Text('修改'),
                                           ),
-                                          Container(
-                                            height: 30,
-                                            child: PrimaryButton(
-                                              onPressed: () {
-                                                delDialog(item);
-                                              },
-                                              child: Text('删除'),
-                                              type: "error",
-                                            ),
-                                          )
+                                          PrimaryButton(
+                                            onPressed: () {
+                                              delDialog(item);
+                                            },
+                                            child: Text('删除'),
+                                            type: "error",
+                                          ),
                                         ],
                                       );
                                       break;

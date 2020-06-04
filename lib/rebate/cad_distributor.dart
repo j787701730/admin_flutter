@@ -170,21 +170,17 @@ class _CADDistributorState extends State<CADDistributor> {
                                     runSpacing: 10,
                                     spacing: 10,
                                     children: <Widget>[
-                                      SizedBox(
-                                        height: 30,
-                                        child: PrimaryButton(
-                                            onPressed: () {
-                                              turnToModify({'item': item});
-                                            },
-                                            child: Text('修改')),
+                                      PrimaryButton(
+                                        onPressed: () {
+                                          turnToModify({'item': item});
+                                        },
+                                        child: Text('修改'),
                                       ),
-                                      SizedBox(
-                                        height: 30,
-                                        child: PrimaryButton(
-                                            onPressed: () {
-                                              turnToHistory({'item': item});
-                                            },
-                                            child: Text('开通历史')),
+                                      PrimaryButton(
+                                        onPressed: () {
+                                          turnToHistory({'item': item});
+                                        },
+                                        child: Text('开通历史'),
                                       ),
                                     ],
                                   );

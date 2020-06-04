@@ -128,7 +128,6 @@ class _TaskListState extends State<TaskList> {
         return AlertDialog(
           title: Text(
             '信息',
-
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -336,28 +335,22 @@ class _TaskListState extends State<TaskList> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      color: CFColors.success,
-                      onPressed: () {
-                        setState(() {
-                          isExpandedFlag = !isExpandedFlag;
-                        });
-                      },
-                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                    ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),

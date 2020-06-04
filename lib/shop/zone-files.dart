@@ -162,16 +162,13 @@ class _ZoneFilesState extends State<ZoneFiles> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['currPage'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['currPage'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
                 ],
               ),

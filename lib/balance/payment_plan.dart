@@ -283,7 +283,12 @@ class _PaymentPlanState extends State<PaymentPlan> {
                             ),
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),
+                              contentPadding: EdgeInsets.only(
+                                top: 0,
+                                bottom: 0,
+                                left: 15,
+                                right: 15,
+                              ),
                             ),
                             onChanged: (String val) {
                               setState(() {
@@ -323,7 +328,12 @@ class _PaymentPlanState extends State<PaymentPlan> {
                             ),
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),
+                              contentPadding: EdgeInsets.only(
+                                top: 0,
+                                bottom: 0,
+                                left: 15,
+                                right: 15,
+                              ),
                             ),
                             onChanged: (String val) {
                               setState(() {
@@ -459,26 +469,20 @@ class _PaymentPlanState extends State<PaymentPlan> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        turnTo(null);
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('添加支付方案'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      turnTo(null);
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('添加支付方案'),
                   ),
                 ],
               ),
@@ -631,25 +635,19 @@ class _PaymentPlanState extends State<PaymentPlan> {
                                                     runSpacing: 10,
                                                     spacing: 10,
                                                     children: <Widget>[
-                                                      Container(
-                                                        height: 30,
-                                                        child: PrimaryButton(
-                                                          onPressed: () {
-                                                            turnTo(item);
-                                                          },
-                                                          child: Text('修改'),
-                                                        ),
+                                                      PrimaryButton(
+                                                        onPressed: () {
+                                                          turnTo(item);
+                                                        },
+                                                        child: Text('修改'),
                                                       ),
-                                                      Container(
-                                                        height: 30,
-                                                        child: PrimaryButton(
-                                                          onPressed: () {
-                                                            delDialog(item);
-                                                          },
-                                                          child: Text('删除'),
-                                                          type: 'error',
-                                                        ),
-                                                      )
+                                                      PrimaryButton(
+                                                        onPressed: () {
+                                                          delDialog(item);
+                                                        },
+                                                        child: Text('删除'),
+                                                        type: 'error',
+                                                      ),
                                                     ],
                                                   );
                                                   break;

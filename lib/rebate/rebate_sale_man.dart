@@ -144,7 +144,9 @@ class _RebateSaleManState extends State<RebateSaleMan> {
                             children: ajaxData.map<Widget>((item) {
                               return Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Color(0xffdddddd), ),
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
                                 ),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(top: 5, bottom: 5),
@@ -164,27 +166,21 @@ class _RebateSaleManState extends State<RebateSaleMan> {
                                           runSpacing: 10,
                                           spacing: 10,
                                           children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  add(ajaxData.indexOf(item) + 1);
-                                                },
-                                                child: Text('添加'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                add(ajaxData.indexOf(item) + 1);
+                                              },
+                                              child: Text('添加'),
                                             ),
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                type: 'error',
-                                                onPressed: () {
-                                                  del(
-                                                    ajaxData.indexOf(item),
-                                                  );
-                                                },
-                                                child: Text('删除'),
-                                              ),
-                                            )
+                                            PrimaryButton(
+                                              type: 'error',
+                                              onPressed: () {
+                                                del(
+                                                  ajaxData.indexOf(item),
+                                                );
+                                              },
+                                              child: Text('删除'),
+                                            ),
                                           ],
                                         );
                                         break;
@@ -215,25 +211,19 @@ class _RebateSaleManState extends State<RebateSaleMan> {
               child: Wrap(
                 spacing: 10,
                 children: <Widget>[
-                  Container(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        add(ajaxData.length);
-                      },
-                      child: Text('添加'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      add(ajaxData.length);
+                    },
+                    child: Text('添加'),
                   ),
-                  Container(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        FocusScope.of(context).requestFocus(
-                          FocusNode(),
-                        );
-                      },
-                      child: Text('保存'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      FocusScope.of(context).requestFocus(
+                        FocusNode(),
+                      );
+                    },
+                    child: Text('保存'),
                   ),
                 ],
               ),

@@ -84,7 +84,7 @@ class _BalanceManualOperaState extends State<BalanceManualOpera> {
                               Radius.circular(5),
                             ),
                           ),
-                          height: 30,
+                          height: 32,
                           alignment: Alignment.centerLeft,
                           child: Wrap(
                             children: selectUsersData.keys.toList().map<Widget>(
@@ -134,7 +134,6 @@ class _BalanceManualOperaState extends State<BalanceManualOpera> {
                       widget.props == null
                           ? SizedBox(
                               width: 80,
-                              height: 30,
                               child: PrimaryButton(
                                 onPressed: () {
                                   FocusScope.of(context).requestFocus(FocusNode());
@@ -257,7 +256,7 @@ class _BalanceManualOperaState extends State<BalanceManualOpera> {
                                       Radius.circular(5),
                                     ),
                                   ),
-                                  height: 30,
+                                  height: 32,
                                   alignment: Alignment.centerLeft,
                                   child: Row(
                                     children: <Widget>[
@@ -296,7 +295,7 @@ class _BalanceManualOperaState extends State<BalanceManualOpera> {
                                       Radius.circular(5),
                                     ),
                                   ),
-                                  height: 30,
+                                  height: 32,
                                   alignment: Alignment.centerLeft,
                                   child: Row(
                                     children: <Widget>[
@@ -346,7 +345,7 @@ class _BalanceManualOperaState extends State<BalanceManualOpera> {
                                     Radius.circular(5),
                                   ),
                                 ),
-                                height: 30,
+                                height: 32,
                                 width: 70,
                                 alignment: Alignment.center,
                                 child: Text('$item'),

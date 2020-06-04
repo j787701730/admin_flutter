@@ -338,31 +338,25 @@ class _RebateListState extends State<RebateList> {
               spacing: 10,
               runSpacing: 10,
               children: <Widget>[
-                SizedBox(
-                  height: 30,
-                  child: PrimaryButton(
-                    onPressed: () {
-                      setState(() {
-                        param['curr_page'] = 1;
-                        param2['curr_page'] = 1;
-                        getData();
-                        getData2();
-                      });
-                    },
-                    child: Text('搜索'),
-                  ),
+                PrimaryButton(
+                  onPressed: () {
+                    setState(() {
+                      param['curr_page'] = 1;
+                      param2['curr_page'] = 1;
+                      getData();
+                      getData2();
+                    });
+                  },
+                  child: Text('搜索'),
                 ),
-                SizedBox(
-                  height: 30,
-                  child: PrimaryButton(
-                    color: CFColors.success,
-                    onPressed: () {
-                      setState(() {
-                        isExpandedFlag = !isExpandedFlag;
-                      });
-                    },
-                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                  ),
+                PrimaryButton(
+                  color: CFColors.success,
+                  onPressed: () {
+                    setState(() {
+                      isExpandedFlag = !isExpandedFlag;
+                    });
+                  },
+                  child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                 ),
               ],
             ),

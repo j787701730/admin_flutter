@@ -151,18 +151,17 @@ class _BaseSitemapState extends State<BaseSitemap> {
                                                     ),
                                                   );
                                                 },
-                                                child: Text('${item['mnm']}'),
-                                              ),
-                                              Container(
-                                                height: 30,
-                                                child: PrimaryButton(
-                                                  onPressed: () {},
-                                                  child: Text(
-                                                    '添加二级菜单',
-                                                    style: TextStyle(fontSize: 14),
-                                                  ),
+                                                child: Text(
+                                                  '${item['mnm']}',
                                                 ),
-                                              )
+                                              ),
+                                              PrimaryButton(
+                                                onPressed: () {},
+                                                child: Text(
+                                                  '添加二级菜单',
+                                                  style: TextStyle(fontSize: 14),
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -191,16 +190,13 @@ class _BaseSitemapState extends State<BaseSitemap> {
                                                         },
                                                         child: Text('${c['mnm']}'),
                                                       ),
-                                                      Container(
-                                                        height: 30,
-                                                        child: PrimaryButton(
-                                                          onPressed: () {},
-                                                          child: Text(
-                                                            '添加三级菜单',
-                                                            style: TextStyle(fontSize: 14),
-                                                          ),
+                                                      PrimaryButton(
+                                                        onPressed: () {},
+                                                        child: Text(
+                                                          '添加三级菜单',
+                                                          style: TextStyle(fontSize: 14),
                                                         ),
-                                                      )
+                                                      ),
                                                     ],
                                                   ),
                                                 ),

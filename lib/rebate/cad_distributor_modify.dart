@@ -490,15 +490,12 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
             Container(
               margin: EdgeInsets.all(10),
               alignment: Alignment.center,
-              child: SizedBox(
-                height: 30,
-                child: PrimaryButton(
-                  onPressed: () {
-                    print(data);
-                    unFocus();
-                  },
-                  child: Text('保存'),
-                ),
+              child: PrimaryButton(
+                onPressed: () {
+                  print(data);
+                  unFocus();
+                },
+                child: Text('保存'),
               ),
             )
           ],

@@ -138,7 +138,6 @@ class _BoardCutUserGrantState extends State<BoardCutUserGrant> {
         return AlertDialog(
           title: Text(
             '信息',
-
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -247,26 +246,20 @@ class _BoardCutUserGrantState extends State<BoardCutUserGrant> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        turnTo(null);
-                      },
-                      child: Text('新增'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      turnTo(null);
+                    },
+                    child: Text('新增'),
                   ),
                 ],
               ),
@@ -326,27 +319,21 @@ class _BoardCutUserGrantState extends State<BoardCutUserGrant> {
                                           runSpacing: 10,
                                           spacing: 10,
                                           children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  FocusScope.of(context).requestFocus(FocusNode());
-                                                  turnTo(item);
-                                                },
-                                                child: Text('修改'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                FocusScope.of(context).requestFocus(FocusNode());
+                                                turnTo(item);
+                                              },
+                                              child: Text('修改'),
                                             ),
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  FocusScope.of(context).requestFocus(FocusNode());
-                                                  delDialog(item);
-                                                },
-                                                child: Text('删除'),
-                                                type: 'error',
-                                              ),
-                                            )
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                FocusScope.of(context).requestFocus(FocusNode());
+                                                delDialog(item);
+                                              },
+                                              child: Text('删除'),
+                                              type: 'error',
+                                            ),
                                           ],
                                         );
                                         break;

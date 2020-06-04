@@ -60,7 +60,8 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       buttonTheme: ButtonThemeData(
-        minWidth: 44,
+        minWidth: 34,
+        height: 32,
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: const Color.fromARGB(55, 255, 255, 255),
@@ -79,7 +80,7 @@ class _MyAppState extends State<MyApp> {
         ),
         focusedBorder: OutlineInputBorder(
 //          borderRadius: BorderRadius.circular(100),
-          borderSide: BorderSide(color: DarkColor.border),
+          borderSide: BorderSide(color: DarkColor.title),
         ),
         prefixStyle: TextStyle(
           color: DarkColor.text,
@@ -129,7 +130,8 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       buttonTheme: ButtonThemeData(
-        minWidth: 44,
+        minWidth: 34,
+        height: 32,
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: const Color.fromARGB(55, 0, 0, 0),

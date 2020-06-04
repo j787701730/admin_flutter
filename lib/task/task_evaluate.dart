@@ -134,16 +134,13 @@ class _TaskEvaluateState extends State<TaskEvaluate> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
                 ],
               ),
@@ -426,32 +423,29 @@ class _TaskEvaluateState extends State<TaskEvaluate> {
                 ? Container()
                 : Row(
                     children: <Widget>[
-                      Container(
-                        height: 30,
-                        child: PrimaryButton(
-                          onPressed: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            if (ajaxData.length == 5) {
-                              Fluttertoast.showToast(
-                                msg: '最多只能配置5条规则',
-                                gravity: ToastGravity.CENTER,
-                              );
-                            } else {
-                              setState(() {
-                                ajaxData.insert(ajaxData.length, {
-                                  'user_type': param['user_type'],
-                                  'task_type': param['task_type'],
-                                  'left_value': '',
-                                  'right_value': '',
-                                  'topic': '',
-                                  'detail': '',
-                                });
+                      PrimaryButton(
+                        onPressed: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          if (ajaxData.length == 5) {
+                            Fluttertoast.showToast(
+                              msg: '最多只能配置5条规则',
+                              gravity: ToastGravity.CENTER,
+                            );
+                          } else {
+                            setState(() {
+                              ajaxData.insert(ajaxData.length, {
+                                'user_type': param['user_type'],
+                                'task_type': param['task_type'],
+                                'left_value': '',
+                                'right_value': '',
+                                'topic': '',
+                                'detail': '',
                               });
-                            }
-                          },
-                          child: Text('添加规则'),
-                        ),
-                      )
+                            });
+                          }
+                        },
+                        child: Text('添加规则'),
+                      ),
                     ],
                   ),
             Container(

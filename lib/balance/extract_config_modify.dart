@@ -69,7 +69,10 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                         child: Container(
                           margin: EdgeInsets.only(right: 10),
                           padding: EdgeInsets.only(left: 10, right: 10),
-                          decoration: BoxDecoration(border: Border.all(color: Colors.grey, )),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                            color: Colors.grey,
+                          )),
                           height: 30,
                           alignment: Alignment.centerLeft,
                           child: Wrap(
@@ -113,7 +116,6 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                       ),
                       SizedBox(
                         width: 110,
-                        height: 30,
                         child: PrimaryButton(
                           onPressed: () {
                             FocusScope.of(context).requestFocus(FocusNode());
@@ -180,7 +182,12 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                           )),
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,)),
+                              contentPadding: EdgeInsets.only(
+                                top: 0,
+                                bottom: 0,
+                                left: 15,
+                                right: 15,
+                              )),
                           onChanged: (String val) {
                             setState(() {
                               param['extract_limit'] = val;
@@ -239,7 +246,12 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                           )),
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,)),
+                              contentPadding: EdgeInsets.only(
+                                top: 0,
+                                bottom: 0,
+                                left: 15,
+                                right: 15,
+                              )),
                           onChanged: (String val) {
                             setState(() {
                               param['extract_rate'] = val;
@@ -315,7 +327,6 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                   child: Row(
                     children: <Widget>[
                       Container(
-                        height: 30,
                         child: PrimaryButton(
                           onPressed: () {
                             print(param);

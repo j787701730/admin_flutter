@@ -160,7 +160,6 @@ class _SupplyClassState extends State<SupplyClass> {
                               return AlertDialog(
                                 title: Text(
                                   '信息',
-
                                 ),
                                 content: SingleChildScrollView(
                                   child: ListBody(
@@ -249,35 +248,31 @@ class _SupplyClassState extends State<SupplyClass> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      getData();
+                      FocusScope.of(context).requestFocus(
+                        FocusNode(),
+                      );
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SupplyClassModify(
-                              {
-                                'industryClass': industryClass,
-                                'item': null,
-                              },
-                            ),
+                  PrimaryButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SupplyClassModify(
+                            {
+                              'industryClass': industryClass,
+                              'item': null,
+                            },
                           ),
-                        );
-                      },
-                      child: Text('新增分类'),
-                    ),
-                  )
+                        ),
+                      );
+                    },
+                    child: Text('新增分类'),
+                  ),
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),

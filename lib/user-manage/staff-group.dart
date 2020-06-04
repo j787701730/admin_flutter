@@ -118,7 +118,6 @@ class _StaffGroupState extends State<StaffGroup> {
         return AlertDialog(
           title: Text(
             '信息',
-
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -158,7 +157,6 @@ class _StaffGroupState extends State<StaffGroup> {
         return AlertDialog(
           title: Text(
             '信息',
-
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -315,32 +313,23 @@ class _StaffGroupState extends State<StaffGroup> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        _scaffoldKey.currentState.openDrawer();
-                      },
-                      child: Text('岗位'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      _scaffoldKey.currentState.openDrawer();
+                    },
+                    child: Text('岗位'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        modifyName({});
-                      },
-                      child: Text('新增岗位'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      modifyName({});
+                    },
+                    child: Text('新增岗位'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
+                  PrimaryButton(
+                    onPressed: () {
 //                        _scaffoldKey.currentState.openDrawer();
-                      },
-                      child: Text('修改权限'),
-                    ),
+                    },
+                    child: Text('修改权限'),
                   ),
                 ],
               ),
@@ -433,7 +422,7 @@ class _StaffGroupState extends State<StaffGroup> {
 //                                                                      '${item3['ck']}' == '1' && '${item3['kp']}' == '1'
 //                                                                          ? Color(0xffFFFCED)
 //                                                                          : Colors.white,
-                                                              ),
+                                                                  ),
                                                               child: InkWell(
                                                                 onTap: () {
                                                                   setState(() {

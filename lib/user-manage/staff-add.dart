@@ -98,7 +98,6 @@ class _StaffAddState extends State<StaffAdd> {
         return AlertDialog(
           title: Text(
             '信息',
-
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -220,14 +219,11 @@ class _StaffAddState extends State<StaffAdd> {
               spacing: 10,
               runSpacing: 10,
               children: <Widget>[
-                SizedBox(
-                  height: 30,
-                  child: PrimaryButton(
-                    onPressed: () {
-                      modifyName({});
-                    },
-                    child: Text('保存'),
-                  ),
+                PrimaryButton(
+                  onPressed: () {
+                    modifyName({});
+                  },
+                  child: Text('保存'),
                 ),
               ],
             ),

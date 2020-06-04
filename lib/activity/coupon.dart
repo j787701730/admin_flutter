@@ -512,41 +512,32 @@ class _CouponState extends State<Coupon> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => CouponCreate()),
-                        );
-                      },
-                      child: Text('创建优惠券'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CouponCreate()),
+                      );
+                    },
+                    child: Text('创建优惠券'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      color: CFColors.success,
-                      onPressed: () {
-                        setState(() {
-                          isExpandedFlag = !isExpandedFlag;
-                        });
-                      },
-                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                    ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),

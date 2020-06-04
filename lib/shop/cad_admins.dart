@@ -109,7 +109,6 @@ class _CadAdminsState extends State<CadAdmins> {
         return AlertDialog(
           title: Text(
             '${data['name']} 修改',
-
           ),
           content: SingleChildScrollView(
             child: ListBody(
@@ -168,7 +167,6 @@ class _CadAdminsState extends State<CadAdmins> {
         return AlertDialog(
           title: Text(
             '提示',
-
           ),
           content: SingleChildScrollView(
             child: ListBody(
@@ -307,44 +305,35 @@ class _CadAdminsState extends State<CadAdmins> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(
-                          FocusNode(),
-                        );
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(
+                        FocusNode(),
+                      );
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                            builder: (context) => new CreateCadAdmin(),
-                          ),
-                        );
-                      },
-                      child: Text('新增CAD管理员'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                          builder: (context) => new CreateCadAdmin(),
+                        ),
+                      );
+                    },
+                    child: Text('新增CAD管理员'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      color: CFColors.success,
-                      onPressed: () {
-                        setState(() {
-                          isExpandedFlag = !isExpandedFlag;
-                        });
-                      },
-                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                    ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),
@@ -390,24 +379,18 @@ class _CadAdminsState extends State<CadAdmins> {
                                           runSpacing: 10,
                                           spacing: 10,
                                           children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  dialog(item);
-                                                },
-                                                child: Text('修改'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                dialog(item);
+                                              },
+                                              child: Text('修改'),
                                             ),
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  stateDialog(item);
-                                                },
-                                                child: Text('${item['state']}' == '1' ? '冻结' : '解冻'),
-                                              ),
-                                            )
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                stateDialog(item);
+                                              },
+                                              child: Text('${item['state']}' == '1' ? '冻结' : '解冻'),
+                                            ),
                                           ],
                                         );
                                         break;

@@ -225,29 +225,23 @@ class _CsLogsState extends State<CsLogs> {
               spacing: 10,
               alignment: WrapAlignment.center,
               children: <Widget>[
-                SizedBox(
-                  height: 30,
-                  child: PrimaryButton(
-                    onPressed: () {
-                      setState(() {
-                        curr_page = 1;
-                        getData();
-                      });
-                    },
-                    child: Text('搜索'),
-                  ),
+                PrimaryButton(
+                  onPressed: () {
+                    setState(() {
+                      curr_page = 1;
+                      getData();
+                    });
+                  },
+                  child: Text('搜索'),
                 ),
-                SizedBox(
-                  height: 30,
-                  child: PrimaryButton(
-                    color: CFColors.success,
-                    onPressed: () {
-                      setState(() {
-                        isExpandedFlag = !isExpandedFlag;
-                      });
-                    },
-                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                  ),
+                PrimaryButton(
+                  color: CFColors.success,
+                  onPressed: () {
+                    setState(() {
+                      isExpandedFlag = !isExpandedFlag;
+                    });
+                  },
+                  child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                 ),
               ],
             ),

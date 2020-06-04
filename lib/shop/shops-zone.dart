@@ -150,16 +150,13 @@ class _ShopsZoneState extends State<ShopsZone> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['currPage'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['currPage'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
                 ],
               ),
@@ -213,13 +210,10 @@ class _ShopsZoneState extends State<ShopsZone> {
                                           runSpacing: 10,
                                           spacing: 10,
                                           children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {},
-                                                child: Text('修改'),
-                                              ),
-                                            )
+                                            PrimaryButton(
+                                              onPressed: () {},
+                                              child: Text('修改'),
+                                            ),
                                           ],
                                         );
                                         break;

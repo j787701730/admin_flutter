@@ -146,32 +146,28 @@ class _BoardCutUserGrantModifyState extends State<BoardCutUserGrantModify> {
                   ),
                 ),
                 widget.props == null
-                    ? SizedBox(
-                        width: 70,
-                        height: 30,
-                        child: PrimaryButton(
-                          onPressed: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => UserPlugin(
-                                  userCount: 1,
-                                  selectUsersData: jsonDecode(
-                                    jsonEncode(param['user']),
-                                  ),
+                    ? PrimaryButton(
+                        onPressed: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UserPlugin(
+                                userCount: 1,
+                                selectUsersData: jsonDecode(
+                                  jsonEncode(param['user']),
                                 ),
                               ),
-                            ).then((val) {
-                              if (val != null) {
-                                setState(() {
-                                  param['user'] = jsonDecode(jsonEncode(val));
-                                });
-                              }
-                            });
-                          },
-                          child: Text('选择'),
-                        ),
+                            ),
+                          ).then((val) {
+                            if (val != null) {
+                              setState(() {
+                                param['user'] = jsonDecode(jsonEncode(val));
+                              });
+                            }
+                          });
+                        },
+                        child: Text('选择'),
                       )
                     : Container()
               ],

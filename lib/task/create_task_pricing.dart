@@ -97,32 +97,28 @@ class _CreateTaskPricingState extends State<CreateTaskPricing> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 110,
-                  height: 30,
-                  child: PrimaryButton(
-                    onPressed: () {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => UserPlugin(
-                                  userCount: 1,
-                                  selectUsersData: jsonDecode(
-                                    jsonEncode(param['user']),
-                                  ),
-                                )),
-                      ).then((val) {
-                        if (val != null) {
-                          setState(() {
-                            param['user'] = jsonDecode(jsonEncode(val));
-                          });
-                        }
-                      });
-                    },
-                    child: Text('选择用户'),
-                  ),
-                )
+                PrimaryButton(
+                  onPressed: () {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UserPlugin(
+                                userCount: 1,
+                                selectUsersData: jsonDecode(
+                                  jsonEncode(param['user']),
+                                ),
+                              )),
+                    ).then((val) {
+                      if (val != null) {
+                        setState(() {
+                          param['user'] = jsonDecode(jsonEncode(val));
+                        });
+                      }
+                    });
+                  },
+                  child: Text('选择用户'),
+                ),
               ],
             ),
           ),
@@ -261,13 +257,10 @@ class _CreateTaskPricingState extends State<CreateTaskPricing> {
                 flex: 1,
                 child: Row(
                   children: <Widget>[
-                    Container(
-                      height: 30,
-                      child: PrimaryButton(
-                        onPressed: () {},
-                        child: Text('添加'),
-                      ),
-                    )
+                    PrimaryButton(
+                      onPressed: () {},
+                      child: Text('添加'),
+                    ),
                   ],
                 ),
               ),

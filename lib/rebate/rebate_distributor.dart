@@ -215,72 +215,57 @@ class _RebateDistributorState extends State<RebateDistributor> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        selectDistributor.clear();
-                        getData();
-                        FocusScope.of(context).requestFocus(
-                          FocusNode(),
-                        );
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      selectDistributor.clear();
+                      getData();
+                      FocusScope.of(context).requestFocus(
+                        FocusNode(),
+                      );
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        FocusScope.of(context).requestFocus(
-                          FocusNode(),
-                        );
-                        List arr = [];
-                        for (var o in ajaxData) {
-                          arr.add(o['apply_id']);
-                        }
-                        setState(() {
-                          selectDistributor = arr;
-                        });
-                      },
-                      child: Text('全选'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      FocusScope.of(context).requestFocus(
+                        FocusNode(),
+                      );
+                      List arr = [];
+                      for (var o in ajaxData) {
+                        arr.add(o['apply_id']);
+                      }
+                      setState(() {
+                        selectDistributor = arr;
+                      });
+                    },
+                    child: Text('全选'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        FocusScope.of(context).requestFocus(
-                          FocusNode(),
-                        );
-                      },
-                      child: Text('审核成功'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      FocusScope.of(context).requestFocus(
+                        FocusNode(),
+                      );
+                    },
+                    child: Text('审核成功'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      type: 'error',
-                      onPressed: () {
-                        FocusScope.of(context).requestFocus(
-                          FocusNode(),
-                        );
-                      },
-                      child: Text('审核失败'),
-                    ),
+                  PrimaryButton(
+                    type: 'error',
+                    onPressed: () {
+                      FocusScope.of(context).requestFocus(
+                        FocusNode(),
+                      );
+                    },
+                    child: Text('审核失败'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      color: CFColors.success,
-                      onPressed: () {
-                        setState(() {
-                          isExpandedFlag = !isExpandedFlag;
-                        });
-                      },
-                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                    ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),

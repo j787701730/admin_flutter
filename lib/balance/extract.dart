@@ -123,7 +123,9 @@ class _BalanceExtractState extends State<BalanceExtract> {
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('信息',),
+            title: Text(
+              '信息',
+            ),
             content: Container(
               width: MediaQuery.of(context).size.width - 100,
               child: SingleChildScrollView(
@@ -183,7 +185,13 @@ class _BalanceExtractState extends State<BalanceExtract> {
                       ),
                     )),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15,right: 15,)),
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(
+                          top: 6,
+                          bottom: 6,
+                          left: 15,
+                          right: 15,
+                        )),
                     onChanged: (String val) {
                       setState(() {
                         comments = val;
@@ -253,14 +261,12 @@ class _BalanceExtractState extends State<BalanceExtract> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                        onPressed: () {
-                          param['currPage'] = 1;
-                          getData();
-                        },
-                        child: Text('搜索')),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['currPage'] = 1;
+                      getData();
+                    },
+                    child: Text('搜索'),
                   ),
                 ],
               ),
@@ -299,23 +305,17 @@ class _BalanceExtractState extends State<BalanceExtract> {
                                             con = Wrap(
                                               spacing: 10,
                                               children: <Widget>[
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      model('0', item);
-                                                    },
-                                                    child: Text('取消'),
-                                                  ),
+                                                PrimaryButton(
+                                                  onPressed: () {
+                                                    model('0', item);
+                                                  },
+                                                  child: Text('取消'),
                                                 ),
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      model('1', item);
-                                                    },
-                                                    child: Text('确认'),
-                                                  ),
+                                                PrimaryButton(
+                                                  onPressed: () {
+                                                    model('1', item);
+                                                  },
+                                                  child: Text('确认'),
                                                 ),
                                               ],
                                             );

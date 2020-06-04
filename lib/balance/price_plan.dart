@@ -175,7 +175,6 @@ class _PricePlanState extends State<PricePlan> {
                           ),
                           SizedBox(
                             width: 70,
-                            height: 30,
                             child: PrimaryButton(
                               onPressed: () {
                                 Navigator.push(
@@ -918,7 +917,6 @@ class _PricePlanState extends State<PricePlan> {
                                   children: <Widget>[
                                     Container(
                                       margin: EdgeInsets.only(bottom: 10),
-                                      height: 30,
                                       child: PrimaryButton(
                                         onPressed: () {
                                           Map line = jsonDecode(jsonEncode(pricingStrategyData['pricing_strategy'][0]));
@@ -970,6 +968,7 @@ class _PricePlanState extends State<PricePlan> {
                               ],
                             ),
                           ),
+
                           /// 阶梯计价(月)
                           Offstage(
                             offstage: pricingStrategyId == constTemplate['month'] ||
@@ -1001,15 +1000,12 @@ class _PricePlanState extends State<PricePlan> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Container(
-                            height: 30,
-                            child: PrimaryButton(
-                              onPressed: () {
-                                print(pricingStrategyData);
-                              },
-                              child: Text('确认提交'),
-                            ),
-                          )
+                          PrimaryButton(
+                            onPressed: () {
+                              print(pricingStrategyData);
+                            },
+                            child: Text('确认提交'),
+                          ),
                         ],
                       ),
                     ),

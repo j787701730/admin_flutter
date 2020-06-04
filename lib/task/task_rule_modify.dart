@@ -133,7 +133,6 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
           return AlertDialog(
             title: Text(
               '等级图片',
-
             ),
             content: SingleChildScrollView(
               child: Container(
@@ -521,31 +520,28 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
                 ? Container()
                 : Row(
                     children: <Widget>[
-                      Container(
-                        height: 30,
-                        child: PrimaryButton(
-                          onPressed: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            if (ajaxData.length == 5) {
-                              Fluttertoast.showToast(
-                                msg: '最多只能配置5条规则',
-                                gravity: ToastGravity.CENTER,
-                              );
-                            } else {
-                              setState(() {
-                                ajaxData.insert(ajaxData.length, {
-                                  'left_value': '',
-                                  'right_value': '',
-                                  'level': '',
-                                  'level_name': '',
-                                  'level_logo': '',
-                                });
+                      PrimaryButton(
+                        onPressed: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          if (ajaxData.length == 5) {
+                            Fluttertoast.showToast(
+                              msg: '最多只能配置5条规则',
+                              gravity: ToastGravity.CENTER,
+                            );
+                          } else {
+                            setState(() {
+                              ajaxData.insert(ajaxData.length, {
+                                'left_value': '',
+                                'right_value': '',
+                                'level': '',
+                                'level_name': '',
+                                'level_logo': '',
                               });
-                            }
-                          },
-                          child: Text('添加规则'),
-                        ),
-                      )
+                            });
+                          }
+                        },
+                        child: Text('添加规则'),
+                      ),
                     ],
                   ),
             Container(
@@ -600,15 +596,12 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Container(
-                        height: 30,
-                        child: PrimaryButton(
-                          onPressed: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Text('保存'),
-                        ),
-                      )
+                      PrimaryButton(
+                        onPressed: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
+                        child: Text('保存'),
+                      ),
                     ],
                   ),
           ],

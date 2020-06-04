@@ -46,7 +46,9 @@ class _CreateCadAdminState extends State<CreateCadAdmin> {
                     margin: EdgeInsets.only(right: 10),
                     padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, ),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     height: 300,
@@ -137,14 +139,12 @@ class _CreateCadAdminState extends State<CreateCadAdmin> {
                   flex: 1,
                   child: Row(
                     children: <Widget>[
-                      SizedBox(
-                        height: 30,
-                        child: PrimaryButton(
-                            onPressed: () {
-                              print(param);
-                            },
-                            child: Text('保存')),
-                      )
+                      PrimaryButton(
+                        onPressed: () {
+                          print(param);
+                        },
+                        child: Text('保存'),
+                      ),
                     ],
                   ),
                 )

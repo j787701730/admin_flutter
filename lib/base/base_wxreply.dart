@@ -176,27 +176,21 @@ class _BaseWxreplyState extends State<BaseWxreply> {
                     spacing: 10,
                     runSpacing: 10,
                     children: <Widget>[
-                      SizedBox(
-                        height: 30,
-                        child: PrimaryButton(
-                          onPressed: () {
-                            param['curr_page'] = 1;
-                            getData();
-                          },
-                          child: Text('搜索'),
-                        ),
+                      PrimaryButton(
+                        onPressed: () {
+                          param['curr_page'] = 1;
+                          getData();
+                        },
+                        child: Text('搜索'),
                       ),
-                      SizedBox(
-                        height: 30,
-                        child: PrimaryButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              new MaterialPageRoute(builder: (context) => new WxReplyModify(null)),
-                            );
-                          },
-                          child: Text('添加回复'),
-                        ),
+                      PrimaryButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new WxReplyModify(null)),
+                          );
+                        },
+                        child: Text('添加回复'),
                       ),
                     ],
                   ),
@@ -237,30 +231,28 @@ class _BaseWxreplyState extends State<BaseWxreply> {
                                               spacing: 10,
                                               runSpacing: 10,
                                               children: <Widget>[
-                                                SizedBox(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        new MaterialPageRoute(
-                                                          builder: (context) => new WxReplyModify(
-                                                            {'item': item},
-                                                          ),
+                                                PrimaryButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) => WxReplyModify(
+                                                          {'item': item},
                                                         ),
-                                                      );
-                                                    },
-                                                    child: Text('修改'),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Text(
+                                                    '修改',
                                                   ),
                                                 ),
-                                                SizedBox(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    type: 'error',
-                                                    onPressed: () {},
-                                                    child: Text('删除'),
+                                                PrimaryButton(
+                                                  type: 'error',
+                                                  onPressed: () {},
+                                                  child: Text(
+                                                    '删除',
                                                   ),
-                                                )
+                                                ),
                                               ],
                                             );
                                             break;

@@ -174,7 +174,6 @@ class _IndustryClassState extends State<IndustryClass> {
                               return AlertDialog(
                                 title: Text(
                                   '信息',
-
                                 ),
                                 content: SingleChildScrollView(
                                   child: ListBody(
@@ -251,35 +250,30 @@ class _IndustryClassState extends State<IndustryClass> {
           padding: EdgeInsets.all(10),
           children: <Widget>[
             Input(
-                label: '行业分类',
-                onChanged: (String val) {
-                  searchValue = val;
-                }),
+              label: '行业分类',
+              onChanged: (String val) {
+                searchValue = val;
+              },
+            ),
             Container(
               child: Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        turnTo({'industryClass': industryClass, 'item': null});
-                      },
-                      child: Text('新增分类'),
-                    ),
-                  )
+                  PrimaryButton(
+                    onPressed: () {
+                      turnTo({'industryClass': industryClass, 'item': null});
+                    },
+                    child: Text('新增分类'),
+                  ),
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),

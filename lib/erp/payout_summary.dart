@@ -243,27 +243,21 @@ class _PayoutSummaryState extends State<PayoutSummary> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['currPage'] = 1;
-                        getData();
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['currPage'] = 1;
+                      getData();
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      color: CFColors.success,
-                      onPressed: () {
-                        setState(() {
-                          isExpandedFlag = !isExpandedFlag;
-                        });
-                      },
-                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                    ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),
@@ -341,20 +335,17 @@ class _PayoutSummaryState extends State<PayoutSummary> {
                                               runSpacing: 10,
                                               spacing: 10,
                                               children: <Widget>[
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) => PayoutSummaryDetail({'item': item}),
-                                                        ),
-                                                      );
-                                                    },
-                                                    child: Text('明细'),
-                                                  ),
-                                                )
+                                                PrimaryButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) => PayoutSummaryDetail({'item': item}),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Text('明细'),
+                                                ),
                                               ],
                                             );
                                             break;

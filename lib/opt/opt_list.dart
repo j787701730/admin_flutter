@@ -268,33 +268,29 @@ class _OptListState extends State<OptList> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 70,
-                        height: 30,
-                        child: PrimaryButton(
-                          onPressed: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => UserPlugin(
-                                  userCount: 1,
-                                  selectUsersData: jsonDecode(
-                                    jsonEncode(selectUser),
-                                  ),
+                      PrimaryButton(
+                        onPressed: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UserPlugin(
+                                userCount: 1,
+                                selectUsersData: jsonDecode(
+                                  jsonEncode(selectUser),
                                 ),
                               ),
-                            ).then((val) {
-                              if (val != null) {
-                                setState(() {
-                                  selectUser = jsonDecode(jsonEncode(val));
-                                });
-                              }
-                            });
-                          },
-                          child: Text('选择'),
-                        ),
-                      )
+                            ),
+                          ).then((val) {
+                            if (val != null) {
+                              setState(() {
+                                selectUser = jsonDecode(jsonEncode(val));
+                              });
+                            }
+                          });
+                        },
+                        child: Text('选择'),
+                      ),
                     ],
                   ),
                 ),
@@ -317,28 +313,22 @@ class _OptListState extends State<OptList> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      color: CFColors.success,
-                      onPressed: () {
-                        setState(() {
-                          isExpandedFlag = !isExpandedFlag;
-                        });
-                      },
-                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                    ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),

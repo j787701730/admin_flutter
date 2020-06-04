@@ -47,7 +47,9 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, ),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                     ),
                     child: Text(param['sd_title']),
                   ),
@@ -70,7 +72,9 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, ),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                     ),
                     child: Text(param['user_name']),
                   ),
@@ -93,7 +97,9 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, ),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                     ),
                     child: Text(param['user_phone']),
                   ),
@@ -116,7 +122,9 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, ),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                     ),
                     child: Text(param['user_address']),
                   ),
@@ -139,7 +147,9 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, ),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                     ),
                     child: Text(param['sd_desc']),
                   ),
@@ -182,7 +192,9 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, ),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                     ),
                     child: Wrap(
                       runSpacing: 10,
@@ -192,7 +204,9 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                           width: 100,
                           height: 100,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, ),
+                            border: Border.all(
+                              color: Colors.grey,
+                            ),
                           ),
                           child: Image.network('$baseUrl${item['file_path']}'),
                         );
@@ -219,20 +233,14 @@ class _CadDrawingModifyState extends State<CadDrawingModify> {
                     spacing: 10,
                     runSpacing: 10,
                     children: <Widget>[
-                      Container(
-                        height: 30,
-                        child: PrimaryButton(
-                          onPressed: () {},
-                          child: Text('完成并提交'),
-                        ),
+                      PrimaryButton(
+                        onPressed: () {},
+                        child: Text('完成并提交'),
                       ),
-                      Container(
-                        height: 30,
-                        child: PrimaryButton(
-                          onPressed: () {},
-                          child: Text('保存'),
-                        ),
-                      )
+                      PrimaryButton(
+                        onPressed: () {},
+                        child: Text('保存'),
+                      ),
                     ],
                   ),
                 )

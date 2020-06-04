@@ -138,7 +138,10 @@ class _AgreementState extends State<Agreement> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: ajaxData.map<Widget>((item) {
                               return Container(
-                                decoration: BoxDecoration(border: Border.all(color: Color(0xffdddddd), )),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                  color: Color(0xffdddddd),
+                                )),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(top: 5, bottom: 5),
                                 child: Column(
@@ -162,13 +165,10 @@ class _AgreementState extends State<Agreement> {
                                           runSpacing: 10,
                                           spacing: 10,
                                           children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {},
-                                                child: Text('修改'),
-                                              ),
-                                            )
+                                            PrimaryButton(
+                                              onPressed: () {},
+                                              child: Text('修改'),
+                                            ),
                                           ],
                                         );
                                         break;

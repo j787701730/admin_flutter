@@ -255,15 +255,12 @@ class _IndustryClassModifyState extends State<IndustryClassModify> {
                     spacing: 10,
                     runSpacing: 10,
                     children: <Widget>[
-                      SizedBox(
-                        height: 30,
-                        child: PrimaryButton(
-                          onPressed: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            print(param);
-                          },
-                          child: Text('确认提交'),
-                        ),
+                      PrimaryButton(
+                        onPressed: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          print(param);
+                        },
+                        child: Text('确认提交'),
                       ),
                     ],
                   ),

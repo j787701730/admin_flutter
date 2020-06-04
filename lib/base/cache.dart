@@ -188,26 +188,20 @@ class _BaseCacheState extends State<BaseCache> {
                           spacing: 10,
                           runSpacing: 10,
                           children: <Widget>[
-                            SizedBox(
-                              height: 30,
-                              child: PrimaryButton(
-                                onPressed: () {
-                                  param['curr_page'] = 1;
-                                  getData();
-                                },
-                                child: Text('搜索'),
-                              ),
+                            PrimaryButton(
+                              onPressed: () {
+                                param['curr_page'] = 1;
+                                getData();
+                              },
+                              child: Text('搜索'),
                             ),
-                            SizedBox(
-                              height: 30,
-                              child: PrimaryButton(
-                                color: Colors.green,
-                                onPressed: () {
-                                  print(selectType);
-                                },
-                                child: Text('批量清除缓存'),
-                              ),
-                            )
+                            PrimaryButton(
+                              color: Colors.green,
+                              onPressed: () {
+                                print(selectType);
+                              },
+                              child: Text('批量清除缓存'),
+                            ),
                           ],
                         ),
                         margin: EdgeInsets.only(bottom: 10),
@@ -264,13 +258,10 @@ class _BaseCacheState extends State<BaseCache> {
                                           case 'option':
                                             con = Row(
                                               children: <Widget>[
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {},
-                                                    child: Text('清除缓存'),
-                                                  ),
-                                                )
+                                                PrimaryButton(
+                                                  onPressed: () {},
+                                                  child: Text('清除缓存'),
+                                                ),
                                               ],
                                             );
                                             break;

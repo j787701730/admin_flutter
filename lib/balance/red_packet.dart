@@ -109,7 +109,9 @@ class _RedPacketState extends State<RedPacket> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('红包列表',),
+          title: Text(
+            '红包列表',
+          ),
           content: Container(
             width: MediaQuery.of(context).size.width - 100,
             child: SingleChildScrollView(
@@ -241,32 +243,26 @@ class _RedPacketState extends State<RedPacket> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(builder: (context) => new CreateRedPacket()),
-                        ).then((val) {
-                          if (val == true) {
-                            param['curr_page'] = 1;
-                            getData();
-                          }
-                        });
-                      },
-                      child: Text('新建红包'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        new MaterialPageRoute(builder: (context) => new CreateRedPacket()),
+                      ).then((val) {
+                        if (val == true) {
+                          param['curr_page'] = 1;
+                          getData();
+                        }
+                      });
+                    },
+                    child: Text('新建红包'),
                   ),
                 ],
               ),

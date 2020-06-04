@@ -142,7 +142,6 @@ class _CadUserRelationState extends State<CadUserRelation> {
         return AlertDialog(
           title: Text(
             '提示',
-
           ),
           content: SingleChildScrollView(
             child: ListBody(
@@ -325,44 +324,35 @@ class _CadUserRelationState extends State<CadUserRelation> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(
-                          FocusNode(),
-                        );
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(
+                        FocusNode(),
+                      );
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CreateCadUserRelation(null),
-                          ),
-                        );
-                      },
-                      child: Text('新增CAD用户关系'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CreateCadUserRelation(null),
+                        ),
+                      );
+                    },
+                    child: Text('新增CAD用户关系'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      color: CFColors.success,
-                      onPressed: () {
-                        setState(() {
-                          isExpandedFlag = !isExpandedFlag;
-                        });
-                      },
-                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                    ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),
@@ -405,30 +395,24 @@ class _CadUserRelationState extends State<CadUserRelation> {
                                           spacing: 10,
                                           runSpacing: 10,
                                           children: <Widget>[
-                                            SizedBox(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) => CreateCadUserRelation({'item': item}),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Text('修改'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => CreateCadUserRelation({'item': item}),
+                                                  ),
+                                                );
+                                              },
+                                              child: Text('修改'),
                                             ),
-                                            SizedBox(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                type: 'error',
-                                                onPressed: () {
-                                                  delDialog(item);
-                                                },
-                                                child: Text('删除'),
-                                              ),
-                                            )
+                                            PrimaryButton(
+                                              type: 'error',
+                                              onPressed: () {
+                                                delDialog(item);
+                                              },
+                                              child: Text('删除'),
+                                            ),
                                           ],
                                         );
                                         break;

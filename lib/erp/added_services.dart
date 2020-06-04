@@ -245,14 +245,12 @@ class _AddedServicesState extends State<AddedServices> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                        onPressed: () {
-                          param['currPage'] = 1;
-                          getData();
-                        },
-                        child: Text('搜索')),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['currPage'] = 1;
+                      getData();
+                    },
+                    child: Text('搜索'),
                   ),
                 ],
               ),

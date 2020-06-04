@@ -130,7 +130,6 @@ class _TaskPricingState extends State<TaskPricing> {
         return AlertDialog(
           title: Text(
             '${modifyItem['user_name']} 任务定价修改',
-
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -438,43 +437,34 @@ class _TaskPricingState extends State<TaskPricing> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CreateTaskPricing(),
-                          ),
-                        );
-                      },
-                      child: Text('添加任务定价'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CreateTaskPricing(),
+                        ),
+                      );
+                    },
+                    child: Text('添加任务定价'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      color: CFColors.success,
-                      onPressed: () {
-                        setState(() {
-                          isExpandedFlag = !isExpandedFlag;
-                        });
-                      },
-                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                    ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),
@@ -522,18 +512,15 @@ class _TaskPricingState extends State<TaskPricing> {
                                               runSpacing: 10,
                                               spacing: 10,
                                               children: <Widget>[
-                                                Container(
-                                                  height: 30,
-                                                  child: PrimaryButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        modifyItem = jsonDecode(jsonEncode(item));
-                                                        modifyDialog();
-                                                      });
-                                                    },
-                                                    child: Text('修改'),
-                                                  ),
-                                                )
+                                                PrimaryButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      modifyItem = jsonDecode(jsonEncode(item));
+                                                      modifyDialog();
+                                                    });
+                                                  },
+                                                  child: Text('修改'),
+                                                ),
                                               ],
                                             );
                                             break;

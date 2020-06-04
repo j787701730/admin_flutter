@@ -92,7 +92,9 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                     padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
                     height: 34,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, ),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     alignment: Alignment.centerLeft,
@@ -195,7 +197,9 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                     margin: EdgeInsets.only(right: 10),
                     padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, ),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     height: widget.props == null ? 340 : 50,
@@ -322,14 +326,12 @@ class _CreateCadUserRelationState extends State<CreateCadUserRelation> {
                   flex: 1,
                   child: Wrap(
                     children: <Widget>[
-                      Container(
-                        height: 30,
-                        child: PrimaryButton(
-                            onPressed: () {
-                              print(param);
-                            },
-                            child: Text('保存'),),
-                      )
+                      PrimaryButton(
+                        onPressed: () {
+                          print(param);
+                        },
+                        child: Text('保存'),
+                      ),
                     ],
                   ),
                 )

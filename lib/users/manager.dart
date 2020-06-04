@@ -198,7 +198,6 @@ class _UsersManagerState extends State<UsersManager> {
           return AlertDialog(
             title: Text(
               '${selectRow['login_name']} 用户类型修改',
-
             ),
             contentPadding: EdgeInsets.all(10),
             content: SingleChildScrollView(
@@ -455,7 +454,6 @@ class _UsersManagerState extends State<UsersManager> {
         return AlertDialog(
           title: Text(
             '系统提示',
-
           ),
           content: SingleChildScrollView(
             child: ListBody(
@@ -537,29 +535,23 @@ class _UsersManagerState extends State<UsersManager> {
               spacing: 10,
               runSpacing: 10,
               children: <Widget>[
-                SizedBox(
-                  height: 30,
-                  child: PrimaryButton(
-                    onPressed: () {
-                      setState(() {
-                        param['curr_page'] = 1;
-                        getData();
-                      });
-                    },
-                    child: Text('搜索'),
-                  ),
+                PrimaryButton(
+                  onPressed: () {
+                    setState(() {
+                      param['curr_page'] = 1;
+                      getData();
+                    });
+                  },
+                  child: Text('搜索'),
                 ),
-                SizedBox(
-                  height: 30,
-                  child: PrimaryButton(
-                    color: CFColors.success,
-                    onPressed: () {
-                      setState(() {
-                        isExpandedFlag = !isExpandedFlag;
-                      });
-                    },
-                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                  ),
+                PrimaryButton(
+                  color: CFColors.success,
+                  onPressed: () {
+                    setState(() {
+                      isExpandedFlag = !isExpandedFlag;
+                    });
+                  },
+                  child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                 ),
               ],
             ),
@@ -670,7 +662,6 @@ class _UsersManagerState extends State<UsersManager> {
                                         Widget btn2 = Container(width: 0);
                                         if (item['user_state'] == '0') {
                                           btn = Container(
-                                            height: 30,
                                             margin: EdgeInsets.only(right: 10),
                                             child: PrimaryButton(
                                               onPressed: () {
@@ -682,7 +673,6 @@ class _UsersManagerState extends State<UsersManager> {
                                           );
                                         } else if (item['user_state'] == '-1') {
                                           btn = Container(
-                                            height: 30,
                                             margin: EdgeInsets.only(right: 10),
                                             child: PrimaryButton(
                                               onPressed: () {
@@ -693,7 +683,6 @@ class _UsersManagerState extends State<UsersManager> {
                                           );
                                         } else {
                                           btn = Container(
-                                            height: 30,
                                             margin: EdgeInsets.only(right: 10),
                                             child: PrimaryButton(
                                               onPressed: () {},
@@ -705,7 +694,6 @@ class _UsersManagerState extends State<UsersManager> {
                                         if (int.tryParse(item['shop_id']) >= 1) {
                                           if (item['invite_user_id'] != '0') {
                                             btn2 = Container(
-                                              height: 30,
                                               margin: EdgeInsets.only(right: 10),
                                               child: PrimaryButton(
                                                 onPressed: () {},
@@ -714,7 +702,6 @@ class _UsersManagerState extends State<UsersManager> {
                                             );
                                           } else if (item['invite_user_id'] == '0') {
                                             btn2 = Container(
-                                              height: 30,
                                               margin: EdgeInsets.only(right: 10),
                                               child: PrimaryButton(
                                                 onPressed: () {},
@@ -728,7 +715,6 @@ class _UsersManagerState extends State<UsersManager> {
                                           runSpacing: 10,
                                           children: <Widget>[
                                             Container(
-                                              height: 30,
                                               margin: EdgeInsets.only(right: 10),
                                               child: PrimaryButton(
                                                 onPressed: () {

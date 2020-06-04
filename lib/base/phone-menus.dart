@@ -150,7 +150,6 @@ class _PhoneMenusState extends State<PhoneMenus> {
           return AlertDialog(
             title: Text(
               '移动',
-
             ),
             content: Container(
               height: 50,
@@ -216,7 +215,6 @@ class _PhoneMenusState extends State<PhoneMenus> {
         return AlertDialog(
           title: Text(
             '信息',
-
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -424,36 +422,27 @@ class _PhoneMenusState extends State<PhoneMenus> {
                                           runSpacing: 10,
                                           spacing: 10,
                                           children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  topDialog(item);
-                                                },
-                                                child: Text('修改'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                topDialog(item);
+                                              },
+                                              child: Text('修改'),
                                             ),
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    moveKey = sellerSelectKey;
-                                                    moveDialog();
-                                                  });
-                                                },
-                                                child: Text('移动'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  moveKey = sellerSelectKey;
+                                                  moveDialog();
+                                                });
+                                              },
+                                              child: Text('移动'),
                                             ),
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  delDialog(item);
-                                                },
-                                                child: Text('删除'),
-                                                type: 'error',
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                delDialog(item);
+                                              },
+                                              child: Text('删除'),
+                                              type: 'error',
                                             ),
                                           ],
                                         );
@@ -652,36 +641,27 @@ class _PhoneMenusState extends State<PhoneMenus> {
                                           runSpacing: 10,
                                           spacing: 10,
                                           children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  topDialog(item);
-                                                },
-                                                child: Text('修改'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                topDialog(item);
+                                              },
+                                              child: Text('修改'),
                                             ),
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    moveKey = sellerSelectKey;
-                                                    moveDialog();
-                                                  });
-                                                },
-                                                child: Text('移动'),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  moveKey = sellerSelectKey;
+                                                  moveDialog();
+                                                });
+                                              },
+                                              child: Text('移动'),
                                             ),
-                                            Container(
-                                              height: 30,
-                                              child: PrimaryButton(
-                                                onPressed: () {
-                                                  delDialog(item);
-                                                },
-                                                child: Text('删除'),
-                                                type: 'error',
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                delDialog(item);
+                                              },
+                                              child: Text('删除'),
+                                              type: 'error',
                                             ),
                                           ],
                                         );

@@ -78,7 +78,9 @@ class _RebateRatesModifyState extends State<RebateRatesModify> {
                     margin: EdgeInsets.only(right: 10),
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, ),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                     ),
                     height: 34,
                     alignment: Alignment.centerLeft,
@@ -124,7 +126,6 @@ class _RebateRatesModifyState extends State<RebateRatesModify> {
                 widget.props == null
                     ? SizedBox(
                         width: 110,
-                        height: 30,
                         child: PrimaryButton(
                           onPressed: () {
                             FocusScope.of(context).requestFocus(

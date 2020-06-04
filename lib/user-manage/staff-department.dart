@@ -131,7 +131,6 @@ class _StaffDepartmentState extends State<StaffDepartment> {
         return AlertDialog(
           title: Text(
             '信息',
-
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -171,7 +170,6 @@ class _StaffDepartmentState extends State<StaffDepartment> {
         return AlertDialog(
           title: Text(
             '信息',
-
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -362,23 +360,17 @@ class _StaffDepartmentState extends State<StaffDepartment> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        _scaffoldKey.currentState.openDrawer();
-                      },
-                      child: Text('部门'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      _scaffoldKey.currentState.openDrawer();
+                    },
+                    child: Text('部门'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        modifyName({});
-                      },
-                      child: Text('新增部门'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      modifyName({});
+                    },
+                    child: Text('新增部门'),
                   ),
                 ],
               ),
@@ -428,15 +420,10 @@ class _StaffDepartmentState extends State<StaffDepartment> {
                                               ),
                                               child: Text('${state[item['state']]}'),
                                             ),
-                                            Container(
-                                              height: 30,
-                                              width: 60,
-                                              child: PrimaryButton(
-                                                onPressed: () {},
-                                                child: '${item['state']}' == '1'
-                                                    ? Icon(Icons.play_arrow)
-                                                    : Icon(Icons.stop),
-                                              ),
+                                            PrimaryButton(
+                                              onPressed: () {},
+                                              child:
+                                                  '${item['state']}' == '1' ? Icon(Icons.play_arrow) : Icon(Icons.stop),
                                             ),
                                           ],
                                         );

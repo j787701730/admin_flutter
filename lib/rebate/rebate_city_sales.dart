@@ -191,57 +191,42 @@ class _RebateCitySalesState extends State<RebateCitySales> {
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      onPressed: () {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('通过'),
-                    ),
+                  PrimaryButton(
+                    onPressed: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('通过'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      color: CFColors.secondary,
-                      onPressed: () {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('待审核'),
-                    ),
+                  PrimaryButton(
+                    color: CFColors.secondary,
+                    onPressed: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('待审核'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      type: 'error',
-                      onPressed: () {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('不通过'),
-                    ),
+                  PrimaryButton(
+                    type: 'error',
+                    onPressed: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('不通过'),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: PrimaryButton(
-                      color: CFColors.success,
-                      onPressed: () {
-                        setState(() {
-                          isExpandedFlag = !isExpandedFlag;
-                        });
-                      },
-                      child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                    ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),

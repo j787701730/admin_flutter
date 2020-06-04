@@ -48,7 +48,9 @@ class _CouponCreateState extends State<CouponCreate> {
                     margin: EdgeInsets.only(right: 10),
                     padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, ),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     height: 34,
@@ -153,7 +155,9 @@ class _CouponCreateState extends State<CouponCreate> {
                           child: Container(
                             height: 34,
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey, ),
+                              border: Border.all(
+                                color: Colors.grey,
+                              ),
                               borderRadius: BorderRadius.circular(4),
                             ),
                             width: 70,
@@ -206,7 +210,12 @@ class _CouponCreateState extends State<CouponCreate> {
                       ),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),
+                        contentPadding: EdgeInsets.only(
+                          top: 0,
+                          bottom: 0,
+                          left: 15,
+                          right: 15,
+                        ),
                       ),
                       onChanged: (String val) {
                         setState(() {
@@ -264,7 +273,12 @@ class _CouponCreateState extends State<CouponCreate> {
                       ),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),
+                        contentPadding: EdgeInsets.only(
+                          top: 0,
+                          bottom: 0,
+                          left: 15,
+                          right: 15,
+                        ),
                       ),
                       onChanged: (String val) {
                         setState(() {
@@ -314,7 +328,12 @@ class _CouponCreateState extends State<CouponCreate> {
                       ),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15,right: 15,),
+                        contentPadding: EdgeInsets.only(
+                          top: 0,
+                          bottom: 0,
+                          left: 15,
+                          right: 15,
+                        ),
                       ),
                       onChanged: (String val) {
                         setState(() {
@@ -384,8 +403,14 @@ class _CouponCreateState extends State<CouponCreate> {
                       height: 34,
                       padding: EdgeInsets.only(left: 10),
                       alignment: Alignment.centerLeft,
-                      decoration: BoxDecoration(border: Border.all(color: Colors.grey, ),),
-                      child: Text(param['eff_date'] == null ? '' : '${param['eff_date']}'.substring(0, 19),),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      child: Text(
+                        param['eff_date'] == null ? '' : '${param['eff_date']}'.substring(0, 19),
+                      ),
                     ),
                   ),
                 ),
@@ -420,8 +445,14 @@ class _CouponCreateState extends State<CouponCreate> {
                       height: 34,
                       padding: EdgeInsets.only(left: 10),
                       alignment: Alignment.centerLeft,
-                      decoration: BoxDecoration(border: Border.all(color: Colors.grey, ),),
-                      child: Text(param['exp_date'] == null ? '' : '${param['exp_date']}'.substring(0, 19),),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      child: Text(
+                        param['exp_date'] == null ? '' : '${param['exp_date']}'.substring(0, 19),
+                      ),
                     ),
                   ),
                 )
@@ -440,14 +471,11 @@ class _CouponCreateState extends State<CouponCreate> {
                   flex: 1,
                   child: Row(
                     children: <Widget>[
-                      Container(
-                        height: 30,
-                        child: PrimaryButton(
-                          onPressed: () {
-                            print(param);
-                          },
-                          child: Text('保存'),
-                        ),
+                      PrimaryButton(
+                        onPressed: () {
+                          print(param);
+                        },
+                        child: Text('保存'),
                       ),
                     ],
                   ),
