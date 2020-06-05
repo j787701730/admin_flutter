@@ -319,7 +319,7 @@ class _PricePlanState extends State<PricePlan> {
                     children: <Widget>[
                       Container(
                         width: 80,
-                        padding: EdgeInsets.only(top: 12),
+                        padding: EdgeInsets.only(top: 10),
                         alignment: Alignment.centerRight,
                         child: Text('月基本费:'),
                         margin: EdgeInsets.only(right: 10),
@@ -566,7 +566,7 @@ class _PricePlanState extends State<PricePlan> {
                   children: <Widget>[
                     Container(
                       width: 80,
-                      padding: EdgeInsets.only(top: 12),
+                      padding: EdgeInsets.only(top: 10),
                       alignment: Alignment.centerRight,
                       child: Text('定价规则:'),
                       margin: EdgeInsets.only(right: 10),

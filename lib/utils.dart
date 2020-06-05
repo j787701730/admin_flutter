@@ -198,3 +198,30 @@ fileFormatSize(size) {
 //  return (math.round(size * 100) / 100 || 0) + unit[i];
   return '${(double.tryParse('$size') * 100).round() / 100}${unit[i]}';
 }
+
+///  在build 初始化 SizeFit.initialize(context);  使用 SizeFit.setPx(200),
+class SizeFit {
+  static MediaQueryData _mediaQueryData;
+  static double screenWidth;
+  static double screenHeight;
+  static double rpx;
+  static double px;
+
+  static void initialize(BuildContext context, {double standardWidth = 750}) {
+    _mediaQueryData = MediaQuery.of(context);
+    screenWidth = _mediaQueryData.size.width;
+    screenHeight = _mediaQueryData.size.height;
+    rpx = screenWidth / standardWidth;
+    px = screenWidth / standardWidth * 2;
+  }
+
+  // 按照px来设置
+  static double setPx(double size) {
+    return SizeFit.rpx * size * 2;
+  }
+
+  // 按照rpx来设置
+  static double setRpx(double size) {
+    return SizeFit.rpx * size;
+  }
+}

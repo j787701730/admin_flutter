@@ -6,6 +6,7 @@ import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _ZoneFilesState extends State<ZoneFiles> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-
+  bool isExpandedFlag = true;
   List columns = [
     {'title': '文件名称', 'key': 'name'},
     {'title': '文件大小', 'key': 'file_size'},
@@ -128,33 +129,44 @@ class _ZoneFilesState extends State<ZoneFiles> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '文件名称',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('file_name');
-                  } else {
-                    param['file_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '店铺名字',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('shop_name');
-                  } else {
-                    param['shop_name'] = val;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime2,
-              label: '上传时间',
+            AnimatedCrossFade(
+              firstChild: Container(),
+              secondChild: Column(
+                children: <Widget>[
+                  Input(
+                    label: '文件名称',
+                    onChanged: (String val) {
+                      setState(() {
+                        if (val == '') {
+                          param.remove('file_name');
+                        } else {
+                          param['file_name'] = val;
+                        }
+                      });
+                    },
+                  ),
+                  Input(
+                    label: '店铺名字',
+                    onChanged: (String val) {
+                      setState(() {
+                        if (val == '') {
+                          param.remove('shop_name');
+                        } else {
+                          param['shop_name'] = val;
+                        }
+                      });
+                    },
+                  ),
+                  DateSelectPlugin(
+                    onChanged: getDateTime2,
+                    label: '上传时间',
+                  ),
+                ],
+              ),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+              duration: const Duration(
+                milliseconds: 300,
+              ),
             ),
             Container(
               child: Wrap(
@@ -170,6 +182,15 @@ class _ZoneFilesState extends State<ZoneFiles> {
                     },
                     child: Text('搜索'),
                   ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
+                  )
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),

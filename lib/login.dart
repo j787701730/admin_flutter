@@ -74,6 +74,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     _context = context;
+    SizeFit.initialize(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('登录'),
@@ -83,6 +84,13 @@ class _LoginState extends State<Login> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+//            Container(
+//              width: HYSizeFit.setPx(100),
+//              height: HYSizeFit.setPx(100),
+//              decoration: BoxDecoration(
+//                gradient: RadialGradient(colors: [Colors.white, Colors.black]),
+//              ),
+//            ),
             Container(
               alignment: Alignment.center,
               height: 34,

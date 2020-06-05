@@ -362,7 +362,7 @@ class _BalanceListState extends State<BalanceList> {
                             return Container(
                               margin: EdgeInsets.only(bottom: 15),
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start, 
                                 children: <Widget>[
                                   Container(
                                     margin: EdgeInsets.only(bottom: 6),

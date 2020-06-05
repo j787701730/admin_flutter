@@ -8,6 +8,7 @@ import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,7 @@ class _AddedServicesState extends State<AddedServices> {
     '9': 'WebCAD云盘',
     '11': '增值包(WebCAD)',
   };
+  bool isExpandedFlag = true;
 
   void _onRefresh() async {
     setState(() {
@@ -61,6 +63,7 @@ class _AddedServicesState extends State<AddedServices> {
     super.initState();
     _controller = ScrollController();
     _context = context;
+
     Timer(Duration(milliseconds: 200), () {
       getData();
     });
@@ -187,57 +190,68 @@ class _AddedServicesState extends State<AddedServices> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Input(
-              label: '用户',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('user_name');
-                  } else {
-                    param['user_name'] = val;
-                  }
-                });
-              },
-            ),
-            Input(
-              label: '工厂',
-              onChanged: (String val) {
-                setState(() {
-                  if (val == '') {
-                    param.remove('shop_name');
-                  } else {
-                    param['shop_name'] = val;
-                  }
-                });
-              },
-            ),
-            Select(
-              selectOptions: type,
-              selectedValue: param['pricing_class'] ?? '0',
-              label: '服务类型',
-              onChanged: (String newValue) {
-                setState(() {
-                  if (newValue == '0') {
-                    param.remove('pricing_class');
-                  } else {
-                    param['pricing_class'] = newValue;
-                  }
-                });
-              },
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime,
-              label: '购买时间',
-            ),
-            DateSelectPlugin(
-              onChanged: getDateTime2,
-              label: '有效时间',
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            AnimatedCrossFade(
+              firstChild: Container(),
+              secondChild: Column(
+                children: <Widget>[
+                  Input(
+                    label: '用户',
+                    onChanged: (String val) {
+                      setState(() {
+                        if (val == '') {
+                          param.remove('user_name');
+                        } else {
+                          param['user_name'] = val;
+                        }
+                      });
+                    },
+                  ),
+                  Input(
+                    label: '工厂',
+                    onChanged: (String val) {
+                      setState(() {
+                        if (val == '') {
+                          param.remove('shop_name');
+                        } else {
+                          param['shop_name'] = val;
+                        }
+                      });
+                    },
+                  ),
+                  Select(
+                    selectOptions: type,
+                    selectedValue: param['pricing_class'] ?? '0',
+                    label: '服务类型',
+                    onChanged: (String newValue) {
+                      setState(() {
+                        if (newValue == '0') {
+                          param.remove('pricing_class');
+                        } else {
+                          param['pricing_class'] = newValue;
+                        }
+                      });
+                    },
+                  ),
+                  DateSelectPlugin(
+                    onChanged: getDateTime,
+                    label: '购买时间',
+                  ),
+                  DateSelectPlugin(
+                    onChanged: getDateTime2,
+                    label: '有效时间',
+                  ),
+                  Select(
+                    selectOptions: selects,
+                    selectedValue: defaultVal,
+                    label: '排序',
+                    onChanged: orderBy,
+                  ),
+                ],
+              ),
+              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+              duration: const Duration(
+                milliseconds: 300,
+              ),
             ),
             Container(
               child: Wrap(
@@ -251,6 +265,15 @@ class _AddedServicesState extends State<AddedServices> {
                       getData();
                     },
                     child: Text('搜索'),
+                  ),
+                  PrimaryButton(
+                    color: CFColors.success,
+                    onPressed: () {
+                      setState(() {
+                        isExpandedFlag = !isExpandedFlag;
+                      });
+                    },
+                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),
