@@ -8,6 +8,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class StaffAdd extends StatefulWidget {
+  final props;
+
+  StaffAdd({this.props});
+
   @override
   _StaffAddState createState() => _StaffAddState();
 }
@@ -15,44 +19,28 @@ class StaffAdd extends StatefulWidget {
 class _StaffAddState extends State<StaffAdd> {
   BuildContext _context;
   ScrollController _controller;
-  Map selectGroup = {
-    'grpID': '1',
-    'name': '超级管理员',
-  };
+  Map selectGroup = {};
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   List ajaxData = [];
   int count = 0;
   bool loading = true;
   bool isExpandedFlag = true;
   Map param = {'sex': '1', 'depid': '0', 'grpID': '1', 'wx_check': '1'};
+  Map staffInfo = {};
   double width;
   List department = [
-    {'id': '0', 'name': '我的团队'},
-    {'id': '1', 'name': '11112'},
-    {'id': '2', 'name': '新部门'},
-    {'id': '3', 'name': '测试部'},
-    {'id': '4', 'name': '工程部'},
-    {'id': '5', 'name': '业务部'},
-    {'id': '6', 'name': '客服部'},
-    {'id': '7', 'name': '财务部'},
+    {'department_id': '0', 'department_name': '我的团队'},
   ];
-  List group = [
-    {'id': '1', 'name': '超级管理员'},
-    {'id': '2', 'name': '研发组'},
-    {'id': '3', 'name': '测试组'},
-    {'id': '4', 'name': '工程组'},
-    {'id': '5', 'name': '业务组'},
-    {'id': '6', 'name': '客服组'},
-    {'id': '7', 'name': '财务组'},
-  ];
+  List group = [];
 
   @override
   void initState() {
     super.initState();
     _controller = ScrollController();
     _context = context;
+
     Timer(Duration(milliseconds: 200), () {
-      getData();
+      getGroupsDepartment();
     });
   }
 
@@ -62,11 +50,63 @@ class _StaffAddState extends State<StaffAdd> {
     _controller.dispose();
   }
 
+  getGroupsDepartment({isRefresh: false}) async {
+    setState(() {
+      loading = true;
+    });
+    ajax('Adminrelas-Api-groupsDepartMent', {}, true, (res) {
+      if (mounted) {
+        setState(() {
+          loading = false;
+          department.addAll(res['department'] ?? []);
+          group = res['groups'] ?? [];
+          selectGroup = group[0];
+          if (widget.props != null) {
+            getStaffInfo();
+          }
+          getData();
+        });
+      }
+    }, () {
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+      }
+    }, _context);
+  }
+
+  getStaffInfo({isRefresh: false}) async {
+    setState(() {
+      loading = true;
+    });
+    ajax('Adminrelas-Api-editStaffData', {'staffID': widget.props['staff_id']}, true, (res) {
+      if (mounted) {
+        setState(() {
+          loading = false;
+          staffInfo = res['userInfo'] ?? {};
+          param['uname'] = staffInfo['login_name'];
+          param['fname'] = staffInfo['full_name'];
+          param['wx_check'] = staffInfo['wx_check'];
+          param['depid'] = staffInfo['department_id'];
+          param['grpID'] = staffInfo['group_id'];
+          param['sex'] = staffInfo['user_sex'];
+        });
+      }
+    }, () {
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+      }
+    }, _context);
+  }
+
   getData({isRefresh: false}) async {
     setState(() {
       loading = true;
     });
-    ajax('Adminrelas-Staff-GroupRightsShow', {'grpID': selectGroup['grpID']}, true, (res) {
+    ajax('Adminrelas-Staff-GroupRightsShow', {'grpID': selectGroup['group_id']}, true, (res) {
       if (mounted) {
         setState(() {
           loading = false;
@@ -90,116 +130,13 @@ class _StaffAddState extends State<StaffAdd> {
     );
   }
 
-  topDialog(item) {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: true, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            '信息',
-          ),
-          content: SingleChildScrollView(
-            child: Container(
-//                width: MediaQuery.of(context).size.width - 100,
-              child: Text(
-                '确认删除 ${item['name']}?',
-                style: TextStyle(fontSize: CFFontSize.content),
-              ),
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('取消'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
-              child: Text('提交'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  modifyName(item) {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: true, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            '信息',
-          ),
-          content: SingleChildScrollView(
-            child: Container(
-              height: 34,
-//                width: MediaQuery.of(context).size.width - 100,
-              child: TextField(
-                style: TextStyle(fontSize: CFFontSize.content),
-                controller: TextEditingController.fromValue(
-                  TextEditingValue(
-                    text: '${item['name'] ?? ''}',
-                    selection: TextSelection.fromPosition(
-                      TextPosition(
-                        affinity: TextAffinity.downstream,
-                        offset: '${item['name'] ?? ''}'.length,
-                      ),
-                    ),
-                  ),
-                ),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.only(
-                    top: 6,
-                    bottom: 6,
-                    left: 15,
-                    right: 15,
-                  ),
-                ),
-                onChanged: (val) {
-                  setState(() {
-                    item['name'] = val;
-                  });
-                },
-              ),
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('取消'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
-              child: Text('提交'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('添加员工'),
+        title: Text(widget.props == null ? '添加员工' : widget.props['login_name'] + ' 员工修改'),
         leading: IconButton(
           icon: const BackButtonIcon(),
           color: Colors.white,
@@ -221,7 +158,7 @@ class _StaffAddState extends State<StaffAdd> {
               children: <Widget>[
                 PrimaryButton(
                   onPressed: () {
-                    modifyName({});
+                    print(param);
                   },
                   child: Text('保存'),
                 ),
@@ -240,6 +177,7 @@ class _StaffAddState extends State<StaffAdd> {
                 param['uname'] = val;
               });
             },
+            value: param['uname'],
           ),
           Input(
             label: '密码',
@@ -270,6 +208,7 @@ class _StaffAddState extends State<StaffAdd> {
                 param['fname'] = val;
               });
             },
+            value: param['fname'],
           ),
           Container(
             margin: EdgeInsets.only(bottom: 10),
@@ -319,7 +258,7 @@ class _StaffAddState extends State<StaffAdd> {
                           children: <Widget>[
                             Radio(
                               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              value: '0',
+                              value: '2',
                               groupValue: param['sex'],
                               onChanged: (value) {
                                 setState(() {
@@ -437,7 +376,7 @@ class _StaffAddState extends State<StaffAdd> {
                               children: <Widget>[
                                 Radio(
                                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                  value: '${item['id']}',
+                                  value: '${item['department_id']}',
                                   groupValue: param['depid'],
                                   onChanged: (value) {
                                     setState(() {
@@ -445,7 +384,7 @@ class _StaffAddState extends State<StaffAdd> {
                                     });
                                   },
                                 ),
-                                Text('${item['name']}')
+                                Text('${item['department_name']}')
                               ],
                             );
                           },
@@ -489,17 +428,16 @@ class _StaffAddState extends State<StaffAdd> {
                               children: <Widget>[
                                 Radio(
                                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                  value: '${item['id']}',
-                                  groupValue: selectGroup['grpID'],
+                                  value: '${item['group_id']}',
+                                  groupValue: param['grpID'],
                                   onChanged: (value) {
                                     setState(() {
-                                      param['grpid'] = value;
-                                      selectGroup['grpID'] = value;
+                                      param['grpID'] = value;
                                       getData();
                                     });
                                   },
                                 ),
-                                Text('${item['name']}')
+                                Text('${item['group_name']}')
                               ],
                             );
                           },

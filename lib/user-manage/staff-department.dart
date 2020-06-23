@@ -7,6 +7,7 @@ import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
+import 'package:admin_flutter/user-manage/staff-add.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,10 +36,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
   };
   double width;
 
-  Map selectDepartment = {
-    'grpID': '1',
-    'name': '超级管理员',
-  };
+  Map selectDepartment = {};
 
   List columns = [
     {'title': '账号', 'key': 'login_name'},
@@ -52,14 +50,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
   ];
 
   List department = [
-    {'id': '0', 'name': '我的团队'},
-    {'id': '1', 'name': '11112'},
-    {'id': '2', 'name': '新部门'},
-    {'id': '3', 'name': '测试部'},
-    {'id': '4', 'name': '工程部'},
-    {'id': '5', 'name': '业务部'},
-    {'id': '6', 'name': '客服部'},
-    {'id': '7', 'name': '财务部'},
+    {'department_id': '0', 'department_name': '我的团队'},
   ];
 
   void _onRefresh() async {
@@ -75,7 +66,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
-      getData();
+      getDepartment();
     });
   }
 
@@ -83,6 +74,31 @@ class _StaffDepartmentState extends State<StaffDepartment> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+
+  getDepartment({isRefresh: false}) async {
+    setState(() {
+      loading = true;
+    });
+    ajax('Adminrelas-Api-getDepartment', {}, true, (res) {
+      if (mounted) {
+        setState(() {
+          loading = false;
+          department.addAll(res['data'] ?? []);
+          selectDepartment = department[0];
+          getData();
+        });
+        if (isRefresh) {
+          _refreshController.refreshCompleted();
+        }
+      }
+    }, () {
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+      }
+    }, _context);
   }
 
   getData({isRefresh: false}) async {
@@ -123,7 +139,8 @@ class _StaffDepartmentState extends State<StaffDepartment> {
     getData();
   }
 
-  topDialog(item) {
+  delDialog(item) {
+    print(item);
     return showDialog<void>(
       context: context,
       barrierDismissible: true, // user must tap button!
@@ -136,7 +153,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
             child: Container(
 //                width: MediaQuery.of(context).size.width - 100,
               child: Text(
-                '确认删除 ${item['name']}?',
+                '确认删除 ${item['department_name']}?',
                 style: TextStyle(fontSize: CFFontSize.content),
               ),
             ),
@@ -153,7 +170,112 @@ class _StaffDepartmentState extends State<StaffDepartment> {
               textColor: Colors.white,
               child: Text('提交'),
               onPressed: () {
+                ajax('Adminrelas-Staff-deleteDepartment', {'depID': item['department_id']}, true, (data) {
+                  setState(() {
+                    department.remove(item);
+                  });
+                  Navigator.of(context).pop();
+                }, () {}, _context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  wxCheckDialog(item) {
+    return showDialog<void>(
+      context: _context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            '信息',
+          ),
+          content: SingleChildScrollView(
+            child: Container(
+//                width: MediaQuery.of(context).size.width - 100,
+              child: Text(
+                '确认把 ${item['login_name']} 调成 ${item['wx_check'] == '0' ? '微信登录' : '普通登录'} ?',
+                style: TextStyle(fontSize: CFFontSize.content),
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('取消'),
+              onPressed: () {
                 Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: Text('提交'),
+              onPressed: () {
+                ajax(
+                    'Adminrelas-Staff-editUserWxCheck',
+                    {
+                      'param': jsonEncode({
+                        'staffID': item['staff_id'],
+                        'wx_check': item['wx_check'] == '0' ? '1' : '0',
+                      })
+                    },
+                    true, (data) {
+                  Navigator.of(_context).pop();
+                  getData();
+                }, () {}, _context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  stateDialog(item) {
+    return showDialog<void>(
+      context: _context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            '信息',
+          ),
+          content: SingleChildScrollView(
+            child: Container(
+//                width: MediaQuery.of(context).size.width - 100,
+              child: Text(
+                '确认把 ${item['login_name']} 调成 ${item['state'] == '0' ? '启用' : '停止'} ?',
+                style: TextStyle(fontSize: CFFontSize.content),
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('取消'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: Text('提交'),
+              onPressed: () {
+                ajax(
+                    'Adminrelas-Staff-editUserState',
+                    {
+                      'param': jsonEncode({
+                        'staffID': item['staff_id'],
+                        'state': item['state'] == '0' ? '1' : '0',
+                      })
+                    },
+                    true, (data) {
+                  Navigator.of(_context).pop();
+                  getData();
+                }, () {}, _context);
               },
             ),
           ],
@@ -163,13 +285,14 @@ class _StaffDepartmentState extends State<StaffDepartment> {
   }
 
   modifyName(item) {
+    Map itemTemp = jsonDecode(jsonEncode(item));
     return showDialog<void>(
       context: context,
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            '信息',
+            item['department_name'] == null ? '新增部门' : '${itemTemp['department_name']} 修改',
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -179,11 +302,11 @@ class _StaffDepartmentState extends State<StaffDepartment> {
                 style: TextStyle(fontSize: CFFontSize.content),
                 controller: TextEditingController.fromValue(
                   TextEditingValue(
-                    text: '${item['name'] ?? ''}',
+                    text: '${itemTemp['department_name'] ?? ''}',
                     selection: TextSelection.fromPosition(
                       TextPosition(
                         affinity: TextAffinity.downstream,
-                        offset: '${item['name'] ?? ''}'.length,
+                        offset: '${itemTemp['department_name'] ?? ''}'.length,
                       ),
                     ),
                   ),
@@ -199,7 +322,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
                 ),
                 onChanged: (val) {
                   setState(() {
-                    item['name'] = val;
+                    itemTemp['department_name'] = val;
                   });
                 },
               ),
@@ -217,7 +340,13 @@ class _StaffDepartmentState extends State<StaffDepartment> {
               textColor: Colors.white,
               child: Text('提交'),
               onPressed: () {
-                Navigator.of(context).pop();
+                ajax('Adminrelas-Staff-editDepartmentName',
+                    {'depID': itemTemp['department_id'], 'depName': itemTemp['department_name']}, true, (data) {
+                  setState(() {
+                    item['department_name'] = itemTemp['department_name'];
+                    Navigator.of(context).pop();
+                  });
+                }, () {}, _context);
               },
             ),
           ],
@@ -258,7 +387,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('${selectDepartment['name']} 组织架构'),
+        title: Text('${selectDepartment['department_name']} 组织架构'),
         leading: IconButton(
           icon: const BackButtonIcon(),
           color: context.watch<CFProvider>().themeMode == ThemeMode.dark ? CFColors.dark : Colors.white,
@@ -293,7 +422,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
-                            param['dep_id'] = department[index]['id'];
+                            param['dep_id'] = department[index]['department_id'];
                             param['curr_page'] = 1;
                             selectDepartment = jsonDecode(jsonEncode(department[index]));
                             Navigator.of(context).pop();
@@ -301,32 +430,37 @@ class _StaffDepartmentState extends State<StaffDepartment> {
                           });
                         },
                         behavior: HitTestBehavior.opaque,
-                        child: Text('${department[index]['name']}'),
+                        child: Text('${department[index]['department_name']}'),
                       ),
                     ),
                   ),
-                  Container(
-                    child: Material(
-                      child: IconButton(
-                        onPressed: () {
-                          modifyName(department[index]);
-                        },
-                        icon: Icon(Icons.edit),
-                        tooltip: '修改',
-                      ),
-                    ),
-                  ),
-                  Container(
-                    child: Material(
-                      child: IconButton(
-                        onPressed: () {
-                          topDialog(department[index]);
-                        },
-                        icon: Icon(Icons.delete_forever),
-                        tooltip: '删除',
-                      ),
-                    ),
-                  ),
+                  department[index]['department_id'] == '0'
+                      ? Container()
+                      : Container(
+                          child: Material(
+                            child: IconButton(
+                              onPressed: () {
+                                modifyName(department[index]);
+                              },
+                              icon: Icon(Icons.edit),
+                              tooltip: '修改',
+                            ),
+                          ),
+                        ),
+                  department[index]['department_id'] == '0'
+                      ? Container()
+                      : Container(
+                          margin: EdgeInsets.only(left: 8, right: 8),
+                          child: Material(
+                            child: IconButton(
+                              onPressed: () {
+                                delDialog(department[index]);
+                              },
+                              icon: Icon(Icons.delete_forever),
+                              tooltip: '删除',
+                            ),
+                          ),
+                        ),
                 ],
               ),
             );
@@ -371,6 +505,17 @@ class _StaffDepartmentState extends State<StaffDepartment> {
                       modifyName({});
                     },
                     child: Text('新增部门'),
+                  ),
+                  PrimaryButton(
+                    onPressed: () {
+                      Navigator.push(
+                        _context,
+                        MaterialPageRoute(
+                          builder: (context) => StaffAdd(),
+                        ),
+                      );
+                    },
+                    child: Text('添加员工'),
                   ),
                 ],
               ),
@@ -421,9 +566,31 @@ class _StaffDepartmentState extends State<StaffDepartment> {
                                               child: Text('${state[item['state']]}'),
                                             ),
                                             PrimaryButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                stateDialog(item);
+                                              },
                                               child:
                                                   '${item['state']}' == '1' ? Icon(Icons.play_arrow) : Icon(Icons.stop),
+                                            ),
+                                          ],
+                                        );
+                                        break;
+                                      case 'wx_check_ch':
+                                        con = Row(
+                                          children: <Widget>[
+                                            Container(
+                                              height: 30,
+                                              alignment: Alignment.centerLeft,
+                                              margin: EdgeInsets.only(
+                                                right: 15,
+                                              ),
+                                              child: Text('${item['wx_check_ch']}'),
+                                            ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                wxCheckDialog(item);
+                                              },
+                                              child: Icon(Icons.repeat),
                                             ),
                                           ],
                                         );
@@ -434,7 +601,16 @@ class _StaffDepartmentState extends State<StaffDepartment> {
                                           spacing: 10,
                                           children: <Widget>[
                                             PrimaryButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  _context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => StaffAdd(
+                                                      props: item,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
                                               child: Text('修改'),
                                             ),
                                           ],

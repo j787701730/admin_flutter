@@ -12,6 +12,20 @@ import 'package:path_provider/path_provider.dart';
 
 final baseUrl = 'http://192.168.1.213/';
 
+ajaxMini(url, data) {
+  Dio dio = Dio();
+  return dio.post(
+    "$baseUrl$url",
+    data: data,
+    options: Options(
+      contentType: Headers.formUrlEncodedContentType,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    ),
+  );
+}
+
 ajaxSimple(String url, data, Function fun, {Function netError}) async {
   var dio = Dio();
   Directory tempDir = await getTemporaryDirectory();

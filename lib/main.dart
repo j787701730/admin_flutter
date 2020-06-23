@@ -55,13 +55,14 @@ class _MyAppState extends State<MyApp> {
           fontSize: 14,
         ),
         subtitle1: TextStyle(
-          // listtitle
+          // ListTitle
           fontSize: 14,
         ),
       ),
       buttonTheme: ButtonThemeData(
         minWidth: 34,
         height: 32,
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: const Color.fromARGB(55, 255, 255, 255),
@@ -125,13 +126,14 @@ class _MyAppState extends State<MyApp> {
           fontSize: 14,
         ),
         subtitle1: TextStyle(
-          // listtitle
+          // ListTitle
           fontSize: 14,
         ),
       ),
       buttonTheme: ButtonThemeData(
         minWidth: 34,
         height: 32,
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: const Color.fromARGB(55, 0, 0, 0),

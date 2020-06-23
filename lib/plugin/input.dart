@@ -37,6 +37,14 @@ class _InputState extends State<Input> {
   }
 
   @override
+  void didUpdateWidget(Input oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.value != widget.value) {
+      value = widget.value;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 10),

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:admin_flutter/cf-provider.dart';
 import 'package:admin_flutter/primary_button.dart';
@@ -19,10 +20,7 @@ class _StaffGroupState extends State<StaffGroup> {
   BuildContext _context;
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
-  Map selectGroup = {
-    'grpID': '1',
-    'name': '超级管理员',
-  };
+  Map selectGroup = {};
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   List ajaxData = [];
   int count = 0;
@@ -46,15 +44,8 @@ class _StaffGroupState extends State<StaffGroup> {
     {'title': '操作', 'key': 'option'},
   ];
 
-  List department = [
-    {'id': '1', 'name': '超级管理员'},
-    {'id': '2', 'name': '研发组'},
-    {'id': '3', 'name': '测试组'},
-    {'id': '4', 'name': '工程组'},
-    {'id': '5', 'name': '业务组'},
-    {'id': '6', 'name': '客服组'},
-    {'id': '7', 'name': '财务组'},
-  ];
+  List groups = [];
+  bool canEdit = false;
 
   void _onRefresh() async {
     setState(() {
@@ -68,7 +59,7 @@ class _StaffGroupState extends State<StaffGroup> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
-      getData();
+      getGroups();
     });
   }
 
@@ -78,11 +69,34 @@ class _StaffGroupState extends State<StaffGroup> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getGroups({isRefresh: false}) async {
     setState(() {
       loading = true;
     });
-    ajax('Adminrelas-Staff-GroupRightsShow', {'grpID': selectGroup['grpID']}, true, (res) {
+    ajax('Adminrelas-Api-getGroups', {}, true, (res) {
+      if (mounted) {
+        setState(() {
+          loading = false;
+          groups = res['data'] ?? [];
+          selectGroup = groups[0];
+          getData();
+        });
+      }
+    }, () {
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+      }
+    }, _context);
+  }
+
+  getData({isRefresh: false}) async {
+    setState(() {
+      loading = true;
+      canEdit = false;
+    });
+    ajax('Adminrelas-Staff-GroupRightsShow', {'grpID': selectGroup['group_id']}, true, (res) {
       if (mounted) {
         setState(() {
           loading = false;
@@ -110,9 +124,9 @@ class _StaffGroupState extends State<StaffGroup> {
     );
   }
 
-  topDialog(item) {
+  delDialog(item) {
     return showDialog<void>(
-      context: context,
+      context: _context,
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
@@ -123,7 +137,7 @@ class _StaffGroupState extends State<StaffGroup> {
             child: Container(
 //                width: MediaQuery.of(context).size.width - 100,
               child: Text(
-                '确认删除 ${item['name']}?',
+                '确认删除 ${item['group_name']}?',
                 style: TextStyle(fontSize: CFFontSize.content),
               ),
             ),
@@ -140,7 +154,12 @@ class _StaffGroupState extends State<StaffGroup> {
               textColor: Colors.white,
               child: Text('提交'),
               onPressed: () {
-                Navigator.of(context).pop();
+                ajax('Adminrelas-Staff-deleteGroups', {'grpID': item['group_id']}, true, (data) {
+                  setState(() {
+                    groups.remove(item);
+                  });
+                  Navigator.of(context).pop();
+                }, () {}, _context);
               },
             ),
           ],
@@ -150,13 +169,14 @@ class _StaffGroupState extends State<StaffGroup> {
   }
 
   modifyName(item) {
+    Map itemTemp = jsonDecode(jsonEncode(item));
     return showDialog<void>(
       context: context,
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            '信息',
+            item['group_name'] == null ? '新增岗位' : '${item['group_name']} 修改',
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -166,11 +186,11 @@ class _StaffGroupState extends State<StaffGroup> {
                 style: TextStyle(fontSize: CFFontSize.content),
                 controller: TextEditingController.fromValue(
                   TextEditingValue(
-                    text: '${item['name'] ?? ''}',
+                    text: '${itemTemp['group_name'] ?? ''}',
                     selection: TextSelection.fromPosition(
                       TextPosition(
                         affinity: TextAffinity.downstream,
-                        offset: '${item['name'] ?? ''}'.length,
+                        offset: '${itemTemp['group_name'] ?? ''}'.length,
                       ),
                     ),
                   ),
@@ -186,7 +206,7 @@ class _StaffGroupState extends State<StaffGroup> {
                 ),
                 onChanged: (val) {
                   setState(() {
-                    item['name'] = val;
+                    itemTemp['name'] = val;
                   });
                 },
               ),
@@ -204,7 +224,13 @@ class _StaffGroupState extends State<StaffGroup> {
               textColor: Colors.white,
               child: Text('提交'),
               onPressed: () {
-                Navigator.of(context).pop();
+                ajax('Adminrelas-Staff-editGroupsName', {'grpID': item['group_id'], 'grpName': itemTemp['group_name']},
+                    true, (data) {}, () {
+                  setState(() {
+                    item['group_name'] = itemTemp['group_name'];
+                    Navigator.of(context).pop();
+                  });
+                }, _context);
               },
             ),
           ],
@@ -219,7 +245,7 @@ class _StaffGroupState extends State<StaffGroup> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('${selectGroup['name']} 岗位架构'),
+        title: Text('${selectGroup['group_name']} 岗位架构'),
         leading: IconButton(
           icon: const BackButtonIcon(),
           color: context.watch<CFProvider>().themeMode == ThemeMode.dark ? CFColors.dark : Colors.white,
@@ -240,7 +266,6 @@ class _StaffGroupState extends State<StaffGroup> {
         child: ListView.separated(
           itemBuilder: (context, index) {
             return Container(
-//              color: department[index]['id'] == selectGroup['id'] ? CFColors.white : Color(0xfff5f5f5),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -254,13 +279,13 @@ class _StaffGroupState extends State<StaffGroup> {
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
-                            selectGroup = jsonDecode(jsonEncode(department[index]));
+                            selectGroup = jsonDecode(jsonEncode(groups[index]));
                             Navigator.of(context).pop();
                             getData();
                           });
                         },
                         behavior: HitTestBehavior.opaque,
-                        child: Text('${department[index]['name']}'),
+                        child: Text('${groups[index]['group_name']}'),
                       ),
                     ),
                   ),
@@ -268,7 +293,7 @@ class _StaffGroupState extends State<StaffGroup> {
                     child: Material(
                       child: IconButton(
                         onPressed: () {
-                          modifyName(department[index]);
+                          modifyName(groups[index]);
                         },
                         icon: Icon(Icons.edit),
                         tooltip: '修改',
@@ -276,10 +301,11 @@ class _StaffGroupState extends State<StaffGroup> {
                     ),
                   ),
                   Container(
+                    margin: EdgeInsets.symmetric(horizontal: 8),
                     child: Material(
                       child: IconButton(
                         onPressed: () {
-                          topDialog(department[index]);
+                          delDialog(groups[index]);
                         },
                         icon: Icon(Icons.delete_forever),
                         tooltip: '删除',
@@ -293,7 +319,7 @@ class _StaffGroupState extends State<StaffGroup> {
           separatorBuilder: (context, index) {
             return Divider();
           },
-          itemCount: department.length,
+          itemCount: groups.length,
         ),
       ),
       body: SmartRefresher(
@@ -325,12 +351,42 @@ class _StaffGroupState extends State<StaffGroup> {
                     },
                     child: Text('新增岗位'),
                   ),
-                  PrimaryButton(
-                    onPressed: () {
+                  canEdit
+                      ? PrimaryButton(
+                          onPressed: () {
 //                        _scaffoldKey.currentState.openDrawer();
-                    },
-                    child: Text('修改权限'),
-                  ),
+                            List grpRights = [];
+                            String grpID = selectGroup['group_id'];
+                            for (var o in ajaxData) {
+                              for (var p in o['c']) {
+                                for (var q in p['c']) {
+                                  if ('${q['ck']}' == '1') {
+                                    grpRights.add(q['fid']);
+                                  }
+                                }
+                              }
+                            }
+                            print(grpRights);
+                            ajax(
+                                'Adminrelas-Staff-editGrpRights',
+                                {'grpID': grpID, 'grpRights': grpRights.isEmpty ? -1 : grpRights.join(',')},
+                                true, (data) {
+                              setState(() {
+                                canEdit = false;
+                              });
+                            }, () {}, _context);
+                          },
+                          child: Text('保存权限'),
+                        )
+                      : PrimaryButton(
+                          onPressed: () {
+                            setState(() {
+                              canEdit = !canEdit;
+                            });
+//                        _scaffoldKey.currentState.openDrawer();
+                          },
+                          child: Text('修改权限'),
+                        ),
                 ],
               ),
               margin: EdgeInsets.only(
@@ -368,10 +424,40 @@ class _StaffGroupState extends State<StaffGroup> {
                                 ),
                                 child: Row(
                                   children: <Widget>[
-                                    Container(
-                                      width: 100,
-                                      padding: EdgeInsets.symmetric(horizontal: 6),
-                                      child: Text('${item['mnm']}'),
+                                    InkWell(
+                                      onTap: () {
+                                        if (canEdit) {
+                                          if (item['clickCount'] == null || item['clickCount'] == 0) {
+                                            for (var o in item['c']) {
+                                              for (var p in o['c']) {
+                                                setState(() {
+                                                  p['ck'] = 1;
+                                                  item['clickCount'] = 1;
+                                                });
+                                              }
+                                            }
+                                          } else {
+                                            for (var o in item['c']) {
+                                              for (var p in o['c']) {
+                                                setState(() {
+                                                  p['ck'] = 0;
+                                                  item['clickCount'] = 0;
+                                                });
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      child: Container(
+                                        width: 100,
+                                        padding: EdgeInsets.symmetric(horizontal: 6),
+                                        child: Text(
+                                          '${item['mnm']}',
+                                          style: TextStyle(
+                                            color: canEdit ? CFColors.primary : CFColors.text,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                     Expanded(
                                       child: Container(
@@ -390,9 +476,35 @@ class _StaffGroupState extends State<StaffGroup> {
                                             (item2) {
                                               return Row(
                                                 children: <Widget>[
-                                                  Container(
-                                                    width: 110,
-                                                    child: Text('${item2['mnm']}'),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      if (canEdit) {
+                                                        if (item2['clickCount'] == null || item2['clickCount'] == 0) {
+                                                          for (var o in item2['c']) {
+                                                            setState(() {
+                                                              o['ck'] = 1;
+                                                              item2['clickCount'] = 1;
+                                                            });
+                                                          }
+                                                        } else {
+                                                          for (var o in item2['c']) {
+                                                            setState(() {
+                                                              o['ck'] = 0;
+                                                              item2['clickCount'] = 0;
+                                                            });
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    child: Container(
+                                                      width: 110,
+                                                      child: Text(
+                                                        '${item2['mnm']}',
+                                                        style: TextStyle(
+                                                          color: canEdit ? CFColors.primary : CFColors.text,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
                                                   Expanded(
                                                     child: Container(
@@ -425,9 +537,33 @@ class _StaffGroupState extends State<StaffGroup> {
                                                                   ),
                                                               child: InkWell(
                                                                 onTap: () {
-                                                                  setState(() {
-                                                                    item3['ck'] = '${item3['ck']}' == '1' ? '0' : '1';
-                                                                  });
+                                                                  if (canEdit) {
+                                                                    bool flag = false;
+                                                                    if (item2['c'].indexOf(item3) == 0) {
+                                                                      if (item2['c'].length == 1) {
+                                                                        flag = true;
+                                                                      } else {
+                                                                        flag = true;
+                                                                        for (var i = 1; i < item2['c'].length; i++) {
+                                                                          if ('${item2['c'][i]['ck']}' == '1') {
+                                                                            flag = false;
+                                                                            break;
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    } else {
+                                                                      flag = true;
+                                                                      setState(() {
+                                                                        item2['c'][0]['ck'] = '1';
+                                                                      });
+                                                                    }
+                                                                    if (flag) {
+                                                                      setState(() {
+                                                                        item3['ck'] =
+                                                                            '${item3['ck']}' == '1' ? '0' : '1';
+                                                                      });
+                                                                    }
+                                                                  }
                                                                 },
                                                                 child: Row(
                                                                   mainAxisSize: MainAxisSize.min,
@@ -437,9 +573,9 @@ class _StaffGroupState extends State<StaffGroup> {
                                                                           MaterialTapTargetSize.shrinkWrap,
                                                                       value: '${item3['ck']}' == '1',
                                                                       onChanged: (bool newValue) {
-                                                                        setState(() {
-                                                                          item3['ck'] = newValue ? '1' : '0';
-                                                                        });
+//                                                                        setState(() {
+//                                                                          item3['ck'] = newValue ? '1' : '0';
+//                                                                        });
                                                                       },
                                                                     ),
                                                                     Text(' ${item3['fnm']}'),

@@ -8,6 +8,7 @@ import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/shop/shop_modify.dart';
 import 'package:admin_flutter/shop/shop_staff.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
@@ -38,7 +39,7 @@ class _ShopListState extends State<ShopList> {
   bool loading = true;
   Map shopState = {'-2': '被冻结', '-1': '已打烊', '0': '待审核', '1': '营业中'};
   List columns = [
-    {'title': '店铺名', 'key': 'shop_name'},
+    {'title': '店铺名称', 'key': 'shop_name'},
     {'title': '详细地址', 'key': 'shop_address'},
     {'title': '店铺角色', 'key': 'role_id'},
     {'title': '管理员', 'key': 'login_name'},
@@ -50,48 +51,7 @@ class _ShopListState extends State<ShopList> {
     {'title': '状态', 'key': 'state'},
     {'title': '操作', 'key': 'option'},
   ];
-  Map roles = {
-    "101": {
-      "role_id": "101",
-      "role_en_name": "ROLE_TYPE_STORE",
-      "role_ch_name": "销售门店",
-      "can_apply": "1",
-      "comments": "提供全方位的销售定制门店",
-      "icon": "icon-shopping-cart"
-    },
-    "102": {
-      "role_id": "102",
-      "role_en_name": "ROLE_TYPE_SUPPLIER",
-      "role_ch_name": "供货商",
-      "can_apply": "1",
-      "comments": "提供五金建材的供货服务",
-      "icon": "icon-truck"
-    },
-    "103": {
-      "role_id": "103",
-      "role_en_name": "ROLE_TYPE_FACTORY",
-      "role_ch_name": "加工工厂",
-      "can_apply": "1",
-      "comments": "提供定价加工服务",
-      "icon": "icon-gears"
-    },
-    "104": {
-      "role_id": "104",
-      "role_en_name": "ROLE_TYPE_DESIGNER",
-      "role_ch_name": "设计师",
-      "can_apply": "1",
-      "comments": "提供设计、测量等服务",
-      "icon": "icon-male"
-    },
-    "105": {
-      "role_id": "105",
-      "role_en_name": "ROLE_TYPE_CONSTRUCTION",
-      "role_ch_name": "工程施工",
-      "can_apply": "1",
-      "comments": "提供上门施工服务",
-      "icon": "icon-wrench"
-    }
-  };
+  Map roles = {};
   List selectRole = [];
   Map order = {
     'all': '无',
@@ -134,7 +94,7 @@ class _ShopListState extends State<ShopList> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
-      getData();
+      getParamData();
     });
   }
 
@@ -142,6 +102,17 @@ class _ShopListState extends State<ShopList> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+
+  getParamData() {
+    ajax('Adminrelas-Api-getUserRole', {}, true, (data) {
+      if (mounted) {
+        setState(() {
+          roles = data['data'];
+          getData();
+        });
+      }
+    }, () {}, _context);
   }
 
   getData({isRefresh: false}) async {
@@ -395,7 +366,7 @@ class _ShopListState extends State<ShopList> {
               secondChild: Column(
                 children: <Widget>[
                   Input(
-                    label: '店铺列表',
+                    label: '店铺名称',
                     onChanged: (String val) {
                       setState(() {
                         param['shopName'] = val;
@@ -535,6 +506,26 @@ class _ShopListState extends State<ShopList> {
                                 children: columns.map<Widget>((col) {
                                   Widget con = Text('${item[col['key']] ?? ''}');
                                   switch (col['key']) {
+                                    case 'shop_name':
+                                      con = InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                            _context,
+                                            MaterialPageRoute(
+                                              builder: (context) => ShopModify(
+                                                props: item,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          '${item['shop_name']}',
+                                          style: TextStyle(
+                                            color: CFColors.primary,
+                                          ),
+                                        ),
+                                      );
+                                      break;
                                     case 'login_name':
                                       con = Wrap(
                                         crossAxisAlignment: WrapCrossAlignment.center,
@@ -559,7 +550,7 @@ class _ShopListState extends State<ShopList> {
                                         children: <Widget>[
                                           Container(
                                             width: 60,
-                                            height: 26,
+                                            height: 34,
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
                                               color: Color(0xff5cb85c),

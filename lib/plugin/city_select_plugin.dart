@@ -1,5 +1,7 @@
+import 'dart:convert';
+
+import 'package:admin_flutter/plugin/cache.dart';
 import 'package:admin_flutter/style.dart';
-import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
 
 class CitySelectPlugin extends StatefulWidget {
@@ -12,38 +14,74 @@ class CitySelectPlugin extends StatefulWidget {
 }
 
 class _CitySelectPluginState extends State<CitySelectPlugin> {
-  Map provinceData = {'0': '请选择'};
-  Map cityData = {'0': '请选择'};
-  Map regionData = {'0': '请选择'};
+  Map provinceData = {
+    '0': {
+      'region_id': "0",
+      'region_name': "请选择",
+    }
+  };
+  Map cityData = {
+    '0': {
+      'region_id': "0",
+      'region_name': "请选择",
+    }
+  };
+  Map regionData = {
+    '0': {
+      'region_id': "0",
+      'region_name': "请选择",
+    }
+  };
   Map selectArea = {'province': '0', 'city': '0', 'region': '0'};
-  Map ajaXData = {'county': 1, 'province': '', 'city': ''};
+  Cache cache = Cache(
+    'area',
+  );
+  Map areaData = {};
 
   @override
   void initState() {
     super.initState();
-    getCityData(0);
+    getArea();
+  }
+
+  @override
+  void didUpdateWidget(CitySelectPlugin oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
+  getArea() async {
+    var res = await cache.get('Config-area', {});
+    setState(() {
+      areaData = res;
+      getCityData(0);
+    });
   }
 
   getCityData(index) async {
-    ajaxSimple('Home-Config-areaConfig', ajaXData, (data) {
-      Map temp = {'0': '请选择'};
-      temp.addAll(data);
-      if (mounted) {
-        if (index == 0) {
-          setState(() {
-            provinceData = temp;
-          });
-        } else if (index == 1) {
-          setState(() {
-            cityData = temp;
-          });
-        } else if (index == 2) {
-          setState(() {
-            regionData = temp;
-          });
-        }
+    Map temp = {
+      '0': {
+        'region_id': "0",
+        'region_name': "请选择",
       }
-    });
+    };
+    if (mounted) {
+      if (index == 0) {
+        temp.addAll(jsonDecode(jsonEncode(areaData)));
+        setState(() {
+          provinceData = temp;
+        });
+      } else if (index == 1) {
+        temp.addAll(jsonDecode(jsonEncode(areaData[selectArea['province'].toString()]['child'])));
+        setState(() {
+          cityData = temp;
+        });
+      } else if (index == 2) {
+        temp.addAll(jsonDecode(jsonEncode(cityData[selectArea['city'].toString()]['child'])));
+        setState(() {
+          regionData = temp;
+        });
+      }
+    }
   }
 
   @override
@@ -70,13 +108,9 @@ class _CitySelectPluginState extends State<CitySelectPlugin> {
                 value: selectArea['province'],
                 onChanged: (String newValue) {
                   setState(() {
-                    ajaXData['province'] = newValue;
-                    ajaXData['city'] = '';
                     selectArea['province'] = newValue;
                     selectArea['city'] = '0';
                     selectArea['region'] = '0';
-                    cityData = {'0': '请选择'};
-                    regionData = {'0': '请选择'};
                     if (newValue != '0') {
                       getCityData(1);
                     }
@@ -89,7 +123,7 @@ class _CitySelectPluginState extends State<CitySelectPlugin> {
                     child: Container(
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
-                        '${provinceData[item.toString()]}',
+                        '${provinceData[item]['region_name']}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -123,9 +157,7 @@ class _CitySelectPluginState extends State<CitySelectPlugin> {
                 onChanged: (String newValue) {
                   setState(() {
                     selectArea['city'] = newValue;
-                    ajaXData['city'] = newValue;
                     selectArea['region'] = '0';
-                    regionData = {'0': '请选择'};
                     if (newValue != '0') {
                       getCityData(2);
                     }
@@ -138,7 +170,7 @@ class _CitySelectPluginState extends State<CitySelectPlugin> {
                     child: Container(
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
-                        '${cityData[item.toString()]}',
+                        '${cityData['$item']['region_name']}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -181,7 +213,7 @@ class _CitySelectPluginState extends State<CitySelectPlugin> {
                     child: Container(
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
-                        '${regionData[item.toString()]}',
+                        '${regionData['$item']['region_name']}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
