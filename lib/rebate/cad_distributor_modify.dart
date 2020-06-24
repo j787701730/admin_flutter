@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
@@ -46,7 +47,7 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
   }
 
   getImage(type) async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var image = await ImagePicker().getImage(source: ImageSource.gallery);
     if (image == null) return;
     if (type == 'logo') {
       setState(() {
@@ -62,7 +63,7 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
     // 压缩图片
     final tempDir = await getTemporaryDirectory();
     CompressObject compressObject = CompressObject(
-      imageFile: image, //image
+      imageFile: File(image.path), //image
       path: tempDir.path, //compress to path
       quality: 85, //first compress quality, default 80
       step: 9, //compress quality step, The bigger the fast, Smaller is more accurate, default 6
@@ -75,8 +76,9 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
   }
 
   upload(_path, type, filename) async {
-    FormData formData =
-        FormData.fromMap({'file': await MultipartFile.fromFile("$_path", filename: '$filename'), 'imgType': '$type'});
+    FormData formData = FormData.fromMap(
+      {'file': await MultipartFile.fromFile("$_path", filename: '$filename'), 'imgType': '$type'},
+    );
     ajaxSimple('Rebate-uploadWebCadImg', formData, (res) {
       if ('${res['err_code']}' == '0') {
         if (type == 'logo') {
@@ -219,7 +221,9 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
                           child: Stack(
                             children: <Widget>[
                               Container(
-                                decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey, width: 1),
+                                ),
                                 width: 80,
                                 height: 80,
                                 child: logoLoading

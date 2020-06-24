@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 
 class CitySelectPlugin extends StatefulWidget {
   final getArea;
+  final linkage;
+  final initArea;
 
-  CitySelectPlugin({@required this.getArea});
+  CitySelectPlugin({@required this.getArea, this.linkage = false, this.initArea});
 
   @override
   _CitySelectPluginState createState() => _CitySelectPluginState();
@@ -41,12 +43,33 @@ class _CitySelectPluginState extends State<CitySelectPlugin> {
   @override
   void initState() {
     super.initState();
+    if (widget.linkage) {
+      provinceData = {};
+      cityData = {};
+      regionData = {};
+      selectArea = {
+        'province': widget.initArea['province'],
+        'city': widget.initArea['city'],
+        'region': widget.initArea['region'],
+      };
+    }
     getArea();
   }
 
   @override
   void didUpdateWidget(CitySelectPlugin oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if (widget.linkage) {
+      provinceData = {};
+      cityData = {};
+      regionData = {};
+      selectArea = {
+        'province': widget.initArea['province'],
+        'city': widget.initArea['city'],
+        'region': widget.initArea['region'],
+      };
+    }
+    getArea();
   }
 
   getArea() async {
@@ -64,22 +87,43 @@ class _CitySelectPluginState extends State<CitySelectPlugin> {
         'region_name': "请选择",
       }
     };
+    if (widget.linkage) {
+      temp = {};
+    }
     if (mounted) {
       if (index == 0) {
         temp.addAll(jsonDecode(jsonEncode(areaData)));
         setState(() {
           provinceData = temp;
+          if (selectArea['province'] == null) {
+            selectArea['province'] = temp.keys.toList()[0];
+          }
         });
+        if (widget.linkage) {
+          getCityData(1);
+        }
       } else if (index == 1) {
         temp.addAll(jsonDecode(jsonEncode(areaData[selectArea['province'].toString()]['child'])));
         setState(() {
           cityData = temp;
+          if (selectArea['city'] == null || temp[selectArea['city']] == null) {
+            selectArea['city'] = temp.keys.toList()[0];
+          }
         });
+        if (widget.linkage) {
+          getCityData(2);
+        }
       } else if (index == 2) {
         temp.addAll(jsonDecode(jsonEncode(cityData[selectArea['city'].toString()]['child'])));
         setState(() {
           regionData = temp;
+          if (selectArea['region'] == null || temp[selectArea['region']] == null) {
+            selectArea['region'] = temp.keys.toList()[0];
+          }
         });
+        if (widget.linkage) {
+          widget.getArea(selectArea);
+        }
       }
     }
   }
@@ -114,7 +158,9 @@ class _CitySelectPluginState extends State<CitySelectPlugin> {
                     if (newValue != '0') {
                       getCityData(1);
                     }
-                    widget.getArea(selectArea);
+                    if (!widget.linkage) {
+                      widget.getArea(selectArea);
+                    }
                   });
                 },
                 items: provinceData.keys.toList().map<DropdownMenuItem<String>>((item) {
@@ -161,7 +207,9 @@ class _CitySelectPluginState extends State<CitySelectPlugin> {
                     if (newValue != '0') {
                       getCityData(2);
                     }
-                    widget.getArea(selectArea);
+                    if (!widget.linkage) {
+                      widget.getArea(selectArea);
+                    }
                   });
                 },
                 items: cityData.keys.toList().map<DropdownMenuItem<String>>((item) {

@@ -1,12 +1,17 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:admin_flutter/plugin/city_select_plugin.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/shop/industry_class_select.dart';
+import 'package:admin_flutter/shop/industry_supply_class_select.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ShopModify extends StatefulWidget {
   final props;
@@ -26,11 +31,11 @@ class _ShopModifyState extends State<ShopModify> {
     super.initState();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
+      getIndustryClass();
+      getSupplyClass();
       if (widget.props != null) {
         getData();
       }
-      getIndustryClass();
-      getSupplyClass();
     });
   }
 
@@ -39,12 +44,19 @@ class _ShopModifyState extends State<ShopModify> {
   Map serviceType = {};
   List serviceTypeDisabled = [];
   Map shopAddress = {
-    'province': '',
-    'city': '',
-    'region': '',
+    'province': null,
+    'city': null,
+    'region': null,
   };
   List industryClass = []; // 行业分类
+  List selectIndustryClass = []; // 选择的行业分类
+  Map industryClassData = {}; // 数据匹配用的
   List supplyClass = []; // 供应分类
+  List selectSupplyClass = []; // 选择的供应分类
+  Map supplyClassData = {}; // 数据匹配用的
+  unFocus() {
+    FocusScope.of(_context).requestFocus(FocusNode());
+  }
 
   getData() {
     ajax('Adminrelas-Api-editShopShow-shopId-${widget.props['shop_id']}', {}, true, (data) {
@@ -55,15 +67,26 @@ class _ShopModifyState extends State<ShopModify> {
             arr.add(key);
           }
         }
-        print(arr);
         setState(() {
           shopInfo = data['data'];
           userRole = data['userRole'];
           serviceType = data['serviceType'];
-          shopAddress['province'] = data['shop_province'];
-          shopAddress['city'] = data['shop_city'];
-          shopAddress['region'] = data['shop_region'];
+          shopAddress = {
+            'province': data['data']['shop_province'],
+            'city': data['data']['shop_city'],
+            'region': data['data']['shop_region'],
+          };
           serviceTypeDisabled = arr;
+          for (var o in data['data']['supply_class'].keys.toList()) {
+            for (var d in data['data']['supply_class'][o]) {
+              selectSupplyClass.add(d['class_id']);
+            }
+          }
+          for (var o in data['data']['industry_class'].keys.toList()) {
+            for (var d in data['data']['industry_class'][o]) {
+              selectIndustryClass.add(d['class_id']);
+            }
+          }
         });
       }
     }, () {}, _context);
@@ -73,6 +96,17 @@ class _ShopModifyState extends State<ShopModify> {
     ajax('Adminrelas-shopsManage-getIndustryClass', {}, true, (data) {
       if (mounted) {
         industryClass = data['data'];
+        for (var o in data['data']) {
+          industryClassData[o['class_id']] = {'class_name': o['class_name'], 'parent_class_id': o['parent_class_id']};
+          if (o['children'] != '') {
+            for (var p in o['children']) {
+              industryClassData[p['class_id']] = {
+                'class_name': p['class_name'],
+                'parent_class_id': p['parent_class_id']
+              };
+            }
+          }
+        }
       }
     }, () {}, _context);
   }
@@ -81,8 +115,73 @@ class _ShopModifyState extends State<ShopModify> {
     ajax('Adminrelas-shopsManage-getSupplyClass', {}, true, (data) {
       if (mounted) {
         supplyClass = data['data'];
+        for (var o in data['data']) {
+          supplyClassData[o['class_id']] = {'class_name': o['class_name'], 'parent_class_id': o['parent_class_id']};
+          if (o['children'] != '') {
+            for (var p in o['children']) {
+              supplyClassData[p['class_id']] = {'class_name': p['class_name'], 'parent_class_id': p['parent_class_id']};
+            }
+          }
+        }
       }
     }, () {}, _context);
+  }
+
+  bool logoLoading = false;
+
+  image2Base64(String path) async {
+    File file = new File(path);
+    List<int> imageBytes = await file.readAsBytes();
+
+    setState(() {
+      shopInfo['shop_logo'] = 'data:image/png;base64,${base64Encode(imageBytes)}';
+    });
+
+//    return 'data:image/png;base64,${base64Encode(imageBytes)}';
+  }
+
+  uploadShopLogo() async {
+    setState(() {
+      logoLoading = true;
+    });
+    var image = await ImagePicker().getImage(source: ImageSource.gallery);
+    setState(() {
+      logoLoading = false;
+    });
+    if (image == null) return;
+
+//    String filename = image.path.substring(image.path.lastIndexOf('/') + 1, image.path.length);
+    image2Base64(image.path);
+    // 压缩图片
+//    final tempDir = await getTemporaryDirectory();
+//    CompressObject compressObject = CompressObject(
+//      imageFile: File(image.path), //image
+//      path: tempDir.path, //compress to path
+//      quality: 85, //first compress quality, default 80
+//      step: 9, //compress quality step, The bigger the fast, Smaller is more accurate, default 6
+////      mode: CompressMode.LARGE2SMALL,//default AUTO
+//    );
+//    Luban.compressImage(compressObject).then((_path) {
+////        compressedFile = File(_path);
+//      upload(_path, type, filename);
+//    });
+  }
+
+  uploadShopPics() async {
+    var image = await ImagePicker().getImage(source: ImageSource.gallery);
+    if (image == null) return;
+
+    String filename = image.path.substring(image.path.lastIndexOf('/') + 1, image.path.length);
+    FormData formData = FormData.fromMap(
+      {'file': await MultipartFile.fromFile("${image.path}", filename: '$filename'), 'imgType': 'image'},
+    );
+    ajaxSimple('Adminrelas-ShopsManage-shopPic-shopID-${widget.props['shop_id']}', formData, (res) {
+      if ('${res['err_code']}' == '0') {
+        setState(() {
+          shopInfo['shop_pics'].add(res['img']);
+        });
+      }
+    });
   }
 
   @override
@@ -108,11 +207,12 @@ class _ShopModifyState extends State<ShopModify> {
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
                   width: 100,
                   alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
+                  margin: EdgeInsets.only(right: 10, top: 6),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
@@ -159,11 +259,12 @@ class _ShopModifyState extends State<ShopModify> {
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
                   width: 100,
                   alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
+                  margin: EdgeInsets.only(right: 10, top: 6),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
@@ -196,7 +297,7 @@ class _ShopModifyState extends State<ShopModify> {
                                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                   value: serviceType[item]['check'] == '1',
                                   onChanged: (val) {},
-                                  activeColor: serviceTypeDisabled.indexOf(item) == -1
+                                  activeColor: serviceTypeDisabled.indexOf(item) > -1
                                       ? CFColors.text
                                       : Theme.of(context).toggleableActiveColor,
                                 ),
@@ -235,11 +336,12 @@ class _ShopModifyState extends State<ShopModify> {
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
                   width: 100,
                   alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
+                  margin: EdgeInsets.only(right: 10, top: 6),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[Text('行业分类')],
@@ -247,24 +349,69 @@ class _ShopModifyState extends State<ShopModify> {
                 ),
                 Expanded(
                   flex: 1,
-                  child: Wrap(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Wrap(
+                            spacing: 10,
+                            runSpacing: 10,
+                            children: selectIndustryClass.map<Widget>(
+                              (item) {
+                                String text = '';
+                                Map obj = industryClassData[item];
+                                if (obj['parent_class_id'] != '0') {
+                                  text =
+                                      '${industryClassData[obj['parent_class_id']]['class_name']}/${industryClassData[item]['class_name']}';
+                                }
+                                return Container(
+                                  color: Colors.grey[300],
+                                  padding: EdgeInsets.all(4),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Text(text),
+                                      InkWell(
+                                        child: Icon(
+                                          Icons.close,
+                                          size: 20,
+                                          color: CFColors.danger,
+                                        ),
+                                        onTap: () {
+                                          setState(() {
+                                            selectIndustryClass.remove(item);
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ).toList()),
+                      ),
                       PrimaryButton(
                         onPressed: () {
                           Navigator.push(
                             _context,
                             MaterialPageRoute(
                               builder: (context) => IndustryClassSelect(
-                                selectClass: [],
+                                selectClass: selectIndustryClass,
                                 classData: industryClass,
+                                title: '行业分类',
                               ),
                             ),
                           ).then((value) {
-                            print(value);
+                            if (value != null) {
+                              setState(() {
+                                selectIndustryClass = jsonDecode(jsonEncode(value));
+                              });
+                            }
                           });
                         },
                         child: Text('添加'),
-                      ),
+                      )
                     ],
                   ),
                 )
@@ -274,11 +421,12 @@ class _ShopModifyState extends State<ShopModify> {
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
                   width: 100,
                   alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
+                  margin: EdgeInsets.only(right: 10, top: 6),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[Text('供应分类')],
@@ -286,8 +434,70 @@ class _ShopModifyState extends State<ShopModify> {
                 ),
                 Expanded(
                   flex: 1,
-                  child: Wrap(
-                    children: <Widget>[],
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Wrap(
+                            spacing: 10,
+                            runSpacing: 10,
+                            children: selectSupplyClass.map<Widget>(
+                              (item) {
+                                String text = '';
+                                Map obj = supplyClassData[item];
+                                if (obj['parent_class_id'] != '0') {
+                                  text =
+                                      '${supplyClassData[obj['parent_class_id']]['class_name']}/${supplyClassData[item]['class_name']}';
+                                }
+                                return Container(
+                                  color: Colors.grey[300],
+                                  padding: EdgeInsets.all(4),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Text(text),
+                                      InkWell(
+                                        child: Icon(
+                                          Icons.close,
+                                          size: 20,
+                                          color: CFColors.danger,
+                                        ),
+                                        onTap: () {
+                                          setState(() {
+                                            selectSupplyClass.remove(item);
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ).toList()),
+                      ),
+                      PrimaryButton(
+                        onPressed: () {
+                          Navigator.push(
+                            _context,
+                            MaterialPageRoute(
+                              builder: (context) => IndustryClassSelect(
+                                selectClass: selectSupplyClass,
+                                classData: supplyClass,
+                                title: '供应分类',
+                              ),
+                            ),
+                          ).then((value) {
+                            if (value != null) {
+                              setState(() {
+                                selectSupplyClass = jsonDecode(jsonEncode(value));
+                              });
+                            }
+                          });
+                        },
+                        child: Text('添加'),
+                      )
+                    ],
                   ),
                 )
               ],
@@ -296,11 +506,12 @@ class _ShopModifyState extends State<ShopModify> {
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
                   width: 100,
                   alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
+                  margin: EdgeInsets.only(right: 10, top: 6),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[Text('店铺图标')],
@@ -308,8 +519,66 @@ class _ShopModifyState extends State<ShopModify> {
                 ),
                 Expanded(
                   flex: 1,
-                  child: Wrap(
-                    children: <Widget>[],
+                  child: Row(
+                    children: <Widget>[
+                      InkWell(
+                        onTap: () {
+                          uploadShopLogo();
+                          unFocus();
+                        },
+                        child: Stack(
+                          children: <Widget>[
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey, width: 1),
+                              ),
+                              width: 80,
+                              height: 80,
+                              child: logoLoading
+                                  ? CupertinoActivityIndicator()
+                                  : shopInfo['shop_logo'] == '' || shopInfo['shop_logo'] == null
+                                      ? Icon(
+                                          Icons.image,
+                                          color: Colors.grey,
+                                          size: 50,
+                                        )
+                                      : shopInfo['shop_logo'].split(',').length == 2
+                                          ? Image.memory(
+                                              base64Decode(shopInfo['shop_logo'].split(',')[1]),
+                                              fit: BoxFit.contain,
+                                            )
+                                          : Image.network(
+                                              '$baseUrl${shopInfo['shop_logo']}',
+                                              fit: BoxFit.contain,
+                                            ),
+                            ),
+                            Positioned(
+                              right: 1,
+                              bottom: 1,
+                              child: InkWell(
+                                onTap: () {
+                                  unFocus();
+                                  setState(() {
+                                    shopInfo['shop_logo'] = '';
+                                  });
+                                },
+                                child: Container(
+                                  width: 20,
+                                  height: 20,
+                                  color: Color(0xffeeeeee),
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
                   ),
                 )
               ],
@@ -318,11 +587,12 @@ class _ShopModifyState extends State<ShopModify> {
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
                   width: 100,
                   alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
+                  margin: EdgeInsets.only(right: 10, top: 6),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[Text('店铺图片')],
@@ -330,8 +600,68 @@ class _ShopModifyState extends State<ShopModify> {
                 ),
                 Expanded(
                   flex: 1,
-                  child: Wrap(
-                    children: <Widget>[],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      shopInfo['shop_pics'] == null
+                          ? Container()
+                          : Wrap(
+                              spacing: 10,
+                              runSpacing: 10,
+                              children: shopInfo['shop_pics'].map<Widget>(
+                                (item) {
+                                  return Stack(
+                                    children: <Widget>[
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: Colors.grey, width: 1),
+                                        ),
+                                        width: 80,
+                                        height: 80,
+                                        child: Image.network(
+                                          '$baseUrl$item',
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                      Positioned(
+                                        right: 1,
+                                        bottom: 1,
+                                        child: InkWell(
+                                          onTap: () {
+                                            unFocus();
+                                            setState(() {
+                                              shopInfo['shop_pics'].remove(item);
+                                            });
+                                          },
+                                          child: Container(
+                                            width: 20,
+                                            height: 20,
+                                            color: Color(0xffeeeeee),
+                                            alignment: Alignment.center,
+                                            child: Icon(
+                                              Icons.delete,
+                                              color: Colors.red,
+                                              size: 20,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                },
+                              ).toList(),
+                            ),
+                      Container(
+                        height: 10,
+                      ),
+                      PrimaryButton(
+                        onPressed: () {
+                          uploadShopPics();
+                          unFocus();
+                        },
+                        child: Text('添加图片'),
+                      ),
+                    ],
                   ),
                 )
               ],
@@ -365,8 +695,10 @@ class _ShopModifyState extends State<ShopModify> {
                   flex: 1,
                   child: CitySelectPlugin(
                     getArea: (val) {
-//                      print(val);
+                      shopAddress = jsonDecode(jsonEncode(val));
                     },
+                    initArea: shopAddress,
+                    linkage: true,
                   ),
                 )
               ],
@@ -383,6 +715,15 @@ class _ShopModifyState extends State<ShopModify> {
             value: shopInfo['shop_address'],
             require: true,
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              PrimaryButton(
+                onPressed: () {},
+                child: Text('确认修改'),
+              ),
+            ],
+          )
         ],
       ),
     );

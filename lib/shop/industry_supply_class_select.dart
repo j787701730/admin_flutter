@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class IndustryClassSelect extends StatefulWidget {
   final selectClass;
   final classData;
+  final title;
 
-  IndustryClassSelect({this.selectClass, this.classData});
+  IndustryClassSelect({this.selectClass, this.classData, this.title});
 
   @override
   _IndustryClassSelectState createState() => _IndustryClassSelectState();
@@ -14,11 +15,35 @@ class IndustryClassSelect extends StatefulWidget {
 class _IndustryClassSelectState extends State<IndustryClassSelect> {
   List openClass = [];
 
+  classSelectAll(item, checked) {
+    if (item['children'].length > 0) {
+      for (var child in item['children']) {
+        setState(() {
+          if (checked) {
+            widget.selectClass.remove(child['class_id']);
+          } else {
+            widget.selectClass.add(child['class_id']);
+          }
+        });
+      }
+    }
+  }
+
+  classSelectSingle(children) {
+    setState(() {
+      if (widget.selectClass.indexOf(children['class_id']) == -1) {
+        widget.selectClass.add(children['class_id']);
+      } else {
+        widget.selectClass.remove(children['class_id']);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('行业分类'),
+        title: Text(widget.title),
       ),
       body: Stack(
         fit: StackFit.expand,
@@ -31,7 +56,9 @@ class _IndustryClassSelectState extends State<IndustryClassSelect> {
               height: 40,
               alignment: Alignment.center,
               child: PrimaryButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pop(widget.selectClass);
+                },
                 child: Text('添加'),
               ),
             ),
@@ -45,6 +72,14 @@ class _IndustryClassSelectState extends State<IndustryClassSelect> {
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 12),
               children: widget.classData.map<Widget>(
                 (item) {
+                  bool checked = true;
+                  if (item['children'].length > 0) {
+                    for (var child in item['children']) {
+                      if (widget.selectClass.indexOf(child['class_id']) == -1) {
+                        checked = false;
+                      }
+                    }
+                  }
                   return Container(
                     child: Column(
                       children: <Widget>[
@@ -52,7 +87,9 @@ class _IndustryClassSelectState extends State<IndustryClassSelect> {
                           child: Row(
                             children: <Widget>[
                               IconButton(
-                                icon: Icon(Icons.keyboard_arrow_down),
+                                icon: Icon(openClass.indexOf(item['class_id']) > -1
+                                    ? Icons.keyboard_arrow_down
+                                    : Icons.keyboard_arrow_right),
                                 onPressed: () {
                                   setState(() {
                                     if (openClass.indexOf(item['class_id']) == -1) {
@@ -64,14 +101,20 @@ class _IndustryClassSelectState extends State<IndustryClassSelect> {
                                 },
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  classSelectAll(item, checked);
+                                },
                                 child: Row(
                                   children: <Widget>[
-                                    Checkbox(
-                                      value: true,
-                                      onChanged: (v) {},
-                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                    ),
+                                    item['children'].length > 0
+                                        ? Checkbox(
+                                            value: checked,
+                                            onChanged: (v) {
+                                              classSelectAll(item, checked);
+                                            },
+                                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                          )
+                                        : Container(),
                                     Text('${item['class_name']}'),
                                   ],
                                 ),
@@ -93,19 +136,15 @@ class _IndustryClassSelectState extends State<IndustryClassSelect> {
                                       (children) {
                                         return InkWell(
                                           onTap: () {
-                                            setState(() {
-                                              if (widget.selectClass.indexOf(children['class_id']) == -1) {
-                                                widget.selectClass.add(children['class_id']);
-                                              } else {
-                                                widget.selectClass.remove(children['class_id']);
-                                              }
-                                            });
+                                            classSelectSingle(children);
                                           },
                                           child: Row(
                                             children: <Widget>[
                                               Checkbox(
                                                 value: widget.selectClass.indexOf(children['class_id']) > -1,
-                                                onChanged: (v) {},
+                                                onChanged: (v) {
+                                                  classSelectSingle(children);
+                                                },
                                                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                               ),
                                               Text('${children['class_name']}')
