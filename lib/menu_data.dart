@@ -86,13 +86,14 @@ List menuData = [
         "access": [10],
         "path": '/shopList'
       },
-      {
-        "spell_all": "dianpuxiugai",
-        "spell_index": "dpxg",
-        "name": "店铺修改",
-        "access": [10],
-        "path": '/shopModify'
-      },
+//      {
+//        "spell_all": "dianpuxiugai",
+//        "spell_index": "dpxg",
+//        "name": "店铺修改",
+//        "access": [10],
+//        "path": '/shopModify',
+//        "hidden": true,
+//      },
       {
         "spell_all": "hangyefenlei",
         "spell_index": "hyfl",

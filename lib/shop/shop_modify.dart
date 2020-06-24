@@ -77,14 +77,18 @@ class _ShopModifyState extends State<ShopModify> {
             'region': data['data']['shop_region'],
           };
           serviceTypeDisabled = arr;
-          for (var o in data['data']['supply_class'].keys.toList()) {
-            for (var d in data['data']['supply_class'][o]) {
-              selectSupplyClass.add(d['class_id']);
+          if (data['data']['supply_class'] != null) {
+            for (var o in data['data']['supply_class'].keys.toList()) {
+              for (var d in data['data']['supply_class'][o]) {
+                selectSupplyClass.add(d['class_id']);
+              }
             }
           }
-          for (var o in data['data']['industry_class'].keys.toList()) {
-            for (var d in data['data']['industry_class'][o]) {
-              selectIndustryClass.add(d['class_id']);
+          if (data['data']['industry_class'] != null) {
+            for (var o in data['data']['industry_class'].keys.toList()) {
+              for (var d in data['data']['industry_class'][o]) {
+                selectIndustryClass.add(d['class_id']);
+              }
             }
           }
         });
@@ -242,7 +246,11 @@ class _ShopModifyState extends State<ShopModify> {
                                 Checkbox(
                                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                   value: userRole[item]['check'] == 1,
-                                  onChanged: (val) {},
+                                  onChanged: (val) {
+                                    setState(() {
+                                      userRole[item]['check'] = userRole[item]['check'] == 1 ? 0 : 1;
+                                    });
+                                  },
                                 ),
                                 Text('${userRole[item]['role_ch_name']}'),
                               ],
@@ -296,9 +304,15 @@ class _ShopModifyState extends State<ShopModify> {
                                 Checkbox(
                                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                   value: serviceType[item]['check'] == '1',
-                                  onChanged: (val) {},
+                                  onChanged: (val) {
+                                    setState(() {
+                                      if (serviceTypeDisabled.indexOf(item) == -1) {
+                                        serviceType[item]['check'] = serviceType[item]['check'] == '1' ? '0' : '1';
+                                      }
+                                    });
+                                  },
                                   activeColor: serviceTypeDisabled.indexOf(item) > -1
-                                      ? CFColors.text
+                                      ? CFColors.secondary
                                       : Theme.of(context).toggleableActiveColor,
                                 ),
                                 Text('${serviceType[item]['service_type_ch_name']}'),

@@ -59,17 +59,19 @@ class _CitySelectPluginState extends State<CitySelectPlugin> {
   @override
   void didUpdateWidget(CitySelectPlugin oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.linkage) {
-      provinceData = {};
-      cityData = {};
-      regionData = {};
+    if (widget.linkage &&
+        oldWidget.initArea != null &&
+        widget.initArea != null &&
+        (oldWidget.initArea['province'] != widget.initArea['province'] ||
+            oldWidget.initArea['city'] != widget.initArea['city'] ||
+            oldWidget.initArea['region'] != widget.initArea['region'])) {
       selectArea = {
         'province': widget.initArea['province'],
         'city': widget.initArea['city'],
         'region': widget.initArea['region'],
       };
+      getCityData(0);
     }
-    getArea();
   }
 
   getArea() async {
