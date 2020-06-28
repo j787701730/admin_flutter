@@ -36,102 +36,10 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
   bool isExpandedFlag = true;
   Map url = {
     "all": "全部",
-    "1": "商品明细 (/CS-getGoodsDetail)",
-    "2": "心跳包 (/CS-heart)",
-    "3": "登录 (/CS-login)",
-    "4": "注销 (/CS-logout)",
-    "5": "心跳包 (//Opt-heart)",
-    "6": "登录 (//Opt-login)",
-    "7": "上传 (//Opt-upload)",
-    "8": "下载配置 (/opt-downLoadCfg)",
-    "9": "心跳包 (/opt-heart)",
-    "10": "登录 (/opt-login)",
-    "11": "注销 (/opt-logout)",
-    "12": "上传 (/opt-upload)",
-    "13": " (/yangxb-login)",
-    "14": "登录 (//Erp-login)",
-    "15": "增值服务 (/Erp-addedService)",
-    "16": "所有员工 (/Erp-allStaff)",
-    "17": "所有用户 (/erp-allUsers)",
-    "18": "拆单配置 (/Erp-boardCut)",
-    "19": "拆单配置明细 (/Erp-boradCutConf)",
-    "20": "CRM列表 (/erp-crmList)",
-    "21": "入库 (/Erp-depotIn)",
-    "22": "文件删除 (/Erp-fileDelete)",
-    "23": "文件上传 (/Erp-fileUpload)",
-    "24": "主帐号 (/Erp-getMasterUser)",
-    "25": "商品列表 (/erp-goodsList)",
-    "26": "令牌登录 (/Erp-JWTLogin)",
-    "27": "登录 (/Erp-login)",
-    "28": "订单创建 (/erp-orderCreate)",
-    "29": "订单删除 (/erp-orderDelete)",
-    "30": "订单明细 (/Erp-orderDetail)",
-    "31": "订单明细 (/Erp-orderDetail?tdsourcetag=s_pcqq_aiomsg)",
-    "32": "订单列表 (/Erp-orderList)",
-    "33": "订单流程 (/erp-orderProcess)",
-    "34": "订单更新 (/erp-orderUpdate)",
-    "35": "拆单扣款 (/Erp-payout)",
-    "36": "拆单预扣款 (/Erp-prePayout)",
-    "37": "报价 (/Erp-pricingProposal)",
-    "38": "会话鉴权 (/Erp-sessionAuth)",
-    "39": "任务确认 (/Erp-taskConfirm)",
-    "40": "任务完成 (/Erp-taskFinish)",
-    "41": "语音合成 (/Erp-Voice)",
-    "42": " (/yangxb-chenlh)",
-    "43": " (/yangxb-test)",
-    "44": "配置更新 (/CAD-cfgEdit)",
-    "45": "配置查询 (/CAD-cfgQuery)",
-    "46": "短信验证 (/CAD-checkCode)",
-    "47": "是否注册 (/CAD-checkRegUser)",
-    "48": "目录创建 (/CAD-dirCreate)",
-    "49": "目录删除 (/CAD-dirDelete)",
-    "50": "目录查询 (/CAD-dirQuery)",
-    "51": "目录更新 (/CAD-dirUpdate)",
-    "52": "文件创建 (/CAD-fileCreate)",
-    "53": "文件删除 (/CAD-fileDelete)",
-    "54": "文件明细 (/CAD-fileDetail)",
-    "55": "文件列表 (/CAD-fileList)",
-    "56": "文件更新 (/CAD-fileUpdate)",
-    "57": "商品列表 (/CAD-goodsList)",
-    "58": "心跳包 (/CAD-heart)",
-    "59": "图片删除 (/CAD-imageDelete)",
-    "60": "图片列表 (/CAD-imageList)",
-    "61": "图片上传 (/CAD-imageUpload)",
-    "62": "登录 (/CAD-login)",
-    "63": "注销 (/CAD-loginOut)",
-    "64": "登录状态 (/CAD-loginStatus)",
-    "65": "封面山川 (/CAD-logoUpload)",
-    "66": "材质创建 (/CAD-materialCreate)",
-    "67": "材质删除 (/CAD-materialDelete)",
-    "68": "材质明细 (/CAD-materialDetail)",
-    "69": "材质列表 (/CAD-materialList)",
-    "70": "材质更新 (/CAD-materialUpdate)",
-    "71": "模板创建 (/CAD-moduleCreate)",
-    "72": "模板删除 (/CAD-moduleDelete)",
-    "73": "模板明细 (/CAD-moduleDetail)",
-    "74": "模板列表 (/CAD-moduleList)",
-    "75": "模板更新 (/CAD-moduleUpdate)",
-    "76": "注册 (/CAD-reg)",
-    "77": "顶线创建 (/CAD-toplineCreate)",
-    "78": "顶线明细 (/CAD-toplineDetail)",
-    "79": "顶线列表 (/CAD-toplineList)",
-    "80": "空间查询 (/CAD-zoneQuery)",
-    "85": " (/CAD-fileMove)",
-    "86": " (/CAD-heart?tdsourcetag=s_pctim_aiomsg)",
-    "87": " (/CAD-toplineDelete)",
-    "88": " (/CAD-toplineUpdate)",
-    "89": " (/CAD-materialMove)",
-    "90": " (/CAD-moduleMove)",
-    "91": " (/CAD-toplineMove)",
-    "92": " (/CAD-dirQuery?tdsourcetag=s_pctim_aiomsg)",
   };
 
   Map logSource = {
     'all': '全部',
-    '1': '客户端日志',
-    '2': '优化日志',
-    '3': 'ERP日志',
-    '4': 'WebCad日志',
   };
 
   DateTime create_date_min;
@@ -167,8 +75,7 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
-      getData();
-      getData2();
+      getParamData();
     });
   }
 
@@ -178,7 +85,22 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getParamData() {
+    ajax('Adminrelas-Api-analysisLog', {}, true, (data) {
+      if (mounted) {
+        setState(() {
+          logSource.addAll(data['source']);
+          for (var o in data['url_list']) {
+            url[o['url_id']] = o['name'];
+          }
+          getData();
+          getData2();
+        });
+      }
+    }, () {}, _context);
+  }
+
+  getData({isRefresh: false}) {
     if (create_date_min != null) {
       param['log_dayL'] = create_date_min.toString().substring(0, 10);
     } else {

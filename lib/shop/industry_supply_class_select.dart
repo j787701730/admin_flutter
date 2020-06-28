@@ -112,7 +112,6 @@ class _IndustryClassSelectState extends State<IndustryClassSelect> {
                                             onChanged: (v) {
                                               classSelectAll(item, checked);
                                             },
-                                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                           )
                                         : Container(),
                                     Text('${item['class_name']}'),
@@ -145,7 +144,6 @@ class _IndustryClassSelectState extends State<IndustryClassSelect> {
                                                 onChanged: (v) {
                                                   classSelectSingle(children);
                                                 },
-                                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                               ),
                                               Text('${children['class_name']}')
                                             ],

@@ -284,7 +284,6 @@ class _ShopListState extends State<ShopList> {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Checkbox(
-                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               value: selectRole.indexOf(key) > -1,
                               onChanged: (val) {
                                 if (selectRole.indexOf(key) > -1) {

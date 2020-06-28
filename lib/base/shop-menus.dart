@@ -87,7 +87,6 @@ class _ShopMenusState extends State<ShopMenus> {
         return AlertDialog(
           title: Text(
             '信息',
-
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -215,14 +214,15 @@ class _ShopMenusState extends State<ShopMenus> {
                                                                     horizontal: 4,
                                                                   ),
                                                                   decoration: BoxDecoration(
+                                                                    color: '${item3['kp']}' == '1'
+                                                                        ? Color(0xffFFFCED)
+                                                                        : Color(0xffE5F5FF),
+                                                                    border: Border.all(
                                                                       color: '${item3['kp']}' == '1'
-                                                                          ? Color(0xffFFFCED)
-                                                                          : Color(0xffE5F5FF),
-                                                                      border: Border.all(
-                                                                        color: '${item3['kp']}' == '1'
-                                                                            ? Color(0xffEFA843)
-                                                                            : Color(0xff79CAFF),
-                                                                      )),
+                                                                          ? Color(0xffEFA843)
+                                                                          : Color(0xff79CAFF),
+                                                                    ),
+                                                                  ),
                                                                   child: Text(' ${item3['fnm']}'),
                                                                 );
                                                         },

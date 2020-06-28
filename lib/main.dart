@@ -102,6 +102,7 @@ class _MyAppState extends State<MyApp> {
           color: DarkColor.title,
         ),
       ),
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );
     return base;
   }
@@ -115,6 +116,7 @@ class _MyAppState extends State<MyApp> {
       primarySwatch: Colors.blue,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       platform: TargetPlatform.iOS,
+      scaffoldBackgroundColor: Colors.white,
       textTheme: TextTheme(
         subtitle2: TextStyle(
           textBaseline: TextBaseline.alphabetic,
@@ -162,6 +164,7 @@ class _MyAppState extends State<MyApp> {
           color: LightColor.title,
         ),
       ),
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );
     return base;
   }

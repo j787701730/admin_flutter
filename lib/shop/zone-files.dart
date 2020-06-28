@@ -5,6 +5,7 @@ import 'package:admin_flutter/plugin/date_select_plugin.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
+import 'package:admin_flutter/plugin/photo-view-plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
@@ -235,13 +236,28 @@ class _ZoneFilesState extends State<ZoneFiles> {
                                       case 'name':
                                         con = Row(
                                           children: <Widget>[
-                                            Container(
-                                              width: 60,
-                                              height: 60,
-                                              margin: EdgeInsets.only(
-                                                right: 10,
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  _context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => PhotoViewPlugin([
+                                                      '$baseUrl${item['real_path']}',
+                                                    ]),
+                                                  ),
+                                                );
+                                              },
+                                              child: Container(
+                                                width: 60,
+                                                height: 60,
+                                                margin: EdgeInsets.only(
+                                                  right: 10,
+                                                ),
+                                                child: Hero(
+                                                  tag: '$baseUrl${item['real_path']}',
+                                                  child: Image.network('$baseUrl${item['path']}'),
+                                                ),
                                               ),
-                                              child: Image.network('$baseUrl${item['path']}'),
                                             ),
                                             Text(item['name']),
                                           ],

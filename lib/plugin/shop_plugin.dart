@@ -278,13 +278,11 @@ class _ShopPluginState extends State<ShopPlugin> {
                             child: Center(
                               child: shopCount == 1
                                   ? Radio(
-                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                       value: item['shop_id'],
                                       groupValue: selectShopsData.keys.isEmpty ? '' : selectShopsData.keys.toList()[0],
                                       onChanged: (val) => selectOrCancel(item),
                                     )
                                   : Checkbox(
-                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                       value: selectShopsData.keys.toList().indexOf(item['shop_id']) != -1,
                                       onChanged: (val) => selectOrCancel(item),
                                     ),

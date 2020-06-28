@@ -226,7 +226,6 @@ class _BoardCutUserGrantModifyState extends State<BoardCutUserGrantModify> {
                                       }
                                     });
                                   },
-                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                 ),
                               ),
                               Expanded(
@@ -271,7 +270,6 @@ class _BoardCutUserGrantModifyState extends State<BoardCutUserGrantModify> {
                                             }
                                           });
                                         },
-                                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                       ),
                                     ),
                                     Expanded(

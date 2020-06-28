@@ -272,13 +272,11 @@ class _UserPluginState extends State<UserPlugin> {
                           child: Center(
                             child: userCount == 1
                                 ? Radio(
-                                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                     value: item['user_id'],
                                     groupValue: selectUsersData.keys.isEmpty ? '' : selectUsersData.keys.toList()[0],
                                     onChanged: (val) => selectOrCancel(item),
                                   )
                                 : Checkbox(
-                                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                     value: selectUsersData.keys.toList().indexOf(item['user_id']) != -1,
                                     onChanged: (val) => selectOrCancel(item),
                                   ),

@@ -175,7 +175,6 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
                     child: Row(
                       children: <Widget>[
                         Checkbox(
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           value: data['if_show'] == '1',
                           onChanged: (val) {
                             unFocus();

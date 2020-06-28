@@ -343,7 +343,6 @@ class _PricePlanState extends State<PricePlan> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
                                       Radio(
-                                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                         value: '1',
                                         groupValue: newRenew,
                                         onChanged: (val) {
@@ -366,7 +365,6 @@ class _PricePlanState extends State<PricePlan> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
                                       Radio(
-                                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                         value: '0',
                                         groupValue: newRenew,
                                         onChanged: (val) {

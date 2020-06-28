@@ -44,6 +44,8 @@ class _PhoneLogsState extends State<PhoneLogs> {
   DateTime create_date_min;
   DateTime create_date_max;
   bool loading = true;
+  Map price = {};
+  Map priceMonth = {};
 
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
@@ -73,6 +75,7 @@ class _PhoneLogsState extends State<PhoneLogs> {
     _context = context;
     Timer(Duration(milliseconds: 200), () {
       getData();
+      getParamData();
     });
   }
 
@@ -82,7 +85,18 @@ class _PhoneLogsState extends State<PhoneLogs> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getParamData() {
+    ajax('Adminrelas-Api-phoneLogs', {}, true, (data) {
+      if (mounted) {
+        setState(() {
+          price = data['price'];
+          priceMonth = data['priceMonth'];
+        });
+      }
+    }, () {}, _context);
+  }
+
+  getData({isRefresh: false}) {
     if (create_date_min != null) {
       param['create_date_min'] = create_date_min.toString().substring(0, 10);
     } else {
@@ -291,9 +305,33 @@ class _PhoneLogsState extends State<PhoneLogs> {
               margin: EdgeInsets.only(bottom: 10),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 8),
+              margin: EdgeInsets.only(bottom: 10),
               alignment: Alignment.centerRight,
               child: NumberBar(count: count),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Wrap(
+                runSpacing: 6,
+                children: <Widget>[
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[Text('本月通话时长为：'), Text('${priceMonth['duration']}分钟，')],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[Text('费用为：'), Text('${priceMonth['all_price']}分钟。')],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[Text('总计通话时长为：'), Text('${price['duration']}分钟，')],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[Text('费用为：'), Text('${price['duration']}分钟。')],
+                  ),
+                ],
+              ),
             ),
             loading
                 ? Container(

@@ -241,7 +241,6 @@ class _StaffAddState extends State<StaffAdd> {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Radio(
-                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               value: '1',
                               groupValue: param['sex'],
                               onChanged: (value) {
@@ -257,7 +256,6 @@ class _StaffAddState extends State<StaffAdd> {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Radio(
-                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               value: '2',
                               groupValue: param['sex'],
                               onChanged: (value) {
@@ -307,7 +305,6 @@ class _StaffAddState extends State<StaffAdd> {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Radio(
-                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               value: '1',
                               groupValue: param['wx_check'],
                               onChanged: (value) {
@@ -323,7 +320,6 @@ class _StaffAddState extends State<StaffAdd> {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Radio(
-                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               value: '0',
                               groupValue: param['wx_check'],
                               onChanged: (value) {
@@ -375,7 +371,6 @@ class _StaffAddState extends State<StaffAdd> {
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Radio(
-                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                   value: '${item['department_id']}',
                                   groupValue: param['depid'],
                                   onChanged: (value) {
@@ -427,7 +422,6 @@ class _StaffAddState extends State<StaffAdd> {
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Radio(
-                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                   value: '${item['group_id']}',
                                   groupValue: param['grpID'],
                                   onChanged: (value) {

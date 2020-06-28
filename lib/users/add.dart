@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:admin_flutter/plugin/city_select_plugin.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
@@ -16,9 +18,11 @@ class _UsersAddState extends State<UsersAdd> {
   String password = '';
   String confirmPassword = '';
   String shopname = '';
-  String shop_province = '';
-  String service_city = '';
-  String service_region = '';
+  Map shopArea = {
+    'province': '14',
+    'city': '14001',
+    'region': '14001001',
+  };
   String shopaddress = '';
   String company_name = '';
   String tax_no = '';
@@ -209,11 +213,11 @@ class _UsersAddState extends State<UsersAdd> {
   };
 
   getArea(val) {
-    setState(() {
-      shop_province = val['province'];
-      service_city = val['city'];
-      service_region = val['region'];
-    });
+    if (val != null) {
+      setState(() {
+        shopArea = jsonDecode(jsonEncode(val));
+      });
+    }
   }
 
   @override
@@ -248,7 +252,12 @@ class _UsersAddState extends State<UsersAdd> {
                       ),
                     ),
                   ),
-                  child: Text('用户信息'),
+                  child: Text(
+                    '用户信息',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.only(right: 10),
@@ -333,7 +342,12 @@ class _UsersAddState extends State<UsersAdd> {
                       ),
                     ),
                   ),
-                  child: Text('店铺信息'),
+                  child: Text(
+                    '店铺信息',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.only(right: 10),
@@ -374,6 +388,8 @@ class _UsersAddState extends State<UsersAdd> {
                               flex: 1,
                               child: CitySelectPlugin(
                                 getArea: getArea,
+                                linkage: true,
+                                initArea: shopArea,
                               ),
                             )
                           ],
@@ -434,7 +450,6 @@ class _UsersAddState extends State<UsersAdd> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
                                           Checkbox(
-                                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                               value: rolesList.indexOf(item) > -1,
                                               onChanged: (val) {
                                                 if (rolesList.indexOf(item) == -1) {
@@ -504,7 +519,6 @@ class _UsersAddState extends State<UsersAdd> {
                                             mainAxisSize: MainAxisSize.min,
                                             children: <Widget>[
                                               Checkbox(
-                                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                                   value: right_flag.indexOf(item) > -1,
                                                   onChanged: (val) {
                                                     if (right_flag.indexOf(item) == -1) {
@@ -566,7 +580,6 @@ class _UsersAddState extends State<UsersAdd> {
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: <Widget>[
                                                   Radio(
-                                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                                       value: type['type_id'],
                                                       groupValue: right_flag.indexOf(type['type_id']) > -1
                                                           ? right_flag[right_flag.indexOf(type['type_id'])]
@@ -869,7 +882,7 @@ class _UsersAddState extends State<UsersAdd> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   Radio(
-                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // 设置大小
+                                      // 设置大小
                                       value: item,
                                       groupValue: present,
                                       onChanged: (val) {

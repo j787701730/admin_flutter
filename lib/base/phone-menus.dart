@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:admin_flutter/style.dart';
 
-import 'phone-menus-data.dart';
-
+import 'package:admin_flutter/base/phone-menu-add-modify.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,6 @@ class _PhoneMenusState extends State<PhoneMenus> {
   BuildContext _context;
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
-  Map param = {"curr_page": 1, "page_count": 15};
   List ajaxData = [];
   int count = 0;
   bool loading = true;
@@ -28,6 +26,7 @@ class _PhoneMenusState extends State<PhoneMenus> {
   String sellerSelectKey = '';
   String buyerSelectKey = '';
   String moveKey = '';
+  Map menus = {};
 
   List columns = [
     {'title': '图标', 'key': 'mio'},
@@ -43,8 +42,7 @@ class _PhoneMenusState extends State<PhoneMenus> {
 
   void _onRefresh() async {
     setState(() {
-      param['curr_page'] = 1;
-      getData(isRefresh: true);
+      getParamData(isRefresh: true);
     });
   }
 
@@ -54,7 +52,7 @@ class _PhoneMenusState extends State<PhoneMenus> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
-//      getData();
+      getParamData();
     });
   }
 
@@ -64,29 +62,17 @@ class _PhoneMenusState extends State<PhoneMenus> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
-    setState(() {
-      loading = true;
-    });
-    ajax('Adminrelas-goodsConfig-getAttrByClassID', {'param': jsonEncode(param)}, true, (res) {
+  getParamData({isRefresh: false}) {
+    ajax('Adminrelas-Api-phoneMenusData', {}, true, (data) {
       if (mounted) {
         setState(() {
-          loading = false;
-          ajaxData = res['data'] ?? [];
-          count = int.tryParse('${res['count'] ?? 0}');
-          toTop();
+          menus = data['data'];
         });
         if (isRefresh) {
           _refreshController.refreshCompleted();
         }
       }
-    }, () {
-      if (mounted) {
-        setState(() {
-          loading = false;
-        });
-      }
-    }, _context);
+    }, () {}, _context);
   }
 
   toTop() {
@@ -95,11 +81,6 @@ class _PhoneMenusState extends State<PhoneMenus> {
       duration: Duration(milliseconds: 300), // 300ms
       curve: Curves.bounceIn, // 动画方式
     );
-  }
-
-  getPage(page) {
-    param['curr_page'] += page;
-    getData();
   }
 
   topDialog(item) {
@@ -141,7 +122,7 @@ class _PhoneMenusState extends State<PhoneMenus> {
     );
   }
 
-  moveDialog() {
+  moveDialog(item, menuID, parentMenuID) {
     return showDialog<void>(
       context: context,
       barrierDismissible: true, // user must tap button!
@@ -149,7 +130,7 @@ class _PhoneMenusState extends State<PhoneMenus> {
         return StatefulBuilder(builder: (context1, state) {
           return AlertDialog(
             title: Text(
-              '移动',
+              '${item['mnm']} 移动',
             ),
             content: Container(
               height: 50,
@@ -197,7 +178,17 @@ class _PhoneMenusState extends State<PhoneMenus> {
                 textColor: Colors.white,
                 child: Text('提交'),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  print(menuID);
+                  print(parentMenuID);
+                  ajax(
+                      'Adminrelas-WebSysConfig-alterPhoneMenus',
+                      {
+                        'data': jsonEncode({"menu_id": menuID, "parent_menu_id": parentMenuID})
+                      },
+                      true, (data) {
+                    getParamData();
+                    Navigator.of(context).pop();
+                  }, () {}, _context);
                 },
               ),
             ],
@@ -207,7 +198,7 @@ class _PhoneMenusState extends State<PhoneMenus> {
     );
   }
 
-  delDialog(item) {
+  delDialog(item, menuID, {type: ''}) {
     return showDialog<void>(
       context: context,
       barrierDismissible: true, // user must tap button!
@@ -237,6 +228,16 @@ class _PhoneMenusState extends State<PhoneMenus> {
               textColor: Colors.white,
               child: Text('提交'),
               onPressed: () {
+                ajax('Adminrelas-WebSysConfig-delPhoneMenus', {'menu_id': menuID}, true, (data) {
+                  setState(() {
+                    if (type == 'sellerSelectKey') {
+                      sellerSelectKey = '';
+                    } else if (type == buyerSelectKey) {
+                      buyerSelectKey = '';
+                    }
+                    getParamData();
+                  });
+                }, () {}, _context);
                 Navigator.of(context).pop();
               },
             ),
@@ -244,6 +245,23 @@ class _PhoneMenusState extends State<PhoneMenus> {
         );
       },
     );
+  }
+
+  phoneMenuAddModify(item, parentMenuID, menuID) {
+    Navigator.push(
+      _context,
+      MaterialPageRoute(
+        builder: (context) => PhoneMenuAddModify(
+          item: item,
+          parentMenuID: parentMenuID,
+          menuID: menuID,
+        ),
+      ),
+    ).then((value) {
+      if (value) {
+        getParamData();
+      }
+    });
   }
 
   @override
@@ -305,7 +323,9 @@ class _PhoneMenusState extends State<PhoneMenus> {
                       child: Row(
                         children: <Widget>[
                           PrimaryButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              phoneMenuAddModify({'mt': '2'}, '0', null);
+                            },
                             child: Text(
                               '新增',
                             ),
@@ -341,27 +361,45 @@ class _PhoneMenusState extends State<PhoneMenus> {
                                             child: sellerSelectKey == key
                                                 ? Row(
                                                     children: <Widget>[
-                                                      Text(
-                                                        '${menu['mnm']}',
-                                                        style: TextStyle(
-                                                          color: Color(0xffff4400),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(horizontal: 4),
+                                                        child: Text(
+                                                          '${menu['mnm']}',
+                                                          style: TextStyle(
+                                                            color: Color(0xffff4400),
+                                                          ),
                                                         ),
                                                       ),
-                                                      Icon(
-                                                        Icons.edit,
-                                                        size: 20,
-                                                        color: CFColors.primary,
+                                                      IconButton(
+                                                        icon: Icon(
+                                                          Icons.edit,
+                                                          size: 20,
+                                                          color: CFColors.primary,
+                                                        ),
+                                                        onPressed: () {
+                                                          phoneMenuAddModify(menu, '0', key);
+                                                        },
                                                       ),
-                                                      Icon(
-                                                        Icons.delete_outline,
-                                                        size: 20,
-                                                        color: CFColors.danger,
-                                                      ),
+                                                      IconButton(
+                                                        onPressed: () {
+                                                          delDialog(menu, sellerSelectKey, type: 'sellerSelectKey');
+                                                        },
+                                                        icon: Icon(
+                                                          Icons.delete_outline,
+                                                          size: 20,
+                                                          color: CFColors.danger,
+                                                        ),
+                                                      )
                                                     ],
                                                   )
                                                 : Row(
                                                     children: <Widget>[
-                                                      Text('${menu['mnm']}'),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(horizontal: 4),
+                                                        child: Text(
+                                                          '${menu['mnm']}',
+                                                        ),
+                                                      ),
                                                     ],
                                                   ),
                                           ),
@@ -382,14 +420,19 @@ class _PhoneMenusState extends State<PhoneMenus> {
                       ),
                       alignment: Alignment.centerLeft,
                       child: PrimaryButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          phoneMenuAddModify({'mt': '2'}, sellerSelectKey, null);
+                        },
                         child: Text(
                           '新增子工具',
                         ),
                       ),
                     ),
-                    sellerSelectKey == ''
-                        ? Container()
+                    sellerSelectKey == '' || menus[sellerSelectKey]['c'] == null
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: menus[sellerSelectKey]['c'].keys.toList().map<Widget>((key) {
@@ -424,7 +467,7 @@ class _PhoneMenusState extends State<PhoneMenus> {
                                           children: <Widget>[
                                             PrimaryButton(
                                               onPressed: () {
-                                                topDialog(item);
+                                                phoneMenuAddModify(item, sellerSelectKey, key);
                                               },
                                               child: Text('修改'),
                                             ),
@@ -432,14 +475,14 @@ class _PhoneMenusState extends State<PhoneMenus> {
                                               onPressed: () {
                                                 setState(() {
                                                   moveKey = sellerSelectKey;
-                                                  moveDialog();
+                                                  moveDialog(item, key, sellerSelectKey);
                                                 });
                                               },
                                               child: Text('移动'),
                                             ),
                                             PrimaryButton(
                                               onPressed: () {
-                                                delDialog(item);
+                                                delDialog(item, key);
                                               },
                                               child: Text('删除'),
                                               type: 'error',
@@ -524,7 +567,9 @@ class _PhoneMenusState extends State<PhoneMenus> {
                       child: Row(
                         children: <Widget>[
                           PrimaryButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              phoneMenuAddModify({'mt': '1'}, '0', null);
+                            },
                             child: Text(
                               '新增',
                             ),
@@ -560,27 +605,45 @@ class _PhoneMenusState extends State<PhoneMenus> {
                                             child: buyerSelectKey == key
                                                 ? Row(
                                                     children: <Widget>[
-                                                      Text(
-                                                        '${menu['mnm']}',
-                                                        style: TextStyle(
-                                                          color: Color(0xffff4400),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(horizontal: 4),
+                                                        child: Text(
+                                                          '${menu['mnm']}',
+                                                          style: TextStyle(
+                                                            color: Color(0xffff4400),
+                                                          ),
                                                         ),
                                                       ),
-                                                      Icon(
-                                                        Icons.edit,
-                                                        size: 20,
-                                                        color: CFColors.primary,
+                                                      IconButton(
+                                                        icon: Icon(
+                                                          Icons.edit,
+                                                          size: 20,
+                                                          color: CFColors.primary,
+                                                        ),
+                                                        onPressed: () {
+                                                          phoneMenuAddModify(menu, '0', key);
+                                                        },
                                                       ),
-                                                      Icon(
-                                                        Icons.delete_outline,
-                                                        size: 20,
-                                                        color: CFColors.danger,
-                                                      ),
+                                                      IconButton(
+                                                        onPressed: () {
+                                                          delDialog(menu, buyerSelectKey, type: 'buyerSelectKey');
+                                                        },
+                                                        icon: Icon(
+                                                          Icons.delete_outline,
+                                                          size: 20,
+                                                          color: CFColors.danger,
+                                                        ),
+                                                      )
                                                     ],
                                                   )
                                                 : Row(
                                                     children: <Widget>[
-                                                      Text('${menu['mnm']}'),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(horizontal: 4),
+                                                        child: Text(
+                                                          '${menu['mnm']}',
+                                                        ),
+                                                      ),
                                                     ],
                                                   ),
                                           ),
@@ -601,14 +664,19 @@ class _PhoneMenusState extends State<PhoneMenus> {
                       ),
                       alignment: Alignment.centerLeft,
                       child: PrimaryButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          phoneMenuAddModify({'mt': '1'}, buyerSelectKey, null);
+                        },
                         child: Text(
                           '新增子工具',
                         ),
                       ),
                     ),
-                    buyerSelectKey == ''
-                        ? Container()
+                    buyerSelectKey == '' || menus[buyerSelectKey]['c'] == null
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text('无数据'),
+                          )
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: menus[buyerSelectKey]['c'].keys.toList().map<Widget>((key) {
@@ -643,22 +711,22 @@ class _PhoneMenusState extends State<PhoneMenus> {
                                           children: <Widget>[
                                             PrimaryButton(
                                               onPressed: () {
-                                                topDialog(item);
+                                                phoneMenuAddModify(item, buyerSelectKey, key);
                                               },
                                               child: Text('修改'),
                                             ),
                                             PrimaryButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  moveKey = sellerSelectKey;
-                                                  moveDialog();
+                                                  moveKey = buyerSelectKey;
+                                                  moveDialog(item, key, buyerSelectKey);
                                                 });
                                               },
                                               child: Text('移动'),
                                             ),
                                             PrimaryButton(
                                               onPressed: () {
-                                                delDialog(item);
+                                                delDialog(item, key);
                                               },
                                               child: Text('删除'),
                                               type: 'error',

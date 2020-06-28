@@ -231,7 +231,6 @@ class _UsersManagerState extends State<UsersManager> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
                                           Checkbox(
-                                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                               value: selectRow['user_type'].contains(key),
                                               onChanged: (val) {
                                                 state(() {
@@ -290,7 +289,6 @@ class _UsersManagerState extends State<UsersManager> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
                                           Radio(
-                                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                               value: key,
                                               groupValue: selectRow['user_type'].indexOf(key) > -1
                                                   ? selectRow['user_type'][selectRow['user_type'].indexOf(key)]

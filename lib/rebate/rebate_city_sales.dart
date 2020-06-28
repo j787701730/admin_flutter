@@ -304,7 +304,6 @@ class _RebateCitySalesState extends State<RebateCitySales> {
                                     left: 0,
                                     top: 0,
                                     child: Checkbox(
-                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                       value: selectSales.contains(item['sales_id']),
                                       onChanged: (val) {
                                         setState(() {

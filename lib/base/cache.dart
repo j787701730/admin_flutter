@@ -238,7 +238,6 @@ class _BaseCacheState extends State<BaseCache> {
                                               children: <Widget>[
                                                 Text('${item[col['key']] ?? ''}'),
                                                 Checkbox(
-                                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                                   value: selectType.indexOf(item['id']) > -1,
                                                   onChanged: (val) {
                                                     if (selectType.indexOf(item['id']) > -1) {

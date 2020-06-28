@@ -38,25 +38,9 @@ class _SmsLogsState extends State<SmsLogs> {
   ];
   bool isExpandedFlag = true;
 
-  Map smsTemplate = {
-    'all': '全部',
-    '1': '用户注册(SMS_9721536)',
-    '3': '用户登录(SMS_9721538)',
-    '4': '身份认证(SMS_9721540)',
-    '5': '信息变更(SMS_9721533)',
-    '6': '密码变更(SMS_9721534)',
-    '7': '工厂授权(SMS_173473094)',
-  };
+  Map smsTemplate = {};
 
-  Map smsTemplate2 = {
-    'all': '全部',
-    'SMS_9721536': '用户注册(SMS_9721536)',
-    'SMS_9721538': '用户登录(SMS_9721538)',
-    'SMS_9721540': '身份认证(SMS_9721540)',
-    'SMS_9721533': '信息变更(SMS_9721533)',
-    'SMS_9721534': '密码变更(SMS_9721534)',
-    'SMS_173473094': '工厂授权(SMS_173473094)',
-  };
+  Map smsTemplate2 = {};
 
   DateTime create_date_min;
   DateTime create_date_max;
@@ -89,7 +73,7 @@ class _SmsLogsState extends State<SmsLogs> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
-      getData();
+      getParamData();
     });
   }
 
@@ -99,7 +83,31 @@ class _SmsLogsState extends State<SmsLogs> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getParamData() {
+    ajax('Adminrelas-Api-smsLog', {}, true, (data) {
+      if (mounted) {
+        Map obj = {
+          'all': '全部',
+        };
+        Map obj2 = {
+          'all': '全部',
+        };
+        for (var key in data['data'].keys.toList()) {
+          obj[key] = '${data['data'][key]['template_ch_name']}(${data['data'][key]['template_code']})';
+          obj2[data['data'][key]['template_code']] =
+              '${data['data'][key]['template_ch_name']}(${data['data'][key]['template_code']})';
+        }
+
+        setState(() {
+          smsTemplate = obj;
+          smsTemplate2 = obj2;
+          getData();
+        });
+      }
+    }, () {}, _context);
+  }
+
+  getData({isRefresh: false}) {
     if (create_date_min != null) {
       param['create_date_min'] = create_date_min.toString().substring(0, 10);
     } else {

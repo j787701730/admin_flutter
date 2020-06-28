@@ -617,7 +617,6 @@ class _ChargeCardState extends State<ChargeCard> {
                                           ? Row(
                                               children: <Widget>[
                                                 Checkbox(
-                                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                                   value: selectCards[item['card_id']] != null,
                                                   onChanged: (val) {
                                                     if (selectCards[item['card_id']] == null) {

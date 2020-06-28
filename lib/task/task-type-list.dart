@@ -242,7 +242,6 @@ class _TaskTypeListState extends State<TaskTypeList> {
                                                   item['web_confirm'] = val ? '1' : '0';
                                                 });
                                               },
-                                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                             ),
                                             Text('${item['type_en_name']}'),
                                           ],

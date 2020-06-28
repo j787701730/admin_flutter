@@ -55,6 +55,8 @@ dependencies:
   provider: 4.1.2
   # 缓存
   shared_preferences: 0.5.7+3
+  # 图片查看器
+  photo_view: 0.9.2
 
 #dev_dependencies:
 #  flutter_test:

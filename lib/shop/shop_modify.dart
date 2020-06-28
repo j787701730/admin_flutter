@@ -244,7 +244,6 @@ class _ShopModifyState extends State<ShopModify> {
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Checkbox(
-                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                   value: userRole[item]['check'] == 1,
                                   onChanged: (val) {
                                     setState(() {
@@ -302,7 +301,6 @@ class _ShopModifyState extends State<ShopModify> {
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Checkbox(
-                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                   value: serviceType[item]['check'] == '1',
                                   onChanged: (val) {
                                     setState(() {
