@@ -86,7 +86,6 @@ class _TaskPricingState extends State<TaskPricing> {
       data['order'] = param['order'];
     }
     ajax('Adminrelas-taskManage-taskPriceList', data, true, (res) {
-      print(data);
       if (mounted) {
         setState(() {
           loading = false;

@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
+import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -16,12 +18,7 @@ class _RebateSaleManState extends State<RebateSaleMan> {
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   Map param = {"curr_page": 1, "page_count": 15};
-  List ajaxData = [
-    {"rate_id": "1", "left_value": "0", "right_value": "0", "rate": "10.0", "sort": "1"},
-    {"rate_id": "6", "left_value": "1", "right_value": "1", "rate": "20.0", "sort": "2"},
-    {"rate_id": "7", "left_value": "2", "right_value": "6", "rate": "30.0", "sort": "3"},
-    {"rate_id": "8", "left_value": "7", "right_value": "999999999", "rate": "60.0", "sort": "4"}
-  ];
+  List ajaxData = [];
   int count = 0;
   bool loading = true;
 
@@ -62,25 +59,24 @@ class _RebateSaleManState extends State<RebateSaleMan> {
     if (isRefresh) {
       _refreshController.refreshCompleted();
     }
-//    ajax('Adminrelas-goodsConfig-getAttrByClassID', {'param': jsonEncode(param)}, true, (res) {
-//      if (mounted) {
-//        setState(() {
-//          loading = false;
-//          ajaxData = res['data'] ?? [];
-//          count = int.tryParse('${res['count'] ?? 0}');
-//          toTop();
-//        });
-//        if (isRefresh) {
-//          _refreshController.refreshCompleted();
-//        }
-//      }
-//    }, () {
-//      if (mounted) {
-//        setState(() {
-//          loading = false;
-//        });
-//      }
-//    }, _context);
+    ajax('Adminrelas-Api-getSalesmanRate', {}, true, (res) {
+      if (mounted) {
+        setState(() {
+          loading = false;
+          ajaxData = res['data'] ?? [];
+          toTop();
+        });
+        if (isRefresh) {
+          _refreshController.refreshCompleted();
+        }
+      }
+    }, () {
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+      }
+    }, _context);
   }
 
   toTop() {
@@ -109,6 +105,38 @@ class _RebateSaleManState extends State<RebateSaleMan> {
     setState(() {
       ajaxData.removeAt(index);
     });
+  }
+
+  save() {
+    print(ajaxData);
+    List arr = [];
+    int sort = 1;
+    for (var o in ajaxData) {
+      if (o['left_value'] != null &&
+          o['right_value'] != null &&
+          o['rate'] != null &&
+          '${o['left_value']}'.trim() != '' &&
+          '${o['right_value']}'.trim() != '' &&
+          '${o['rate']}'.trim() != '') {
+        o['sort'] = '$sort';
+        arr.add(o);
+        sort += 1;
+      }
+    }
+    if (arr.length == 1) {
+    } else {}
+    FocusScope.of(context).requestFocus(FocusNode());
+    return;
+    ajax(
+      'Adminrelas-RebateManage-setSalesmanRate',
+      {
+        'data': jsonEncode({'salesman_rate': ajaxData})
+      },
+      true,
+      (data) {},
+      () {},
+      _context,
+    );
   }
 
   @override
@@ -218,11 +246,7 @@ class _RebateSaleManState extends State<RebateSaleMan> {
                     child: Text('添加'),
                   ),
                   PrimaryButton(
-                    onPressed: () {
-                      FocusScope.of(context).requestFocus(
-                        FocusNode(),
-                      );
-                    },
+                    onPressed: save,
                     child: Text('保存'),
                   ),
                 ],

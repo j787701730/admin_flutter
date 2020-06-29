@@ -47,10 +47,6 @@ class _RebateListState extends State<RebateList> {
 
   Map type = {
     "all": "全部",
-    "1": "商品推荐返利",
-    "2": "店铺注册返利",
-    "3": "月基本费返利",
-    "4": "流量计费返利",
   };
 
   DateTime create_date_min;
@@ -86,6 +82,7 @@ class _RebateListState extends State<RebateList> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
+      getParamData();
       getData();
       getData2();
     });
@@ -95,6 +92,20 @@ class _RebateListState extends State<RebateList> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+
+  getParamData() {
+    ajax('Adminrelas-Api-getRebateType', {}, true, (data) {
+      if (mounted) {
+        Map temp = {};
+        for (var k in data['data'].keys.toList()) {
+          temp[k] = data['data'][k]['type_ch_name'];
+        }
+        setState(() {
+          type.addAll(temp);
+        });
+      }
+    }, () {}, _context);
   }
 
   getData({isRefresh: false}) async {

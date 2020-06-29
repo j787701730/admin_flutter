@@ -433,7 +433,6 @@ class _TaskListState extends State<TaskList> {
                             groupValue: param['markup_type'],
                             value: '0',
                             onChanged: (val) {
-                              print(val);
                               setState(() {
                                 param['markup_type'] = '0';
                               });

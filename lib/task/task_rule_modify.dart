@@ -450,8 +450,6 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
                                       child: Row(
                                         children: <Widget>[
                                           Container(
-                                            width: 34,
-                                            height: 34,
                                             child: IconButton(
                                               padding: EdgeInsets.all(0),
                                               icon: Icon(
@@ -476,8 +474,6 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
                                             ),
                                           ),
                                           Container(
-                                            width: 34,
-                                            height: 34,
                                             child: IconButton(
                                               icon: Icon(
                                                 Icons.add,
