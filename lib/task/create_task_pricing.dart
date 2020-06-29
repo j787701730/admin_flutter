@@ -4,7 +4,9 @@ import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/plugin/user_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
+import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CreateTaskPricing extends StatefulWidget {
   @override
@@ -16,6 +18,57 @@ class _CreateTaskPricingState extends State<CreateTaskPricing> {
   Map taskType = {
     "104": "设计任务",
   };
+
+  BuildContext _context;
+
+  @override
+  void initState() {
+    super.initState();
+    _context = context;
+  }
+
+  save() {
+    bool flag = true;
+    List msg = [];
+    if (param['user'].isEmpty) {
+      flag = false;
+      msg.add('用户');
+    }
+
+    if (param['price'] == null || param['price'] == '0' || param['price'] == '') {
+      flag = false;
+      msg.add('定价标准');
+    }
+
+    if (param['subsidy'] == null || param['subsidy'] == '') {
+      flag = false;
+      msg.add('平台补贴');
+    }
+
+    if (flag) {
+      ajax(
+        'Adminrelas-taskManage-makeTaskPrice',
+        {
+          'price': 1,
+          'subsidy': 1,
+          'task_type': 104,
+          'user_id': param['user'][param['user'].keys.toList()[0]]['user_id'],
+        },
+        true,
+        (data) {
+          Navigator.pop(context, true);
+        },
+        () {},
+        _context,
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: '请填写 ${msg.join(', ')}',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -258,7 +311,7 @@ class _CreateTaskPricingState extends State<CreateTaskPricing> {
                 child: Row(
                   children: <Widget>[
                     PrimaryButton(
-                      onPressed: () {},
+                      onPressed: save,
                       child: Text('添加'),
                     ),
                   ],

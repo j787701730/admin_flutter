@@ -41,8 +41,8 @@ class _TaskPricingState extends State<TaskPricing> {
     {'title': '名称', 'key': 'user_name'},
     {'title': '任务类型', 'key': 'task_type'},
     {'title': '价格', 'key': 'price'},
-    {'title': '创建时间', 'key': 'create_date'},
     {'title': '平台补贴', 'key': 'subsidy'},
+    {'title': '创建时间', 'key': 'create_date'},
     {'title': '更新时间', 'key': 'update_date'},
     {'title': '描述', 'key': 'comments'},
     {'title': '操作', 'key': 'option'},
@@ -137,14 +137,15 @@ class _TaskPricingState extends State<TaskPricing> {
               child: Column(
                 children: <Widget>[
                   Select(
-                      selectOptions: taskType2,
-                      selectedValue: modifyItem['task_type'],
-                      label: '任务类型',
-                      onChanged: (val) {
-                        setState(() {
-                          modifyItem['task_type'] = val;
-                        });
-                      }),
+                    selectOptions: taskType2,
+                    selectedValue: modifyItem['task_type'],
+                    label: '任务类型',
+                    onChanged: (val) {
+                      setState(() {
+                        modifyItem['task_type'] = val;
+                      });
+                    },
+                  ),
                   Container(
                     margin: EdgeInsets.only(bottom: 10),
                     child: Row(
@@ -282,7 +283,22 @@ class _TaskPricingState extends State<TaskPricing> {
               color: Colors.blue,
               textColor: Colors.white,
               onPressed: () {
-                Navigator.of(context).pop();
+                ajax(
+                  'Adminrelas-taskManage-alterTaskPrice',
+                  {
+                    'subsidy': modifyItem['subsidy'],
+                    'pricing_id': modifyItem['pricing_id'],
+                    'task_type': modifyItem['task_type'],
+                    'price': modifyItem['price'],
+                  },
+                  true,
+                  (data) {
+                    Navigator.of(context).pop();
+                    getData();
+                  },
+                  () {},
+                  _context,
+                );
               },
             ),
           ],
@@ -453,7 +469,11 @@ class _TaskPricingState extends State<TaskPricing> {
                         MaterialPageRoute(
                           builder: (context) => CreateTaskPricing(),
                         ),
-                      );
+                      ).then((value) {
+                        if (value == true) {
+                          getData();
+                        }
+                      });
                     },
                     child: Text('添加任务定价'),
                   ),

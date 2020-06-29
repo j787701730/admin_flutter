@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:admin_flutter/plugin/city_select_plugin.dart';
 import 'package:admin_flutter/plugin/date_select_plugin.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
@@ -48,7 +49,7 @@ class _TaskListState extends State<TaskList> {
     "3": "接单人已评",
     "4": "双方已评",
   };
-
+  Map taskArea = {"province": "", "city": "", 'region': ''};
   List columns = [
     {'title': '编号名称', 'key': 'task_id'},
     {'title': '任务类型', 'key': 'type_ch_name'},
@@ -58,6 +59,9 @@ class _TaskListState extends State<TaskList> {
     {'title': '截止时间', 'key': 'end_date'},
     {'title': '操作', 'key': 'option'},
   ];
+
+  String markupValue = '';
+  Map markupValueList = {'markup_valueL': "", 'markup_valueU': ""};
 
   void _onRefresh() async {
     setState(() {
@@ -86,6 +90,24 @@ class _TaskListState extends State<TaskList> {
     setState(() {
       loading = true;
     });
+    if (taskArea['province'] == '' || taskArea['province'] == '0') {
+      param.remove('province');
+    } else {
+      param['province'] = taskArea['province'];
+    }
+    if (taskArea['city'] == '' || taskArea['city'] == '0') {
+      param.remove('city');
+    } else {
+      param['city'] = taskArea['city'];
+    }
+    if (param['markup_type'] == '2') {
+      param['markup_value'] = [markupValueList];
+    } else if (param['markup_type'] == '1') {
+      param['markup_value'] = markupValue;
+    } else {
+      param.remove('markup_value');
+    }
+
     ajax('Adminrelas-TaskManage-getTasks', {'param': jsonEncode(param)}, true, (res) {
       if (mounted) {
         setState(() {
@@ -248,6 +270,7 @@ class _TaskListState extends State<TaskList> {
               secondChild: Column(children: <Widget>[
                 Input(
                   label: '任务标题',
+                  labelWidth: 100,
                   onChanged: (String val) {
                     setState(() {
                       if (val == '') {
@@ -260,6 +283,7 @@ class _TaskListState extends State<TaskList> {
                 ),
                 Input(
                   label: '任务编号',
+                  labelWidth: 100,
                   onChanged: (String val) {
                     setState(() {
                       if (val == '') {
@@ -270,8 +294,22 @@ class _TaskListState extends State<TaskList> {
                     });
                   },
                 ),
+                Input(
+                  label: '订单单号',
+                  labelWidth: 100,
+                  onChanged: (String val) {
+                    setState(() {
+                      if (val == '') {
+                        param.remove('order_no');
+                      } else {
+                        param['order_no'] = val;
+                      }
+                    });
+                  },
+                ),
                 Select(
                   selectOptions: state,
+                  labelWidth: 100,
                   selectedValue: param['state'] ?? 'all',
                   label: '任务状态',
                   onChanged: (val) {
@@ -286,6 +324,7 @@ class _TaskListState extends State<TaskList> {
                 ),
                 Select(
                   selectOptions: state,
+                  labelWidth: 100,
                   selectedValue: param['task_type'] ?? 'all',
                   label: '任务类型',
                   onChanged: (val) {
@@ -300,6 +339,7 @@ class _TaskListState extends State<TaskList> {
                 ),
                 Select(
                   selectOptions: state,
+                  labelWidth: 100,
                   selectedValue: param['evaluate_state'] ?? 'all',
                   label: '评价状态',
                   onChanged: (val) {
@@ -315,16 +355,272 @@ class _TaskListState extends State<TaskList> {
                 DateSelectPlugin(
                   onChanged: getDateTime,
                   label: '创建时间',
+                  labelWidth: 100,
                 ),
                 DateSelectPlugin(
                   onChanged: getDateTime2,
                   label: '需求时间',
+                  labelWidth: 100,
+                ),
+                Container(
+                  height: 34,
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        width: 100,
+                        alignment: Alignment.centerRight,
+                        margin: EdgeInsets.only(right: 10),
+                        child: Text('地区'),
+                      ),
+                      Expanded(
+                        child: CitySelectPlugin(getArea: (val) {
+                          if (val != null) {
+                            taskArea = val;
+                          }
+                        }),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 34,
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        width: 100,
+                        alignment: Alignment.centerRight,
+                        margin: EdgeInsets.only(right: 10),
+                        child: Text('查看置顶'),
+                      ),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          child: Checkbox(
+                            value: param['top'] == '1',
+                            onChanged: (val) {
+                              setState(() {
+                                if (val) {
+                                  param['top'] = '1';
+                                } else {
+                                  param.remove('top');
+                                }
+                              });
+                              FocusScope.of(context).requestFocus(FocusNode());
+                            },
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 34,
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        width: 100,
+                        alignment: Alignment.centerRight,
+                        margin: EdgeInsets.only(right: 10),
+                        child: Text('不加价'),
+                      ),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          child: Radio(
+                            groupValue: param['markup_type'],
+                            value: '0',
+                            onChanged: (val) {
+                              print(val);
+                              setState(() {
+                                param['markup_type'] = '0';
+                              });
+                              FocusScope.of(context).requestFocus(FocusNode());
+                            },
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 34,
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        width: 100,
+                        alignment: Alignment.centerRight,
+                        margin: EdgeInsets.only(right: 10),
+                        child: Text('按比例加价'),
+                      ),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            children: <Widget>[
+                              Radio(
+                                groupValue: param['markup_type'],
+                                value: '1',
+                                onChanged: (val) {
+                                  setState(() {
+                                    param['markup_type'] = '1';
+                                  });
+                                  FocusScope.of(context).requestFocus(FocusNode());
+                                },
+                              ),
+                              Container(
+                                width: 120,
+                                height: 34,
+                                child: TextField(
+                                  controller: TextEditingController.fromValue(
+                                    TextEditingValue(
+                                      text: '${markupValue ?? ''}',
+                                      selection: TextSelection.fromPosition(
+                                        TextPosition(
+                                          affinity: TextAffinity.downstream,
+                                          offset: '${markupValue ?? ''}'.length,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  style: TextStyle(fontSize: CFFontSize.content),
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    contentPadding: EdgeInsets.only(
+                                      top: 0,
+                                      bottom: 0,
+                                      left: 10,
+                                      right: 10,
+                                    ),
+                                  ),
+                                  maxLines: 1,
+                                  onChanged: (String val) {
+                                    setState(() {
+                                      markupValue = val;
+                                    });
+                                  },
+                                ),
+                              ),
+                              Text(' 倍'),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 34,
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        width: 100,
+                        alignment: Alignment.centerRight,
+                        margin: EdgeInsets.only(right: 10),
+                        child: Text('固定额度加价'),
+                      ),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            children: <Widget>[
+                              Radio(
+                                groupValue: param['markup_type'],
+                                value: '2',
+                                onChanged: (val) {
+                                  setState(() {
+                                    param['markup_type'] = '2';
+                                  });
+                                  FocusScope.of(context).requestFocus(FocusNode());
+                                },
+                              ),
+                              Expanded(
+                                child: Container(
+                                  height: 34,
+                                  child: TextField(
+                                    controller: TextEditingController.fromValue(
+                                      TextEditingValue(
+                                        text: '${markupValueList['markup_valueL'] ?? ''}',
+                                        selection: TextSelection.fromPosition(
+                                          TextPosition(
+                                            affinity: TextAffinity.downstream,
+                                            offset: '${markupValueList['markup_valueL'] ?? ''}'.length,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    style: TextStyle(fontSize: CFFontSize.content),
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      contentPadding: EdgeInsets.only(
+                                        top: 0,
+                                        bottom: 0,
+                                        left: 10,
+                                        right: 10,
+                                      ),
+                                    ),
+                                    maxLines: 1,
+                                    onChanged: (String val) {
+                                      setState(() {
+                                        markupValueList['markup_valueL'] = val;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Text(' - '),
+                              Expanded(
+                                child: Container(
+                                  height: 34,
+                                  child: TextField(
+                                    controller: TextEditingController.fromValue(
+                                      TextEditingValue(
+                                        text: '${markupValueList['markup_valueU'] ?? ''}',
+                                        selection: TextSelection.fromPosition(
+                                          TextPosition(
+                                            affinity: TextAffinity.downstream,
+                                            offset: '${markupValueList['markup_valueU'] ?? ''}'.length,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    style: TextStyle(fontSize: CFFontSize.content),
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      contentPadding: EdgeInsets.only(
+                                        top: 0,
+                                        bottom: 0,
+                                        left: 10,
+                                        right: 10,
+                                      ),
+                                    ),
+                                    maxLines: 1,
+                                    onChanged: (String val) {
+                                      setState(() {
+                                        markupValueList['markup_valueU'] = val;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Text(' 元'),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 Select(
                   selectOptions: selects,
                   selectedValue: defaultVal,
                   label: '排序',
                   onChanged: orderBy,
+                  labelWidth: 100,
                 ),
               ]),
               crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
