@@ -28,20 +28,10 @@ class _CouponState extends State<Coupon> {
   int count = 0;
   bool loading = true;
   bool isExpandedFlag = true;
-  Map state = {"all": "全部", "0": "失效", "1": "生效"};
-  Map couponType = {"all": "全部", "1": "满减", "2": "抵扣", "3": "折扣"};
-  Map goodsType = {
-    "all": "全部",
-    "1": "供应类商品",
-    "11": "实物类商品",
-    "12": "虚拟类商品",
-    "13": "设计类商品",
-    "14": "生产加工类商品",
-    "15": "施工类商品",
-    "16": "物流类商品",
-    "17": "培训类商品",
-  };
-  Map couponSource = {"all": "全部", "1": "店铺自建", "2": "平台赠送"};
+  Map state = {"all": "全部"};
+  Map couponType = {"all": "全部"};
+  Map goodsType = {"all": "全部"};
+  Map couponSource = {"all": "全部"};
   List columns = [
     {'title': '店铺', 'key': 'shop_name'},
     {'title': '优惠券URL', 'key': 'coupon_id'},
@@ -71,7 +61,7 @@ class _CouponState extends State<Coupon> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
-      getData();
+      getParamData();
     });
   }
 
@@ -81,11 +71,31 @@ class _CouponState extends State<Coupon> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getParamData() {
+    ajax('Adminrelas-Api-couponData', {}, true, (data) {
+      if (mounted) {
+        Map goodsTypeTemp = {};
+        for (var key in data['goodsType'].keys.toList()) {
+          goodsTypeTemp[data['goodsType'][key]] = data['goodsType'][key]['goods_type_ch_name'];
+        }
+        setState(() {
+          couponType.addAll(data['couponsType']);
+          goodsType.addAll(goodsTypeTemp);
+          couponSource.addAll(data['shopCoupon']['coupon_source']);
+          state.addAll(data['shopCoupon']['coupon_state']);
+          getData();
+        });
+      }
+    }, () {}, _context);
+  }
+
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });
-    ajax('Adminrelas-coupon-getCoupon', {'param': jsonEncode(param)}, true, (res) {
+    Map tempParam = jsonDecode(jsonEncode(param));
+    tempParam['curr_page'] -= 1;
+    ajax('Adminrelas-coupon-getCoupon', {'param': jsonEncode(tempParam)}, true, (res) {
       if (mounted) {
         setState(() {
           loading = false;
@@ -196,7 +206,7 @@ class _CouponState extends State<Coupon> {
             child: Container(
               // width: MediaQuery.of(context).size.width - 100,
               child: Text(
-                '确认${item['state'].toString() == '1' ? '关闭' : '开启'} ${item['shop_name']}的优惠券?',
+                '确认${item['state'].toString() == '1' ? '停用' : '开启'} ${item['shop_name']}的优惠券?',
                 style: TextStyle(fontSize: CFFontSize.content),
               ),
             ),
@@ -213,7 +223,16 @@ class _CouponState extends State<Coupon> {
               color: Colors.blue,
               textColor: Colors.white,
               onPressed: () {
-                Navigator.of(context).pop();
+                ajax(
+                    'Adminrelas-coupon-editState',
+                    {
+                      'coupon_id': item['coupon_id'],
+                      'state': int.parse('${item['state'].toString() == '1' ? '0' : '1'}'),
+                    },
+                    true, (data) {
+                  getData();
+                  Navigator.of(context).pop();
+                }, () {}, _context);
               },
             ),
           ],
@@ -381,7 +400,17 @@ class _CouponState extends State<Coupon> {
               color: Colors.blue,
               textColor: Colors.white,
               onPressed: () {
-                Navigator.of(context).pop();
+                ajax(
+                    'Adminrelas-coupon-ajaxEditCoupon',
+                    {
+                      'leftnum': modifyItem['left_nums'],
+                      'limitnum': modifyItem['limit_nums'],
+                      'coupon_id': modifyItem['coupon_id']
+                    },
+                    true, (data) {
+                  getData();
+                  Navigator.of(context).pop();
+                }, () {}, _context);
               },
             ),
           ],
@@ -526,7 +555,12 @@ class _CouponState extends State<Coupon> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => CouponCreate()),
-                      );
+                      ).then((value) {
+                        if (value == true) {
+                          getData();
+                          print(value);
+                        }
+                      });
                     },
                     child: Text('创建优惠券'),
                   ),
@@ -611,7 +645,7 @@ class _CouponState extends State<Coupon> {
                                                       onPressed: () {
                                                         stateDialog(item);
                                                       },
-                                                      child: Text('关闭'),
+                                                      child: Text('停用'),
                                                       type: 'error',
                                                     )
                                                   : PrimaryButton(

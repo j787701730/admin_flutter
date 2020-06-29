@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/plugin/shop_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
+import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CouponCreate extends StatefulWidget {
   @override
@@ -11,8 +15,85 @@ class CouponCreate extends StatefulWidget {
 }
 
 class _CouponCreateState extends State<CouponCreate> {
-  Map param = {'shops': {}, 'goods_type': '0'};
+  Map param = {'shops': {}, 'goods_type': '0', 'leftnum': '10', 'limitnum': '1'};
   Map goodsType = {'0': '全部商品'};
+  BuildContext _context;
+
+  @override
+  void initState() {
+    super.initState();
+    _context = context;
+    Timer(Duration(milliseconds: 200), () {
+      getParamData();
+    });
+  }
+
+  getParamData() {
+    ajax('Adminrelas-Api-couponData', {}, true, (data) {
+      if (mounted) {
+        Map goodsTypeTemp = {};
+        for (var key in data['goodsType'].keys.toList()) {
+          goodsTypeTemp[data['goodsType'][key]] = data['goodsType'][key]['goods_type_ch_name'];
+        }
+        setState(() {
+          goodsType.addAll(goodsTypeTemp);
+        });
+      }
+    }, () {}, _context);
+  }
+
+  save() {
+    print(param);
+    bool flag = true;
+    List msg = [];
+    if (param['shops'].isEmpty) {
+      msg.add('店铺');
+      flag = false;
+    }
+
+    if (param['leftnum'] == null || param['leftnum'] == '' || param['leftnum'] == '0') {
+      msg.add('发放量');
+      flag = false;
+    }
+    if (param['limitnum'] == null || param['limitnum'] == '' || param['limitnum'] == '0') {
+      msg.add('限领数量');
+      flag = false;
+    }
+    if (param['subval'] == null || param['subval'] == '' || param['subval'] == '0') {
+      msg.add('折扣金额');
+      flag = false;
+    }
+    if (param['eff_date'] == null || param['eff_date'] == '') {
+      msg.add('生效日期的起始日期');
+      flag = false;
+    }
+    if (param['eff_date'] == null || param['eff_date'] == '') {
+      msg.add('生效日期的截止日期');
+      flag = false;
+    }
+
+    if (flag) {
+      ajax(
+          'Adminrelas-coupon-ajaxCreateCoupon',
+          {
+            'leftnum': 100,
+            'limitnum': 1,
+            'coupon_id': 16,
+            'subval': 1,
+            'goodstype': 0,
+            'effstart': '2020-06-29 00:00:00',
+            'expend': '2020-06-30 00:00:00',
+            'shopID': 1160,
+            'shop_name': '炜炜小店',
+          },
+          true, (data) {
+        Navigator.of(_context).pop(true);
+      }, () {}, _context);
+    } else {
+      Fluttertoast.showToast(
+          msg: '请填写 ${msg.join(', ')}', gravity: ToastGravity.CENTER, toastLength: Toast.LENGTH_LONG);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +149,7 @@ class _CouponCreateState extends State<CouponCreate> {
                                     Container(
                                       padding: EdgeInsets.only(left: 6),
                                       child: Text(
-                                        '${param['shops'][key]['login_name']}',
+                                        '${param['shops'][key]['shop_name']}',
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -109,7 +190,9 @@ class _CouponCreateState extends State<CouponCreate> {
                         ),
                       ).then((val) {
                         if (val != null) {
-                          param['shops'] = val;
+                          setState(() {
+                            param['shops'] = val;
+                          });
                         }
                       });
                     },
@@ -201,10 +284,9 @@ class _CouponCreateState extends State<CouponCreate> {
                       style: TextStyle(fontSize: CFFontSize.content),
                       controller: TextEditingController.fromValue(
                         TextEditingValue(
-                          text: '${param['leftnum'] ?? '10'}',
+                          text: '${param['leftnum']}',
                           selection: TextSelection.fromPosition(
-                            TextPosition(
-                                affinity: TextAffinity.downstream, offset: '${param['leftnum'] ?? '10'}'.length),
+                            TextPosition(affinity: TextAffinity.downstream, offset: '${param['leftnum']}'.length),
                           ),
                         ),
                       ),
@@ -472,9 +554,7 @@ class _CouponCreateState extends State<CouponCreate> {
                   child: Row(
                     children: <Widget>[
                       PrimaryButton(
-                        onPressed: () {
-                          print(param);
-                        },
+                        onPressed: save,
                         child: Text('保存'),
                       ),
                     ],

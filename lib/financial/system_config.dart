@@ -1,6 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
+import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -15,92 +19,7 @@ class _SystemConfigState extends State<SystemConfig> {
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   Map param = {"curr_page": 1, "page_count": 15};
-  List ajaxData = [
-    {
-      "config_id": "1",
-      "config_type": "3",
-      "config_define": "FINANCIAL_PLAT_EARN_RATE",
-      "config_label": "平台盈利",
-      "config_value": "0.50",
-      "create_date": "2019-02-27 11:19:18",
-      "comments": "平台赚取的盈利部分 + 平台的成本(含税收、利息等)，默认为订单抽取金额的50%",
-      "config_ch": "金融配置",
-      "login_name": "yangxb",
-      "update_date": "2019-03-12 00:00:00"
-    },
-    {
-      "config_id": "2",
-      "config_type": "3",
-      "config_define": "FINANCIAL_SMALL_LIMIT_LOWER",
-      "config_label": "小红包下限",
-      "config_value": "0.20",
-      "create_date": "2019-02-27 11:19:18",
-      "comments": "平台发放小红包占订单抽取金额的最小比例，默认为20%",
-      "config_ch": "金融配置",
-      "login_name": "yangxb",
-      "update_date": "2019-03-12 00:00:00"
-    },
-    {
-      "config_id": "3",
-      "config_type": "3",
-      "config_define": "FINANCIAL_SMALL_LIMIT_UPPER",
-      "config_label": "小红包上限",
-      "config_value": "0.40",
-      "create_date": "2019-02-27 11:19:18",
-      "comments": "平台发放小红包占订单抽取金额的最大比例，默认为40%",
-      "config_ch": "金融配置",
-      "login_name": "yangxb",
-      "update_date": "2019-03-12 00:00:00"
-    },
-    {
-      "config_id": "4",
-      "config_type": "3",
-      "config_define": "FINANCIAL_BIG_THRESHOLD",
-      "config_label": "大红包阀值",
-      "config_value": "200",
-      "create_date": "2019-02-27 11:19:18",
-      "comments": "平台可用盈利累积到一定金额，发放大红包的阀值",
-      "config_ch": "金融配置",
-      "login_name": "yangxb",
-      "update_date": "2019-03-14 00:00:00"
-    },
-    {
-      "config_id": "5",
-      "config_type": "3",
-      "config_define": "FINANCIAL_ORDER_DISCOUNT",
-      "config_label": "订单折扣率",
-      "config_value": "0.05",
-      "create_date": "2019-02-27 11:19:18",
-      "comments": "",
-      "config_ch": "金融配置",
-      "login_name": "yangxb",
-      "update_date": ""
-    },
-    {
-      "config_id": "6",
-      "config_type": "3",
-      "config_define": "FINANCIAL_ORDER_EXTRACT",
-      "config_label": "订单提现率",
-      "config_value": "0.5",
-      "create_date": "2019-02-27 11:19:18",
-      "comments": "",
-      "config_ch": "金融配置",
-      "login_name": "yangxb",
-      "update_date": "2019-03-14 00:00:00"
-    },
-    {
-      "config_id": "7",
-      "config_type": "3",
-      "config_define": "FINANCIAL_ORDER_PAY_ONLINE",
-      "config_label": "在线支付",
-      "config_value": "0",
-      "create_date": "2019-02-27 11:19:18",
-      "comments": "",
-      "config_ch": "金融配置",
-      "login_name": "yangxb",
-      "update_date": "2019-03-14 00:00:00"
-    }
-  ];
+  List ajaxData = [];
   int count = 0;
   bool loading = true;
 
@@ -108,7 +27,7 @@ class _SystemConfigState extends State<SystemConfig> {
     {'title': '配置类型', 'key': 'config_ch'},
     {'title': '配置宏', 'key': 'config_define'},
     {'title': '配置名称', 'key': 'config_label'},
-    {'title': '配置值', 'key': 'config_id'},
+    {'title': '配置值', 'key': 'config_value'},
     {'title': '修改人', 'key': 'login_name'},
     {'title': '创建时间', 'key': 'create_date'},
     {'title': '更新时间', 'key': 'update_date'},
@@ -141,25 +60,25 @@ class _SystemConfigState extends State<SystemConfig> {
     setState(() {
       loading = false;
     });
-//    ajax('Adminrelas-goodsConfig-getAttrByClassID', {'param': jsonEncode(param)}, true, (res) {
-//      if (mounted) {
-//        setState(() {
-//          loading = false;
-//          ajaxData = res['data'] ?? [];
+    ajax('Adminrelas-Api-systemConfigData', {}, true, (res) {
+      if (mounted) {
+        setState(() {
+          loading = false;
+          ajaxData = res['data'] ?? [];
 //          count = int.tryParse('${res['count'] ?? 0}');
-//          toTop();
-//        });
-//        if (isRefresh) {
-//          _refreshController.refreshCompleted();
-//        }
-//      }
-//    }, () {
-//      if (mounted) {
-//        setState(() {
-//          loading = false;
-//        });
-//      }
-//    }, _context);
+          toTop();
+        });
+        if (isRefresh) {
+          _refreshController.refreshCompleted();
+        }
+      }
+    }, () {
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+      }
+    }, _context);
   }
 
   toTop() {
@@ -174,6 +93,99 @@ class _SystemConfigState extends State<SystemConfig> {
     if (loading) return;
     param['curr_page'] += page;
     getData();
+  }
+
+  commentsDialog(item) {
+    return showDialog<void>(
+      context: _context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            '${item['config_label']} 备注',
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(_context).size.width - 100,
+                  child: Text('${item['comments']}'),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('关闭'),
+              onPressed: () {
+                Navigator.of(_context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  configValueDialog(item) {
+    String configValue = '${item['config_value']}';
+    return showDialog<void>(
+      context: _context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            '${item['config_label']} 配置值修改',
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(_context).size.width - 100,
+                  child: Input(
+                    label: '配置值',
+                    onChanged: (val) {
+                      configValue = val;
+                    },
+                    value: configValue,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('关闭'),
+              onPressed: () {
+                Navigator.of(_context).pop();
+              },
+            ),
+            FlatButton(
+              color: CFColors.primary,
+              child: Text('修改'),
+              onPressed: () {
+                ajax(
+                  'Adminrelas-financialLoan-setSystemConfig',
+                  {
+                    'data': jsonEncode({
+                      "config_id": item['config_id'],
+                      "config_value": configValue,
+                    }),
+                  },
+                  true,
+                  (data) {
+                    getData();
+                    Navigator.of(_context).pop();
+                  },
+                  () {},
+                  _context,
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -273,6 +285,37 @@ class _SystemConfigState extends State<SystemConfig> {
                                   children: columns.map<Widget>((col) {
                                     Widget con = Text('${item[col['key']] ?? ''}');
                                     switch (col['key']) {
+                                      case 'config_value':
+                                        con = Row(
+                                          children: <Widget>[
+                                            InkWell(
+                                              onTap: () {
+                                                configValueDialog(item);
+                                              },
+                                              child: Text(
+                                                '${item['config_value']}',
+                                                style: TextStyle(
+                                                  color: CFColors.primary,
+                                                ),
+                                              ),
+                                            ),
+                                            item['comments'] == null || item['comments'] == ''
+                                                ? Container()
+                                                : Container(
+                                                    width: 30,
+                                                    height: 30,
+                                                    child: IconButton(
+                                                      iconSize: 20,
+                                                      padding: EdgeInsets.all(2),
+                                                      icon: Icon(Icons.help),
+                                                      onPressed: () {
+                                                        commentsDialog(item);
+                                                      },
+                                                    ),
+                                                  )
+                                          ],
+                                        );
+                                        break;
                                       case 'config_id':
                                         if ('${item['config_id']}' == '7') {
                                           con = Text('${item[col['key']] == '1' ? '是' : '否'}');
