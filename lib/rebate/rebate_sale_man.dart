@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RebateSaleMan extends StatefulWidget {
@@ -108,9 +110,10 @@ class _RebateSaleManState extends State<RebateSaleMan> {
   }
 
   save() {
-    print(ajaxData);
     List arr = [];
     int sort = 1;
+    bool flag = true;
+    List msg = [];
     for (var o in ajaxData) {
       if (o['left_value'] != null &&
           o['right_value'] != null &&
@@ -123,20 +126,52 @@ class _RebateSaleManState extends State<RebateSaleMan> {
         sort += 1;
       }
     }
-    if (arr.length == 1) {
-    } else {}
+    if (arr.length == 0) {
+      msg.add('请设置成长规则');
+    } else {
+      for (var i = 0; i < ajaxData.length; i++) {
+        if (int.parse('${ajaxData[i]['left_value']}') > int.parse('${ajaxData[i]['right_value']}')) {
+          msg.add('规则的最大值 ${ajaxData[i]['right_value']} 要大于最后一条规则的最小值 ${ajaxData[i]['left_value']}');
+          flag = false;
+        }
+        if (i == 0) {
+          if ('${ajaxData[0]['left_value']}' != '0') {
+            msg.add('第一条规则的最小值要从0开始');
+            flag = false;
+          }
+        } else {
+          if (int.parse('${ajaxData[i]['left_value']}') != int.parse('${ajaxData[i - 1]['right_value']}') + 1) {
+            msg.add('规则在最小值 ${ajaxData[i]['left_value']} 要等于前一条规则最大值 ${ajaxData[i - 1]['right_value']} 加 1 , 请修改! ');
+            flag = false;
+          }
+        }
+        if (i == ajaxData.length - 1) {
+          if ('${ajaxData[i]['right_value']}' != '999999999') {
+            msg.add('最后一条规则的最大值要等于999999999');
+            flag = false;
+          }
+        }
+      }
+    }
     FocusScope.of(context).requestFocus(FocusNode());
-    return;
-    ajax(
-      'Adminrelas-RebateManage-setSalesmanRate',
-      {
-        'data': jsonEncode({'salesman_rate': ajaxData})
-      },
-      true,
-      (data) {},
-      () {},
-      _context,
-    );
+    if (flag) {
+      ajax(
+        'Adminrelas-RebateManage-setSalesmanRate',
+        {
+          'data': jsonEncode({'salesman_rate': ajaxData})
+        },
+        true,
+        (data) {},
+        () {},
+        _context,
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: '${msg.join(', ')}',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+    }
   }
 
   @override
@@ -177,52 +212,113 @@ class _RebateSaleManState extends State<RebateSaleMan> {
                                   ),
                                 ),
                                 margin: EdgeInsets.only(bottom: 10),
-                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                padding: EdgeInsets.only(top: 10, right: 12),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: columns.map<Widget>((col) {
                                     Widget con = Text('${item[col['key']] ?? ''}');
                                     switch (col['key']) {
+                                      case 'left_value':
+                                        con = Input(
+                                          label: '',
+                                          onChanged: (val) {
+                                            setState(() {
+                                              item['left_value'] = val;
+                                            });
+                                          },
+                                          labelWidth: 0,
+                                          value: '${item['left_value']}',
+                                        );
+                                        break;
                                       case 'right_value':
-                                        con = Text('${item['right_value']} (含)');
-                                        break;
-                                      case 'rate':
-                                        con = Text('${item['rate']} %');
-                                        break;
-                                      case 'option':
-                                        con = Wrap(
-                                          runSpacing: 10,
-                                          spacing: 10,
+                                        con = Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
                                           children: <Widget>[
-                                            PrimaryButton(
-                                              onPressed: () {
-                                                add(ajaxData.indexOf(item) + 1);
-                                              },
-                                              child: Text('添加'),
+                                            Expanded(
+                                              child: Input(
+                                                label: '',
+                                                onChanged: (val) {
+                                                  setState(() {
+                                                    item['right_value'] = val;
+                                                  });
+                                                },
+                                                labelWidth: 0,
+                                                value: '${item['right_value']}',
+                                              ),
                                             ),
-                                            PrimaryButton(
-                                              type: 'error',
-                                              onPressed: () {
-                                                del(
-                                                  ajaxData.indexOf(item),
-                                                );
-                                              },
-                                              child: Text('删除'),
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                bottom: 10,
+                                                left: 10,
+                                              ),
+                                              child: Text(' (含)'),
                                             ),
                                           ],
+                                        );
+                                        break;
+                                      case 'rate':
+                                        con = Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              child: Input(
+                                                label: '',
+                                                onChanged: (val) {
+                                                  setState(() {
+                                                    item['rate'] = val;
+                                                  });
+                                                },
+                                                labelWidth: 0,
+                                                value: '${item['rate']}',
+                                              ),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                bottom: 10,
+                                                left: 10,
+                                              ),
+                                              child: Text(' %'),
+                                            ),
+                                          ],
+                                        );
+                                        break;
+                                      case 'option':
+                                        con = Container(
+                                          margin: EdgeInsets.only(bottom: 10),
+                                          child: Wrap(
+                                            runSpacing: 10,
+                                            spacing: 10,
+                                            children: <Widget>[
+                                              PrimaryButton(
+                                                onPressed: () {
+                                                  add(ajaxData.indexOf(item) + 1);
+                                                },
+                                                child: Text('添加'),
+                                              ),
+                                              PrimaryButton(
+                                                type: 'error',
+                                                onPressed: () {
+                                                  del(
+                                                    ajaxData.indexOf(item),
+                                                  );
+                                                },
+                                                child: Text('删除'),
+                                              ),
+                                            ],
+                                          ),
                                         );
                                         break;
                                     }
 
                                     return Container(
-                                      margin: EdgeInsets.only(bottom: 6),
                                       child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
                                           Container(
                                             width: 80,
                                             alignment: Alignment.centerRight,
                                             child: Text('${col['title']}'),
-                                            margin: EdgeInsets.only(right: 10),
+                                            margin: EdgeInsets.only(right: 10, bottom: 10),
                                           ),
                                           Expanded(flex: 1, child: con)
                                         ],
@@ -235,7 +331,7 @@ class _RebateSaleManState extends State<RebateSaleMan> {
                           ),
                   ),
             Container(
-              margin: EdgeInsets.only(bottom: 6),
+              margin: EdgeInsets.only(bottom: 10),
               child: Wrap(
                 spacing: 10,
                 children: <Widget>[

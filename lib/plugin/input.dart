@@ -56,7 +56,7 @@ class _InputState extends State<Input> {
           Container(
             width: widget.labelWidth ?? 80,
             alignment: Alignment.centerRight,
-            margin: EdgeInsets.only(right: 10, top: widget.marginTop),
+            margin: EdgeInsets.only(right: widget.label == '' ? 0 : 10, top: widget.marginTop),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
