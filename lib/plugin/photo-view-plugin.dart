@@ -99,16 +99,8 @@ class _PhotoViewPluginState extends State<PhotoViewPlugin> {
               top: 0,
               child: Container(
                 padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.keyboard_arrow_left,
-                    color: Colors.white,
-                    size: 36,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  tooltip: '返回',
+                child: BackButton(
+                  color: Colors.white,
                 ),
               ),
             ),

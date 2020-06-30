@@ -109,6 +109,17 @@ class _InputState extends State<Input> {
                   )
                 : TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: '${value ?? ''}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${value ?? ''}'.length,
+                          ),
+                        ),
+                      ),
+                    ),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       contentPadding: widget.contentPadding ??

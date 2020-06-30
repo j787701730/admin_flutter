@@ -31,16 +31,9 @@ class _TaskListState extends State<TaskList> {
   bool isExpandedFlag = true;
   Map state = {
     "all": "全部",
-    "1": "待接单",
-    "2": "进行中",
-    "3": "已完成待确认",
-    "4": "问题处理中",
-    "5": "任务结束",
-    "6": "已取消",
   };
   Map taskType = {
     'all': '全部',
-    '104': '设计任务',
   };
   Map evaluateState = {
     "all": "全部",
@@ -76,7 +69,7 @@ class _TaskListState extends State<TaskList> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
-      getData();
+      getParamData();
     });
   }
 
@@ -84,6 +77,26 @@ class _TaskListState extends State<TaskList> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+
+  getParamData() {
+    ajax('Adminrelas-Api-getTaskType', {}, true, (data) {
+      if (mounted) {
+        Map stateTemp = {};
+        Map typeTemp = {};
+        for (var k in data['taskState'].keys.toList()) {
+          stateTemp[k] = data['taskState'][k]['state_ch_name'];
+        }
+        for (var k in data['type'].keys.toList()) {
+          typeTemp[k] = data['type'][k]['type_ch_name'];
+        }
+        setState(() {
+          state.addAll(stateTemp);
+          taskType.addAll(typeTemp);
+          getData();
+        });
+      }
+    }, () {}, _context);
   }
 
   getData({isRefresh: false}) async {
@@ -323,7 +336,7 @@ class _TaskListState extends State<TaskList> {
                   },
                 ),
                 Select(
-                  selectOptions: state,
+                  selectOptions: taskType,
                   labelWidth: 100,
                   selectedValue: param['task_type'] ?? 'all',
                   label: '任务类型',
@@ -338,7 +351,7 @@ class _TaskListState extends State<TaskList> {
                   },
                 ),
                 Select(
-                  selectOptions: state,
+                  selectOptions: evaluateState,
                   labelWidth: 100,
                   selectedValue: param['evaluate_state'] ?? 'all',
                   label: '评价状态',

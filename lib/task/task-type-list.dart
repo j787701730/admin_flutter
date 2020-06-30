@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,80 +19,7 @@ class _TaskTypeListState extends State<TaskTypeList> {
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   Map param = {"curr_page": 1, "page_count": 15};
-  List ajaxData = [
-    {
-      "type_id": "104",
-      "type_name": "设计任务",
-      "type_en_name": "TASK_TYPE_DESIGN",
-      "web_confirm": "0",
-      "comment": "",
-      "childs": [
-        {
-          "class_id": "2",
-          "class_name": "CAD拆单",
-          "sort": "1",
-          "create_date": "2017-09-14 09:19:32",
-          "update_date": "2017-09-19 16:48:00",
-          "task_type": "104",
-          "comments": ""
-        },
-        {
-          "class_id": "1",
-          "class_name": "CAD设计",
-          "sort": "2",
-          "create_date": "2017-09-14 09:19:32",
-          "update_date": "2017-09-19 16:48:00",
-          "task_type": "104",
-          "comments": ""
-        },
-        {
-          "class_id": "4",
-          "class_name": "13213213",
-          "sort": "3",
-          "create_date": "2017-09-19 16:57:03",
-          "update_date": null,
-          "task_type": "104",
-          "comments": "555"
-        },
-        {
-          "class_id": "5",
-          "class_name": "7",
-          "sort": "4",
-          "create_date": "2017-09-19 17:01:26",
-          "update_date": "2017-10-17 15:14:43",
-          "task_type": "104",
-          "comments": ""
-        },
-        {
-          "class_id": "6",
-          "class_name": "认ewrw",
-          "sort": "5",
-          "create_date": "2017-09-19 17:01:26",
-          "update_date": "2017-10-23 15:44:46",
-          "task_type": "104",
-          "comments": ""
-        },
-        {
-          "class_id": "7",
-          "class_name": "555",
-          "sort": "6",
-          "create_date": "2017-09-19 17:07:18",
-          "update_date": null,
-          "task_type": "104",
-          "comments": ""
-        },
-        {
-          "class_id": "8",
-          "class_name": "666",
-          "sort": "7",
-          "create_date": "2017-09-19 17:07:51",
-          "update_date": null,
-          "task_type": "104",
-          "comments": ""
-        }
-      ]
-    }
-  ];
+  Map ajaxData = {};
   int count = 0;
   bool loading = false;
 
@@ -107,7 +36,7 @@ class _TaskTypeListState extends State<TaskTypeList> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
-//      getData();
+      getData();
     });
   }
 
@@ -121,12 +50,11 @@ class _TaskTypeListState extends State<TaskTypeList> {
     setState(() {
       loading = true;
     });
-    ajax('Adminrelas-goodsConfig-getAttrByClassID', {'param': jsonEncode(param)}, true, (res) {
+    ajax('Adminrelas-Api-taskType', {}, true, (res) {
       if (mounted) {
         setState(() {
           loading = false;
-          ajaxData = res['data'] ?? [];
-          count = int.tryParse('${res['count'] ?? 0}');
+          ajaxData = res['types'] ?? {};
           toTop();
         });
         if (isRefresh) {
@@ -153,6 +81,170 @@ class _TaskTypeListState extends State<TaskTypeList> {
   getPage(page) {
     param['curr_page'] += page;
     getData();
+  }
+
+  addAndModifyDialog(item) {
+    Map temp = item == null ? {'comments': '', 'class_name': '', 'sort': ''} : jsonDecode(jsonEncode(item));
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            '${item == null ? '新增' : '${temp['class_name']} 修改'}',
+          ),
+          content: SingleChildScrollView(
+            child: Container(
+              width: MediaQuery.of(context).size.width - 100,
+              child: Column(
+                children: <Widget>[
+                  Input(
+                    label: '任务名称',
+                    onChanged: (val) {
+                      setState(() {
+                        temp['class_name'] = val;
+                      });
+                    },
+                    value: '${temp['class_name']}',
+                  ),
+                  Input(
+                    label: '排序',
+                    onChanged: (val) {
+                      setState(() {
+                        temp['sort'] = val;
+                      });
+                    },
+                    value: '${temp['sort']}',
+                  ),
+                  Input(
+                    label: '备注',
+                    maxLines: 5,
+                    onChanged: (val) {
+                      setState(() {
+                        temp['comments'] = val;
+                      });
+                    },
+                    value: '${temp['comments']}',
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('关闭'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              color: CFColors.primary,
+              child: Text('保存'),
+              onPressed: () {
+                print(temp);
+//                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  modifyDialog(item) {
+    Map temp = jsonDecode(jsonEncode(item));
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context1, state) {
+          return AlertDialog(
+            title: Text(
+              '${temp['type_name']} 修改',
+            ),
+            content: SingleChildScrollView(
+              child: Container(
+                width: MediaQuery.of(context).size.width - 100,
+                child: Column(
+                  children: <Widget>[
+                    Input(
+                      label: '任务名称',
+                      onChanged: (val) {
+                        setState(() {
+                          temp['type_name'] = val;
+                        });
+                      },
+                      value: '${temp['type_name']}',
+                    ),
+                    Input(
+                      label: '英文名称',
+                      onChanged: (val) {
+                        setState(() {
+                          temp['type_en_name'] = val;
+                        });
+                      },
+                      value: '${temp['type_en_name']}',
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            width: 80,
+                            margin: EdgeInsets.only(right: 10),
+                            child: Text('web端确认'),
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: <Widget>[
+                                Checkbox(
+                                  value: temp['web_confirm'] == '1',
+                                  onChanged: (val) {
+                                    state(() {
+                                      temp['web_confirm'] = temp['web_confirm'] == '1' ? '0' : '1';
+                                    });
+                                  },
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Input(
+                      label: '备注',
+                      maxLines: 5,
+                      onChanged: (val) {
+                        setState(() {
+                          temp['comment'] = val;
+                        });
+                      },
+                      value: '${temp['comment']}',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('关闭'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                color: CFColors.primary,
+                child: Text('保存'),
+                onPressed: () {
+                  print(temp);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+      },
+    );
   }
 
   @override
@@ -185,7 +277,8 @@ class _TaskTypeListState extends State<TaskTypeList> {
                           )
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: ajaxData.map<Widget>((item) {
+                            children: ajaxData.keys.toList().map<Widget>((key) {
+                              Map item = ajaxData[key];
                               return Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -237,13 +330,19 @@ class _TaskTypeListState extends State<TaskTypeList> {
                                             Text('${item['type_name']}'),
                                             Checkbox(
                                               value: item['web_confirm'] == '1',
-                                              onChanged: (val) {
-                                                setState(() {
-                                                  item['web_confirm'] = val ? '1' : '0';
-                                                });
-                                              },
+                                              onChanged: null,
                                             ),
                                             Text('${item['type_en_name']}'),
+                                            IconButton(
+                                              icon: Icon(
+                                                Icons.edit,
+                                                size: 20,
+                                                color: CFColors.primary,
+                                              ),
+                                              onPressed: () {
+                                                modifyDialog(item);
+                                              },
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -260,18 +359,40 @@ class _TaskTypeListState extends State<TaskTypeList> {
                                           bottom: 6,
                                         ),
                                         child: Column(
-                                          children: item['childs'].map<Widget>(
-                                            (child) {
-                                              return Row(
-                                                children: <Widget>[
-                                                  Expanded(
-                                                    child: Text('${child['class_name']}'),
-                                                  ),
-                                                  Text('${child['sort']}'),
-                                                ],
-                                              );
-                                            },
-                                          ).toList(),
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Column(
+                                              children: item['childs'].map<Widget>(
+                                                (child) {
+                                                  return Row(
+                                                    children: <Widget>[
+                                                      Expanded(
+                                                        child: Text('${child['class_name']}'),
+                                                      ),
+                                                      Text('${child['sort']}'),
+                                                      IconButton(
+                                                        icon: Icon(
+                                                          Icons.edit,
+                                                          size: 20,
+                                                          color: CFColors.primary,
+                                                        ),
+                                                        onPressed: () {
+                                                          addAndModifyDialog(child);
+                                                        },
+                                                      )
+                                                    ],
+                                                  );
+                                                },
+                                              ).toList(),
+                                            ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                addAndModifyDialog(null);
+                                              },
+                                              child: Text('添加子任务类型'),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       crossFadeState: item['isExpanded'] == null
