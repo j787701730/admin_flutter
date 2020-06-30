@@ -690,31 +690,13 @@ class _ShopModifyState extends State<ShopModify> {
             value: shopInfo['shop_desc'],
             maxLines: 6,
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 100,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[Text('联系地址')],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: CitySelectPlugin(
-                    getArea: (val) {
-                      shopAddress = jsonDecode(jsonEncode(val));
-                    },
-                    initArea: shopAddress,
-                    linkage: true,
-                  ),
-                )
-              ],
-            ),
+          CitySelectPlugin(
+            getArea: (val) {
+              shopAddress = jsonDecode(jsonEncode(val));
+            },
+            initArea: shopAddress,
+            linkage: true,
+            label: '联系地址',
           ),
           Input(
             label: '详细地址',

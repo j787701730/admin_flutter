@@ -388,43 +388,13 @@ class _ShopListState extends State<ShopList> {
                       });
                     },
                   ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          width: 80,
-                          alignment: Alignment.centerRight,
-                          margin: EdgeInsets.only(right: 10),
-                          child: Text('店铺地址'),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: CitySelectPlugin(
-                            getArea: getArea,
-                          ),
-                        )
-                      ],
-                    ),
+                  CitySelectPlugin(
+                    getArea: getArea,
+                    label: '店铺地址',
                   ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          width: 80,
-                          alignment: Alignment.centerRight,
-                          margin: EdgeInsets.only(right: 10),
-                          child: Text('服务地址'),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: CitySelectPlugin(
-                            getArea: getArea2,
-                          ),
-                        )
-                      ],
-                    ),
+                  CitySelectPlugin(
+                    getArea: getArea2,
+                    label: '服务地址',
                   ),
                   DateSelectPlugin(
                     onChanged: getDateTime,

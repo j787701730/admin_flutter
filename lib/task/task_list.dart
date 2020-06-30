@@ -375,26 +375,13 @@ class _TaskListState extends State<TaskList> {
                   label: '需求时间',
                   labelWidth: 100,
                 ),
-                Container(
-                  height: 34,
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: 100,
-                        alignment: Alignment.centerRight,
-                        margin: EdgeInsets.only(right: 10),
-                        child: Text('地区'),
-                      ),
-                      Expanded(
-                        child: CitySelectPlugin(getArea: (val) {
-                          if (val != null) {
-                            taskArea = val;
-                          }
-                        }),
-                      )
-                    ],
-                  ),
+                CitySelectPlugin(
+                  getArea: (val) {
+                    if (val != null) {
+                      taskArea = val;
+                    }
+                  },
+                  label: '地区',
                 ),
                 Container(
                   height: 34,

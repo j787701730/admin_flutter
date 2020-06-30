@@ -363,37 +363,13 @@ class _UsersAddState extends State<UsersAdd> {
                         require: true,
                         labelWidth: 90,
                       ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          bottom: 10,
-                        ),
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              alignment: Alignment.centerRight,
-                              margin: EdgeInsets.only(right: 10),
-                              width: 90,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    '* ',
-                                    style: TextStyle(color: CFColors.danger),
-                                  ),
-                                  Text('联系地址')
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: CitySelectPlugin(
-                                getArea: getArea,
-                                linkage: true,
-                                initArea: shopArea,
-                              ),
-                            )
-                          ],
-                        ),
+                      CitySelectPlugin(
+                        getArea: getArea,
+                        linkage: true,
+                        initArea: shopArea,
+                        label: '联系地址',
+                        require: true,
+                        labelWidth: 90,
                       ),
                       Input(
                         label: '详细地址',

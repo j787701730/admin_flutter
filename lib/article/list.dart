@@ -212,22 +212,9 @@ class _ArticleListState extends State<ArticleList> {
                     );
                   }).toList(),
                 ),
-                Container(
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: 80,
-                        alignment: Alignment.centerRight,
-                        child: Text('地址'),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: CitySelectPlugin(
-                          getArea: getArea,
-                        ),
-                      )
-                    ],
-                  ),
+                CitySelectPlugin(
+                  getArea: getArea,
+                  label: '地址',
                 ),
                 Wrap(
                   children: <Widget>[PrimaryButton(onPressed: _share, child: Text('分享微信'))],
