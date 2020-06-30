@@ -109,7 +109,7 @@ class _ChargeSummaryState extends State<ChargeSummary> {
       if (mounted) {
         setState(() {
           loading = false;
-          ajaxData = res['data'];
+          ajaxData = res['data'] ?? [];
           count = int.tryParse('${res['count'] ?? 0}');
           toTop();
         });
