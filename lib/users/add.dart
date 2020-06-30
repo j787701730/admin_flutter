@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:admin_flutter/plugin/city_select_plugin.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/shop/industry_supply_class_select.dart';
 import 'package:admin_flutter/style.dart';
+import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
 
 class UsersAdd extends StatefulWidget {
@@ -41,183 +44,85 @@ class _UsersAddState extends State<UsersAdd> {
   List servicesList = [];
   List right_flag = [];
   String present = '';
-
-  Map roles = {
-    "101": {
-      "role_id": "101",
-      "role_en_name": "ROLE_TYPE_STORE",
-      "role_ch_name": "销售门店",
-      "can_apply": "1",
-      "comments": "提供全方位的销售定制门店",
-      "icon": "icon-shopping-cart"
-    },
-    "102": {
-      "role_id": "102",
-      "role_en_name": "ROLE_TYPE_SUPPLIER",
-      "role_ch_name": "供货商",
-      "can_apply": "1",
-      "comments": "提供五金建材的供货服务",
-      "icon": "icon-truck"
-    },
-    "103": {
-      "role_id": "103",
-      "role_en_name": "ROLE_TYPE_FACTORY",
-      "role_ch_name": "加工工厂",
-      "can_apply": "1",
-      "comments": "提供定价加工服务",
-      "icon": "icon-gears"
-    },
-    "104": {
-      "role_id": "104",
-      "role_en_name": "ROLE_TYPE_DESIGNER",
-      "role_ch_name": "设计师",
-      "can_apply": "1",
-      "comments": "提供设计、测量等服务",
-      "icon": "icon-male"
-    },
-    "105": {
-      "role_id": "105",
-      "role_en_name": "ROLE_TYPE_CONSTRUCTION",
-      "role_ch_name": "工程施工",
-      "can_apply": "1",
-      "comments": "提供上门施工服务",
-      "icon": "icon-wrench"
-    }
-  };
-
-  Map services = {
-    "11": {"service_type_ch_name": "实物商品交易"},
-    "12": {"service_type_ch_name": "虚拟商品交易"},
-    "13": {"service_type_ch_name": "设计服务"},
-    "14": {"service_type_ch_name": "生产加工"},
-    "15": {"service_type_ch_name": "施工服务"},
-    "110": {"service_type_ch_name": "物流服务"},
-    "17": {"service_type_ch_name": "培训服务"}
-  };
-
-  List multiselectUserType = [
-    {
-      "type_id": "1",
-      "type_en_name": "USER_TYPE_CAD_LOGIN",
-      "select_type": "0",
-      "icon": "icon-windows",
-      "type_ch_name": "旧版CAD登录",
-      "comments": "可以登录旧设计软件"
-    },
-    {
-      "type_id": "2",
-      "type_en_name": "USER_TYPE_ERP_BIND",
-      "select_type": "0",
-      "icon": "icon-fire ",
-      "type_ch_name": "ERP工厂端-软件绑定",
-      "comments": "可以绑定平台用户"
-    },
-    {
-      "type_id": "4",
-      "type_en_name": "USER_TYPE_BILL_DESIGN",
-      "select_type": "0",
-      "icon": "icon-maxcdn",
-      "type_ch_name": "CAD设计端-完整版",
-      "comments": "可以登录CAD设计端完整版"
-    },
-    {
-      "type_id": "5",
-      "type_en_name": "USER_TYPE_BILL_WEB",
-      "select_type": "0",
-      "icon": "icon-skype",
-      "type_ch_name": "网页端登录",
-      "comments": "可以登录网页端"
-    },
-    {
-      "type_id": "10",
-      "type_en_name": "USER_TYPE_BILL_OPENS",
-      "select_type": "0",
-      "icon": "icon-tumblr-sign",
-      "type_ch_name": "开料软件登录",
-      "comments": "可以登录开料软件"
-    },
-    {
-      "type_id": "9",
-      "type_en_name": "USER_TYPE_OPTIMIZE",
-      "select_type": "0",
-      "icon": "icon-pinterest",
-      "type_ch_name": "优化软件-免费版",
-      "comments": "可以登录优化软件"
-    },
-    {
-      "type_id": "10",
-      "type_en_name": "USER_TYPE_BASE_LIMIT",
-      "select_type": "0",
-      "icon": "icon-tasks",
-      "type_ch_name": "CAD设计端-精简版",
-      "comments": "1.8W，设计端版本"
-    },
-    {
-      "type_id": "11",
-      "type_en_name": "USER_TYPE_WEB_CAD",
-      "select_type": "0",
-      "icon": "icon-desktop",
-      "type_ch_name": "CAD设计端-WEB版",
-      "comments": "可以登录WEB-CAD版本"
-    },
-    {
-      "type_id": "12",
-      "type_en_name": "USER_TYPE_NEW_ERP",
-      "select_type": "0",
-      "icon": "icon-inbox",
-      "type_ch_name": "新版ERP",
-      "comments": "新版的计费ERP，需设置在主帐号上"
-    },
-    {
-      "type_id": "13",
-      "type_en_name": "USER_TYPE_WEBCAD_SELLER",
-      "select_type": "0",
-      "icon": "icon-adn",
-      "type_ch_name": "WebCAD经销商",
-      "comments": "负责WebCAD推广的经销商"
-    }
-  ];
-
-  Map sigleselectUserType = {
-    "1": [
-      {
-        "type_id": "7",
-        "type_en_name": "USER_TYPE_AREA_MANAGER",
-        "select_type": "1",
-        "icon": "icon-adn",
-        "type_ch_name": "经销商",
-        "comments": "顶级推荐人"
-      },
-      {
-        "type_id": "8",
-        "type_en_name": "USER_TYPE_SALESMAN",
-        "select_type": "1",
-        "icon": "icon-male",
-        "type_ch_name": "业务员",
-        "comments": "公司业务员"
-      }
-    ]
-  };
-
-  Map regPresent = {
-    "1": {"id": 1, "type": "cash", "ch_na": "云端计费赠送100元", "amount": 100, "balance_type": 4},
-    "2": {
-      "id": 2,
-      "type": "serv",
-      "en_na": "design_software",
-      "ch_na": "旧版设计软件包月(1个月)",
-      "month": 1,
-      "pricing_class": 1
-    },
-    "3": {"id": 3, "type": "serv", "en_na": "new_webCad", "ch_na": "新版WebCad包月(1个月)", "month": 1, "pricing_class": 10}
-  };
-
+  Map roles = {};
+  Map services = {};
+  List multiselectUserType = [];
+  Map sigleselectUserType = {};
+  Map regPresent = {};
+  List industryClass = []; // 行业分类
+  List selectIndustryClass = []; // 选择的行业分类
+  Map industryClassData = {}; // 数据匹配用的
+  List supplyClass = []; // 供应分类
+  List selectSupplyClass = []; // 选择的供应分类
+  Map supplyClassData = {}; // 数据匹配用的
   getArea(val) {
     if (val != null) {
       setState(() {
         shopArea = jsonDecode(jsonEncode(val));
       });
     }
+  }
+
+  BuildContext _context;
+
+  @override
+  void initState() {
+    super.initState();
+    _context = context;
+    Timer(Duration(milliseconds: 200), () {
+      getParamData();
+      getSupplyClass();
+      getIndustryClass();
+    });
+  }
+
+  getParamData() {
+    ajax('Adminrelas-Api-addUserData', {}, true, (data) {
+      if (mounted) {
+        setState(() {
+          multiselectUserType = data['multiselectUserType'];
+          regPresent = data['reg_present']['present'];
+          roles = data['roles'];
+          services = data['services'];
+          sigleselectUserType = data['sigleselectUserType'];
+        });
+      }
+    }, () {}, _context);
+  }
+
+  getIndustryClass() {
+    ajax('Adminrelas-shopsManage-getIndustryClass', {}, true, (data) {
+      if (mounted) {
+        industryClass = data['data'];
+        for (var o in data['data']) {
+          industryClassData[o['class_id']] = {'class_name': o['class_name'], 'parent_class_id': o['parent_class_id']};
+          if (o['children'] != '') {
+            for (var p in o['children']) {
+              industryClassData[p['class_id']] = {
+                'class_name': p['class_name'],
+                'parent_class_id': p['parent_class_id']
+              };
+            }
+          }
+        }
+      }
+    }, () {}, _context);
+  }
+
+  getSupplyClass() {
+    ajax('Adminrelas-shopsManage-getSupplyClass', {}, true, (data) {
+      if (mounted) {
+        supplyClass = data['data'];
+        for (var o in data['data']) {
+          supplyClassData[o['class_id']] = {'class_name': o['class_name'], 'parent_class_id': o['parent_class_id']};
+          if (o['children'] != '') {
+            for (var p in o['children']) {
+              supplyClassData[p['class_id']] = {'class_name': p['class_name'], 'parent_class_id': p['parent_class_id']};
+            }
+          }
+        }
+      }
+    }, () {}, _context);
   }
 
   @override
@@ -599,6 +504,188 @@ class _UsersAddState extends State<UsersAdd> {
                               ),
                             )
                           ],
+                        ),
+                      ),
+                      Offstage(
+                        offstage:
+                            !(rolesList.contains('101') || rolesList.contains('104') || rolesList.contains('105')),
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                width: 100,
+                                alignment: Alignment.centerRight,
+                                margin: EdgeInsets.only(right: 10, top: 6),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[Text('行业分类')],
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Wrap(
+                                          spacing: 10,
+                                          runSpacing: 10,
+                                          children: selectIndustryClass.map<Widget>(
+                                            (item) {
+                                              String text = '';
+                                              Map obj = industryClassData[item];
+                                              if (obj['parent_class_id'] != '0') {
+                                                text = '${industryClassData[obj['parent_class_id']]['class_name']}/'
+                                                    '${industryClassData[item]['class_name']}';
+                                              }
+                                              return Container(
+                                                color: Colors.grey[300],
+                                                padding: EdgeInsets.all(4),
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: <Widget>[
+                                                    Text(text),
+                                                    InkWell(
+                                                      child: Icon(
+                                                        Icons.close,
+                                                        size: 20,
+                                                        color: CFColors.danger,
+                                                      ),
+                                                      onTap: () {
+                                                        setState(() {
+                                                          selectIndustryClass.remove(item);
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          ).toList()),
+                                    ),
+                                    PrimaryButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          _context,
+                                          MaterialPageRoute(
+                                            builder: (context) => IndustryClassSelect(
+                                              selectClass: selectIndustryClass,
+                                              classData: industryClass,
+                                              title: '行业分类',
+                                            ),
+                                          ),
+                                        ).then((value) {
+                                          if (value != null) {
+                                            setState(() {
+                                              selectIndustryClass = jsonDecode(jsonEncode(value));
+                                            });
+                                          }
+                                        });
+                                      },
+                                      child: Text('添加'),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      Offstage(
+                        offstage: !(!(rolesList.contains('101') && rolesList.length == 1) ||
+                                rolesList.contains('102') ||
+                                rolesList.contains('103') ||
+                                rolesList.contains('104') ||
+                                rolesList.contains('105')) ||
+                            rolesList.isEmpty,
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                width: 100,
+                                alignment: Alignment.centerRight,
+                                margin: EdgeInsets.only(right: 10, top: 6),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[Text('供应分类')],
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Wrap(
+                                          spacing: 10,
+                                          runSpacing: 10,
+                                          children: selectSupplyClass.map<Widget>(
+                                            (item) {
+                                              String text = '';
+                                              Map obj = supplyClassData[item];
+                                              if (obj['parent_class_id'] != '0') {
+                                                text = '${supplyClassData[obj['parent_class_id']]['class_name']}/'
+                                                    '${supplyClassData[item]['class_name']}';
+                                              }
+                                              return Container(
+                                                color: Colors.grey[300],
+                                                padding: EdgeInsets.all(4),
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: <Widget>[
+                                                    Text(text),
+                                                    InkWell(
+                                                      child: Icon(
+                                                        Icons.close,
+                                                        size: 20,
+                                                        color: CFColors.danger,
+                                                      ),
+                                                      onTap: () {
+                                                        setState(() {
+                                                          selectSupplyClass.remove(item);
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          ).toList()),
+                                    ),
+                                    PrimaryButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          _context,
+                                          MaterialPageRoute(
+                                            builder: (context) => IndustryClassSelect(
+                                              selectClass: selectSupplyClass,
+                                              classData: supplyClass,
+                                              title: '供应分类',
+                                            ),
+                                          ),
+                                        ).then((value) {
+                                          if (value != null) {
+                                            setState(() {
+                                              selectSupplyClass = jsonDecode(jsonEncode(value));
+                                            });
+                                          }
+                                        });
+                                      },
+                                      child: Text('添加'),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       Input(

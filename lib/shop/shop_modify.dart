@@ -42,6 +42,7 @@ class _ShopModifyState extends State<ShopModify> {
   Map shopInfo = {};
   Map userRole = {};
   Map serviceType = {};
+  List rolesList = [];
   List serviceTypeDisabled = [];
   Map shopAddress = {
     'province': null,
@@ -67,9 +68,17 @@ class _ShopModifyState extends State<ShopModify> {
             arr.add(key);
           }
         }
+        List arrRole = [];
+        for (var key in data['userRole'].keys) {
+          if ('${data['userRole'][key]['check']}' == '1') {
+            arrRole.add(key);
+          }
+        }
+
         setState(() {
           shopInfo = data['data'];
           userRole = data['userRole'];
+          rolesList = arrRole;
           serviceType = data['serviceType'];
           shopAddress = {
             'province': data['data']['shop_province'],
@@ -237,17 +246,25 @@ class _ShopModifyState extends State<ShopModify> {
                           child: InkWell(
                             onTap: () {
                               setState(() {
-                                userRole[item]['check'] = userRole[item]['check'] == 1 ? 0 : 1;
+                                if (rolesList.contains(item)) {
+                                  rolesList.remove(item);
+                                } else {
+                                  rolesList.add(item);
+                                }
                               });
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Checkbox(
-                                  value: userRole[item]['check'] == 1,
+                                  value: rolesList.contains(item),
                                   onChanged: (val) {
                                     setState(() {
-                                      userRole[item]['check'] = userRole[item]['check'] == 1 ? 0 : 1;
+                                      if (rolesList.contains(item)) {
+                                        rolesList.remove(item);
+                                      } else {
+                                        rolesList.add(item);
+                                      }
                                     });
                                   },
                                 ),
@@ -345,176 +362,191 @@ class _ShopModifyState extends State<ShopModify> {
             },
             value: shopInfo['tax_no'],
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 100,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10, top: 6),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[Text('行业分类')],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: Wrap(
-                            spacing: 10,
-                            runSpacing: 10,
-                            children: selectIndustryClass.map<Widget>(
-                              (item) {
-                                String text = '';
-                                Map obj = industryClassData[item];
-                                if (obj['parent_class_id'] != '0') {
-                                  text =
-                                      '${industryClassData[obj['parent_class_id']]['class_name']}/${industryClassData[item]['class_name']}';
-                                }
-                                return Container(
-                                  color: Colors.grey[300],
-                                  padding: EdgeInsets.all(4),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Text(text),
-                                      InkWell(
-                                        child: Icon(
-                                          Icons.close,
-                                          size: 20,
-                                          color: CFColors.danger,
-                                        ),
-                                        onTap: () {
-                                          setState(() {
-                                            selectIndustryClass.remove(item);
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ).toList()),
-                      ),
-                      PrimaryButton(
-                        onPressed: () {
-                          Navigator.push(
-                            _context,
-                            MaterialPageRoute(
-                              builder: (context) => IndustryClassSelect(
-                                selectClass: selectIndustryClass,
-                                classData: industryClass,
-                                title: '行业分类',
+          userRole.isNotEmpty
+              ? Offstage(
+                  offstage: !(rolesList.contains('101') || rolesList.contains('104') || rolesList.contains('105')),
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          width: 100,
+                          alignment: Alignment.centerRight,
+                          margin: EdgeInsets.only(right: 10, top: 6),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[Text('行业分类')],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: Wrap(
+                                    spacing: 10,
+                                    runSpacing: 10,
+                                    children: selectIndustryClass.map<Widget>(
+                                      (item) {
+                                        String text = '';
+                                        Map obj = industryClassData[item];
+                                        if (obj['parent_class_id'] != '0') {
+                                          text = '${industryClassData[obj['parent_class_id']]['class_name']}/'
+                                              '${industryClassData[item]['class_name']}';
+                                        }
+                                        return Container(
+                                          color: Colors.grey[300],
+                                          padding: EdgeInsets.all(4),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              Text(text),
+                                              InkWell(
+                                                child: Icon(
+                                                  Icons.close,
+                                                  size: 20,
+                                                  color: CFColors.danger,
+                                                ),
+                                                onTap: () {
+                                                  setState(() {
+                                                    selectIndustryClass.remove(item);
+                                                  });
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ).toList()),
                               ),
-                            ),
-                          ).then((value) {
-                            if (value != null) {
-                              setState(() {
-                                selectIndustryClass = jsonDecode(jsonEncode(value));
-                              });
-                            }
-                          });
-                        },
-                        child: Text('添加'),
-                      )
-                    ],
+                              PrimaryButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    _context,
+                                    MaterialPageRoute(
+                                      builder: (context) => IndustryClassSelect(
+                                        selectClass: selectIndustryClass,
+                                        classData: industryClass,
+                                        title: '行业分类',
+                                      ),
+                                    ),
+                                  ).then((value) {
+                                    if (value != null) {
+                                      setState(() {
+                                        selectIndustryClass = jsonDecode(jsonEncode(value));
+                                      });
+                                    }
+                                  });
+                                },
+                                child: Text('添加'),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 )
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 100,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10, top: 6),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[Text('供应分类')],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: Wrap(
-                            spacing: 10,
-                            runSpacing: 10,
-                            children: selectSupplyClass.map<Widget>(
-                              (item) {
-                                String text = '';
-                                Map obj = supplyClassData[item];
-                                if (obj['parent_class_id'] != '0') {
-                                  text =
-                                      '${supplyClassData[obj['parent_class_id']]['class_name']}/${supplyClassData[item]['class_name']}';
-                                }
-                                return Container(
-                                  color: Colors.grey[300],
-                                  padding: EdgeInsets.all(4),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Text(text),
-                                      InkWell(
-                                        child: Icon(
-                                          Icons.close,
-                                          size: 20,
-                                          color: CFColors.danger,
-                                        ),
-                                        onTap: () {
-                                          setState(() {
-                                            selectSupplyClass.remove(item);
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ).toList()),
-                      ),
-                      PrimaryButton(
-                        onPressed: () {
-                          Navigator.push(
-                            _context,
-                            MaterialPageRoute(
-                              builder: (context) => IndustryClassSelect(
-                                selectClass: selectSupplyClass,
-                                classData: supplyClass,
-                                title: '供应分类',
+              : Container(),
+          userRole.isNotEmpty
+              ? Offstage(
+                  offstage: !(!(rolesList.contains('101') && rolesList.length == 1) ||
+                          rolesList.contains('102') ||
+                          rolesList.contains('103') ||
+                          rolesList.contains('104') ||
+                          rolesList.contains('105')) ||
+                      rolesList.isEmpty,
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          width: 100,
+                          alignment: Alignment.centerRight,
+                          margin: EdgeInsets.only(right: 10, top: 6),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[Text('供应分类')],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: Wrap(
+                                    spacing: 10,
+                                    runSpacing: 10,
+                                    children: selectSupplyClass.map<Widget>(
+                                      (item) {
+                                        String text = '';
+                                        Map obj = supplyClassData[item];
+                                        if (obj['parent_class_id'] != '0') {
+                                          text = '${supplyClassData[obj['parent_class_id']]['class_name']}/'
+                                              '${supplyClassData[item]['class_name']}';
+                                        }
+                                        return Container(
+                                          color: Colors.grey[300],
+                                          padding: EdgeInsets.all(4),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              Text(text),
+                                              InkWell(
+                                                child: Icon(
+                                                  Icons.close,
+                                                  size: 20,
+                                                  color: CFColors.danger,
+                                                ),
+                                                onTap: () {
+                                                  setState(() {
+                                                    selectSupplyClass.remove(item);
+                                                  });
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ).toList()),
                               ),
-                            ),
-                          ).then((value) {
-                            if (value != null) {
-                              setState(() {
-                                selectSupplyClass = jsonDecode(jsonEncode(value));
-                              });
-                            }
-                          });
-                        },
-                        child: Text('添加'),
-                      )
-                    ],
+                              PrimaryButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    _context,
+                                    MaterialPageRoute(
+                                      builder: (context) => IndustryClassSelect(
+                                        selectClass: selectSupplyClass,
+                                        classData: supplyClass,
+                                        title: '供应分类',
+                                      ),
+                                    ),
+                                  ).then((value) {
+                                    if (value != null) {
+                                      setState(() {
+                                        selectSupplyClass = jsonDecode(jsonEncode(value));
+                                      });
+                                    }
+                                  });
+                                },
+                                child: Text('添加'),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 )
-              ],
-            ),
-          ),
+              : Container(),
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Row(
