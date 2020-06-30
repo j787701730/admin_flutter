@@ -57,9 +57,7 @@ class _UsersAddState extends State<UsersAdd> {
   Map supplyClassData = {}; // 数据匹配用的
   getArea(val) {
     if (val != null) {
-      setState(() {
-        shopArea = jsonDecode(jsonEncode(val));
-      });
+      shopArea = jsonDecode(jsonEncode(val));
     }
   }
 

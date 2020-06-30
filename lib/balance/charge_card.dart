@@ -42,26 +42,11 @@ class _ChargeCardState extends State<ChargeCard> {
     {'title': '操作', 'key': 'option'},
   ];
 
-  Map state = {'': '全部', "0": "可用", "1": "已使用", "-1": "作废"};
+  Map state = {'': '全部'};
 
-  Map cardType = {
-    "1": {
-      "type_id": "1",
-      "type_en_name": "CHARGE_CARD_TYPE_CF",
-      "type_ch_name": "晨丰充值卡",
-      "card_prefix": "CF",
-      "balance_type": "[4]",
-      "comments": ""
-    }
-  };
+  Map cardType = {};
 
-  Map cardValue = {
-    "50": '50元面额',
-    "100": '100元面额',
-    "200": "200元面额",
-    "500": "500元面额",
-    "1000": "1000元面额",
-  };
+  Map cardValue = {};
 
   Map selectCards = {};
 
@@ -84,7 +69,7 @@ class _ChargeCardState extends State<ChargeCard> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
-      getData();
+      getParamData();
     });
   }
 
@@ -92,6 +77,23 @@ class _ChargeCardState extends State<ChargeCard> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+
+  getParamData() {
+    ajax('Adminrelas-Api-chargeCardData', {}, true, (data) {
+      if (mounted) {
+        Map tempCard = {};
+        for (var o in data['chargeCardValue'].keys.toList()) {
+          tempCard[o] = data['chargeCardValue'][o]['value_ch_name'];
+        }
+        setState(() {
+          cardValue = tempCard;
+          cardType = data['chargeCardType'];
+          state.addAll(data['state']);
+          getData();
+        });
+      }
+    }, () {}, _context);
   }
 
   getData({isRefresh: false}) async {

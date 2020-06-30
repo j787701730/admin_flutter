@@ -729,6 +729,8 @@ class _ShopModifyState extends State<ShopModify> {
             initArea: shopAddress,
             linkage: true,
             label: '联系地址',
+            labelWidth: 100,
+            require: true,
           ),
           Input(
             label: '详细地址',
