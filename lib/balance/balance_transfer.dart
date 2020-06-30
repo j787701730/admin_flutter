@@ -43,7 +43,7 @@ class _BalanceTransferState extends State<BalanceTransfer> {
     '3': '已取消',
   };
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['currPage'] = 1;
       getData(isRefresh: true);
@@ -66,7 +66,7 @@ class _BalanceTransferState extends State<BalanceTransfer> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

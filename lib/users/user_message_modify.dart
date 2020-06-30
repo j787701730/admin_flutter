@@ -28,7 +28,7 @@ class _UserMessageModifyState extends State<UserMessageModify> {
     });
   }
 
-  getInfo() async {
+  getInfo() {
     setState(() {
       loading = true;
     });

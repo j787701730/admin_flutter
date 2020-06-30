@@ -48,7 +48,7 @@ class _FinancialDetailState extends State<FinancialDetail> {
     {'title': '创建时间', 'key': 'create_date'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -71,7 +71,7 @@ class _FinancialDetailState extends State<FinancialDetail> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     print(param);
     setState(() {
       loading = true;

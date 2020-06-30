@@ -43,7 +43,7 @@ class _InvoiceListState extends State<InvoiceList> {
 
   Map invoiceState = {"all": '全部', "1": "待开发票", "2": "已开发票"};
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -66,7 +66,7 @@ class _InvoiceListState extends State<InvoiceList> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

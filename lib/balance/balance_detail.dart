@@ -46,7 +46,7 @@ class _BalanceDetailState extends State<BalanceDetail> {
     {'title': '发生时间', 'key': 'create_date'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['currPage'] = 1;
       getData(isRefresh: true);
@@ -92,7 +92,7 @@ class _BalanceDetailState extends State<BalanceDetail> {
     }, () {}, _context);
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

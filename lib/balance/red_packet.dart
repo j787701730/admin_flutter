@@ -39,7 +39,7 @@ class _RedPacketState extends State<RedPacket> {
     {'title': '创建员', 'key': 'create_user_name'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -62,7 +62,7 @@ class _RedPacketState extends State<RedPacket> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

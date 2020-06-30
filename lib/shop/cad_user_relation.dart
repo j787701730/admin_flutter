@@ -46,7 +46,7 @@ class _CadUserRelationState extends State<CadUserRelation> {
   Map ifDefault = {'all': '全部', '1': '默认', '0': '非默认'};
   Map relationSource = {'all': '全部', '1': '平台添加', '0': '门店授权'};
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -69,7 +69,7 @@ class _CadUserRelationState extends State<CadUserRelation> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

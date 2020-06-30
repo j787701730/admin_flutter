@@ -53,7 +53,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
     {'department_id': '0', 'department_name': '我的团队'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -76,7 +76,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
     _controller.dispose();
   }
 
-  getDepartment({isRefresh: false}) async {
+  getDepartment({isRefresh: false}) {
     setState(() {
       loading = true;
     });
@@ -101,7 +101,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
     }, _context);
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

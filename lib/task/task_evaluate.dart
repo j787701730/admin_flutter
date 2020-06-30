@@ -30,7 +30,7 @@ class _TaskEvaluateState extends State<TaskEvaluate> {
     '104': '设计任务',
   };
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getData(isRefresh: true);
     });
@@ -54,7 +54,7 @@ class _TaskEvaluateState extends State<TaskEvaluate> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

@@ -81,7 +81,7 @@ class _ShopListState extends State<ShopList> {
     getData();
   }
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['page'] = 1;
       getData(isRefresh: true);
@@ -115,7 +115,7 @@ class _ShopListState extends State<ShopList> {
     }, () {}, _context);
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

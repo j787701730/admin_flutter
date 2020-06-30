@@ -24,7 +24,7 @@ class _IndustryClassState extends State<IndustryClass> {
   double width;
   String searchValue = '';
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getData(isRefresh: true);
     });
@@ -46,7 +46,7 @@ class _IndustryClassState extends State<IndustryClass> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

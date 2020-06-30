@@ -47,7 +47,7 @@ class _RebateRatesState extends State<RebateRates> {
     "4": "流量计费返利",
   };
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -70,7 +70,7 @@ class _RebateRatesState extends State<RebateRates> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

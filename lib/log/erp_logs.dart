@@ -46,7 +46,7 @@ class _ErpLogsState extends State<ErpLogs> {
 
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       curr_page = 1;
       getData(isRefresh: true);
@@ -103,7 +103,7 @@ class _ErpLogsState extends State<ErpLogs> {
     getData();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

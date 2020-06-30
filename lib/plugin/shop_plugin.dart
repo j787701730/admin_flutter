@@ -69,7 +69,7 @@ class _ShopPluginState extends State<ShopPlugin> {
     {'title': '详细地址', 'key': 'shop_address'},
   ];
 
-  fetchShop() async {
+  fetchShop() {
     ajax('Adminrelas-CrmSearch-fetchShop', param, true, (data) {
       if (mounted) {
         setState(() {

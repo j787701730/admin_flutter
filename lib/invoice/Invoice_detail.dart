@@ -23,7 +23,7 @@ class _InvoiceDetailState extends State<InvoiceDetail> {
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   Map ajaxData = {};
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getData(isRefresh: true);
     });
@@ -45,7 +45,7 @@ class _InvoiceDetailState extends State<InvoiceDetail> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     ajax('Adminrelas-Invoice-detail', {'invoice_id': widget.props['invoice_id']}, true, (res) {
       if (mounted) {
         setState(() {

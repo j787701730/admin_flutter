@@ -29,7 +29,7 @@ class _ArticleListState extends State<ArticleList> {
 
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       curr_page = 1;
       getData(isRefresh: true);
@@ -64,7 +64,7 @@ class _ArticleListState extends State<ArticleList> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
 //    ajax(
 //        'Adminrelas-Logs-csLogs',
 //        {'curr_page': curr_page, 'page_count': page_count, 'param': jsonEncode(param)},

@@ -52,7 +52,7 @@ class _BalanceChargeState extends State<BalanceCharge> {
     '6': '丰收贷',
   };
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -75,7 +75,7 @@ class _BalanceChargeState extends State<BalanceCharge> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

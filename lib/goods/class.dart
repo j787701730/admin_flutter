@@ -20,7 +20,7 @@ class _GoodsClassState extends State<GoodsClass> {
 
   List ajaxData = [1];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getData(isRefresh: true);
     });
@@ -43,7 +43,7 @@ class _GoodsClassState extends State<GoodsClass> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     ajax('Adminrelas-GoodsConfig-getGClassMenu', {}, true, (res) {
       if (mounted) {
         setState(() {

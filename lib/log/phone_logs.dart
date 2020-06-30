@@ -49,7 +49,7 @@ class _PhoneLogsState extends State<PhoneLogs> {
 
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);

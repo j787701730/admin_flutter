@@ -53,7 +53,7 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
     '2': '用户积分',
   };
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -76,7 +76,7 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

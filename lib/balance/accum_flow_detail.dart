@@ -75,7 +75,7 @@ class _AccumulateFlowDetailState extends State<AccumulateFlowDetail> {
     }
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['currPage'] = 1;
       getData(isRefresh: true);
@@ -101,7 +101,7 @@ class _AccumulateFlowDetailState extends State<AccumulateFlowDetail> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

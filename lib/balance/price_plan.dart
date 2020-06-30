@@ -49,7 +49,7 @@ class _PricePlanState extends State<PricePlan> {
     }
   }
 
-  getPrincePlan() async {
+  getPrincePlan() {
     ajax('Adminrelas-Balance-prinPlanceByUid', {'pricing_id': '${widget.props['item']['pricing_id']}'}, false, (res) {
       if (mounted) {
         setState(() {

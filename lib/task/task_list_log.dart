@@ -29,7 +29,7 @@ class _TaskListLogState extends State<TaskListLog> {
     {'title': '修改时间', 'key': 'create_date'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getData(isRefresh: true);
     });
@@ -51,7 +51,7 @@ class _TaskListLogState extends State<TaskListLog> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

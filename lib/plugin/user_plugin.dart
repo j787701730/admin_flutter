@@ -63,7 +63,7 @@ class _UserPluginState extends State<UserPlugin> {
     {'title': '地区', 'key': 'province_name'},
   ];
 
-  fetchShop() async {
+  fetchShop() {
     ajax('Adminrelas-CrmSearch-fetchUser', param, true, (data) {
       if (mounted) {
         setState(() {

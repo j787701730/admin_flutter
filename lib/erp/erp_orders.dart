@@ -43,7 +43,7 @@ class _ErpOrdersState extends State<ErpOrders> {
     "5": {"type_id": "5", "type_en_name": "ERP_ORDER_TYPE_SUPPLY", "type_ch_name": "供货订单", "comments": null}
   };
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -66,7 +66,7 @@ class _ErpOrdersState extends State<ErpOrders> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

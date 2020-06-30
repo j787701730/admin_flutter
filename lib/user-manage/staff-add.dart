@@ -50,7 +50,7 @@ class _StaffAddState extends State<StaffAdd> {
     _controller.dispose();
   }
 
-  getGroupsDepartment({isRefresh: false}) async {
+  getGroupsDepartment({isRefresh: false}) {
     setState(() {
       loading = true;
     });
@@ -76,7 +76,7 @@ class _StaffAddState extends State<StaffAdd> {
     }, _context);
   }
 
-  getStaffInfo({isRefresh: false}) async {
+  getStaffInfo({isRefresh: false}) {
     setState(() {
       loading = true;
     });
@@ -102,7 +102,7 @@ class _StaffAddState extends State<StaffAdd> {
     }, _context);
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

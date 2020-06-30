@@ -40,7 +40,7 @@ class _ErpSoftwareState extends State<ErpSoftware> {
     {'title': '失效日期', 'key': 'end_date'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['currPage'] = 1;
       getData(isRefresh: true);
@@ -63,7 +63,7 @@ class _ErpSoftwareState extends State<ErpSoftware> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

@@ -37,7 +37,7 @@ class _ErpPaymentState extends State<ErpPayment> {
     {'title': '备注', 'key': 'comments'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -60,7 +60,7 @@ class _ErpPaymentState extends State<ErpPayment> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

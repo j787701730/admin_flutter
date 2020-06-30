@@ -67,7 +67,7 @@ class _RebateDistributorState extends State<RebateDistributor> {
     "1": "审核通过",
   };
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -90,7 +90,7 @@ class _RebateDistributorState extends State<RebateDistributor> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

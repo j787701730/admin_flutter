@@ -13,6 +13,7 @@ class CitySelectPlugin extends StatefulWidget {
   final double labelWidth;
   final bool require; // 是否必填 显示*
   final marginTop;
+  final bool hiddenRegion;
 
   CitySelectPlugin({
     @required this.getArea,
@@ -22,6 +23,7 @@ class CitySelectPlugin extends StatefulWidget {
     this.require = false,
     this.marginTop = 3.0,
     this.labelWidth = 80,
+    this.hiddenRegion = false,
   });
 
   @override
@@ -95,7 +97,7 @@ class _CitySelectPluginState extends State<CitySelectPlugin> {
     });
   }
 
-  getCityData(index) async {
+  getCityData(index) {
     Map temp = {
       '0': {
         'region_id': "0",
@@ -267,48 +269,50 @@ class _CitySelectPluginState extends State<CitySelectPlugin> {
                     ),
                   ),
                   Container(
-                    width: 10,
+                    width: widget.hiddenRegion ? 0 : 10,
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4),
-                        ),
-                      ),
-                      height: 34,
-                      child: DropdownButton<String>(
-                        isExpanded: true,
-                        elevation: 1,
-                        underline: Container(),
-                        value: selectArea['region'],
-                        onChanged: (String newValue) {
-                          setState(() {
-                            selectArea['region'] = newValue;
-                            widget.getArea(selectArea);
-                          });
-                        },
-                        items: regionData.keys.toList().map<DropdownMenuItem<String>>((item) {
-                          return DropdownMenuItem(
-                            value: '$item',
-                            child: Container(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                '${regionData['$item']['region_name']}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: CFFontSize.content,
-                                ),
+                  widget.hiddenRegion
+                      ? Container()
+                      : Expanded(
+                          flex: 1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(4),
                               ),
                             ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
+                            height: 34,
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              elevation: 1,
+                              underline: Container(),
+                              value: selectArea['region'],
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  selectArea['region'] = newValue;
+                                  widget.getArea(selectArea);
+                                });
+                              },
+                              items: regionData.keys.toList().map<DropdownMenuItem<String>>((item) {
+                                return DropdownMenuItem(
+                                  value: '$item',
+                                  child: Container(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      '${regionData['$item']['region_name']}',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: CFFontSize.content,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
                 ],
               ),
             ),

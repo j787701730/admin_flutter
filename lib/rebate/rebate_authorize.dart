@@ -39,7 +39,7 @@ class _RebateAuthorizeState extends State<RebateAuthorize> {
     {'title': '操作时间', 'key': 'payout_date'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -62,7 +62,7 @@ class _RebateAuthorizeState extends State<RebateAuthorize> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

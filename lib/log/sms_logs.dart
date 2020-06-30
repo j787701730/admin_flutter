@@ -48,7 +48,7 @@ class _SmsLogsState extends State<SmsLogs> {
 
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);

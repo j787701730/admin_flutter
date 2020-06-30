@@ -33,7 +33,7 @@ class _LoginRecordState extends State<LoginRecord> {
     {'title': '登录来源', 'key': 'login_source'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['currPage'] = 1;
       getData(isRefresh: true);
@@ -57,7 +57,7 @@ class _LoginRecordState extends State<LoginRecord> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

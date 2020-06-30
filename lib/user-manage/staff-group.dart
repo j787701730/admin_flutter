@@ -47,7 +47,7 @@ class _StaffGroupState extends State<StaffGroup> {
   List groups = [];
   bool canEdit = false;
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getData(isRefresh: true);
     });
@@ -69,7 +69,7 @@ class _StaffGroupState extends State<StaffGroup> {
     _controller.dispose();
   }
 
-  getGroups({isRefresh: false}) async {
+  getGroups({isRefresh: false}) {
     setState(() {
       loading = true;
     });
@@ -91,7 +91,7 @@ class _StaffGroupState extends State<StaffGroup> {
     }, _context);
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
       canEdit = false;

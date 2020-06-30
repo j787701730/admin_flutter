@@ -151,7 +151,7 @@ class _UsersManagerState extends State<UsersManager> {
 
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -351,7 +351,7 @@ class _UsersManagerState extends State<UsersManager> {
     );
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

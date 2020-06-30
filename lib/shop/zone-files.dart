@@ -36,7 +36,7 @@ class _ZoneFilesState extends State<ZoneFiles> {
     {'title': '操作', 'key': 'option'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['currPage'] = 1;
       getData(isRefresh: true);

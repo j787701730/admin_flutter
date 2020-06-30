@@ -38,7 +38,7 @@ class _ClassAttributeState extends State<ClassAttribute> {
     {'title': '属性排序', 'key': 'map_sort'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getData(isRefresh: true);
     });
@@ -60,7 +60,7 @@ class _ClassAttributeState extends State<ClassAttribute> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

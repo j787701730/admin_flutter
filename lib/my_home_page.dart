@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Future.delayed(duration, checkLogin);
   }
 
-  getAccess() async {
+  getAccess() {
     ajaxSimple('Adminrelas-Manage-getTest', {}, (res) {
       setState(() {
         isAjax = false;
@@ -124,7 +124,6 @@ class _MyHomePageState extends State<MyHomePage> {
         return AlertDialog(
           title: Text(
             '修改密码',
-
           ),
           content: SingleChildScrollView(
             child: Column(

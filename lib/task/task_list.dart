@@ -56,7 +56,7 @@ class _TaskListState extends State<TaskList> {
   String markupValue = '';
   Map markupValueList = {'markup_valueL': "", 'markup_valueU': ""};
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -99,7 +99,7 @@ class _TaskListState extends State<TaskList> {
     }, () {}, _context);
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

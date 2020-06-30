@@ -23,7 +23,7 @@ class _ClassAttributeSelectState extends State<ClassAttributeSelect> {
   Map ajaxData = {};
   bool loading = true;
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getData(isRefresh: true);
     });
@@ -45,7 +45,7 @@ class _ClassAttributeSelectState extends State<ClassAttributeSelect> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

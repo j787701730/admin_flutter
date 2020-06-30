@@ -34,7 +34,7 @@ class _BalanceRedBagDetailState extends State<BalanceRedBagDetail> {
     {'title': '操作', 'key': 'option'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -58,7 +58,7 @@ class _BalanceRedBagDetailState extends State<BalanceRedBagDetail> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

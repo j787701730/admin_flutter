@@ -33,7 +33,7 @@ class _CADDistributorHistoryState extends State<CADDistributorHistory> {
     {'title': '开通时间', 'key': 'payout_date'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -57,7 +57,7 @@ class _CADDistributorHistoryState extends State<CADDistributorHistory> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

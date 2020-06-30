@@ -51,7 +51,7 @@ class _AddedServicesState extends State<AddedServices> {
   };
   bool isExpandedFlag = true;
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['currPage'] = 1;
       getData(isRefresh: true);
@@ -75,7 +75,7 @@ class _AddedServicesState extends State<AddedServices> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

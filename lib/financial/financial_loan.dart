@@ -48,7 +48,7 @@ class _FinancialLoanState extends State<FinancialLoan> {
 
   Map state = {'all': '全部', '1': '审核中', '2': '审核失败', '3': '审核通过', '4': '已冻结', '5': '已关闭'};
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -71,7 +71,7 @@ class _FinancialLoanState extends State<FinancialLoan> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

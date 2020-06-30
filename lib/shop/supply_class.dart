@@ -24,7 +24,7 @@ class _SupplyClassState extends State<SupplyClass> {
   double width;
   String searchValue = '';
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getData(isRefresh: true);
     });
@@ -46,7 +46,7 @@ class _SupplyClassState extends State<SupplyClass> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

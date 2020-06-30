@@ -28,7 +28,7 @@ class _BaseMonitorState extends State<BaseMonitor> {
   int timeFlag = 1;
   int count = 0;
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getData(isRefresh: true);
       getData2(isRefresh: true);
@@ -56,7 +56,7 @@ class _BaseMonitorState extends State<BaseMonitor> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     ajaxSimple('Adminrelas-Monitor-getCpu', cpuParam, (res) {
       if (mounted) {
         if (res.runtimeType.toString().substring(0, 4) == 'List') {
@@ -78,7 +78,7 @@ class _BaseMonitorState extends State<BaseMonitor> {
     });
   }
 
-  getData2({isRefresh: false}) async {
+  getData2({isRefresh: false}) {
     ajaxSimple('Adminrelas-Monitor-getMem', cpuParam, (res) {
       if (mounted) {
         if (res.runtimeType.toString().substring(0, 4) == 'List') {
@@ -94,7 +94,7 @@ class _BaseMonitorState extends State<BaseMonitor> {
     });
   }
 
-  getData3({isRefresh: false}) async {
+  getData3({isRefresh: false}) {
     ajaxSimple('Adminrelas-Monitor-getIO', cpuParam, (res) {
       if (mounted) {
         if (res.runtimeType.toString().substring(0, 4) == 'List') {
@@ -110,7 +110,7 @@ class _BaseMonitorState extends State<BaseMonitor> {
     });
   }
 
-  getData4({isRefresh: false}) async {
+  getData4({isRefresh: false}) {
     ajaxSimple('Adminrelas-Monitor-getNet', cpuParam, (res) {
       if (mounted) {
         if (res.runtimeType.toString().substring(0, 4) == 'List') {

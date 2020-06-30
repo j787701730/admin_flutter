@@ -38,7 +38,7 @@ class _BalanceExtractState extends State<BalanceExtract> {
     {'title': '操作', 'key': 'option'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['currPage'] = 1;
       getData(isRefresh: true);
@@ -61,7 +61,7 @@ class _BalanceExtractState extends State<BalanceExtract> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });
@@ -116,7 +116,7 @@ class _BalanceExtractState extends State<BalanceExtract> {
     });
   }
 
-  transferQuery(item) async {
+  transferQuery(item) {
     ajax('Adminrelas-Balance-transferQuery', {'serial_id': item['serial_id']}, true, (res) {
       return showDialog<void>(
         context: context,
@@ -159,7 +159,7 @@ class _BalanceExtractState extends State<BalanceExtract> {
 
   String comments = '';
 
-  model(type, item) async {
+  model(type, item) {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!

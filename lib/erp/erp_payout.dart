@@ -37,7 +37,7 @@ class _ErpPayoutState extends State<ErpPayout> {
     {'title': '付款日期', 'key': 'payout_date'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['currPage'] = 1;
       getData(isRefresh: true);
@@ -60,7 +60,7 @@ class _ErpPayoutState extends State<ErpPayout> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

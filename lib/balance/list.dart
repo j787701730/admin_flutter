@@ -31,7 +31,7 @@ class _BalanceListState extends State<BalanceList> {
   bool loading = false;
   bool isExpandedFlag = true;
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -93,7 +93,7 @@ class _BalanceListState extends State<BalanceList> {
     }, () {}, _context);
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });
@@ -130,7 +130,7 @@ class _BalanceListState extends State<BalanceList> {
     getData();
   }
 
-  balanceCheck() async {
+  balanceCheck() {
     showDialog<void>(
       context: _context,
       barrierDismissible: false, // user must tap button!

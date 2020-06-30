@@ -22,7 +22,7 @@ class _BaseSitemapState extends State<BaseSitemap> {
   List ajaxData = [];
   bool loading = true;
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getData(isRefresh: true);
     });
@@ -44,7 +44,7 @@ class _BaseSitemapState extends State<BaseSitemap> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

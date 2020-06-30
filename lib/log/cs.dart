@@ -45,7 +45,7 @@ class _CsLogsState extends State<CsLogs> {
 
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       curr_page = 1;
       getData(isRefresh: true);
@@ -80,7 +80,7 @@ class _CsLogsState extends State<CsLogs> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

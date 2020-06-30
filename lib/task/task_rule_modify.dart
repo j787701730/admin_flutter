@@ -68,7 +68,7 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
     }
   };
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getData(isRefresh: true);
     });
@@ -90,7 +90,7 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

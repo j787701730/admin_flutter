@@ -38,7 +38,7 @@ class _GoodsAttributeState extends State<GoodsAttribute> {
     {'title': '属性状态', 'key': 'state'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['currPage'] = 1;
       getData(isRefresh: true);
@@ -61,7 +61,7 @@ class _GoodsAttributeState extends State<GoodsAttribute> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     FocusScope.of(context).requestFocus(FocusNode());
     setState(() {
       loading = true;

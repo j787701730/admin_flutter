@@ -51,7 +51,7 @@ class _UsersCertState extends State<UsersCert> {
     {'title': '审核描述', 'key': 'audit_desc'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['currPage'] = 1;
       getData(isRefresh: true);
@@ -74,7 +74,7 @@ class _UsersCertState extends State<UsersCert> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

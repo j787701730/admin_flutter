@@ -48,7 +48,7 @@ class _BalanceManualState extends State<BalanceManual> {
     '6': '丰收贷',
   };
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -71,7 +71,7 @@ class _BalanceManualState extends State<BalanceManual> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

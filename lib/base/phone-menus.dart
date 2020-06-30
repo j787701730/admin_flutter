@@ -40,7 +40,7 @@ class _PhoneMenusState extends State<PhoneMenus> {
     {'title': '操作', 'key': 'option'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getParamData(isRefresh: true);
     });

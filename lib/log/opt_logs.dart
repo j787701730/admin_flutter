@@ -43,7 +43,7 @@ class _OPTLogsState extends State<OPTLogs> {
 
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -78,7 +78,7 @@ class _OPTLogsState extends State<OPTLogs> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     if (create_date_min != null) {
       param['create_date_min'] = create_date_min.toString().substring(0, 10);
     } else {

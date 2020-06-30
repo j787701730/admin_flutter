@@ -41,7 +41,7 @@ class _ErpCrmState extends State<ErpCrm> {
     '2': '已处理',
   };
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -64,7 +64,7 @@ class _ErpCrmState extends State<ErpCrm> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

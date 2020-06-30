@@ -24,7 +24,7 @@ class _ShopMenusState extends State<ShopMenus> {
   int type = 1;
   double width;
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getData(isRefresh: true);
     });
@@ -46,7 +46,7 @@ class _ShopMenusState extends State<ShopMenus> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

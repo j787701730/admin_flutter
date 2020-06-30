@@ -53,7 +53,7 @@ class _OptConfigDetailState extends State<OptConfigDetail> {
     "8": {"val": 8, "ch_name": "提刀"},
   };
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       getData(isRefresh: true);
     });
@@ -75,7 +75,7 @@ class _OptConfigDetailState extends State<OptConfigDetail> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });

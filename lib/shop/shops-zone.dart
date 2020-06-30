@@ -35,7 +35,7 @@ class _ShopsZoneState extends State<ShopsZone> {
     {'title': '操作', 'key': 'option'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['currPage'] = 1;
       getData(isRefresh: true);

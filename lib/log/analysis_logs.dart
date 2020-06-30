@@ -48,7 +48,7 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
   int tabType = 1; // 1: 日志明细 2: 日志汇总
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       param2['curr_page'] = 1;
@@ -139,7 +139,7 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
     }, _context);
   }
 
-  getData2({isRefresh: false}) async {
+  getData2({isRefresh: false}) {
     if (create_date_min != null) {
       param2['log_dayL'] = create_date_min.toString().substring(0, 10);
     } else {

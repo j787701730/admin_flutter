@@ -46,7 +46,7 @@ class _OptListState extends State<OptList> {
     {'title': '时间', 'key': 'create_date'},
   ];
 
-  void _onRefresh() async {
+  void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
       getData(isRefresh: true);
@@ -69,7 +69,7 @@ class _OptListState extends State<OptList> {
     _controller.dispose();
   }
 
-  getData({isRefresh: false}) async {
+  getData({isRefresh: false}) {
     setState(() {
       loading = true;
     });
