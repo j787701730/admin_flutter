@@ -1,11 +1,12 @@
 import 'dart:convert';
-
+import 'dart:async';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/plugin/user_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
+import 'package:admin_flutter/utils.dart';
 
 /// 手工账
 class BalanceManualOpera extends StatefulWidget {
@@ -18,29 +19,48 @@ class BalanceManualOpera extends StatefulWidget {
 }
 
 class _BalanceManualOperaState extends State<BalanceManualOpera> {
-  Map manualType = {
-    "1": '商城现金',
-    "3": '云端计费',
-    "4": '云端计费-赠送',
-    "5": '经销商',
-  };
+  Map manualType = {};
+  Map amount = {};
   String manualTypeID = '1';
   String manualState = '1';
   String manualAmount = '';
+  String maxManualAmount = '';
   String manualComment = '';
   Map selectUsersData = {};
+  BuildContext _context;
 
   @override
   void initState() {
     super.initState();
+    _context = context;
     selectUsersData = widget.props == null ? {} : widget.props['user'];
     manualTypeID = widget.props == null ? '1' : widget.props['manualType'];
     manualState = widget.props == null ? '1' : widget.props['manualState'];
+    Timer(Duration(milliseconds: 200), () {
+      getParamData();
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  getParamData() {
+    ajax('Adminrelas-Api-flowData', {}, true, (data) {
+      if (mounted) {
+        Map balanceTypeTemp = {};
+        for (var o in data['balanceType']) {
+          balanceTypeTemp[o['balance_type_id']] = o['balance_type_ch_name'];
+        }
+
+        setState(() {
+          manualType = balanceTypeTemp;
+          amount = data['amount'];
+          maxManualAmount = '${data['manualAmount']}';
+        });
+      }
+    }, () {}, _context);
   }
 
   @override
@@ -330,7 +350,8 @@ class _BalanceManualOperaState extends State<BalanceManualOpera> {
                         child: Wrap(
                           runSpacing: 10,
                           spacing: 10,
-                          children: [100, 200, 500, 1000, 10000].map<Widget>((item) {
+                          children: amount.keys.toList().map<Widget>((key) {
+                            String item = '${amount[key]}';
                             return InkWell(
                               onTap: () {
                                 FocusScope.of(context).requestFocus(FocusNode());
@@ -437,7 +458,7 @@ class _BalanceManualOperaState extends State<BalanceManualOpera> {
                                   size: 20,
                                 ),
                                 Text(
-                                  ' 调增金额限制 10000 元以内',
+                                  ' 调增金额限制 $maxManualAmount 元以内',
                                   style: TextStyle(color: Colors.red),
                                 )
                               ],

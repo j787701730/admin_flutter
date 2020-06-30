@@ -52,26 +52,13 @@ class _BalanceListState extends State<BalanceList> {
     {'title': '资金操作', 'key': 'if_charge'},
     {'title': '操作', 'key': 'option'},
   ];
-  Map balanceType = {
-    '0': '全部',
-    '1': '商城现金',
-    '3': '云端计费',
-    '4': '云端计费-赠送',
-    '5': '经销商',
-  };
+  Map balanceType = {'0': '全部'};
   Map state = {
     'all': '全部',
     '1': '在用',
     '0': '停用',
   };
-  Map balanceCheckOptions = {
-    "all": "全部",
-    "0": "待稽核",
-    "1": "资金平衡",
-    "2": "来源比支出多",
-    "3": "支出比来源多",
-    "4": "预占金额不平",
-  };
+  Map balanceCheckOptions = {"all": "全部"};
 
   @override
   void initState() {
@@ -79,6 +66,7 @@ class _BalanceListState extends State<BalanceList> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
+      getParamData();
       getData();
     });
   }
@@ -87,6 +75,22 @@ class _BalanceListState extends State<BalanceList> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+
+  getParamData() {
+    ajax('Adminrelas-Api-flowData', {}, true, (data) {
+      if (mounted) {
+        Map balanceTypeTemp = {};
+        for (var o in data['balanceType']) {
+          balanceTypeTemp[o['balance_type_id']] = o['balance_type_ch_name'];
+        }
+
+        setState(() {
+          balanceType.addAll(balanceTypeTemp);
+          balanceCheckOptions.addAll(data['balanceCheck']);
+        });
+      }
+    }, () {}, _context);
   }
 
   getData({isRefresh: false}) async {
@@ -347,6 +351,9 @@ class _BalanceListState extends State<BalanceList> {
                 ),
               ],
             ),
+            Container(
+              height: 12,
+            ),
             loading
                 ? CupertinoActivityIndicator()
                 : ajaxData.isEmpty
@@ -362,7 +369,7 @@ class _BalanceListState extends State<BalanceList> {
                             return Container(
                               margin: EdgeInsets.only(bottom: 15),
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start, 
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Container(
                                     margin: EdgeInsets.only(bottom: 6),

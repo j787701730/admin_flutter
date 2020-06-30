@@ -35,41 +35,6 @@ class _BalanceDetailState extends State<BalanceDetail> {
 
   List sourceType = [
     {"type_id": "0", "type_name": "请选择", 'type': '1'},
-    {"type_id": "1", "type_name": "平台充值", 'type': '2'},
-    {"type_id": "2", "type_name": "商品出售", 'type': '2'},
-    {"type_id": "3", "type_name": "余额转帐", 'type': '2'},
-    {"type_id": "4", "type_name": "平台注册赠送", 'type': '2'},
-    {"type_id": "5", "type_name": "推荐返利", 'type': '2'},
-    {"type_id": "6", "type_name": "经销商返利", 'type': '2'},
-    {"type_id": "7", "type_name": "任务收入", 'type': '2'},
-    {"type_id": "8", "type_name": "任务平台补贴", 'type': '2'},
-    {"type_id": "9", "type_name": "保证金返还", 'type': '2'},
-    {"type_id": "10", "type_name": "充值赠送", 'type': '2'},
-    {"type_id": "11", "type_name": "业务员返利", 'type': '2'},
-    {"type_id": "12", "type_name": "手工帐", 'type': '2'},
-    {"type_id": "13", "type_name": "调帐", 'type': '2'},
-    {"type_id": "14", "type_name": "抢红包", 'type': '2'},
-    {"type_id": "15", "type_name": "抽奖活动", 'type': '2'},
-    {"type_id": "16", "type_name": "ERP订单收入", 'type': '2'},
-    {"type_id": "17", "type_name": "金融还款", 'type': '2'},
-    {"type_id": "18", "type_name": "ERP订单红包", 'type': '2'},
-    {"type_id": "20", "type_name": "金融提额", 'type': '2'},
-    {"type_id": "1", "type_name": "平台提现", 'type': '3'},
-    {"type_id": "2", "type_name": "商品购买", 'type': '3'},
-    {"type_id": "3", "type_name": "余额转帐", 'type': '3'},
-    {"type_id": "4", "type_name": "云拆单扣款", 'type': '3'},
-    {"type_id": "5", "type_name": "任务扣款", 'type': '3'},
-    {"type_id": "6", "type_name": "包月扣款", 'type': '3'},
-    {"type_id": "7", "type_name": "经销商扣款", 'type': '3'},
-    {"type_id": "8", "type_name": "手工帐", 'type': '3'},
-    {"type_id": "9", "type_name": "调帐", 'type': '3'},
-    {"type_id": "10", "type_name": "帐号扣款", 'type': '3'},
-    {"type_id": "11", "type_name": "提现手续费", 'type': '3'},
-    {"type_id": "12", "type_name": "ERP订单支付", 'type': '3'},
-    {"type_id": "13", "type_name": "订单手续费", 'type': '3'},
-    {"type_id": "14", "type_name": "金融还款", 'type': '3'},
-    {"type_id": "15", "type_name": "滞纳金", 'type': '3'},
-    {"type_id": "16", "type_name": "金融降额", 'type': '3'}
   ];
 
   List columns = [
@@ -95,6 +60,7 @@ class _BalanceDetailState extends State<BalanceDetail> {
     _context = context;
     param['acctBalanceID'] = '${widget.props['acct_balance_id']}';
     Timer(Duration(milliseconds: 200), () {
+      getParamData();
       getData();
     });
   }
@@ -103,6 +69,27 @@ class _BalanceDetailState extends State<BalanceDetail> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+
+  getParamData() {
+    ajax('Adminrelas-Api-flowData', {}, true, (data) {
+      if (mounted) {
+        List sourceTypeTemp = [];
+        for (var o in data['payoutType']) {
+          sourceTypeTemp.add(
+              {"type_id": o['balance_payout_type_id'], "type_name": o['balance_payout_type_ch_name'], 'type': '3'});
+        }
+
+        for (var o in data['sourceType']) {
+          sourceTypeTemp.add(
+              {"type_id": o['balance_source_type_id'], "type_name": o['balance_source_type_ch_name'], 'type': '2'});
+        }
+
+        setState(() {
+          sourceType.addAll(sourceTypeTemp);
+        });
+      }
+    }, () {}, _context);
   }
 
   getData({isRefresh: false}) async {
@@ -281,7 +268,9 @@ class _BalanceDetailState extends State<BalanceDetail> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: ajaxData.map<Widget>((item) {
                           return Container(
-                            decoration: BoxDecoration(border: Border.all(color: Color(0xffeeeeee), width: 1),),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Color(0xffeeeeee), width: 1),
+                            ),
                             margin: EdgeInsets.only(bottom: 10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
