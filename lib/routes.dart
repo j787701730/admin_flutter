@@ -3,7 +3,7 @@ import 'package:admin_flutter/activity/coupon.dart';
 import 'package:admin_flutter/activity/draw_type.dart';
 import 'package:admin_flutter/activity/user_prizes.dart';
 import 'package:admin_flutter/app-settings.dart';
-import 'package:admin_flutter/article/list.dart';
+import 'package:admin_flutter/article/article-list.dart';
 import 'package:admin_flutter/balance/accum_flow.dart';
 import 'package:admin_flutter/balance/balance_charge.dart';
 import 'package:admin_flutter/balance/balance_manual.dart';
