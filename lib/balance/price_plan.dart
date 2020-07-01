@@ -7,8 +7,6 @@ import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
 
-import 'pricing_data.dart';
-
 class PricePlan extends StatefulWidget {
   final props;
 
@@ -20,7 +18,7 @@ class PricePlan extends StatefulWidget {
 
 class _PricePlanState extends State<PricePlan> {
   Map selectUsersData = {};
-  String pricingClassId = pricingClass.keys.toList()[0].toString();
+  String pricingClassId = '';
   String pricingStrategyId;
   Map pricingStrategySel = {};
   String newRenew = '1';
@@ -37,16 +35,33 @@ class _PricePlanState extends State<PricePlan> {
     'onetime': "3", // 一次买断
     'monthly': "4", // 包月计价(月扣)
   };
+  Map pricingStrategy = {};
+  Map unit = {};
+  Map pricingClass = {};
 
   @override
   void initState() {
     super.initState();
     _context = context;
-    if (widget.props == null) {
-      getPricingStrategy();
-    } else {
-      getPrincePlan();
-    }
+    getParamData();
+  }
+
+  getParamData() {
+    ajax('Adminrelas-Api-pricePlanData', {}, true, (data) {
+      if (mounted) {
+        setState(() {
+          pricingClass = data['pricingClass'];
+          unit = data['princingUnit'];
+          pricingStrategy = data['template'];
+          pricingClassId = '${data['pricingClass'].keys.toList()[0]}';
+          if (widget.props == null) {
+            getPricingStrategy();
+          } else {
+            getPrincePlan();
+          }
+        });
+      }
+    }, () {}, _context);
   }
 
   getPrincePlan() {
@@ -70,8 +85,9 @@ class _PricePlanState extends State<PricePlan> {
   }
 
   getPricingStrategy() {
-    pricingStrategyId = pricingStrategy[jsonDecode(pricingClass[pricingClassId]['pricing_strategy_ids'])[0].toString()]
-        ['pricing_strategy_id'];
+    pricingStrategyId =
+        pricingStrategy[jsonDecode(pricingClass['$pricingClassId']['pricing_strategy_ids'])[0].toString()]
+            ['pricing_strategy_id'];
     pricingStrategySel.clear();
     for (var o in jsonDecode(pricingClass[pricingClassId]['pricing_strategy_ids'])) {
       setState(() {
@@ -224,34 +240,36 @@ class _PricePlanState extends State<PricePlan> {
                           ),
                         ),
                         height: 34,
-                        child: DropdownButton<String>(
-                          isExpanded: true,
-                          elevation: 1,
-                          underline: Container(),
-                          value: pricingClassId,
-                          onChanged: (String newValue) {
-                            setState(() {
-                              pricingClassId = newValue;
-                              getPricingStrategy();
-                            });
-                          },
-                          items: pricingClass.keys.toList().map<DropdownMenuItem<String>>(
-                            (item) {
-                              return DropdownMenuItem(
-                                value: '$item',
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 10),
-                                  child: Text(
-                                    '${pricingClass[item]['class_ch_name']}',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(fontSize: CFFontSize.content),
-                                  ),
-                                ),
-                              );
-                            },
-                          ).toList(),
-                        ),
+                        child: pricingClassId == ''
+                            ? Container()
+                            : DropdownButton<String>(
+                                isExpanded: true,
+                                elevation: 1,
+                                underline: Container(),
+                                value: pricingClassId,
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    pricingClassId = newValue;
+                                    getPricingStrategy();
+                                  });
+                                },
+                                items: pricingClass.keys.toList().map<DropdownMenuItem<String>>(
+                                  (item) {
+                                    return DropdownMenuItem(
+                                      value: '$item',
+                                      child: Container(
+                                        padding: EdgeInsets.only(left: 10),
+                                        child: Text(
+                                          '${pricingClass[item]['class_ch_name']}',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(fontSize: CFFontSize.content),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ).toList(),
+                              ),
                       ),
                     )
                   ],
@@ -591,12 +609,14 @@ class _PricePlanState extends State<PricePlan> {
                                           style: TextStyle(fontSize: CFFontSize.content),
                                           controller: TextEditingController.fromValue(
                                             TextEditingValue(
-                                              text: '${pricingStrategyData['pricing_strategy']['pricing_amount']}',
+                                              text:
+                                                  '${jsonDecode(pricingStrategyData['pricing_strategy'])['pricing_amount']}',
                                               selection: TextSelection.fromPosition(
                                                 TextPosition(
                                                   affinity: TextAffinity.downstream,
-                                                  offset: '${pricingStrategyData['pricing_strategy']['pricing_amount']}'
-                                                      .length,
+                                                  offset:
+                                                      '${jsonDecode(pricingStrategyData['pricing_strategy'])['pricing_amount']}'
+                                                          .length,
                                                 ),
                                               ),
                                             ),
@@ -622,12 +642,14 @@ class _PricePlanState extends State<PricePlan> {
                                           style: TextStyle(fontSize: CFFontSize.content),
                                           controller: TextEditingController.fromValue(
                                             TextEditingValue(
-                                              text: '${pricingStrategyData['pricing_strategy']['pricing_nums']}',
+                                              text:
+                                                  '${pricingStrategyData['pricing_strategy'] == null ? '' : jsonDecode(pricingStrategyData['pricing_strategy'])['pricing_nums']}',
                                               selection: TextSelection.fromPosition(
                                                 TextPosition(
                                                     affinity: TextAffinity.downstream,
-                                                    offset: '${pricingStrategyData['pricing_strategy']['pricing_nums']}'
-                                                        .length),
+                                                    offset:
+                                                        '${pricingStrategyData['pricing_strategy'] == null ? '' : jsonDecode(pricingStrategyData['pricing_strategy'])['pricing_nums']}'
+                                                            .length),
                                               ),
                                             ),
                                           ),
@@ -651,33 +673,36 @@ class _PricePlanState extends State<PricePlan> {
                                           ),
                                         ),
                                         height: 34,
-                                        child: DropdownButton<String>(
-                                          isExpanded: true,
-                                          elevation: 1,
-                                          underline: Container(),
-                                          value: '${pricingStrategyData['pricing_strategy']['pricing_unit']}',
-                                          onChanged: (String newValue) {
-                                            setState(() {
-                                              pricingStrategyData['pricing_strategy']['pricing_unit'] = newValue;
-                                            });
-                                          },
-                                          items: unit.keys.toList().map<DropdownMenuItem<String>>(
-                                            (item) {
-                                              return DropdownMenuItem(
-                                                value: '$item',
-                                                child: Container(
-                                                  padding: EdgeInsets.only(left: 10),
-                                                  child: Text(
-                                                    '${unit[item]['attr_unit_ch_name']}',
-                                                    maxLines: 1,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: TextStyle(fontSize: CFFontSize.content),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          ).toList(),
-                                        ),
+                                        child: pricingStrategyData['pricing_strategy'] == null
+                                            ? Container()
+                                            : DropdownButton<String>(
+                                                isExpanded: true,
+                                                elevation: 1,
+                                                underline: Container(),
+                                                value:
+                                                    '${pricingStrategyData['pricing_strategy'] == null ? '' : jsonDecode(pricingStrategyData['pricing_strategy'])['pricing_unit']}',
+                                                onChanged: (String newValue) {
+                                                  setState(() {
+                                                    pricingStrategyData['pricing_strategy']['pricing_unit'] = newValue;
+                                                  });
+                                                },
+                                                items: unit.keys.toList().map<DropdownMenuItem<String>>(
+                                                  (item) {
+                                                    return DropdownMenuItem(
+                                                      value: '$item',
+                                                      child: Container(
+                                                        padding: EdgeInsets.only(left: 10),
+                                                        child: Text(
+                                                          '${unit[item]['attr_unit_ch_name']}',
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: TextStyle(fontSize: CFFontSize.content),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).toList(),
+                                              ),
                                       )
                                     ],
                                   )

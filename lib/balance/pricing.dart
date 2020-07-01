@@ -11,8 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'pricing_data.dart';
-
 /// 定价计划
 class BalancePricing extends StatefulWidget {
   BalancePricing();
@@ -29,6 +27,10 @@ class _BalancePricingState extends State<BalancePricing> {
   List ajaxData = [];
   int count = 0;
   bool loading = false;
+  Map pricingStrategy = {};
+  Map unit = {};
+  Map pricingClass = {};
+  Map adminInfo = {};
 
   List columns = [
     {'title': '用户ID', 'key': 'user_id'},
@@ -53,7 +55,7 @@ class _BalancePricingState extends State<BalancePricing> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
-      getData();
+      getParamData();
     });
   }
 
@@ -61,6 +63,20 @@ class _BalancePricingState extends State<BalancePricing> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+
+  getParamData() {
+    ajax('Adminrelas-Api-pricePlanData', {}, true, (data) {
+      if (mounted) {
+        setState(() {
+          pricingClass = data['pricingClass'];
+          unit = data['princingUnit'];
+          pricingStrategy = data['template'];
+          adminInfo = data['adminInfo'];
+          getData();
+        });
+      }
+    }, () {}, _context);
   }
 
   getData({isRefresh: false}) {
@@ -183,8 +199,8 @@ class _BalancePricingState extends State<BalancePricing> {
                             Widget con = Text('${item[col['key']] ?? ''}');
                             switch (col['key']) {
                               case 'pricing_class':
-                                print(item[col['key']]);
-                                con = Text('${pricingClass[item[col['key']]]['class_ch_name']}');
+                                con = Text(
+                                    '${pricingClass[item[col['key']]] == null ? '' : pricingClass[item[col['key']]]['class_ch_name']}');
                                 break;
                               case 'pricing_strategy_id':
                                 con = Text(

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:admin_flutter/balance/pricing_data.dart';
 import 'package:admin_flutter/plugin/date_select_plugin.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
@@ -50,6 +49,7 @@ class _AddedServicesState extends State<AddedServices> {
     '11': '增值包(WebCAD)',
   };
   bool isExpandedFlag = true;
+  Map pricingClass = {};
 
   void _onRefresh() {
     setState(() {
@@ -65,7 +65,7 @@ class _AddedServicesState extends State<AddedServices> {
     _context = context;
 
     Timer(Duration(milliseconds: 200), () {
-      getData();
+      getParamData();
     });
   }
 
@@ -73,6 +73,17 @@ class _AddedServicesState extends State<AddedServices> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+
+  getParamData() {
+    ajax('Adminrelas-Api-getErpPricingClass', {}, true, (data) {
+      if (mounted) {
+        setState(() {
+          pricingClass = data['pricingClass'];
+          getData();
+        });
+      }
+    }, () {}, _context);
   }
 
   getData({isRefresh: false}) {

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:admin_flutter/balance/pricing_data.dart';
 import 'package:admin_flutter/plugin/date_select_plugin.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
@@ -29,6 +28,7 @@ class _ErpSoftwareState extends State<ErpSoftware> {
   int count = 0;
   bool loading = false;
   bool isExpandedFlag = true;
+  Map pricingClass = {};
   List columns = [
     {'title': '用户', 'key': 'user_name'},
     {'title': '工厂', 'key': 'shop_name'},
@@ -53,7 +53,7 @@ class _ErpSoftwareState extends State<ErpSoftware> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
-      getData();
+      getParamData();
     });
   }
 
@@ -61,6 +61,17 @@ class _ErpSoftwareState extends State<ErpSoftware> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+
+  getParamData() {
+    ajax('Adminrelas-Api-getErpPricingClass', {}, true, (data) {
+      if (mounted) {
+        setState(() {
+          pricingClass = data['pricingClass'];
+          getData();
+        });
+      }
+    }, () {}, _context);
   }
 
   getData({isRefresh: false}) {
