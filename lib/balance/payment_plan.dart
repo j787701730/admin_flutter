@@ -10,6 +10,7 @@ import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PaymentPlan extends StatefulWidget {
@@ -26,89 +27,9 @@ class _PaymentPlanState extends State<PaymentPlan> {
   int count = 0;
   bool loading = true;
 
-  Map paymentMethod = {"all": '全部', "1": "现金支付"};
-  Map planType = {
-    "1": {
-      "type_id": "1",
-      "type_en_name": "PAYMENT_PLAN_TYPE_PLAT",
-      "type_ch_name": "平台购物",
-      "comments": "仅供在平台的商品卖卖",
-    },
-    "2": {
-      "type_id": "2",
-      "type_en_name": "PAYMENT_PLAN_TYPE_CLOUD_BILL",
-      "type_ch_name": "云端计费",
-      "comments": "仅供云端ERP按平米计费"
-    },
-    "3": {
-      "type_id": "3",
-      "type_en_name": "PAYMENT_PLAN_TYPE_TASK",
-      "type_ch_name": "任务扣费",
-      "comments": "仅供任务扣费使用",
-    },
-    "4": {
-      "type_id": "4",
-      "type_en_name": "PAYMENT_PLAN_TYPE_ERP_ORDER",
-      "type_ch_name": "ERP订单",
-      "comments": "ERP订单付款余额支付方案",
-    }
-  };
-  Map balanceType = {
-    "1": {
-      "balance_type_id": "1",
-      "balance_type_en_name": "BALANCE_TYPE_CASH",
-      "balance_type_ch_name": "商城现金",
-      "if_charge": "1",
-      "if_extract": "1",
-      "if_transfer": "1",
-      "comments": "平台购物使用，暂时不可充值，可转账，可提取",
-    },
-    "2": {
-      "balance_type_id": "2",
-      "balance_type_en_name": "BALANCE_TYPE_CASH_PRESENT",
-      "balance_type_ch_name": "商城红包",
-      "if_charge": "0",
-      "if_extract": "0",
-      "if_transfer": "0",
-      "comments": "平台购物使用，不可充值，不可转账，不可提取",
-    },
-    "3": {
-      "balance_type_id": "3",
-      "balance_type_en_name": "BALANCE_TYPE_BILL",
-      "balance_type_ch_name": "云端计费",
-      "if_charge": "1",
-      "if_extract": "0",
-      "if_transfer": "0",
-      "comments": "云拆单与软件包月使用，可充值，不可转账，不可提取",
-    },
-    "4": {
-      "balance_type_id": "4",
-      "balance_type_en_name": "BALANCE_TYPE_BILL_PRESENT",
-      "balance_type_ch_name": "云端计费-赠送",
-      "if_charge": "0",
-      "if_extract": "0",
-      "if_transfer": "0",
-      "comments": "云拆单与软件包月使用，不可充值，不可转账，不可提取",
-    },
-    "5": {
-      "balance_type_id": "5",
-      "balance_type_en_name": "BALANCE_TYPE_DISTRIBUTOR",
-      "balance_type_ch_name": "经销商",
-      "if_charge": "1",
-      "if_extract": "0",
-      "if_transfer": "0",
-      "comments": "经销商充值，可充值，不可转账，不可提取",
-    },
-    "6": {
-      "balance_type_id": "6",
-      "balance_type_en_name": "BALANCE_TYPE_HARVEST_LOAN",
-      "balance_type_ch_name": "丰收贷",
-      "if_charge": "0",
-      "if_extract": "0",
-      "if_transfer": "0",
-      "comments": "晨丰贷款业务，不可充值，不可转账，不可提取",
-    }
-  };
+  Map paymentMethod = {"all": '全部'};
+  Map planType = {};
+  Map balanceType = {};
 
   Map balanceTypeSelect = {};
   Map planTypeSelect = {};
@@ -134,16 +55,7 @@ class _PaymentPlanState extends State<PaymentPlan> {
     _controller = ScrollController();
     _context = context;
     Timer(Duration(milliseconds: 200), () {
-      balanceTypeSelect['all'] = '全部';
-      planTypeSelect['all'] = '全部';
-      for (var key in balanceType.keys.toList()) {
-        balanceTypeSelect[key] = balanceType[key]['balance_type_ch_name'];
-      }
-
-      for (var key in planType.keys.toList()) {
-        planTypeSelect[key] = planType[key]['type_ch_name'];
-      }
-      getData();
+      getParamData();
     });
   }
 
@@ -151,6 +63,32 @@ class _PaymentPlanState extends State<PaymentPlan> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+
+  getParamData() {
+    ajax('Adminrelas-Api-paymentPlan', {}, true, (data) {
+      if (mounted) {
+        Map paymentMethodTemp = {};
+        for (var o in data['payment_method'].keys.toList()) {
+          paymentMethodTemp[o] = data['payment_method'][o]['payment_method_ch_name'];
+        }
+        setState(() {
+          paymentMethod.addAll(paymentMethodTemp);
+          planType = data['plan_type'];
+          balanceType = data['balance_type'];
+          balanceTypeSelect['all'] = '全部';
+          planTypeSelect['all'] = '全部';
+          for (var key in balanceType.keys.toList()) {
+            balanceTypeSelect[key] = balanceType[key]['balance_type_ch_name'];
+          }
+
+          for (var key in planType.keys.toList()) {
+            planTypeSelect[key] = planType[key]['type_ch_name'];
+          }
+          getData();
+        });
+      }
+    }, () {}, _context);
   }
 
   getData({isRefresh: false}) {
@@ -197,7 +135,11 @@ class _PaymentPlanState extends State<PaymentPlan> {
       MaterialPageRoute(
         builder: (context) => PaymentPlanModify(data),
       ),
-    );
+    ).then((value) {
+      if (value == true) {
+        getData();
+      }
+    });
   }
 
   delDialog(data) {
@@ -230,7 +172,10 @@ class _PaymentPlanState extends State<PaymentPlan> {
               textColor: Colors.white,
               child: Text('提交'),
               onPressed: () {
-                Navigator.of(context).pop();
+                ajax('adminrelas-Balance-payMentPlansDel', {'payment_plan_id': data['payment_plan_id']}, true, (data) {
+                  getData();
+                  Navigator.of(context).pop();
+                }, () {}, _context);
               },
             ),
           ],
@@ -241,7 +186,7 @@ class _PaymentPlanState extends State<PaymentPlan> {
 
   Map planTypeModify;
 
-  modifyDialog() {
+  addAndModifyDialog() {
     return showDialog<void>(
       context: context,
       barrierDismissible: true, // user must tap button!
@@ -328,12 +273,7 @@ class _PaymentPlanState extends State<PaymentPlan> {
                             ),
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(
-                                top: 0,
-                                bottom: 0,
-                                left: 15,
-                                right: 15,
-                              ),
+                              contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15, right: 15),
                             ),
                             onChanged: (String val) {
                               setState(() {
@@ -401,7 +341,37 @@ class _PaymentPlanState extends State<PaymentPlan> {
               textColor: Colors.white,
               child: Text('提交'),
               onPressed: () {
-                Navigator.of(context).pop();
+                bool flag = true;
+                List msg = [];
+                if (planTypeModify['type_ch_name'] == null || planTypeModify['type_ch_name'].trim() == '') {
+                  flag = false;
+                  msg.add('中文名称');
+                }
+                if (planTypeModify['type_en_name'] == null || planTypeModify['type_en_name'].trim() == '') {
+                  flag = false;
+                  msg.add('英文名称');
+                }
+                String url = 'adminrelas-Balance-addPaymentPlanType';
+                if (planTypeModify['type_id'] != null) {
+                  url = 'adminrelas-Balance-alterPaymentPlanType';
+                }
+                if (flag) {
+                  ajax(
+                    url,
+                    {'data': jsonEncode(planTypeModify)},
+                    true,
+                    (data) {
+                      Navigator.of(context).pop();
+                    },
+                    () {},
+                    _context,
+                  );
+                } else {
+                  Fluttertoast.showToast(
+                    msg: '请填写 ${msg.join(', ')}',
+                    gravity: ToastGravity.CENTER,
+                  );
+                }
               },
             ),
           ],
@@ -479,10 +449,11 @@ class _PaymentPlanState extends State<PaymentPlan> {
                   ),
                   PrimaryButton(
                     onPressed: () {
-                      turnTo(null);
+                      planTypeModify = {};
+                      addAndModifyDialog();
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
-                    child: Text('添加支付方案'),
+                    child: Text('添加支付方案类型'),
                   ),
                 ],
               ),
@@ -522,10 +493,23 @@ class _PaymentPlanState extends State<PaymentPlan> {
                                       child: Row(
                                         children: <Widget>[
                                           Text(
-                                            '${planTypeSelect[data['payment_plan_type']]}：',
+                                            '支付方案：',
                                             style: TextStyle(fontWeight: FontWeight.bold),
                                           ),
                                           Text('${data['name']} '),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                turnTo(null);
+                                              });
+                                            },
+                                            child: Container(
+                                              child: Icon(
+                                                Icons.add,
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                          ),
                                           InkWell(
                                             onTap: () {
                                               setState(() {
@@ -534,8 +518,9 @@ class _PaymentPlanState extends State<PaymentPlan> {
                                                   'type_en_name':
                                                       '${planType[data['payment_plan_type']]['type_en_name']}',
                                                   'comments': '${planType[data['payment_plan_type']]['comments']}',
+                                                  'type_id': '${data['payment_plan_type']}',
                                                 };
-                                                modifyDialog();
+                                                addAndModifyDialog();
                                               });
                                             },
                                             child: Container(
