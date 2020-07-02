@@ -388,14 +388,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text('${selectDepartment['department_name']} 组织架构'),
-        leading: IconButton(
-          icon: const BackButtonIcon(),
-          color: context.watch<CFProvider>().themeMode == ThemeMode.dark ? CFColors.dark : Colors.white,
-          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-          onPressed: () {
-            Navigator.maybePop(context);
-          },
-        ),
+        leading: BackButton(),
       ),
       drawer: Container(
         width: width * 0.85,

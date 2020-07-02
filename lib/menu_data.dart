@@ -28,7 +28,8 @@ List menuData = [
         "spell_all": "huishouzhan",
         "spell_index": "hsz",
         "name": "回收站",
-        "access": [5]
+        "access": [5],
+        "path": '/articleRecycle'
       },
       {
         "spell_all": "jiaochengpingjia",
@@ -40,7 +41,8 @@ List menuData = [
         "spell_all": "jiaochengyuedu",
         "spell_index": "jcyd",
         "name": "教程阅读",
-        "access": [114]
+        "access": [114],
+        "path": '/readCollect'
       }
     ]
   },

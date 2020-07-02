@@ -4,6 +4,8 @@ import 'package:admin_flutter/activity/draw_type.dart';
 import 'package:admin_flutter/activity/user_prizes.dart';
 import 'package:admin_flutter/app-settings.dart';
 import 'package:admin_flutter/article/article-list.dart';
+import 'package:admin_flutter/article/article-recycle.dart';
+import 'package:admin_flutter/article/read-collect.dart';
 import 'package:admin_flutter/balance/accum_flow.dart';
 import 'package:admin_flutter/balance/balance_charge.dart';
 import 'package:admin_flutter/balance/balance_manual.dart';
@@ -93,6 +95,8 @@ final routes = <String, WidgetBuilder>{
   '/AppSettings': (_) => AppSettings(),
   '/login': (_) => Login(),
   '/articleList': (_) => ArticleList(), // 文章列表
+  '/articleRecycle': (_) => ArticleRecycle(), // 文章回收站
+  '/readCollect': (_) => ReadCollect(), // 教程阅读
   '/staffDepartment': (_) => StaffDepartment(), // 组织架构
   '/staffGroup': (_) => StaffGroup(), // 岗位架构
   '/staffAdd': (_) => StaffAdd(), // 员工添加

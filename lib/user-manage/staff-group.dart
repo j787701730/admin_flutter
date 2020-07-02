@@ -246,14 +246,7 @@ class _StaffGroupState extends State<StaffGroup> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text('${selectGroup['group_name']} 岗位架构'),
-        leading: IconButton(
-          icon: const BackButtonIcon(),
-          color: context.watch<CFProvider>().themeMode == ThemeMode.dark ? CFColors.dark : Colors.white,
-          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-          onPressed: () {
-            Navigator.maybePop(context);
-          },
-        ),
+        leading: BackButton(),
       ),
       drawer: Container(
         width: width * 0.85,
