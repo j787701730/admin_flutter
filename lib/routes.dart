@@ -62,6 +62,13 @@ import 'package:admin_flutter/opt/board_cut_configs.dart';
 import 'package:admin_flutter/opt/board_cut_user_grant.dart';
 import 'package:admin_flutter/opt/opt_config.dart';
 import 'package:admin_flutter/opt/opt_list.dart';
+import 'package:admin_flutter/qualifications/construnction-service.dart';
+import 'package:admin_flutter/qualifications/designing-service.dart';
+import 'package:admin_flutter/qualifications/logistics-service.dart';
+import 'package:admin_flutter/qualifications/physical-product-trading.dart';
+import 'package:admin_flutter/qualifications/production-processing.dart';
+import 'package:admin_flutter/qualifications/training-service.dart';
+import 'package:admin_flutter/qualifications/vitual-product-trading.dart';
 import 'package:admin_flutter/rebate/cad_distributor.dart';
 import 'package:admin_flutter/rebate/rebate_authorize.dart';
 import 'package:admin_flutter/rebate/rebate_city_sales.dart';
@@ -182,5 +189,12 @@ final routes = <String, WidgetBuilder>{
   '/boardCutConfigs': (_) => BoardCutConfigs(), // 开料配置
   '/boardCutUserGrant': (_) => BoardCutUserGrant(), // 用户收费开料配置
   '/shopsZone': (_) => ShopsZone(), // 云盘列表
-  '/zoneFiles': (_) => ZoneFiles(), // 空间文件
+  '/zoneFiles': (_) => ZoneFiles(), // 空间文件,
+  '/physicalProductTrading': (_) => PhysicalProductTrading(), // 实物商品交易
+  '/vitualProductTrading': (_) => VitualProductTrading(), // 虚拟商品交易
+  '/designingService': (_) => DesigningService(), // 设计服务
+  '/productionProcessing': (_) => ProductionProcessing(), // 生产加工
+  '/construnctionService': (_) => ConstrunctionService(), // 施工服务
+  '/logisticsService': (_) => LogisticsService(), // 物流服务
+  '/trainingService': (_) => TrainingService(), // 培训服务
 };

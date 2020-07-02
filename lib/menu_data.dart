@@ -144,43 +144,50 @@ List menuData = [
         "spell_all": "shiwushangpinjiaoyi",
         "spell_index": "swspjy",
         "name": "实物商品交易",
-        "access": [12]
+        "access": [12],
+        "path": '/physicalProductTrading'
       },
       {
         "spell_all": "xunishangpinjiaoyi",
         "spell_index": "xnspjy",
         "name": "虚拟商品交易",
-        "access": [13]
+        "access": [13],
+        "path": '/vitualProductTrading'
       },
       {
         "spell_all": "shejifuwu",
         "spell_index": "sjfw",
         "name": "设计服务",
-        "access": [14]
+        "access": [14],
+        "path": '/designingService'
       },
       {
         "spell_all": "shengchanjiagong",
         "spell_index": "scjg",
         "name": "生产加工",
-        "access": [15]
+        "access": [15],
+        "path": '/productionProcessing'
       },
       {
         "spell_all": "shigongfuwu",
         "spell_index": "sgfw",
         "name": "施工服务",
-        "access": [16]
+        "access": [16],
+        "path": '/construnctionService'
       },
       {
         "spell_all": "wuliufuwu",
         "spell_index": "wlfw",
         "name": "物流服务",
-        "access": [17]
+        "access": [17],
+        "path": '/logisticsService'
       },
       {
         "spell_all": "peixunfuwu",
         "spell_index": "pxfw",
         "name": "培训服务",
-        "access": [18]
+        "access": [18],
+        "path": '/trainingService'
       }
     ]
   },

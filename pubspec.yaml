@@ -40,11 +40,11 @@ dependencies:
   month_picker_dialog: 0.3.2
   # 文件
   path_provider: 1.6.9
-  # 微信
-  fluwx: 2.1.0
+  # 微信分享
+  #  fluwx: 2.1.0
   # 图表
   charts_flutter: 0.9.0
-  # 图片上传
+  # 本地图片上传
   #  multi_image_picker: 4.5.9
   image_picker: 0.6.7
   # 图片压缩
