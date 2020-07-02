@@ -22,7 +22,10 @@ class _AccountSummaryState extends State<AccountSummary> {
   BuildContext _context;
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
-  Map param = {"curr_page": 1, "page_count": 15};
+  Map param = {
+    "curr_page": 1,
+    "page_count": 15,
+  };
   List ajaxData = [];
   int count = 0;
   Map sumData = {};
