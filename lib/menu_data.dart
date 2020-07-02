@@ -389,7 +389,8 @@ List menuData = [
         "spell_all": "zhangmuhuizong",
         "spell_index": "zmhz",
         "name": "账目汇总",
-        "access": [142]
+        "access": [142],
+        "path": '/accountSummary'
       }
     ]
   },

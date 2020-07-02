@@ -7,6 +7,7 @@ import 'package:admin_flutter/article/article-list.dart';
 import 'package:admin_flutter/article/article-menu-config.dart';
 import 'package:admin_flutter/article/article-recycle.dart';
 import 'package:admin_flutter/article/read-collect.dart';
+import 'package:admin_flutter/balance/account-summary.dart';
 import 'package:admin_flutter/balance/accum_flow.dart';
 import 'package:admin_flutter/balance/balance_charge.dart';
 import 'package:admin_flutter/balance/balance_manual.dart';
@@ -129,6 +130,7 @@ final routes = <String, WidgetBuilder>{
   '/chargePresent': (_) => ChargePresent(), // 充值赠送
   '/paymentPlan': (_) => PaymentPlan(), // 支付方案
   '/extractConfig': (_) => ExtractConfig(), // 提现配置
+  '/accountSummary': (_) => AccountSummary(), // 账目汇总
   '/accumulateFlow': (_) => AccumulateFlow(), // 积量汇总
   '/shopList': (_) => ShopList(), // 店铺列表
   '/cadUserRelation': (_) => CadUserRelation(), // CAD用户关系
