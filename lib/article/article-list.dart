@@ -78,7 +78,7 @@ class _ArticleListState extends State<ArticleList> {
       'class_id': list['class_id'],
       'parent_class_id': list['parent_class_id'] == '0' ? list['article_type_id'] : list['parent_class_id'],
       'class_name': list['class_name'],
-      'class_level': '${list['depth']}',
+      'class_level': '${list['level'] + 2}',
       'class_type': '${list['class_type']}',
     });
     if (list['children'] != null && list['children'].isNotEmpty) {

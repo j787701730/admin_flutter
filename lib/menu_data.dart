@@ -22,7 +22,8 @@ List menuData = [
         "spell_all": "lanmuguanli",
         "spell_index": "lmgl",
         "name": "栏目管理",
-        "access": [4]
+        "access": [4],
+        'path': '/articleMenuConfig'
       },
       {
         "spell_all": "huishouzhan",
