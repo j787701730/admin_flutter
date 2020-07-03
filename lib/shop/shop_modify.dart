@@ -483,40 +483,41 @@ class _ShopModifyState extends State<ShopModify> {
                               Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: Wrap(
-                                    spacing: 10,
-                                    runSpacing: 10,
-                                    children: selectSupplyClass.map<Widget>(
-                                      (item) {
-                                        String text = '';
-                                        Map obj = supplyClassData[item];
-                                        if (obj['parent_class_id'] != '0') {
-                                          text = '${supplyClassData[obj['parent_class_id']]['class_name']}/'
-                                              '${supplyClassData[item]['class_name']}';
-                                        }
-                                        return Container(
-                                          color: Colors.grey[300],
-                                          padding: EdgeInsets.all(4),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: <Widget>[
-                                              Text(text),
-                                              InkWell(
-                                                child: Icon(
-                                                  Icons.close,
-                                                  size: 20,
-                                                  color: CFColors.danger,
-                                                ),
-                                                onTap: () {
-                                                  setState(() {
-                                                    selectSupplyClass.remove(item);
-                                                  });
-                                                },
+                                  spacing: 10,
+                                  runSpacing: 10,
+                                  children: selectSupplyClass.map<Widget>(
+                                    (item) {
+                                      String text = '';
+                                      Map obj = supplyClassData[item];
+                                      if (obj['parent_class_id'] != '0') {
+                                        text = '${supplyClassData[obj['parent_class_id']]['class_name']}/'
+                                            '${supplyClassData[item]['class_name']}';
+                                      }
+                                      return Container(
+                                        color: Colors.grey[300],
+                                        padding: EdgeInsets.all(4),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            Text(text),
+                                            InkWell(
+                                              child: Icon(
+                                                Icons.close,
+                                                size: 20,
+                                                color: CFColors.danger,
                                               ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ).toList()),
+                                              onTap: () {
+                                                setState(() {
+                                                  selectSupplyClass.remove(item);
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ).toList(),
+                                ),
                               ),
                               PrimaryButton(
                                 onPressed: () {

@@ -263,16 +263,19 @@ class _ExtractConfigState extends State<ExtractConfig> {
                 runSpacing: 10,
                 children: <Widget>[
                   PrimaryButton(
-                      onPressed: () {
-                        param['curr_page'] = 1;
-                        getData();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Text('搜索')),
+                    onPressed: () {
+                      param['curr_page'] = 1;
+                      getData();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Text('搜索'),
+                  ),
                   PrimaryButton(
                     onPressed: () {
                       turnTo(null);
-                      FocusScope.of(context).requestFocus(FocusNode());
+                      FocusScope.of(context).requestFocus(
+                        FocusNode(),
+                      );
                     },
                     child: Text('提现配置'),
                   ),
@@ -310,9 +313,10 @@ class _ExtractConfigState extends State<ExtractConfig> {
                             children: ajaxData.map<Widget>((item) {
                               return Container(
                                 decoration: BoxDecoration(
-                                    border: Border.all(
-                                  color: Color(0xffdddddd),
-                                )),
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
+                                ),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(top: 5, bottom: 5),
                                 child: Column(

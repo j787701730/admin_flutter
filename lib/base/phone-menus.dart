@@ -439,9 +439,10 @@ class _PhoneMenusState extends State<PhoneMenus> {
                               Map item = menus[sellerSelectKey]['c'][key];
                               return Container(
                                 decoration: BoxDecoration(
-                                    border: Border.all(
-                                  color: Color(0xffdddddd),
-                                )),
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
+                                ),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(top: 5, bottom: 5),
                                 child: Column(
@@ -683,9 +684,10 @@ class _PhoneMenusState extends State<PhoneMenus> {
                               Map item = menus[buyerSelectKey]['c'][key];
                               return Container(
                                 decoration: BoxDecoration(
-                                    border: Border.all(
-                                  color: Color(0xffdddddd),
-                                )),
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
+                                ),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.only(top: 5, bottom: 5),
                                 child: Column(

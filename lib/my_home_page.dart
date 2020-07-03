@@ -375,7 +375,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         hintText: '请输入关键字',
                       ),
                       onChanged: (val) {
-                        filterMenu(val.trim());
+                        filterMenu(
+                          val.trim(),
+                        );
                       },
                     ),
                   ),

@@ -208,60 +208,61 @@ class _UsersCertState extends State<UsersCert> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: ajaxData.map<Widget>((item) {
                         return Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Color(0xffdddddd), width: 1),
-                            ),
-                            margin: EdgeInsets.only(bottom: 10),
-                            padding: EdgeInsets.only(top: 5, bottom: 5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: columns.map<Widget>((col) {
-                                Widget con = Text('${item[col['key']] ?? ''}');
-                                switch (col['key']) {
-                                  case 'province':
-                                    con = Text('${item['province']}${item['city']}${item['region']}');
-                                    break;
-                                  case 'user_sex':
-                                    con = Text('${userSex['${item['user_sex']}']}');
-                                    break;
-                                  case 'audit_state':
-                                    con = Text('${auditState['${item['audit_state']}']}');
-                                    break;
-                                  case 'if_charge':
-                                    con = Container(
-                                      alignment: Alignment.centerLeft,
-                                      child: '${item[col['key']]}' == '1'
-                                          ? Icon(
-                                              Icons.close,
-                                              color: Colors.red,
-                                            )
-                                          : Icon(
-                                              Icons.check,
-                                              color: Colors.green,
-                                            ),
-                                    );
-                                    break;
-                                  case 'option':
-                                    con = Text('在用');
-                                    break;
-                                }
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xffdddddd), width: 1),
+                          ),
+                          margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.only(top: 5, bottom: 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: columns.map<Widget>((col) {
+                              Widget con = Text('${item[col['key']] ?? ''}');
+                              switch (col['key']) {
+                                case 'province':
+                                  con = Text('${item['province']}${item['city']}${item['region']}');
+                                  break;
+                                case 'user_sex':
+                                  con = Text('${userSex['${item['user_sex']}']}');
+                                  break;
+                                case 'audit_state':
+                                  con = Text('${auditState['${item['audit_state']}']}');
+                                  break;
+                                case 'if_charge':
+                                  con = Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: '${item[col['key']]}' == '1'
+                                        ? Icon(
+                                            Icons.close,
+                                            color: Colors.red,
+                                          )
+                                        : Icon(
+                                            Icons.check,
+                                            color: Colors.green,
+                                          ),
+                                  );
+                                  break;
+                                case 'option':
+                                  con = Text('在用');
+                                  break;
+                              }
 
-                                return Container(
-                                  margin: EdgeInsets.only(bottom: 6),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        width: 80,
-                                        alignment: Alignment.centerRight,
-                                        child: Text('${col['title']}'),
-                                        margin: EdgeInsets.only(right: 10),
-                                      ),
-                                      Expanded(flex: 1, child: con)
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            ));
+                              return Container(
+                                margin: EdgeInsets.only(bottom: 6),
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: 80,
+                                      alignment: Alignment.centerRight,
+                                      child: Text('${col['title']}'),
+                                      margin: EdgeInsets.only(right: 10),
+                                    ),
+                                    Expanded(flex: 1, child: con)
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        );
                       }).toList(),
                     ),
                   ),

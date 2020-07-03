@@ -156,12 +156,13 @@ class _CreateTaskPricingState extends State<CreateTaskPricing> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => UserPlugin(
-                                userCount: 1,
-                                selectUsersData: jsonDecode(
-                                  jsonEncode(param['user']),
-                                ),
-                              )),
+                        builder: (context) => UserPlugin(
+                          userCount: 1,
+                          selectUsersData: jsonDecode(
+                            jsonEncode(param['user']),
+                          ),
+                        ),
+                      ),
                     ).then((val) {
                       if (val != null) {
                         setState(() {

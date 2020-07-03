@@ -33,21 +33,22 @@ class _RangeInputState extends State<RangeInput> {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                      child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 0,
-                        bottom: 0,
-                        left: 15,
-                        right: 15,
+                    child: TextField(
+                      style: TextStyle(fontSize: CFFontSize.content),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(
+                          top: 0,
+                          bottom: 0,
+                          left: 15,
+                          right: 15,
+                        ),
                       ),
+                      onChanged: (String val) {
+                        widget.onChangeL(val);
+                      },
                     ),
-                    onChanged: (String val) {
-                      widget.onChangeL(val);
-                    },
-                  )),
+                  ),
                   Container(
                     width: 20,
                     alignment: Alignment.center,

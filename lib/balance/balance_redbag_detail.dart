@@ -119,7 +119,9 @@ class _BalanceRedBagDetailState extends State<BalanceRedBagDetail> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: ajaxData.map<Widget>((item) {
                         return Container(
-                          decoration: BoxDecoration(border: Border.all(color: Color(0xffeeeeee), width: 1)),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xffeeeeee), width: 1),
+                          ),
                           margin: EdgeInsets.only(bottom: 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

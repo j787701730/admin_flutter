@@ -138,7 +138,10 @@ class _LoginRecordState extends State<LoginRecord> {
                                           child: Text('${col['title']}'),
                                           margin: EdgeInsets.only(right: 10),
                                         ),
-                                        Expanded(flex: 1, child: Text('${item[col['key']]}'))
+                                        Expanded(
+                                          flex: 1,
+                                          child: Text('${item[col['key']]}'),
+                                        )
                                       ],
                                     );
                                   }).toList(),

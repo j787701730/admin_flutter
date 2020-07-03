@@ -363,27 +363,28 @@ class _StaffAddState extends State<StaffAdd> {
                   child: Container(
                     alignment: Alignment.centerLeft,
                     child: Wrap(
-                        runSpacing: 6,
-                        spacing: 10,
-                        children: department.map<Widget>(
-                          (item) {
-                            return Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Radio(
-                                  value: '${item['department_id']}',
-                                  groupValue: param['depid'],
-                                  onChanged: (value) {
-                                    setState(() {
-                                      param['depid'] = value;
-                                    });
-                                  },
-                                ),
-                                Text('${item['department_name']}')
-                              ],
-                            );
-                          },
-                        ).toList()),
+                      runSpacing: 6,
+                      spacing: 10,
+                      children: department.map<Widget>(
+                        (item) {
+                          return Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Radio(
+                                value: '${item['department_id']}',
+                                groupValue: param['depid'],
+                                onChanged: (value) {
+                                  setState(() {
+                                    param['depid'] = value;
+                                  });
+                                },
+                              ),
+                              Text('${item['department_name']}')
+                            ],
+                          );
+                        },
+                      ).toList(),
+                    ),
                   ),
                 )
               ],
@@ -414,28 +415,29 @@ class _StaffAddState extends State<StaffAdd> {
                   child: Container(
                     alignment: Alignment.centerLeft,
                     child: Wrap(
-                        runSpacing: 6,
-                        spacing: 10,
-                        children: group.map<Widget>(
-                          (item) {
-                            return Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Radio(
-                                  value: '${item['group_id']}',
-                                  groupValue: param['grpID'],
-                                  onChanged: (value) {
-                                    setState(() {
-                                      param['grpID'] = value;
-                                      getData();
-                                    });
-                                  },
-                                ),
-                                Text('${item['group_name']}')
-                              ],
-                            );
-                          },
-                        ).toList()),
+                      runSpacing: 6,
+                      spacing: 10,
+                      children: group.map<Widget>(
+                        (item) {
+                          return Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Radio(
+                                value: '${item['group_id']}',
+                                groupValue: param['grpID'],
+                                onChanged: (value) {
+                                  setState(() {
+                                    param['grpID'] = value;
+                                    getData();
+                                  });
+                                },
+                              ),
+                              Text('${item['group_name']}')
+                            ],
+                          );
+                        },
+                      ).toList(),
+                    ),
                   ),
                 )
               ],

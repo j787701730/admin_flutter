@@ -40,113 +40,124 @@ class _MaintainState extends State<Maintain> {
             require: true,
           ),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 120,
-                    alignment: Alignment.centerRight,
-                    margin: EdgeInsets.only(right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          '* ',
-                          style: TextStyle(color: CFColors.danger),
-                        ),
-                        Text('维护截止时间')
-                      ],
-                    ),
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 120,
+                  alignment: Alignment.centerRight,
+                  margin: EdgeInsets.only(right: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Text(
+                        '* ',
+                        style: TextStyle(color: CFColors.danger),
+                      ),
+                      Text('维护截止时间')
+                    ],
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: InkWell(
-                        onTap: () {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          DatePicker.showDateTimePicker(
-                            context,
-                            showTitleActions: true,
-                            minTime: DateTime.now(),
-                            maxTime: DateTime(2099, 12, 31),
-                            onChanged: (date) {
-                              print('change $date');
-                            },
-                            onConfirm: (date) {
-                              setState(() {
-                                param['efftime'] = date;
-                              });
-                            },
-                            currentTime: param['efftime'],
-                            locale: LocaleType.zh,
-                          );
+                ),
+                Expanded(
+                  flex: 1,
+                  child: InkWell(
+                    onTap: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      DatePicker.showDateTimePicker(
+                        context,
+                        showTitleActions: true,
+                        minTime: DateTime.now(),
+                        maxTime: DateTime(2099, 12, 31),
+                        onChanged: (date) {
+                          print('change $date');
                         },
-                        child: Container(
-                          height: 34,
-                          padding: EdgeInsets.only(left: 10),
-                          alignment: Alignment.centerLeft,
-                          decoration: BoxDecoration(border: Border.all(color: Colors.grey, )),
-                          child: Text('${param['efftime']}'.substring(0, 19)),
-                        )),
-                  )
-                ],
-              )),
-          Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 120,
-                    alignment: Alignment.centerRight,
-                    margin: EdgeInsets.only(right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          '* ',
-                          style: TextStyle(color: CFColors.danger),
+                        onConfirm: (date) {
+                          setState(() {
+                            param['efftime'] = date;
+                          });
+                        },
+                        currentTime: param['efftime'],
+                        locale: LocaleType.zh,
+                      );
+                    },
+                    child: Container(
+                      height: 34,
+                      padding: EdgeInsets.only(left: 10),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
                         ),
-                        Text('维护状态')
-                      ],
+                      ),
+                      child: Text(
+                        '${param['efftime']}'.substring(0, 19),
+                      ),
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      children: <Widget>[
-                        Tooltip(
-                          message: '开启',
-                          child: Switch(value: param['turn'], onChanged: (val) {}),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              )),
+                )
+              ],
+            ),
+          ),
           Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 120,
-                    margin: EdgeInsets.only(right: 10),
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 120,
+                  alignment: Alignment.centerRight,
+                  margin: EdgeInsets.only(right: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Text(
+                        '* ',
+                        style: TextStyle(color: CFColors.danger),
+                      ),
+                      Text('维护状态')
+                    ],
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          height: 34,
-                          child: PrimaryButton(
-                              onPressed: () {
-                                FocusScope.of(context).requestFocus(FocusNode());
-                              },
-                              child: Text('保存')),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              )),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Row(
+                    children: <Widget>[
+                      Tooltip(
+                        message: '开启',
+                        child: Switch(value: param['turn'], onChanged: (val) {}),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 120,
+                  margin: EdgeInsets.only(right: 10),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        height: 34,
+                        child: PrimaryButton(
+                          onPressed: () {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                          },
+                          child: Text('保存'),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );

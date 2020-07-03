@@ -140,36 +140,37 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
                 child: levelLogs != null
                     ? Column(
                         children: levelLogs.keys.toList().map<Widget>(
-                        (key) {
-                          return Container(
-                            margin: EdgeInsets.only(bottom: 6),
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  item['level_logo'] = '${levelLogs[key]}';
-                                });
-                                state(() {
-                                  item['level_logo'] = '${levelLogs[key]}';
-                                });
-                                Navigator.of(context).pop();
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: '${levelLogs[key]}' == item['level_logo'] ? Colors.blue : Colors.grey),
-                                ),
-                                height: 34,
-                                padding: EdgeInsets.only(top: 4, bottom: 4),
-                                child: Image.network(
-                                  '$baseUrl${levelLogs[key]}',
-                                  fit: BoxFit.contain,
+                          (key) {
+                            return Container(
+                              margin: EdgeInsets.only(bottom: 6),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    item['level_logo'] = '${levelLogs[key]}';
+                                  });
+                                  state(() {
+                                    item['level_logo'] = '${levelLogs[key]}';
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: '${levelLogs[key]}' == item['level_logo'] ? Colors.blue : Colors.grey),
+                                  ),
+                                  height: 34,
+                                  padding: EdgeInsets.only(top: 4, bottom: 4),
+                                  child: Image.network(
+                                    '$baseUrl${levelLogs[key]}',
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                      ).toList())
+                            );
+                          },
+                        ).toList(),
+                      )
                     : Container(
                         child: Text('无数据'),
                       ),

@@ -423,7 +423,10 @@ class _UsersAddState extends State<UsersAdd> {
                                       return Container(
                                         width: width,
                                         decoration: BoxDecoration(
-                                            border: Border(top: BorderSide(color: Color(0xffdddddd), width: 1))),
+                                          border: Border(
+                                            top: BorderSide(color: Color(0xffdddddd), width: 1),
+                                          ),
+                                        ),
                                         child: Wrap(
                                           spacing: 15,
                                           children: sigleselectUserType[item].map<Widget>((type) {
@@ -530,40 +533,41 @@ class _UsersAddState extends State<UsersAdd> {
                                     Container(
                                       margin: EdgeInsets.only(bottom: 10),
                                       child: Wrap(
-                                          spacing: 10,
-                                          runSpacing: 10,
-                                          children: selectIndustryClass.map<Widget>(
-                                            (item) {
-                                              String text = '';
-                                              Map obj = industryClassData[item];
-                                              if (obj['parent_class_id'] != '0') {
-                                                text = '${industryClassData[obj['parent_class_id']]['class_name']}/'
-                                                    '${industryClassData[item]['class_name']}';
-                                              }
-                                              return Container(
-                                                color: Colors.grey[300],
-                                                padding: EdgeInsets.all(4),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: <Widget>[
-                                                    Text(text),
-                                                    InkWell(
-                                                      child: Icon(
-                                                        Icons.close,
-                                                        size: 20,
-                                                        color: CFColors.danger,
-                                                      ),
-                                                      onTap: () {
-                                                        setState(() {
-                                                          selectIndustryClass.remove(item);
-                                                        });
-                                                      },
+                                        spacing: 10,
+                                        runSpacing: 10,
+                                        children: selectIndustryClass.map<Widget>(
+                                          (item) {
+                                            String text = '';
+                                            Map obj = industryClassData[item];
+                                            if (obj['parent_class_id'] != '0') {
+                                              text = '${industryClassData[obj['parent_class_id']]['class_name']}/'
+                                                  '${industryClassData[item]['class_name']}';
+                                            }
+                                            return Container(
+                                              color: Colors.grey[300],
+                                              padding: EdgeInsets.all(4),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  Text(text),
+                                                  InkWell(
+                                                    child: Icon(
+                                                      Icons.close,
+                                                      size: 20,
+                                                      color: CFColors.danger,
                                                     ),
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          ).toList()),
+                                                    onTap: () {
+                                                      setState(() {
+                                                        selectIndustryClass.remove(item);
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ).toList(),
+                                      ),
                                     ),
                                     PrimaryButton(
                                       onPressed: () {
@@ -623,40 +627,41 @@ class _UsersAddState extends State<UsersAdd> {
                                     Container(
                                       margin: EdgeInsets.only(bottom: 10),
                                       child: Wrap(
-                                          spacing: 10,
-                                          runSpacing: 10,
-                                          children: selectSupplyClass.map<Widget>(
-                                            (item) {
-                                              String text = '';
-                                              Map obj = supplyClassData[item];
-                                              if (obj['parent_class_id'] != '0') {
-                                                text = '${supplyClassData[obj['parent_class_id']]['class_name']}/'
-                                                    '${supplyClassData[item]['class_name']}';
-                                              }
-                                              return Container(
-                                                color: Colors.grey[300],
-                                                padding: EdgeInsets.all(4),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: <Widget>[
-                                                    Text(text),
-                                                    InkWell(
-                                                      child: Icon(
-                                                        Icons.close,
-                                                        size: 20,
-                                                        color: CFColors.danger,
-                                                      ),
-                                                      onTap: () {
-                                                        setState(() {
-                                                          selectSupplyClass.remove(item);
-                                                        });
-                                                      },
+                                        spacing: 10,
+                                        runSpacing: 10,
+                                        children: selectSupplyClass.map<Widget>(
+                                          (item) {
+                                            String text = '';
+                                            Map obj = supplyClassData[item];
+                                            if (obj['parent_class_id'] != '0') {
+                                              text = '${supplyClassData[obj['parent_class_id']]['class_name']}/'
+                                                  '${supplyClassData[item]['class_name']}';
+                                            }
+                                            return Container(
+                                              color: Colors.grey[300],
+                                              padding: EdgeInsets.all(4),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  Text(text),
+                                                  InkWell(
+                                                    child: Icon(
+                                                      Icons.close,
+                                                      size: 20,
+                                                      color: CFColors.danger,
                                                     ),
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          ).toList()),
+                                                    onTap: () {
+                                                      setState(() {
+                                                        selectSupplyClass.remove(item);
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ).toList(),
+                                      ),
                                     ),
                                     PrimaryButton(
                                       onPressed: () {
@@ -760,7 +765,9 @@ class _UsersAddState extends State<UsersAdd> {
                         child: InkWell(
                           child: Container(
                             height: 34,
-                            decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                            ),
                             padding: EdgeInsets.only(left: 10, right: 10),
                             alignment: Alignment.centerLeft,
                             child: Text('${eff_date == null ? '' : eff_date.toString().substring(0, 10)}'),
@@ -788,7 +795,9 @@ class _UsersAddState extends State<UsersAdd> {
                         child: InkWell(
                           child: Container(
                             height: 34,
-                            decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                            ),
                             padding: EdgeInsets.only(left: 10, right: 10),
                             alignment: Alignment.centerLeft,
                             child: Text('${eff_time == null ? '' : '${eff_time.hour}:${eff_time.minute}:00'}'),
@@ -833,7 +842,9 @@ class _UsersAddState extends State<UsersAdd> {
                         child: InkWell(
                           child: Container(
                             height: 34,
-                            decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                            ),
                             padding: EdgeInsets.only(left: 10, right: 10),
                             alignment: Alignment.centerLeft,
                             child: Text('${exp_date == null ? '' : exp_date.toString().substring(0, 10)}'),
@@ -861,7 +872,9 @@ class _UsersAddState extends State<UsersAdd> {
                         child: InkWell(
                           child: Container(
                             height: 34,
-                            decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                            ),
                             padding: EdgeInsets.only(left: 10, right: 10),
                             alignment: Alignment.centerLeft,
                             child: Text('${exp_time == null ? '' : '${exp_time.hour}:${exp_time.minute}:00'}'),

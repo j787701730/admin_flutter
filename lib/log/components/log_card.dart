@@ -118,15 +118,16 @@ class LogCard extends StatelessWidget {
                           margin: EdgeInsets.only(right: 10),
                         ),
                         Expanded(
-                            flex: 1,
-                            child: col['event'] == true
-                                ? InkWell(
-                                    onTap: () {
-                                      dialog(item[col['key']], context);
-                                    },
-                                    child: msg(col, item),
-                                  )
-                                : msg(col, item))
+                          flex: 1,
+                          child: col['event'] == true
+                              ? InkWell(
+                                  onTap: () {
+                                    dialog(item[col['key']], context);
+                                  },
+                                  child: msg(col, item),
+                                )
+                              : msg(col, item),
+                        )
                       ],
                     ),
                   );

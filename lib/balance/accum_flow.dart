@@ -294,9 +294,10 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
                             children: ajaxData.keys.toList().map<Widget>((key) {
                               return Container(
                                 decoration: BoxDecoration(
-                                    border: Border.all(
-                                  color: Color(0xffdddddd),
-                                )),
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
+                                  ),
+                                ),
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.all(10),
                                 child: Column(

@@ -70,9 +70,10 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                           margin: EdgeInsets.only(right: 10),
                           padding: EdgeInsets.only(left: 10, right: 10),
                           decoration: BoxDecoration(
-                              border: Border.all(
-                            color: Colors.grey,
-                          )),
+                            border: Border.all(
+                              color: Colors.grey,
+                            ),
+                          ),
                           height: 30,
                           alignment: Alignment.centerLeft,
                           child: Wrap(
@@ -122,10 +123,13 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UserPlugin(
-                                        userCount: 1,
-                                        selectUsersData: jsonDecode(jsonEncode(param['user'])),
-                                      )),
+                                builder: (context) => UserPlugin(
+                                  userCount: 1,
+                                  selectUsersData: jsonDecode(
+                                    jsonEncode(param['user']),
+                                  ),
+                                ),
+                              ),
                             ).then((val) {
                               if (val != null) {
                                 setState(() {
@@ -171,23 +175,26 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                         height: 34,
                         child: TextField(
                           style: TextStyle(fontSize: CFFontSize.content),
-                          controller: TextEditingController.fromValue(TextEditingValue(
-                            text: '${param['extract_limit'] ?? ''}',
-                            selection: TextSelection.fromPosition(
-                              TextPosition(
-                                affinity: TextAffinity.downstream,
-                                offset: '${param['extract_limit'] ?? ''}'.length,
+                          controller: TextEditingController.fromValue(
+                            TextEditingValue(
+                              text: '${param['extract_limit'] ?? ''}',
+                              selection: TextSelection.fromPosition(
+                                TextPosition(
+                                  affinity: TextAffinity.downstream,
+                                  offset: '${param['extract_limit'] ?? ''}'.length,
+                                ),
                               ),
                             ),
-                          )),
+                          ),
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(
-                                top: 0,
-                                bottom: 0,
-                                left: 15,
-                                right: 15,
-                              )),
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.only(
+                              top: 0,
+                              bottom: 0,
+                              left: 15,
+                              right: 15,
+                            ),
+                          ),
                           onChanged: (String val) {
                             setState(() {
                               param['extract_limit'] = val;
@@ -197,7 +204,9 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                       ),
                       Text(
                         '用户每月提现的金额在该值以下，免手续费',
-                        style: TextStyle(color: Color(0xff999999)),
+                        style: TextStyle(
+                          color: Color(0xff999999),
+                        ),
                       ),
                     ],
                   ),
@@ -235,23 +244,26 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                         height: 34,
                         child: TextField(
                           style: TextStyle(fontSize: CFFontSize.content),
-                          controller: TextEditingController.fromValue(TextEditingValue(
-                            text: '${param['extract_rate'] ?? ''}',
-                            selection: TextSelection.fromPosition(
-                              TextPosition(
-                                affinity: TextAffinity.downstream,
-                                offset: '${param['extract_rate'] ?? ''}'.length,
+                          controller: TextEditingController.fromValue(
+                            TextEditingValue(
+                              text: '${param['extract_rate'] ?? ''}',
+                              selection: TextSelection.fromPosition(
+                                TextPosition(
+                                  affinity: TextAffinity.downstream,
+                                  offset: '${param['extract_rate'] ?? ''}'.length,
+                                ),
                               ),
                             ),
-                          )),
+                          ),
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(
-                                top: 0,
-                                bottom: 0,
-                                left: 15,
-                                right: 15,
-                              )),
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.only(
+                              top: 0,
+                              bottom: 0,
+                              left: 15,
+                              right: 15,
+                            ),
+                          ),
                           onChanged: (String val) {
                             setState(() {
                               param['extract_rate'] = val;
@@ -261,7 +273,9 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                       ),
                       Text(
                         '提现超过免费额度时候，提现的手续费占比',
-                        style: TextStyle(color: Color(0xff999999)),
+                        style: TextStyle(
+                          color: Color(0xff999999),
+                        ),
                       )
                     ],
                   ),

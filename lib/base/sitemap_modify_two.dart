@@ -79,17 +79,26 @@ class _SiteMapModifyTwoState extends State<SiteMapModifyTwo> {
                   flex: 1,
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(TextEditingValue(
-                      text: '${param['map_icon'] ?? ''}',
-                      selection: TextSelection.fromPosition(
-                        TextPosition(
-                          affinity: TextAffinity.downstream,
-                          offset: '${param['map_icon'] ?? ""}'.length,
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: '${param['map_icon'] ?? ''}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['map_icon'] ?? ""}'.length,
+                          ),
                         ),
                       ),
-                    )),
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 15,right: 15,)),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(
+                        top: 6,
+                        bottom: 6,
+                        left: 15,
+                        right: 15,
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         param['map_icon'] = val;
@@ -213,15 +222,17 @@ class _SiteMapModifyTwoState extends State<SiteMapModifyTwo> {
                   flex: 1,
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(TextEditingValue(
-                      text: '${param['map_sort'] ?? ''}',
-                      selection: TextSelection.fromPosition(
-                        TextPosition(
-                          affinity: TextAffinity.downstream,
-                          offset: '${param['map_sort'] ?? ''}'.length,
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: '${param['map_sort'] ?? ''}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['map_sort'] ?? ''}'.length,
+                          ),
                         ),
                       ),
-                    )),
+                    ),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.only(

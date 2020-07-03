@@ -135,8 +135,12 @@ class _ChargeCardState extends State<ChargeCard> {
             /// 这里的state就是setState
             return Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                  color: Colors.white),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+                color: Colors.white,
+              ),
               padding: EdgeInsets.only(top: 20),
               height: MediaQuery.of(_context).size.height * 0.6,
               child: ListView(
@@ -146,12 +150,13 @@ class _ChargeCardState extends State<ChargeCard> {
                     child: Row(
                       children: <Widget>[
                         Expanded(
-                            flex: 1,
-                            child: Text(
-                              '${selectCards[key]['card_no']}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            )),
+                          flex: 1,
+                          child: Text(
+                            '${selectCards[key]['card_no']}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                         InkWell(
                           onTap: () {
                             state(() {
@@ -277,8 +282,11 @@ class _ChargeCardState extends State<ChargeCard> {
                                             flex: 1,
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                  border: Border.all(color: Colors.grey),
-                                                  borderRadius: BorderRadius.all(Radius.circular(4))),
+                                                border: Border.all(color: Colors.grey),
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(4),
+                                                ),
+                                              ),
                                               height: 34,
                                               child: DropdownButton<String>(
                                                 isExpanded: true,
@@ -354,13 +362,14 @@ class _ChargeCardState extends State<ChargeCard> {
                                                 style: TextStyle(fontSize: CFFontSize.content),
                                                 controller: TextEditingController(text: setCardCount),
                                                 decoration: InputDecoration(
-                                                    border: OutlineInputBorder(),
-                                                    contentPadding: EdgeInsets.only(
-                                                      top: 6,
-                                                      bottom: 6,
-                                                      left: 15,
-                                                      right: 15,
-                                                    )),
+                                                  border: OutlineInputBorder(),
+                                                  contentPadding: EdgeInsets.only(
+                                                    top: 6,
+                                                    bottom: 6,
+                                                    left: 15,
+                                                    right: 15,
+                                                  ),
+                                                ),
                                                 onChanged: (String val) {
                                                   setState(() {
                                                     setCardCount = val;
@@ -452,7 +461,8 @@ class _ChargeCardState extends State<ChargeCard> {
                                                 alignment: Alignment.centerLeft,
                                                 padding: EdgeInsets.only(left: 10, right: 10),
                                                 decoration: BoxDecoration(
-                                                    border: Border.all(color: Color(0xffdddddd), width: 1)),
+                                                  border: Border.all(color: Color(0xffdddddd), width: 1),
+                                                ),
                                                 child: Wrap(
                                                   children: selectUser.keys.toList().map<Widget>((key) {
                                                     return Container(

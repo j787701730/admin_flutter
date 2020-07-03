@@ -89,15 +89,17 @@ class _SiteMapModifyThreeState extends State<SiteMapModifyThree> {
                   flex: 1,
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(TextEditingValue(
-                      text: '${param['map_ch_name'] ?? ''}',
-                      selection: TextSelection.fromPosition(
-                        TextPosition(
-                          affinity: TextAffinity.downstream,
-                          offset: '${param['map_ch_name'] ?? ""}'.length,
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: '${param['map_ch_name'] ?? ''}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['map_ch_name'] ?? ""}'.length,
+                          ),
                         ),
                       ),
-                    )),
+                    ),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.only(
@@ -130,15 +132,17 @@ class _SiteMapModifyThreeState extends State<SiteMapModifyThree> {
                   flex: 1,
                   child: TextField(
                     style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(TextEditingValue(
-                      text: '${param['map_en_name'] ?? ''}',
-                      selection: TextSelection.fromPosition(
-                        TextPosition(
-                          affinity: TextAffinity.downstream,
-                          offset: '${param['map_en_name'] ?? ''}'.length,
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: '${param['map_en_name'] ?? ''}',
+                        selection: TextSelection.fromPosition(
+                          TextPosition(
+                            affinity: TextAffinity.downstream,
+                            offset: '${param['map_en_name'] ?? ''}'.length,
+                          ),
                         ),
                       ),
-                    )),
+                    ),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.only(

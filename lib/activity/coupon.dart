@@ -294,15 +294,17 @@ class _CouponState extends State<Coupon> {
                             height: 34,
                             child: TextField(
                               style: TextStyle(fontSize: CFFontSize.content),
-                              controller: TextEditingController.fromValue(TextEditingValue(
-                                text: '${modifyItem['limit_nums'] ?? ''}',
-                                selection: TextSelection.fromPosition(
-                                  TextPosition(
-                                    affinity: TextAffinity.downstream,
-                                    offset: '${modifyItem['limit_nums'] ?? ''}'.length,
+                              controller: TextEditingController.fromValue(
+                                TextEditingValue(
+                                  text: '${modifyItem['limit_nums'] ?? ''}',
+                                  selection: TextSelection.fromPosition(
+                                    TextPosition(
+                                      affinity: TextAffinity.downstream,
+                                      offset: '${modifyItem['limit_nums'] ?? ''}'.length,
+                                    ),
                                   ),
                                 ),
-                              )),
+                              ),
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                                 contentPadding: EdgeInsets.only(
@@ -597,84 +599,85 @@ class _CouponState extends State<Coupon> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: ajaxData.map<Widget>((item) {
                               return Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Color(0xffdddddd),
-                                    ),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color(0xffdddddd),
                                   ),
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: columns.map<Widget>((col) {
-                                      Widget con = Text('${item[col['key']] ?? ''}');
-                                      switch (col['key']) {
-                                        case 'coupon_id':
-                                          con = Text('coupons-${item['coupon_id']}');
-                                          break;
-                                        case 'coupon_type':
-                                          con = Text('${couponType[item['coupon_type']]}');
-                                          break;
-                                        case 'goods_type':
-                                          con = '${item['goods_type']}' == '0'
-                                              ? Text('全部商品')
-                                              : Text('${goodsType[item['goods_type']]}');
-                                          break;
-                                        case 'coupon_source':
-                                          con = Text('${couponSource[item['coupon_source']]}');
-                                          break;
-                                        case 'state':
-                                          con = Text('${state[item['state']]}');
-                                          break;
-                                        case 'option':
-                                          con = Wrap(
-                                            runSpacing: 10,
-                                            spacing: 10,
-                                            children: <Widget>[
-                                              PrimaryButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    modifyItem = jsonDecode(jsonEncode(item));
-                                                    modifyDialog();
-                                                  });
-                                                },
-                                                child: Text('修改'),
-                                              ),
-                                              '${item['state']}' == '1'
-                                                  ? PrimaryButton(
-                                                      onPressed: () {
-                                                        stateDialog(item);
-                                                      },
-                                                      child: Text('停用'),
-                                                      type: 'error',
-                                                    )
-                                                  : PrimaryButton(
-                                                      onPressed: () {
-                                                        stateDialog(item);
-                                                      },
-                                                      child: Text('开启'),
-                                                    ),
-                                            ],
-                                          );
-                                          break;
-                                      }
-
-                                      return Container(
-                                        margin: EdgeInsets.only(bottom: 6),
-                                        child: Row(
+                                ),
+                                margin: EdgeInsets.only(bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: columns.map<Widget>((col) {
+                                    Widget con = Text('${item[col['key']] ?? ''}');
+                                    switch (col['key']) {
+                                      case 'coupon_id':
+                                        con = Text('coupons-${item['coupon_id']}');
+                                        break;
+                                      case 'coupon_type':
+                                        con = Text('${couponType[item['coupon_type']]}');
+                                        break;
+                                      case 'goods_type':
+                                        con = '${item['goods_type']}' == '0'
+                                            ? Text('全部商品')
+                                            : Text('${goodsType[item['goods_type']]}');
+                                        break;
+                                      case 'coupon_source':
+                                        con = Text('${couponSource[item['coupon_source']]}');
+                                        break;
+                                      case 'state':
+                                        con = Text('${state[item['state']]}');
+                                        break;
+                                      case 'option':
+                                        con = Wrap(
+                                          runSpacing: 10,
+                                          spacing: 10,
                                           children: <Widget>[
-                                            Container(
-                                              width: 100,
-                                              alignment: Alignment.centerRight,
-                                              child: Text('${col['title']}'),
-                                              margin: EdgeInsets.only(right: 10),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  modifyItem = jsonDecode(jsonEncode(item));
+                                                  modifyDialog();
+                                                });
+                                              },
+                                              child: Text('修改'),
                                             ),
-                                            Expanded(flex: 1, child: con)
+                                            '${item['state']}' == '1'
+                                                ? PrimaryButton(
+                                                    onPressed: () {
+                                                      stateDialog(item);
+                                                    },
+                                                    child: Text('停用'),
+                                                    type: 'error',
+                                                  )
+                                                : PrimaryButton(
+                                                    onPressed: () {
+                                                      stateDialog(item);
+                                                    },
+                                                    child: Text('开启'),
+                                                  ),
                                           ],
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ));
+                                        );
+                                        break;
+                                    }
+
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 6),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 100,
+                                            alignment: Alignment.centerRight,
+                                            child: Text('${col['title']}'),
+                                            margin: EdgeInsets.only(right: 10),
+                                          ),
+                                          Expanded(flex: 1, child: con)
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
                             }).toList(),
                           ),
                   ),

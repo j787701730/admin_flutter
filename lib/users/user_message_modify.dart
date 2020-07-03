@@ -95,8 +95,9 @@ class _UserMessageModifyState extends State<UserMessageModify> {
                                 style: TextStyle(fontSize: CFFontSize.content),
                                 controller: TextEditingController(text: '${userInfo['login_name']}'),
                                 decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15, right: 15)),
+                                  border: OutlineInputBorder(),
+                                  contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15, right: 15),
+                                ),
                                 onChanged: (String val) {
                                   setState(() {
 //                          searchData[key] = val;
