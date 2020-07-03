@@ -183,11 +183,11 @@ class _ArticleListState extends State<ArticleList> {
                 if (node.expand) {
                   //之前是扩展状态，收起列表
                   node.expand = false;
-                  _collect(node.nodeId);
+                  _collect(node.nodeId, node.classType);
                 } else {
                   //之前是收起状态，扩展列表
                   node.expand = true;
-                  _expand(node.nodeId);
+                  _expand(node.nodeId, node.classType);
                 }
                 setState(() {});
               }
@@ -205,11 +205,11 @@ class _ArticleListState extends State<ArticleList> {
   ///扩展机构树：id代表被点击的机构id
   /// 做法是遍历整个list列表，将直接挂在该机构下面的节点增加到一个临时列表中，
   ///然后将临时列表插入到被点击的机构下面
-  void _expand(int id) {
+  void _expand(int id, int classType) {
     //保存到临时列表
     List<Node> tmp = new List();
     for (Node node in list) {
-      if (node.fatherId == id) {
+      if (node.fatherId == id && classType == node.classType) {
         tmp.add(node);
       }
     }
@@ -217,7 +217,7 @@ class _ArticleListState extends State<ArticleList> {
     int index = -1;
     int length = expand.length;
     for (int i = 0; i < length; i++) {
-      if (id == expand[i].nodeId) {
+      if (id == expand[i].nodeId && classType == expand[i].classType) {
         index = i + 1;
         break;
       }
@@ -229,11 +229,11 @@ class _ArticleListState extends State<ArticleList> {
   ///收起机构树：id代表被点击的机构id
   /// 做法是遍历整个expand列表，将直接和间接挂在该机构下面的节点标记，
   ///将这些被标记节点删除即可，此处用到的是将没有被标记的节点加入到新的列表中
-  void _collect(int id) {
+  void _collect(int id, int classType) {
     //清楚之前的标记
     mark.clear();
     //标记
-    _mark(id);
+    _mark(id, classType);
     //重新对expand赋值
     List<Node> tmp = new List();
     for (Node node in expand) {
@@ -249,11 +249,11 @@ class _ArticleListState extends State<ArticleList> {
   }
 
   ///标记，在收起机构树的时候用到
-  void _mark(int id) {
+  void _mark(int id, int classType) {
     for (Node node in expand) {
-      if (id == node.fatherId) {
+      if (id == node.fatherId && classType == node.classType) {
         if (node.isHasChildren) {
-          _mark(node.nodeId);
+          _mark(node.nodeId, node.classType);
         }
         mark.add(node.nodeId);
       }
@@ -265,14 +265,14 @@ class _ArticleListState extends State<ArticleList> {
       //this.expand, this.depth, this.nodeId, this.fatherId, this.object, this.isHasChildren
       bool flag = false;
       for (var oo in classTrees) {
-        if (oo['parent_class_id'] == o['class_id']) {
+        if (oo['parent_class_id'] == o['class_id'] && oo['class_type'] == o['class_type']) {
           flag = true;
           break;
         }
       }
 
       Node<String> node = new Node(false, int.parse(o['class_level']), int.parse(o['class_id']),
-          int.parse(o['parent_class_id']), o['class_name'], flag);
+          int.parse(o['parent_class_id']), o['class_name'], flag, int.parse(o['class_type']));
       if (o['class_level'] == '1') {
         expand.add(node);
       }
@@ -655,8 +655,9 @@ class Node<T> {
   int depth; //深度
   int nodeId; //id
   int fatherId; //父类id
+  int classType; //父类id
   T object; //
   bool isHasChildren; //是否有孩子节点
 
-  Node(this.expand, this.depth, this.nodeId, this.fatherId, this.object, this.isHasChildren);
+  Node(this.expand, this.depth, this.nodeId, this.fatherId, this.object, this.isHasChildren, this.classType);
 }
