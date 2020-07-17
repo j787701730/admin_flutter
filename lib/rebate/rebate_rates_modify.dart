@@ -128,9 +128,7 @@ class _RebateRatesModifyState extends State<RebateRatesModify> {
                         width: 110,
                         child: PrimaryButton(
                           onPressed: () {
-                            FocusScope.of(context).requestFocus(
-                              FocusNode(),
-                            );
+                            FocusScope.of(context).requestFocus(FocusNode());
                             Navigator.push(
                               context,
                               MaterialPageRoute(

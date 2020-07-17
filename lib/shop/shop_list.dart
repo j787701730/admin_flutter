@@ -361,7 +361,10 @@ class _ShopListState extends State<ShopList> {
               duration: const Duration(
                 milliseconds: 300,
               ),
-              firstChild: Container(),
+              firstChild: Placeholder(
+                fallbackHeight: 0.1,
+                color: Colors.transparent,
+              ),
               secondChild: Column(
                 children: <Widget>[
                   Input(
@@ -423,9 +426,7 @@ class _ShopListState extends State<ShopList> {
                     onPressed: () {
                       param['page'] = 1;
                       getData();
-                      FocusScope.of(context).requestFocus(
-                        FocusNode(),
-                      );
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('搜索'),
                   ),

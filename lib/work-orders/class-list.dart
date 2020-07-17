@@ -2,19 +2,19 @@ import 'dart:async';
 
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/shop/supply_class_modify.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
+import 'package:admin_flutter/work-orders/class-modify-add.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class SupplyClass extends StatefulWidget {
+class ClassList extends StatefulWidget {
   @override
-  _SupplyClassState createState() => _SupplyClassState();
+  _ClassListState createState() => _ClassListState();
 }
 
-class _SupplyClassState extends State<SupplyClass> {
+class _ClassListState extends State<ClassList> {
   BuildContext _context;
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
@@ -23,6 +23,7 @@ class _SupplyClassState extends State<SupplyClass> {
   Map industryClass = {};
   double width;
   String searchValue = '';
+  Map state = {'1': '启用', '0': ' 停用'};
 
   void _onRefresh() {
     setState(() {
@@ -50,11 +51,11 @@ class _SupplyClassState extends State<SupplyClass> {
     setState(() {
       loading = true;
     });
-    ajax('Adminrelas-shopsManage-getSupplyClass', {}, true, (res) {
+    ajax('Adminrelas-WorkOrders-getClass', {}, true, (res) {
       if (mounted) {
         setState(() {
           loading = false;
-          ajaxData = res['data'];
+          ajaxData = res['data'] ?? [];
           toTop();
         });
         industryClass = {'0': '顶级分类'};
@@ -77,7 +78,7 @@ class _SupplyClassState extends State<SupplyClass> {
   toTop() {
     _controller.animateTo(
       0,
-      duration: Duration(milliseconds: 300), // 300ms
+      duration: new Duration(milliseconds: 300), // 300ms
       curve: Curves.bounceIn, // 动画方式
     );
   }
@@ -85,6 +86,13 @@ class _SupplyClassState extends State<SupplyClass> {
   getPage(page) {
     if (loading) return;
     getData();
+  }
+
+  turnTo(val) {
+    Navigator.push(
+      _context,
+      MaterialPageRoute(builder: (context) => ClassModifyAdd(val)),
+    );
   }
 
   itemContainer(data, level) {
@@ -96,55 +104,56 @@ class _SupplyClassState extends State<SupplyClass> {
                 Container(
                   width: width / 5,
                   alignment: Alignment.centerRight,
+                  padding: EdgeInsets.only(right: 10),
                   child: Text('${data['sort']}'),
                 ),
                 Expanded(
                   flex: 1,
-                  child: Container(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: <Widget>[
-                        level == 1
-                            ? Text('')
-                            : Icon(
-                                Icons.keyboard_arrow_right,
-                                color: CFColors.success,
-                              ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SupplyClassModify({
-                                  'industryClass': industryClass,
-                                  'item': {
-                                    'parent-class': '${data['parent_class_id']}',
-                                    'class-sort': '${data['sort']}',
-                                    'goods-class-name': '${data['class_name']}',
-                                    'class-comment': '${data['comments']}'
-                                  }
-                                }),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.only(top: 6, bottom: 6),
-                            child: Text(
-                              '${data['class_name']}',
-                              style: TextStyle(
-                                color: CFColors.primary,
-                              ),
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: <Widget>[
+                      level == 1
+                          ? Text('')
+                          : Icon(
+                              Icons.keyboard_arrow_right,
+                              color: CFColors.success,
+                            ),
+                      InkWell(
+                        onTap: () {
+                          turnTo({
+                            'industryClass': industryClass,
+                            'item': {
+                              'parent_class_id': '${data['parent_class_id']}',
+                              'sort': '${data['sort']}',
+                              'class_name': '${data['class_name']}',
+                              'state': '${data['state']}',
+                              'class_id': '${data['class_id']}',
+                              'class_price': '${data['class_price']}',
+                            }
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(top: 6, bottom: 6),
+                          child: Text(
+                            '${data['class_name']}',
+                            style: TextStyle(
+                              color: CFColors.primary,
                             ),
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 Container(
                   width: width / 5,
-                  child: Text('${data['comments'] ?? ''}'),
+                  alignment: Alignment.center,
+                  child: Text('${data['class_price']}'),
+                ),
+                Container(
+                  width: width / 5,
+                  alignment: Alignment.center,
+                  child: Text('${state[data['state']]}'),
                 ),
                 Container(
                   width: 50,
@@ -189,7 +198,7 @@ class _SupplyClassState extends State<SupplyClass> {
                                 ],
                               );
                             },
-                          ); //
+                          );
                         },
                       );
                     },
@@ -222,7 +231,7 @@ class _SupplyClassState extends State<SupplyClass> {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('供应商分类'),
+        title: Text('工单分类'),
       ),
       body: SmartRefresher(
         enablePullDown: true,
@@ -236,11 +245,10 @@ class _SupplyClassState extends State<SupplyClass> {
           padding: EdgeInsets.all(10),
           children: <Widget>[
             Input(
-              label: '供应商分类',
+              label: '工单分类',
               onChanged: (String val) {
                 searchValue = val;
               },
-              labelWidth: 100,
             ),
             Container(
               child: Wrap(
@@ -257,17 +265,7 @@ class _SupplyClassState extends State<SupplyClass> {
                   ),
                   PrimaryButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SupplyClassModify(
-                            {
-                              'industryClass': industryClass,
-                              'item': null,
-                            },
-                          ),
-                        ),
-                      );
+                      turnTo({'industryClass': industryClass, 'item': null});
                     },
                     child: Text('新增分类'),
                   ),
@@ -289,9 +287,7 @@ class _SupplyClassState extends State<SupplyClass> {
                         : Column(
                             children: <Widget>[
                               Container(
-                                padding: EdgeInsets.only(
-                                  bottom: 6,
-                                ),
+                                padding: EdgeInsets.only(bottom: 6),
                                 child: Row(
                                   children: <Widget>[
                                     Container(
@@ -302,13 +298,18 @@ class _SupplyClassState extends State<SupplyClass> {
                                     Expanded(
                                       flex: 1,
                                       child: Center(
-                                        child: Text('供应商分类'),
+                                        child: Text('工单分类'),
                                       ),
                                     ),
                                     Container(
                                       width: width / 5,
                                       alignment: Alignment.center,
-                                      child: Text('备注'),
+                                      child: Text('定价'),
+                                    ),
+                                    Container(
+                                      width: width / 5,
+                                      alignment: Alignment.center,
+                                      child: Text('状态'),
                                     ),
                                     Container(
                                       width: 50,

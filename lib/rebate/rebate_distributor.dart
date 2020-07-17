@@ -179,7 +179,10 @@ class _RebateDistributorState extends State<RebateDistributor> {
               duration: const Duration(
                 milliseconds: 300,
               ),
-              firstChild: Container(),
+              firstChild: Placeholder(
+                fallbackHeight: 0.1,
+                color: Colors.transparent,
+              ),
               secondChild: Column(children: <Widget>[
                 Input(
                   label: '用户',
@@ -220,17 +223,13 @@ class _RebateDistributorState extends State<RebateDistributor> {
                       param['curr_page'] = 1;
                       selectDistributor.clear();
                       getData();
-                      FocusScope.of(context).requestFocus(
-                        FocusNode(),
-                      );
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('搜索'),
                   ),
                   PrimaryButton(
                     onPressed: () {
-                      FocusScope.of(context).requestFocus(
-                        FocusNode(),
-                      );
+                      FocusScope.of(context).requestFocus(FocusNode());
                       List arr = [];
                       for (var o in ajaxData) {
                         arr.add(o['apply_id']);
@@ -243,18 +242,14 @@ class _RebateDistributorState extends State<RebateDistributor> {
                   ),
                   PrimaryButton(
                     onPressed: () {
-                      FocusScope.of(context).requestFocus(
-                        FocusNode(),
-                      );
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('审核成功'),
                   ),
                   PrimaryButton(
                     type: 'error',
                     onPressed: () {
-                      FocusScope.of(context).requestFocus(
-                        FocusNode(),
-                      );
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('审核失败'),
                   ),

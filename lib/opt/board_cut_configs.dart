@@ -208,7 +208,10 @@ class _BoardCutConfigsState extends State<BoardCutConfigs> {
               duration: const Duration(
                 milliseconds: 300,
               ),
-              firstChild: Container(),
+              firstChild: Placeholder(
+                fallbackHeight: 0.1,
+                color: Colors.transparent,
+              ),
               secondChild: Column(children: <Widget>[
                 Input(
                   label: '配置名称',

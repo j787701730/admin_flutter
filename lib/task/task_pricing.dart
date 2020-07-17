@@ -371,7 +371,10 @@ class _TaskPricingState extends State<TaskPricing> {
               duration: const Duration(
                 milliseconds: 300,
               ),
-              firstChild: Container(),
+              firstChild: Placeholder(
+                fallbackHeight: 0.1,
+                color: Colors.transparent,
+              ),
               secondChild: Column(children: <Widget>[
                 Input(
                   label: '用户名',

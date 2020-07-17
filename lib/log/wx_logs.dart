@@ -212,7 +212,10 @@ class _WXLogsState extends State<WXLogs> {
               duration: const Duration(
                 milliseconds: 300,
               ),
-              firstChild: Container(),
+              firstChild: Placeholder(
+                fallbackHeight: 0.1,
+                color: Colors.transparent,
+              ),
               secondChild: Column(children: <Widget>[
                 Column(
                   children: searchData.keys.map<Widget>((key) {
@@ -253,9 +256,7 @@ class _WXLogsState extends State<WXLogs> {
                     onPressed: () {
                       param['curr_page'] = 1;
                       getData();
-                      FocusScope.of(context).requestFocus(
-                        FocusNode(),
-                      );
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('搜索'),
                   ),

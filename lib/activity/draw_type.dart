@@ -137,7 +137,10 @@ class _DrawTypeState extends State<DrawType> {
               duration: const Duration(
                 milliseconds: 300,
               ),
-              firstChild: Container(),
+              firstChild: Placeholder(
+                fallbackHeight: 0.1,
+                color: Colors.transparent,
+              ),
               secondChild: Column(children: <Widget>[
                 Input(
                   label: '中文名称',

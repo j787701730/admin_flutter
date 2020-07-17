@@ -194,7 +194,10 @@ class _ExtractConfigState extends State<ExtractConfig> {
               duration: const Duration(
                 milliseconds: 300,
               ),
-              firstChild: Container(),
+              firstChild: Placeholder(
+                fallbackHeight: 0.1,
+                color: Colors.transparent,
+              ),
               secondChild: Column(children: <Widget>[
                 Input(
                   label: '用户',
@@ -273,9 +276,7 @@ class _ExtractConfigState extends State<ExtractConfig> {
                   PrimaryButton(
                     onPressed: () {
                       turnTo(null);
-                      FocusScope.of(context).requestFocus(
-                        FocusNode(),
-                      );
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('提现配置'),
                   ),

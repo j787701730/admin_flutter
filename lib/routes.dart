@@ -97,6 +97,8 @@ import 'package:admin_flutter/user-manage/staff-group.dart';
 import 'package:admin_flutter/users/add.dart';
 import 'package:admin_flutter/users/manager.dart';
 import 'package:admin_flutter/users/users_cert.dart';
+import 'package:admin_flutter/work-orders/class-list.dart';
+import 'package:admin_flutter/work-orders/work-order-list.dart';
 import 'package:flutter/material.dart';
 
 final routes = <String, WidgetBuilder>{
@@ -199,4 +201,6 @@ final routes = <String, WidgetBuilder>{
   '/construnctionService': (_) => ConstrunctionService(), // 施工服务
   '/logisticsService': (_) => LogisticsService(), // 物流服务
   '/trainingService': (_) => TrainingService(), // 培训服务
+  '/workOrderClassList': (_) => ClassList(), // 工单分类
+  '/workOrderList': (_) => WorkOrdersList(), // 工单列表
 };

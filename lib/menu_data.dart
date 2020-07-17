@@ -714,6 +714,20 @@ List menuData = [
         "name": "任务类型",
         "access": [82],
         "path": "/taskTypeList"
+      },
+      {
+        "spell_all": "gongdanfenlei",
+        "spell_index": "gdfl",
+        "name": "工单分类",
+        "access": [163],
+        "path": '/workOrderClassList'
+      },
+      {
+        "spell_all": "gongdanliebiao",
+        "spell_index": "gdlb",
+        "name": "工单列表",
+        "access": [164],
+        "path": '/workOrderList'
       }
     ]
   },
@@ -994,5 +1008,5 @@ List menuData = [
         "path": "/financialDetail"
       }
     ]
-  }
+  },
 ];

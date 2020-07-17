@@ -222,19 +222,20 @@ class _RebateRatesState extends State<RebateRates> {
               duration: const Duration(
                 milliseconds: 300,
               ),
-              firstChild: Container(),
+              firstChild: Placeholder(
+                fallbackHeight: 0.1,
+                color: Colors.transparent,
+              ),
               secondChild: Column(
                 children: <Widget>[
                   Input(
                     label: '用户名',
                     onChanged: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('user_name');
-                        } else {
-                          param['user_name'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('user_name');
+                      } else {
+                        param['user_name'] = val;
+                      }
                     },
                   ),
                   Select(
@@ -307,17 +308,13 @@ class _RebateRatesState extends State<RebateRates> {
                     onPressed: () {
                       param['curr_page'] = 1;
                       getData();
-                      FocusScope.of(context).requestFocus(
-                        FocusNode(),
-                      );
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('搜索'),
                   ),
                   PrimaryButton(
                     onPressed: () {
-                      FocusScope.of(context).requestFocus(
-                        FocusNode(),
-                      );
+                      FocusScope.of(context).requestFocus(FocusNode());
                       turnTo(null);
                     },
                     child: Text('添加返利比例'),

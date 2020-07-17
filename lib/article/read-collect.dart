@@ -164,7 +164,10 @@ class _ReadCollectState extends State<ReadCollect> {
               duration: const Duration(
                 milliseconds: 300,
               ),
-              firstChild: Container(),
+              firstChild: Placeholder(
+                fallbackHeight: 0.1,
+                color: Colors.transparent,
+              ),
               secondChild: Column(
                 children: <Widget>[
                   Input(

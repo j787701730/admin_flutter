@@ -193,7 +193,10 @@ class _ErpLogsState extends State<ErpLogs> {
               duration: const Duration(
                 milliseconds: 300,
               ),
-              firstChild: Container(),
+              firstChild: Placeholder(
+                fallbackHeight: 0.1,
+                color: Colors.transparent,
+              ),
               secondChild: Column(children: <Widget>[
                 Column(
                   children: searchData.keys.map<Widget>((key) {

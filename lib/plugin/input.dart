@@ -11,7 +11,7 @@ class Input extends StatefulWidget {
   final int maxLines;
   final Padding contentPadding; // TextField contentPadding
   final value;
-  final marginTop;
+  final double marginTop;
 
   Input({
     @required this.label,
@@ -22,7 +22,7 @@ class Input extends StatefulWidget {
     this.maxLines = 1,
     this.contentPadding,
     this.value = '',
-    this.marginTop = 3.0,
+    this.marginTop,
   });
 
   @override
@@ -51,12 +51,15 @@ class _InputState extends State<Input> {
     return Container(
       margin: EdgeInsets.only(bottom: 10),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: widget.marginTop == null ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         children: <Widget>[
           Container(
             width: widget.labelWidth ?? 80,
             alignment: Alignment.centerRight,
-            margin: EdgeInsets.only(right: widget.label == '' ? 0 : 10, top: widget.marginTop),
+            margin: EdgeInsets.only(
+              right: widget.label == '' ? 0 : 10,
+              top: widget.marginTop ?? 0,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[

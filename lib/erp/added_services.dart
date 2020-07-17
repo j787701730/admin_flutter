@@ -202,7 +202,10 @@ class _AddedServicesState extends State<AddedServices> {
           padding: EdgeInsets.all(10),
           children: <Widget>[
             AnimatedCrossFade(
-              firstChild: Container(),
+              firstChild: Placeholder(
+                fallbackHeight: 0.1,
+                color: Colors.transparent,
+              ),
               secondChild: Column(
                 children: <Widget>[
                   Input(

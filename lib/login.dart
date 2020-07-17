@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:admin_flutter/my_home_page.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
@@ -14,6 +15,7 @@ class _LoginState extends State<Login> {
   String loginName = '';
   String password = '';
   BuildContext _context;
+  Timer _timer;
 
   @override
   void initState() {
@@ -21,10 +23,26 @@ class _LoginState extends State<Login> {
     _context = context;
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    if (_timer != null) {
+      _timer.cancel();
+    }
+  }
+
   login() {
     ajax('Adminrelas-Index-loginCheck', {"psw": password, "username": loginName}, true, (res) {
       if (res.runtimeType != String && res['err_code'] == 0) {
-        getAccess();
+//        getAccess();
+
+        if ('${res['wx_check']}' == '1') {
+          _timer = Timer.periodic(Duration(seconds: 3), (timer) {
+            loginStatus({'sign': res.sign});
+          });
+        } else {
+          getAccess();
+        }
       } else {
         if (res.runtimeType == String) {
           Fluttertoast.showToast(
@@ -41,6 +59,26 @@ class _LoginState extends State<Login> {
         }
       }
     }, () {}, _context);
+  }
+
+  loginStatus(data) {
+    ajax('Adminrelas-Index-loginStatus', data, true, (data) {
+      _timer.cancel();
+      _timer = null;
+      if (data['request_state'] == 0) {
+      } else if (data['request_state'] == -1) {
+        Fluttertoast.showToast(
+          msg: '拒绝登录',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
+      } else if (data['request_state'] == 1) {
+        getAccess();
+      }
+    }, () {
+      _timer.cancel();
+      _timer = null;
+    }, _context);
   }
 
   getAccess() {

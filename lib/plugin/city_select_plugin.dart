@@ -12,7 +12,7 @@ class CitySelectPlugin extends StatefulWidget {
   final String label;
   final double labelWidth;
   final bool require; // 是否必填 显示*
-  final marginTop;
+  final double marginTop;
   final bool hiddenRegion;
 
   CitySelectPlugin({
@@ -21,7 +21,7 @@ class CitySelectPlugin extends StatefulWidget {
     this.initArea,
     this.label = '',
     this.require = false,
-    this.marginTop = 3.0,
+    this.marginTop,
     this.labelWidth = 80,
     this.hiddenRegion = false,
   });
@@ -151,10 +151,14 @@ class _CitySelectPluginState extends State<CitySelectPlugin> {
     return Container(
       margin: EdgeInsets.only(bottom: 10),
       child: Row(
+        crossAxisAlignment: widget.marginTop == null ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         children: <Widget>[
           Container(
             width: widget.labelWidth,
-            margin: EdgeInsets.only(right: widget.label == '' ? 0 : 10, top: widget.marginTop),
+            margin: EdgeInsets.only(
+              right: widget.label == '' ? 0 : 10,
+              top: widget.marginTop ?? 0,
+            ),
             alignment: Alignment.centerRight,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,

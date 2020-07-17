@@ -257,7 +257,10 @@ class _CadAdminsState extends State<CadAdmins> {
               duration: const Duration(
                 milliseconds: 300,
               ),
-              firstChild: Container(),
+              firstChild: Placeholder(
+                fallbackHeight: 0.1,
+                color: Colors.transparent,
+              ),
               secondChild: Column(
                 children: <Widget>[
                   Input(
@@ -309,9 +312,7 @@ class _CadAdminsState extends State<CadAdmins> {
                     onPressed: () {
                       param['curr_page'] = 1;
                       getData();
-                      FocusScope.of(context).requestFocus(
-                        FocusNode(),
-                      );
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('搜索'),
                   ),
