@@ -1,3 +1,4 @@
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -44,34 +45,35 @@ class LogCard extends StatelessWidget {
               children: <Widget>[
                 Container(
                   width: MediaQuery.of(_context).size.width - 100,
-                  child: Html(
-                    data: jsonMsg(data),
-                    style: {
-                      'p': Style(
-                        padding: EdgeInsets.zero,
-                      ),
-                      'em': Style(
-                        color: Color(0xff204a87),
-                        fontStyle: FontStyle.normal,
-                        fontSize: FontSize.smaller,
-                      ),
-                      'span': Style(
-                        color: Color(0xff204a87),
-                        fontStyle: FontStyle.normal,
-                        fontSize: FontSize.smaller,
-                      ),
-                      'strong': Style(
-                        color: Color(0xff4e9a06),
-                        fontStyle: FontStyle.normal,
-                        fontSize: FontSize.smaller,
-                      ),
-                      'i': Style(
-                        color: Color(0xff333333),
-                        fontStyle: FontStyle.normal,
-                        fontSize: FontSize.smaller,
-                      ),
-                    },
-                    shrinkWrap: true,
+                  child: MediaQuery(
+                    data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+                    child: Html(
+                      data: jsonMsg(data),
+                      style: {
+                        'body': Style(
+                          fontSize: FontSize(CFFontSize.title),
+                        ),
+                        'p': Style(
+                          padding: EdgeInsets.zero,
+                        ),
+                        'em': Style(
+                          color: Color(0xff204a87),
+                          fontStyle: FontStyle.normal,
+                        ),
+                        'span': Style(
+                          color: Color(0xff204a87),
+                        ),
+                        'strong': Style(
+                          color: Color(0xff4e9a06),
+                          fontStyle: FontStyle.normal,
+                        ),
+                        'i': Style(
+                          color: Color(0xff333333),
+                          fontStyle: FontStyle.normal,
+                        ),
+                      },
+                      shrinkWrap: true,
+                    ),
                   ),
                 ),
               ],

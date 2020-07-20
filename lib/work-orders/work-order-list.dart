@@ -14,6 +14,7 @@ import 'package:admin_flutter/work-orders/work-order-assign.dart';
 import 'package:admin_flutter/work-orders/work-orders-detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class WorkOrdersList extends StatefulWidget {
@@ -177,7 +178,10 @@ class _WorkOrdersListState extends State<WorkOrdersList> {
               textColor: Colors.white,
               child: Text('确定'),
               onPressed: () {
-                Navigator.of(context).pop();
+                ajax('Adminrelas-WorkOrders-setState', {'order_no': item['order_no']}, true, (data) {
+                  Navigator.of(context).pop();
+                  getData();
+                }, () {}, _context);
               },
             ),
           ],
@@ -256,7 +260,15 @@ class _WorkOrdersListState extends State<WorkOrdersList> {
               child: Text('确定'),
               onPressed: () {
                 print(price);
-//                Navigator.of(context).pop();
+                ajax('Adminrelas-WorkOrders-editW', {'order_no': item['order_no'], 'order_price': price}, true, (data) {
+                  Fluttertoast.showToast(
+                    msg: '修改成功',
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                  );
+                  getData();
+                  Navigator.of(context).pop();
+                }, () {}, _context);
               },
             ),
           ],
@@ -294,7 +306,11 @@ class _WorkOrdersListState extends State<WorkOrdersList> {
       MaterialPageRoute(
         builder: (context) => WorkOrderAssign(item),
       ),
-    );
+    ).then((value) {
+      if (value == true) {
+        getData();
+      }
+    });
   }
 
   bool isExpandedFlag = true;
@@ -456,6 +472,7 @@ class _WorkOrdersListState extends State<WorkOrdersList> {
                                     border: Border.all(
                                       color: Color(0xffeeeeee),
                                     ),
+                                    color: '${item['priority']}' == '2' ? Color(0xfffcf8e3) : Colors.white,
                                   ),
                                   margin: EdgeInsets.only(bottom: 10),
                                   child: Column(
@@ -483,18 +500,17 @@ class _WorkOrdersListState extends State<WorkOrdersList> {
                                               ? Container()
                                               : Row(
                                                   children: <Widget>[
-                                                    Text('${item['evaluate_stars']}星 '),
+                                                    Text('${item['evaluate_stars']}星'),
                                                     item['evaluate_content'] == null || item['evaluate_content'] == ''
                                                         ? Container()
-                                                        : InkWell(
-                                                            onTap: () {
+                                                        : IconButton(
+                                                            icon: Icon(Icons.message),
+                                                            onPressed: () {
                                                               evaluateContentDialog(item);
                                                             },
-                                                            child: Icon(
-                                                              Icons.message,
-                                                              color: CFColors.primary,
-                                                              size: 20,
-                                                            ),
+                                                            color: Colors.green,
+                                                            iconSize: 20,
+                                                            padding: EdgeInsets.zero,
                                                           )
                                                   ],
                                                 );

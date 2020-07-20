@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/html_parser.dart';
 import 'package:flutter_html/style.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class WorkOrdersDetail extends StatefulWidget {
@@ -63,7 +66,7 @@ class _WorkOrdersDetailState extends State<WorkOrdersDetail> {
           ajaxData = res['data'] ?? [];
           sLog = res['sLog'] ?? [];
           exe = '${res['exe']}';
-          toTop();
+//          toTop();
         });
         if (isRefresh) {
           _refreshController.refreshCompleted();
@@ -88,6 +91,21 @@ class _WorkOrdersDetailState extends State<WorkOrdersDetail> {
 
   getPage(page) {
     getData();
+  }
+
+  send() {
+    print(param);
+    if (param['log_content'] == null || '${param['log_content']}'.trim() == '') {
+      Fluttertoast.showToast(
+        msg: '请输入内容',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+      return;
+    }
+    ajax('Adminrelas-WorkOrders-addL', {'data': jsonEncode(param)}, true, (data) {
+      getData();
+    }, () {}, _context);
   }
 
   @override
@@ -276,58 +294,106 @@ class _WorkOrdersDetailState extends State<WorkOrdersDetail> {
 //                                  ),
                                   margin: EdgeInsets.only(top: 10),
                                   padding: EdgeInsets.only(top: 5, bottom: 5),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                  child: Column(
                                     children: <Widget>[
-                                      Container(
-                                        width: 40,
-                                        alignment: Alignment.center,
-                                        padding: EdgeInsets.all(int.parse(item['user_id']) >= 27 ? 4 : 0),
-                                        decoration: BoxDecoration(
-                                          color:
-                                              int.parse(item['user_id']) >= 27 ? CFColors.primary : Colors.transparent,
-                                          borderRadius: BorderRadius.circular(20),
-                                        ),
-                                        margin: EdgeInsets.only(right: 10),
-                                        child: Image.network(
-                                          int.parse(item['user_id']) >= 27
-                                              ? '${baseUrl}Public/images/user.png'
-                                              : '${baseUrl}Public/images/cf.jpg',
-                                          fit: BoxFit.contain,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text('${item['user_name']}:'),
-                                            Container(
-                                              child: Html(
-                                                data: '${item['log_content']}',
-                                                style: {
-                                                  'div': Style(
-                                                    fontSize: FontSize(CFFontSize.content),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Container(
+                                            width: 40,
+                                            alignment: Alignment.center,
+                                            padding: EdgeInsets.all(int.parse(item['user_id']) >= 27 ? 4 : 0),
+                                            decoration: BoxDecoration(
+                                              color: int.parse(item['user_id']) >= 27
+                                                  ? CFColors.primary
+                                                  : Colors.transparent,
+                                              borderRadius: BorderRadius.circular(20),
+                                            ),
+                                            margin: EdgeInsets.only(right: 10),
+                                            child: Image.network(
+                                              int.parse(item['user_id']) >= 27
+                                                  ? '${baseUrl}Public/images/user.png'
+                                                  : '${baseUrl}Public/images/cf.jpg',
+                                              fit: BoxFit.contain,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Container(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: <Widget>[
+                                                  Text('${item['user_name']}:'),
+                                                  MediaQuery(
+                                                    data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+                                                    child: Html(
+                                                      shrinkWrap: true,
+                                                      data: '${item['log_content']}',
+                                                      style: {
+//                                                        'html': Style(
+//                                                          display: Display.BLOCK,
+//                                                          fontSize: FontSize(CFFontSize.content),
+//                                                        ),
+                                                        'p': Style(
+                                                          fontSize: FontSize(CFFontSize.title),
+                                                        ),
+                                                        'span': Style(
+                                                          fontSize: FontSize(CFFontSize.title),
+                                                        ),
+                                                      },
+                                                      customRender: {
+                                                        "img": (RenderContext context, Widget child, attributes, _) {
+                                                          return Image.network(
+                                                            '$baseUrl${attributes['src']}',
+                                                            fit: BoxFit.contain,
+                                                          );
+                                                        },
+                                                      },
+                                                    ),
                                                   ),
-                                                  'p': Style(
-                                                    fontSize: FontSize(CFFontSize.content),
-                                                  ),
-                                                },
+                                                  Text(
+                                                    '${item['create_date']}',
+                                                    style: TextStyle(
+                                                      color: CFColors.secondary,
+                                                    ),
+                                                  )
+                                                ],
                                               ),
                                             ),
-                                            Text(
-                                              '${item['create_date']}',
-                                              style: TextStyle(
-                                                color: CFColors.secondary,
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                          )
+                                        ],
                                       )
                                     ],
                                   ),
                                 );
                               }).toList(),
                             ),
+                      '$exe' == '1'
+                          ? Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Input(
+                                    label: '回复内容',
+                                    require: true,
+                                    onChanged: (val) {
+                                      param['log_content'] = val;
+                                    },
+                                    maxLines: 5,
+                                    marginTop: 4.0,
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 90),
+                                    child: PrimaryButton(
+                                      onPressed: send,
+                                      child: Text('提交'),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Container()
                     ],
                   ),
           ],

@@ -76,7 +76,7 @@ class _CouponState extends State<Coupon> {
       if (mounted) {
         Map goodsTypeTemp = {};
         for (var key in data['goodsType'].keys.toList()) {
-          goodsTypeTemp[data['goodsType'][key]] = data['goodsType'][key]['goods_type_ch_name'];
+          goodsTypeTemp[key] = data['goodsType'][key]['goods_type_ch_name'];
         }
         setState(() {
           couponType.addAll(data['couponsType']);

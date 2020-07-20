@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class AgreementContent extends StatefulWidget {
@@ -99,7 +101,18 @@ class _AgreementContentState extends State<AgreementContent> {
                     alignment: Alignment.center,
                     child: CupertinoActivityIndicator(),
                   )
-                : Html(data: content),
+                : MediaQuery(
+                    data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+                    child: Html(
+                      data: content,
+                      shrinkWrap: true,
+                      style: {
+                        'body': Style(
+                          fontSize: FontSize(CFFontSize.title),
+                        )
+                      },
+                    ),
+                  ),
           ],
         ),
       ),

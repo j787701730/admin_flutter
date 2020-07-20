@@ -246,9 +246,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       if (value == '0') {
                         modifyPasswordDialog();
                       } else if (value == '1') {
-                        setState(() {
-                          isLogin = false;
-                        });
+                        Navigator.pushAndRemoveUntil(
+                          _context,
+                          MaterialPageRoute(
+                            builder: (context) => Login(),
+                          ),
+                          (route) => route == null,
+                        );
                       }
                     },
                     itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[

@@ -4,10 +4,12 @@ import 'dart:convert';
 import 'package:admin_flutter/plugin/date_select_plugin.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class BalanceDetail extends StatefulWidget {
@@ -318,8 +320,17 @@ class _BalanceDetailState extends State<BalanceDetail> {
                     width: 0,
                   )
                 : Container(
-                    child: Html(
-                      data: '$stat',
+                    child: MediaQuery(
+                      data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+                      child: Html(
+                        shrinkWrap: true,
+                        data: '$stat',
+                        style: {
+                          'body': Style(
+                            fontSize: FontSize(CFFontSize.title),
+                          )
+                        },
+                      ),
                     ),
                   ),
             Container(

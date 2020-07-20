@@ -12,6 +12,7 @@ import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChargePresent extends StatefulWidget {
@@ -358,7 +359,18 @@ class _ChargePresentState extends State<ChargePresent> {
                                       break;
                                     case 'comments':
                                       con = Container(
-                                        child: Html(data: '${item['comments'] ?? ''}'),
+                                        child: MediaQuery(
+                                          data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+                                          child: Html(
+                                            data: '${item['comments'] ?? ''}',
+                                            shrinkWrap: true,
+                                            style: {
+                                              'body': Style(
+                                                fontSize: FontSize(CFFontSize.title),
+                                              )
+                                            },
+                                          ),
+                                        ),
                                       );
                                       break;
                                     case 'option':
