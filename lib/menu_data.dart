@@ -1009,4 +1009,26 @@ List menuData = [
       }
     ]
   },
+  {
+    "spell_all": "xuanranruanjian",
+    "spell_index": "xrrj",
+    "name": "渲染软件",
+    "access": [159],
+    "children": [
+      {
+        "spell_all": "moxingsucai",
+        "spell_index": "mxsc",
+        "name": "模型素材",
+        "access": [161],
+        "path": '/renderSoftwareList'
+      },
+      {
+        "spell_all": "moxingfenlei",
+        "spell_index": "mxfl",
+        "name": "模型类目",
+        "access": [160],
+        "path": '/renderClass'
+      },
+    ]
+  },
 ];

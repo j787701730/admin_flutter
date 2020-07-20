@@ -78,6 +78,8 @@ import 'package:admin_flutter/rebate/rebate_list.dart';
 import 'package:admin_flutter/rebate/rebate_rates.dart';
 import 'package:admin_flutter/rebate/rebate_rule.dart';
 import 'package:admin_flutter/rebate/rebate_sale_man.dart';
+import 'package:admin_flutter/render-software/render-class.dart';
+import 'package:admin_flutter/render-software/render-software-list.dart';
 import 'package:admin_flutter/shop/cad_admins.dart';
 import 'package:admin_flutter/shop/cad_drawing.dart';
 import 'package:admin_flutter/shop/cad_user_relation.dart';
@@ -203,4 +205,6 @@ final routes = <String, WidgetBuilder>{
   '/trainingService': (_) => TrainingService(), // 培训服务
   '/workOrderClassList': (_) => ClassList(), // 工单分类
   '/workOrderList': (_) => WorkOrdersList(), // 工单列表
+  '/renderSoftwareList': (_) => RenderSoftwareList(), // 模型素材
+  '/renderClass': (_) => RenderClass(), // 模型类目
 };
