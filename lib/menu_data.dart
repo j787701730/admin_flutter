@@ -652,7 +652,8 @@ List menuData = [
         "spell_all": "bankuaiguanli",
         "spell_index": "bkgl",
         "name": "板块管理",
-        "access": [62]
+        "access": [62],
+        'path': '/bbsForum'
       },
       {
         "spell_all": "jiaoseguanli",
@@ -664,13 +665,15 @@ List menuData = [
         "spell_all": "tieziliebiao",
         "spell_index": "tzlb",
         "name": "帖子列表",
-        "access": [64]
+        "access": [64],
+        'path': '/bbsPost'
       },
       {
         "spell_all": "yonghuliebiao",
         "spell_index": "yhlb",
         "name": "用户列表",
-        "access": [65]
+        "access": [65],
+        'path': '/bbsUser'
       }
     ]
   },

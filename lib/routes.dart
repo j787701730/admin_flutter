@@ -29,6 +29,9 @@ import 'package:admin_flutter/base/maintain.dart';
 import 'package:admin_flutter/base/phone-menus.dart';
 import 'package:admin_flutter/base/shop-menus.dart';
 import 'package:admin_flutter/base/sitemap.dart';
+import 'package:admin_flutter/bbs/bbs-forum.dart';
+import 'package:admin_flutter/bbs/bbs-post.dart';
+import 'package:admin_flutter/bbs/bbs-user.dart';
 import 'package:admin_flutter/erp/added_services.dart';
 import 'package:admin_flutter/erp/erp_config.dart';
 import 'package:admin_flutter/erp/erp_crm.dart';
@@ -207,4 +210,7 @@ final routes = <String, WidgetBuilder>{
   '/workOrderList': (_) => WorkOrdersList(), // 工单列表
   '/renderSoftwareList': (_) => RenderSoftwareList(), // 模型素材
   '/renderClass': (_) => RenderClass(), // 模型类目
+  '/bbsUser': (_) => BbsUser(), // 论坛 用户列表
+  '/bbsPost': (_) => BbsPost(), // 论坛 帖子列表
+  '/bbsForum': (_) => BbsForum(), // 论坛 板块管理
 };

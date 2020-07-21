@@ -39,6 +39,42 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
+  updateLog() {
+    return showDialog<void>(
+      context: _context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            '更新内容',
+          ),
+          content: Container(
+            width: MediaQuery.of(context).size.width - 100,
+            child: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('取消'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('确定'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void countDown() {
     // 设置倒计时三秒后执行跳转方法
     Duration duration = Duration(seconds: 1);
@@ -61,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
       } else {
         checkLogin();
       }
+//      updateLog();
     }, netError: (val) {
       setState(() {
         isAjax = false;

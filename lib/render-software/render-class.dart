@@ -20,7 +20,6 @@ class _RenderClassState extends State<RenderClass> {
   BuildContext _context;
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
-  Map param = {};
   List ajaxData = [];
   bool loading = true;
   List selectModules = [];
@@ -130,7 +129,6 @@ class _RenderClassState extends State<RenderClass> {
                             selectClassTree = node.nodeId.toString();
                             selectClassTreeName = node.object.toString();
                             selectClassTreeLevel = '${node.depth}';
-                            param['class_id'] = node.nodeId;
                             getData();
                             Navigator.pop(context);
                           });
@@ -260,7 +258,8 @@ class _RenderClassState extends State<RenderClass> {
     setState(() {
       loading = true;
     });
-    ajax('Adminrelas-RenderSoftware-getParams', {'class_id': param['class_id']}, true, (res) {
+
+    ajax('Adminrelas-RenderSoftware-getParams', {'class_id': selectClassTree}, true, (res) {
       if (mounted) {
         setState(() {
           loading = false;
@@ -296,9 +295,13 @@ class _RenderClassState extends State<RenderClass> {
     Navigator.push(
       _context,
       MaterialPageRoute(
-        builder: (context) => RenderClassEdit(item),
+        builder: (context) => RenderClassEdit(item, ajaxData),
       ),
-    );
+    ).then((value) {
+      if (value == true) {
+        getData();
+      }
+    });
   }
 
   @override
@@ -372,7 +375,7 @@ class _RenderClassState extends State<RenderClass> {
                   ),
                   PrimaryButton(
                     onPressed: () {
-                      print(selectModules);
+                      editAttribute({'class_id': selectClassTree, 'class_name': selectClassTreeName});
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('编辑属性关联'),
@@ -395,18 +398,15 @@ class _RenderClassState extends State<RenderClass> {
               child: Row(
                 children: <Widget>[
                   Container(
-                    width: 90,
+                    width: 120,
+                    margin: EdgeInsets.only(right: 10),
                     child: Text('属性归属'),
                   ),
                   Expanded(
                     child: Container(
                       child: Text('属性名称'),
                     ),
-                  ),
-                  Container(
-                    width: 90,
-                    child: Text('操作'),
-                  ),
+                  )
                 ],
               ),
               color: Color(0xffeeeeee),
@@ -426,58 +426,36 @@ class _RenderClassState extends State<RenderClass> {
                             margin: EdgeInsets.only(bottom: 15),
                             child: Column(
                               children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                        color: Color(0xffcccccc),
+                                return GestureDetector(
+                                  onTap: () {
+                                    seeAttribute(item);
+                                  },
+                                  behavior: HitTestBehavior.opaque,
+                                  child: Container(
+                                    padding: EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Color(0xffcccccc),
+                                        ),
                                       ),
+                                      color:
+                                          '${item['param_owner']}' == '自身属性' ? Color(0xffCCFFcc) : Colors.transparent,
                                     ),
-                                    color: '${item['param_owner']}' == '自身属性' ? Color(0xffCCFFcc) : Colors.transparent,
-                                  ),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        width: 90,
-                                        child: Text('${item['param_owner']}'),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          child: Text('${item['param_name']}'),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          width: 120,
+                                          margin: EdgeInsets.only(right: 10),
+                                          child: Text('${item['param_owner']}'),
                                         ),
-                                      ),
-                                      Container(
-                                        width: 90,
-                                        child: Wrap(
-                                          spacing: 10,
-                                          children: <Widget>[
-                                            InkWell(
-                                              onTap: () {
-                                                seeAttribute(item);
-                                              },
-                                              child: Text(
-                                                '查看',
-                                                style: TextStyle(
-                                                  color: CFColors.primary,
-                                                ),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                editAttribute(item);
-                                              },
-                                              child: Text(
-                                                '编辑',
-                                                style: TextStyle(
-                                                  color: CFColors.primary,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                        Expanded(
+                                          child: Container(
+                                            child: Text('${item['param_name']}'),
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 );
                               }).toList(),

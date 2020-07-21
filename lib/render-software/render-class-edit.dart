@@ -2,25 +2,23 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:admin_flutter/plugin/date_select_plugin.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
-import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/render-software/attribute-add-modify.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
-import 'package:admin_flutter/work-orders/work-order-assign.dart';
 import 'package:admin_flutter/work-orders/work-orders-detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RenderClassEdit extends StatefulWidget {
   final props;
+  final ajaxData;
 
-  RenderClassEdit(this.props);
+  RenderClassEdit(this.props, this.ajaxData);
 
   @override
   _RenderClassEditState createState() => _RenderClassEditState();
@@ -38,32 +36,6 @@ class _RenderClassEditState extends State<RenderClassEdit> {
   int count = 0;
   bool loading = true;
 
-  Map order = {
-    'all': '无',
-    'order_topic': '工单标题 升序',
-    'order_topic desc': '工单标题 降序',
-    'class_id': '工单分类 升序',
-    'class_id desc': '工单分类 降序',
-    'state': '状态 升序',
-    'state desc': '状态 降序',
-    'priority': '优先级 升序',
-    'priority desc': '优先级 降序',
-    'create_date': '创建时间 升序',
-    'create_date desc': '创建时间 降序'
-  };
-  String defaultVal = 'all';
-
-  orderBy(val) {
-    if (val == 'all') {
-      param.remove('order');
-    } else {
-      param['order'] = val;
-    }
-    param['curr_page'] = 1;
-    defaultVal = val;
-    getData();
-  }
-
   void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
@@ -71,11 +43,23 @@ class _RenderClassEditState extends State<RenderClassEdit> {
     });
   }
 
+  Map submitData = {};
+  List paramOwner = [];
+
   @override
   void initState() {
     super.initState();
     _controller = ScrollController();
     _context = context;
+    print(widget.props);
+    submitData['class_id'] = widget.props['class_id'];
+    submitData['param'] = {};
+    for (var o in widget.ajaxData) {
+      submitData['param'][o['param_id']] = o['param_name'];
+      if (o['param_owner'] != '自身属性') {
+        paramOwner.add(o['param_id']);
+      }
+    }
     Timer(Duration(milliseconds: 200), () {
       getData();
     });
@@ -91,8 +75,8 @@ class _RenderClassEditState extends State<RenderClassEdit> {
     setState(() {
       loading = true;
     });
-
-    ajax('Adminrelas-RenderSoftware-getAllParams', {'param': jsonEncode(param)}, true, (res) {
+    print(param);
+    ajax('Adminrelas-RenderSoftware-getAllParams', {'data': jsonEncode(param)}, true, (res) {
       if (mounted) {
         setState(() {
           ajaxData = res['data'] ?? [];
@@ -125,8 +109,7 @@ class _RenderClassEditState extends State<RenderClassEdit> {
     getData();
   }
 
-  priceDialog(item) {
-    String price = item['order_price'];
+  delDialog(item) {
     return showDialog<void>(
       context: _context,
       barrierDismissible: false, // user must tap button!
@@ -138,13 +121,7 @@ class _RenderClassEditState extends State<RenderClassEdit> {
           content: SingleChildScrollView(
             child: Container(
               width: MediaQuery.of(_context).size.width * 0.8,
-              child: Input(
-                label: '工单收费',
-                value: price,
-                onChanged: (val) {
-                  price = val;
-                },
-              ),
+              child: Text('确认删除 ${item['param_name']} ?'),
             ),
           ),
           actions: <Widget>[
@@ -160,13 +137,7 @@ class _RenderClassEditState extends State<RenderClassEdit> {
               textColor: Colors.white,
               child: Text('确定'),
               onPressed: () {
-                print(price);
-                ajax('Adminrelas-WorkOrders-editW', {'order_no': item['order_no'], 'order_price': price}, true, (data) {
-                  Fluttertoast.showToast(
-                    msg: '修改成功',
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                  );
+                ajax('Adminrelas-RenderSoftware-delParams', {'param_id': item['param_id']}, true, (data) {
                   getData();
                   Navigator.of(context).pop();
                 }, () {}, _context);
@@ -174,6 +145,84 @@ class _RenderClassEditState extends State<RenderClassEdit> {
             ),
           ],
         );
+      },
+    );
+  }
+
+  paramDialog() {
+    return showDialog<void>(
+      context: _context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context1, state) {
+          return AlertDialog(
+            title: Text(
+              '拥有的资源属性',
+            ),
+            content: SingleChildScrollView(
+              child: Container(
+                width: MediaQuery.of(_context).size.width * 0.8,
+                child: Column(
+                  children: submitData['param'].keys.toList().map<Widget>(
+                    (item) {
+                      return paramOwner.contains(item)
+                          ? Container()
+                          : Container(
+                              margin: EdgeInsets.only(bottom: 6),
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Text('${submitData['param'][item]}'),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        submitData['param'].remove('$item');
+                                      });
+                                      state(() {
+                                        submitData['param'].remove('$item');
+                                      });
+                                    },
+                                    child: Icon(
+                                      Icons.restore_from_trash,
+                                      color: CFColors.danger,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                    },
+                  ).toList(),
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('取消'),
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                color: Colors.blue,
+                textColor: Colors.white,
+                child: Text('确认保存'),
+                onPressed: () {
+                  Map data = {'class_id': submitData['class_id'], 'param': []};
+                  for (var o in submitData['param'].keys.toList()) {
+                    if (!paramOwner.contains(o)) {
+                      data['param'].add({'param_id': o});
+                    }
+                  }
+                  ajax('Adminrelas-RenderSoftware-alterClassParam', {'data': jsonEncode(data)}, true, (data) {
+                    Navigator.of(context)..pop()..pop(true);
+                  }, () {}, _context);
+                },
+              ),
+            ],
+          );
+        });
       },
     );
   }
@@ -189,11 +238,24 @@ class _RenderClassEditState extends State<RenderClassEdit> {
 
   bool isExpandedFlag = true;
 
+  attributeModify(item) {
+    Navigator.push(
+      _context,
+      MaterialPageRoute(
+        builder: (context) => AttributeAddModify(item),
+      ),
+    ).then((value) {
+      if (value == true) {
+        getData();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('资源属性配置'),
+        title: Text('${widget.props['class_name']}-资源属性配置'),
       ),
       body: SmartRefresher(
         enablePullDown: true,
@@ -220,7 +282,11 @@ class _RenderClassEditState extends State<RenderClassEdit> {
                   Input(
                     label: '属性名称',
                     onChanged: (String val) {
-                      param['order_no'] = val;
+                      if (val == null || val.trim() == '') {
+                        param.remove('param_name');
+                      } else {
+                        param['param_name'] = val;
+                      }
                     },
                   ),
                 ],
@@ -247,8 +313,13 @@ class _RenderClassEditState extends State<RenderClassEdit> {
                   PrimaryButton(
                     onPressed: () {
                       FocusScope.of(context).requestFocus(FocusNode());
+                      attributeModify(null);
                     },
                     child: Text('添加属性'),
+                  ),
+                  PrimaryButton(
+                    onPressed: paramDialog,
+                    child: Text('拥有属性'),
                   ),
                   PrimaryButton(
                     color: CFColors.success,
@@ -283,7 +354,7 @@ class _RenderClassEditState extends State<RenderClassEdit> {
                     ),
                   ),
                   Container(
-                    width: 90,
+                    width: 120,
                     child: Text('操作'),
                   ),
                 ],
@@ -322,13 +393,15 @@ class _RenderClassEditState extends State<RenderClassEdit> {
                                         ),
                                       ),
                                       Container(
-                                        width: 90,
+                                        width: 120,
                                         child: Wrap(
                                           spacing: 10,
                                           runSpacing: 10,
                                           children: <Widget>[
                                             InkWell(
-                                              onTap: () {},
+                                              onTap: () {
+                                                attributeModify(item);
+                                              },
                                               child: Text(
                                                 '编辑',
                                                 style: TextStyle(
@@ -337,7 +410,9 @@ class _RenderClassEditState extends State<RenderClassEdit> {
                                               ),
                                             ),
                                             InkWell(
-                                              onTap: () {},
+                                              onTap: () {
+                                                delDialog(item);
+                                              },
                                               child: Text(
                                                 '删除',
                                                 style: TextStyle(
@@ -345,15 +420,26 @@ class _RenderClassEditState extends State<RenderClassEdit> {
                                                 ),
                                               ),
                                             ),
-                                            InkWell(
-                                              onTap: () {},
-                                              child: Text(
-                                                '加入',
-                                                style: TextStyle(
-                                                  color: CFColors.primary,
-                                                ),
-                                              ),
-                                            ),
+                                            paramOwner.contains('${item['param_id']}')
+                                                ? Text('')
+                                                : InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        if (submitData['param']['${item['param_id']}'] == null) {
+                                                          submitData['param']['${item['param_id']}'] =
+                                                              item['param_name'];
+                                                        } else {
+                                                          submitData['param'].remove('${item['param_id']}');
+                                                        }
+                                                      });
+                                                    },
+                                                    child: Text(
+                                                      submitData['param']['${item['param_id']}'] == null ? '添加' : '移除',
+                                                      style: TextStyle(
+                                                        color: CFColors.primary,
+                                                      ),
+                                                    ),
+                                                  ),
                                           ],
                                         ),
                                       ),
