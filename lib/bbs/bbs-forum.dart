@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:admin_flutter/bbs/forum-add-modify.dart';
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
@@ -46,11 +47,11 @@ class _BbsForumState extends State<BbsForum> {
   getData({isRefresh: false}) {
     setState(() {
       loading = true;
+      isExpandedFlag.clear();
     });
     ajax('Adminrelas-Api-bbsForum', {}, true, (res) {
       if (mounted) {
         setState(() {
-          print(res);
           ajaxData = res['data'];
           toTop();
           loading = false;
@@ -83,6 +84,101 @@ class _BbsForumState extends State<BbsForum> {
     );
   }
 
+  delDialog(item) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            '系统提示',
+          ),
+          content: SingleChildScrollView(
+            child: Container(
+//              width: MediaQuery.of(context).size.width * 0.8,
+              child: Text('确认删除 ${item['bfname']} ?'),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('关闭'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            PrimaryButton(
+              child: Text('确认'),
+              onPressed: () {
+                ajax('Adminrelas-bbsForum-delForum', {'forumId': item['bfid']}, true, (data) {
+                  Navigator.of(context).pop();
+                  getData();
+                }, () {}, _context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  addAndModifyDialog(item, {flag = true}) {
+    Map submitData = {'n': '', 's': '1'};
+    if (flag) {
+      submitData['n'] = item['bfname'];
+      submitData['s'] = item['bfsort'];
+    }
+    return showDialog<void>(
+      context: _context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            flag ? '${item['bfname']} 修改' : item == null ? '新增帖子' : '${item['bfname']} 新增子帖子',
+          ),
+          content: SingleChildScrollView(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: Column(
+                children: <Widget>[
+                  Input(
+                    label: '帖子名称',
+                    require: true,
+                    onChanged: (val) {
+                      submitData['n'] = val;
+                    },
+                    value: submitData['n'],
+                  ),
+                  Input(
+                    label: '帖子排序',
+                    require: true,
+                    onChanged: (val) {
+                      submitData['s'] = val;
+                    },
+                    value: submitData['s'],
+                  )
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('关闭'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            PrimaryButton(
+              child: Text('确认'),
+              onPressed: () {
+                print(submitData);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,21 +197,36 @@ class _BbsForumState extends State<BbsForum> {
           padding: EdgeInsets.all(10),
           children: <Widget>[
             Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Wrap(
+                runSpacing: 10,
+                spacing: 10,
+                children: <Widget>[
+                  PrimaryButton(
+                    onPressed: () {
+                      addAndModifyDialog(null, flag: false);
+                    },
+                    child: Text('添加帖子'),
+                  ),
+                ],
+              ),
+            ),
+            Container(
               padding: EdgeInsets.all(6),
               child: Row(
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      child: Text('属性名称'),
+                      child: Text('帖子名称'),
                     ),
                   ),
                   Container(
-                    width: 120,
+                    width: 100,
                     margin: EdgeInsets.only(right: 10),
                     child: Text('帖子排序'),
                   ),
                   Container(
-                    width: 80,
+                    width: 120,
                     margin: EdgeInsets.only(right: 10),
                     child: Text('操作'),
                   ),
@@ -129,9 +240,6 @@ class _BbsForumState extends State<BbsForum> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: ajaxData.map<Widget>((item) {
-//                        {bfid: 15, bpfid: 0, bfname: 设计软件, bflogo: , bfsort: 0,
-//                        bfchildren: [{bfid: 16, bpfid: 15, bfname: 晨丰家具设计软件,
-//                        bflogo: Uploads/zone/user_-1/20181105/04e09921787728c905d0816c0e94767b.png, bfsort: 1}
                         return Container(
                           decoration: BoxDecoration(
                             border: Border(
@@ -141,7 +249,6 @@ class _BbsForumState extends State<BbsForum> {
                               ),
                             ),
                           ),
-                          margin: EdgeInsets.only(bottom: 10),
                           padding: EdgeInsets.only(top: 5, bottom: 5),
                           child: Column(
                             children: <Widget>[
@@ -162,18 +269,65 @@ class _BbsForumState extends State<BbsForum> {
                                     children: <Widget>[
                                       Expanded(
                                         child: Container(
-                                          child: Text('${item['bfname']}'),
+                                          child: Row(
+                                            children: <Widget>[
+                                              Icon(
+                                                isExpandedFlag['${item['bfid']}'] == true
+                                                    ? Icons.keyboard_arrow_up
+                                                    : Icons.keyboard_arrow_down,
+                                              ),
+                                              Text('${item['bfname']}'),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Container(
-                                        width: 120,
+                                        width: 100,
                                         margin: EdgeInsets.only(right: 10),
                                         child: Text('${item['bfsort']}'),
                                       ),
                                       Container(
-                                        width: 80,
+                                        width: 120,
                                         margin: EdgeInsets.only(right: 10),
-                                        child: Text('操作'),
+                                        child: Wrap(
+                                          spacing: 10,
+                                          runSpacing: 10,
+                                          children: <Widget>[
+                                            InkWell(
+                                              onTap: () {
+                                                addAndModifyDialog(item);
+                                              },
+                                              child: Text(
+                                                '修改',
+                                                style: TextStyle(
+                                                  color: CFColors.primary,
+                                                ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                addAndModifyDialog(item, flag: false);
+                                              },
+                                              child: Text(
+                                                '添加',
+                                                style: TextStyle(
+                                                  color: CFColors.primary,
+                                                ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                delDialog(item);
+                                              },
+                                              child: Text(
+                                                '删除',
+                                                style: TextStyle(
+                                                  color: CFColors.danger,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -198,22 +352,33 @@ class _BbsForumState extends State<BbsForum> {
                                                   children: <Widget>[
                                                     Expanded(
                                                       child: Container(
-                                                        padding: EdgeInsets.only(left: 20),
+                                                        padding: EdgeInsets.only(left: 42),
                                                         child: Text('${child['bfname']}'),
                                                       ),
                                                     ),
                                                     Container(
-                                                      width: 120,
+                                                      width: 100,
                                                       margin: EdgeInsets.only(right: 10),
                                                       child: Text('${child['bfsort']}'),
                                                     ),
                                                     Container(
-                                                      width: 80,
+                                                      width: 120,
                                                       margin: EdgeInsets.only(right: 10),
                                                       child: Wrap(
                                                         spacing: 10,
                                                         runSpacing: 10,
                                                         children: <Widget>[
+                                                          InkWell(
+                                                            child: Text(
+                                                              '修改',
+                                                              style: TextStyle(
+                                                                color: CFColors.primary,
+                                                              ),
+                                                            ),
+                                                            onTap: () {
+                                                              addAndModifyDialog(child);
+                                                            },
+                                                          ),
                                                           InkWell(
                                                             child: Text(
                                                               '编辑',
@@ -232,7 +397,9 @@ class _BbsForumState extends State<BbsForum> {
                                                                 color: CFColors.danger,
                                                               ),
                                                             ),
-                                                            onTap: () {},
+                                                            onTap: () {
+                                                              delDialog(child);
+                                                            },
                                                           ),
                                                         ],
                                                       ),

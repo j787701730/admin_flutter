@@ -210,6 +210,7 @@ class _LoginState extends State<Login> {
                     Expanded(
                       child: PrimaryButton(
                         onPressed: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
                           if (loginName.length < 4) {
                             Fluttertoast.showToast(
                               msg: '账号不少于4位',
