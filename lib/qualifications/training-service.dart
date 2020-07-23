@@ -264,9 +264,7 @@ class _TrainingServiceState extends State<TrainingService> {
                     onPressed: () {
                       param['page'] = 1;
                       getData();
-                      FocusScope.of(context).requestFocus(
-                        FocusNode(),
-                      );
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('搜索'),
                   ),
@@ -276,6 +274,7 @@ class _TrainingServiceState extends State<TrainingService> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

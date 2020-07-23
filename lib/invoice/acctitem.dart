@@ -198,13 +198,11 @@ class _AccountItemState extends State<AccountItem> {
                 Input(
                   label: '用户名',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('login_name');
-                      } else {
-                        param['login_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('login_name');
+                    } else {
+                      param['login_name'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -212,13 +210,11 @@ class _AccountItemState extends State<AccountItem> {
                   selectedValue: param['bill_state'] ?? 'all',
                   label: '对账状态',
                   onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == 'all') {
-                        param.remove('bill_state');
-                      } else {
-                        param['bill_state'] = newValue;
-                      }
-                    });
+                    if (newValue == 'all') {
+                      param.remove('bill_state');
+                    } else {
+                      param['bill_state'] = newValue;
+                    }
                   },
                 ),
                 DateSelectPlugin(
@@ -258,6 +254,7 @@ class _AccountItemState extends State<AccountItem> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

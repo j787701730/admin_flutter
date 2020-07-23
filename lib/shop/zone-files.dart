@@ -140,25 +140,21 @@ class _ZoneFilesState extends State<ZoneFiles> {
                   Input(
                     label: '文件名称',
                     onChanged: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('file_name');
-                        } else {
-                          param['file_name'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('file_name');
+                      } else {
+                        param['file_name'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '店铺名字',
                     onChanged: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('shop_name');
-                        } else {
-                          param['shop_name'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('shop_name');
+                      } else {
+                        param['shop_name'] = val;
+                      }
                     },
                   ),
                   DateSelectPlugin(
@@ -192,6 +188,7 @@ class _ZoneFilesState extends State<ZoneFiles> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   )

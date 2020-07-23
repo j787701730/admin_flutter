@@ -216,25 +216,21 @@ class _BoardCutConfigsState extends State<BoardCutConfigs> {
                 Input(
                   label: '配置名称',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('config_name');
-                      } else {
-                        param['config_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('config_name');
+                    } else {
+                      param['config_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '品牌',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('brand');
-                      } else {
-                        param['brand'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('brand');
+                    } else {
+                      param['brand'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -297,6 +293,7 @@ class _BoardCutConfigsState extends State<BoardCutConfigs> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

@@ -370,25 +370,19 @@ class _ShopListState extends State<ShopList> {
                   Input(
                     label: '店铺名称',
                     onChanged: (String val) {
-                      setState(() {
-                        param['shopName'] = val;
-                      });
+                      param['shopName'] = val;
                     },
                   ),
                   Input(
                     label: '公司名称',
                     onChanged: (String val) {
-                      setState(() {
-                        param['company_name'] = val;
-                      });
+                      param['company_name'] = val;
                     },
                   ),
                   Input(
                     label: '信用代码',
                     onChanged: (String val) {
-                      setState(() {
-                        param['tax_no'] = val;
-                      });
+                      param['tax_no'] = val;
                     },
                   ),
                   CitySelectPlugin(
@@ -436,6 +430,7 @@ class _ShopListState extends State<ShopList> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

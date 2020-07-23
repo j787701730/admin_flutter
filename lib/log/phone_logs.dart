@@ -233,9 +233,11 @@ class _PhoneLogsState extends State<PhoneLogs> {
                     return Input(
                       label: '${searchName[key]}',
                       onChanged: (String val) {
-                        setState(() {
+                        if (val.trim() == '') {
+                          searchData.remove(key);
+                        } else {
                           searchData[key] = val;
-                        });
+                        }
                       },
                     );
                   }).toList(),
@@ -251,22 +253,18 @@ class _PhoneLogsState extends State<PhoneLogs> {
                 RangeInput(
                   label: '通话时长',
                   onChangeL: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('call_duration_min');
-                      } else {
-                        param['call_duration_min'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('call_duration_min');
+                    } else {
+                      param['call_duration_min'] = val;
+                    }
                   },
                   onChangeR: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('call_duration_max');
-                      } else {
-                        param['call_duration_max'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('call_duration_max');
+                    } else {
+                      param['call_duration_max'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -298,6 +296,7 @@ class _PhoneLogsState extends State<PhoneLogs> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

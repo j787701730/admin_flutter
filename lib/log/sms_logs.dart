@@ -236,9 +236,11 @@ class _SmsLogsState extends State<SmsLogs> {
                     return Input(
                       label: '${searchName[key]}',
                       onChanged: (String val) {
-                        setState(() {
+                        if (val.trim() == '') {
+                          searchData.remove(key);
+                        } else {
                           searchData[key] = val;
-                        });
+                        }
                       },
                     );
                   }).toList(),
@@ -248,13 +250,11 @@ class _SmsLogsState extends State<SmsLogs> {
                   selectedValue: param['template_id'] ?? 'all',
                   label: '短信模板',
                   onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == 'all') {
-                        param.remove('template_id');
-                      } else {
-                        param['template_id'] = newValue;
-                      }
-                    });
+                    if (newValue == 'all') {
+                      param.remove('template_id');
+                    } else {
+                      param['template_id'] = newValue;
+                    }
                   },
                 ),
                 DateSelectPlugin(
@@ -290,6 +290,7 @@ class _SmsLogsState extends State<SmsLogs> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

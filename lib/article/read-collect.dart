@@ -173,29 +173,25 @@ class _ReadCollectState extends State<ReadCollect> {
                   Input(
                     label: '用户',
                     onChanged: (val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('login_name');
-                          param2.remove('login_name');
-                        } else {
-                          param['login_name'] = val;
-                          param2['login_name'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('login_name');
+                        param2.remove('login_name');
+                      } else {
+                        param['login_name'] = val;
+                        param2['login_name'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '教程标题',
                     onChanged: (val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('article_topic');
-                          param2.remove('article_topic');
-                        } else {
-                          param['article_topic'] = val;
-                          param2['article_topic'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('article_topic');
+                        param2.remove('article_topic');
+                      } else {
+                        param['article_topic'] = val;
+                        param2['article_topic'] = val;
+                      }
                     },
                   ),
                   DateSelectPlugin(
@@ -243,6 +239,7 @@ class _ReadCollectState extends State<ReadCollect> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

@@ -346,31 +346,51 @@ class _WorkOrdersListState extends State<WorkOrdersList> {
                   Input(
                     label: '工单编号',
                     onChanged: (String val) {
-                      param['order_no'] = val;
+                      if (val.trim() == '') {
+                        param.remove('order_no');
+                      } else {
+                        param['order_no'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '工单标题',
                     onChanged: (String val) {
-                      param['order_topic'] = val;
+                      if (val.trim() == '') {
+                        param.remove('order_topic');
+                      } else {
+                        param['order_topic'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '联系人',
                     onChanged: (String val) {
-                      param['user_name'] = val;
+                      if (val.trim() == '') {
+                        param.remove('user_name');
+                      } else {
+                        param['user_name'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '联系手机',
                     onChanged: (String val) {
-                      param['user_phone'] = val;
+                      if (val.trim() == '') {
+                        param.remove('user_phone');
+                      } else {
+                        param['user_phone'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '指派成员',
                     onChanged: (String val) {
-                      param['a_user'] = val;
+                      if (val.trim() == '') {
+                        param.remove('a_user');
+                      } else {
+                        param['a_user'] = val;
+                      }
                     },
                   ),
                   Select(
@@ -435,6 +455,7 @@ class _WorkOrdersListState extends State<WorkOrdersList> {
                         setState(() {
                           isExpandedFlag = !isExpandedFlag;
                         });
+                        FocusScope.of(context).requestFocus(FocusNode());
                       }
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),

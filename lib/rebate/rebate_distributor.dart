@@ -187,26 +187,25 @@ class _RebateDistributorState extends State<RebateDistributor> {
                 Input(
                   label: '用户',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('user_name');
-                      } else {
-                        param['user_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('user_name');
+                    } else {
+                      param['user_name'] = val;
+                    }
                   },
                 ),
                 Select(
-                    selectOptions: state,
-                    selectedValue: param['state'] ?? 'all',
-                    label: '状态',
-                    onChanged: (val) {
-                      if (val) {
-                        param.remove('state');
-                      } else {
-                        param['state'] = val;
-                      }
-                    }),
+                  selectOptions: state,
+                  selectedValue: param['state'] ?? 'all',
+                  label: '状态',
+                  onChanged: (val) {
+                    if (val) {
+                      param.remove('state');
+                    } else {
+                      param['state'] = val;
+                    }
+                  },
+                ),
                 DateSelectPlugin(onChanged: getDateTime, label: '申请时间'),
                 DateSelectPlugin(onChanged: getDateTime2, label: '审核时间'),
               ]),
@@ -259,6 +258,7 @@ class _RebateDistributorState extends State<RebateDistributor> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

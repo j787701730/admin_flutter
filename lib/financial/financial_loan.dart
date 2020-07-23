@@ -210,25 +210,21 @@ class _FinancialLoanState extends State<FinancialLoan> {
                 Input(
                   label: '店铺',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('shop_name');
-                      } else {
-                        param['shop_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('shop_name');
+                    } else {
+                      param['shop_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '电话号码',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('user_phone');
-                      } else {
-                        param['user_phone'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('user_phone');
+                    } else {
+                      param['user_phone'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -236,55 +232,45 @@ class _FinancialLoanState extends State<FinancialLoan> {
                   selectOptions: state,
                   selectedValue: param['state'] ?? 'all',
                   onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == 'all') {
-                        param.remove('state');
-                      } else {
-                        param['state'] = newValue;
-                      }
-                    });
+                    if (newValue == 'all') {
+                      param.remove('state');
+                    } else {
+                      param['state'] = newValue;
+                    }
                   },
                 ),
                 RangeInput(
                   label: '金融额度',
                   onChangeL: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('amount_l');
-                      } else {
-                        param['amount_l'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('amount_l');
+                    } else {
+                      param['amount_l'] = val;
+                    }
                   },
                   onChangeR: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('amount_r');
-                      } else {
-                        param['amount_r'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('amount_r');
+                    } else {
+                      param['amount_r'] = val;
+                    }
                   },
                 ),
                 RangeInput(
                   label: '信用分',
                   onChangeL: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('credit_score_l');
-                      } else {
-                        param['credit_score_l'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('credit_score_l');
+                    } else {
+                      param['credit_score_l'] = val;
+                    }
                   },
                   onChangeR: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('credit_score_r');
-                      } else {
-                        param['credit_score_r'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('credit_score_r');
+                    } else {
+                      param['credit_score_r'] = val;
+                    }
                   },
                 ),
                 DateSelectPlugin(
@@ -330,6 +316,7 @@ class _FinancialLoanState extends State<FinancialLoan> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

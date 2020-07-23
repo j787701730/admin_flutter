@@ -211,13 +211,11 @@ class _InvoiceListState extends State<InvoiceList> {
                   selectedValue: param['invoice_state'] ?? 'all',
                   label: '发票状态',
                   onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('invoice_state');
-                      } else {
-                        param['invoice_state'] = val;
-                      }
-                    });
+                    if (val == 'all') {
+                      param.remove('invoice_state');
+                    } else {
+                      param['invoice_state'] = val;
+                    }
                   },
                 ),
                 DateSelectPlugin(
@@ -266,7 +264,6 @@ class _InvoiceListState extends State<InvoiceList> {
                   PrimaryButton(
                     onPressed: () {
                       param['curr_page'] = 1;
-                      print(param);
                       getData();
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
@@ -278,6 +275,7 @@ class _InvoiceListState extends State<InvoiceList> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

@@ -395,13 +395,11 @@ class _RenderSoftwareListState extends State<RenderSoftwareList> {
                   Input(
                     label: '模型名称',
                     onChanged: (val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('name');
-                        } else {
-                          param['name'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('name');
+                      } else {
+                        param['name'] = val;
+                      }
                     },
                   ),
                   Select(
@@ -484,6 +482,7 @@ class _RenderSoftwareListState extends State<RenderSoftwareList> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

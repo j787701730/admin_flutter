@@ -136,17 +136,21 @@ class _BalanceTransferState extends State<BalanceTransfer> {
                 Input(
                   label: '收款账号',
                   onChanged: (String val) {
-                    setState(() {
+                    if (val.trim() == '') {
+                      param.remove('z_user');
+                    } else {
                       param['z_user'] = val;
-                    });
+                    }
                   },
                 ),
                 Input(
                   label: '支出账号',
                   onChanged: (String val) {
-                    setState(() {
+                    if (val.trim() == '') {
+                      param.remove('a_user');
+                    } else {
                       param['a_user'] = val;
-                    });
+                    }
                   },
                 ),
                 Select(
@@ -154,9 +158,7 @@ class _BalanceTransferState extends State<BalanceTransfer> {
                   selectedValue: param['state'] ?? 'all',
                   label: '余额类型',
                   onChanged: (String newValue) {
-                    setState(() {
-                      param['state'] = newValue;
-                    });
+                    param['state'] = newValue;
                   },
                 ),
                 Select(
@@ -164,15 +166,11 @@ class _BalanceTransferState extends State<BalanceTransfer> {
                   selectedValue: param['type'] ?? '0',
                   label: '转账类型',
                   onChanged: (String newValue) {
-                    setState(() {
-                      setState(() {
-                        if (newValue == '0') {
-                          param['type'] = '';
-                        } else {
-                          param['type'] = newValue;
-                        }
-                      });
-                    });
+                    if (newValue == '0') {
+                      param['type'] = '';
+                    } else {
+                      param['type'] = newValue;
+                    }
                   },
                 ),
               ]),
@@ -197,6 +195,7 @@ class _BalanceTransferState extends State<BalanceTransfer> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

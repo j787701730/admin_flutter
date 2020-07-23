@@ -223,37 +223,31 @@ class _UserPrizesState extends State<UserPrizes> {
                 Input(
                   label: '用户名称',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('login_name');
-                      } else {
-                        param['login_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('login_name');
+                    } else {
+                      param['login_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '活动名称',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('activity_name');
-                      } else {
-                        param['activity_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('activity_name');
+                    } else {
+                      param['activity_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '奖项名称',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('prize_name');
-                      } else {
-                        param['prize_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('prize_name');
+                    } else {
+                      param['prize_name'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -261,13 +255,11 @@ class _UserPrizesState extends State<UserPrizes> {
                   selectedValue: param['draw_type'] ?? 'all',
                   label: '抽奖类型',
                   onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('draw_type');
-                      } else {
-                        param['draw_type'] = val;
-                      }
-                    });
+                    if (val == 'all') {
+                      param.remove('draw_type');
+                    } else {
+                      param['draw_type'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -275,13 +267,11 @@ class _UserPrizesState extends State<UserPrizes> {
                   selectedValue: param['state'] ?? 'all',
                   label: '兑奖状态',
                   onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('state');
-                      } else {
-                        param['state'] = val;
-                      }
-                    });
+                    if (val == 'all') {
+                      param.remove('state');
+                    } else {
+                      param['state'] = val;
+                    }
                   },
                 ),
                 DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
@@ -309,6 +299,7 @@ class _UserPrizesState extends State<UserPrizes> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

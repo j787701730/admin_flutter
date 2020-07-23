@@ -196,37 +196,31 @@ class _BoardCutConfigTypeState extends State<BoardCutConfigType> {
                 Input(
                   label: '类型中文名',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('type_ch_name');
-                      } else {
-                        param['type_ch_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('type_ch_name');
+                    } else {
+                      param['type_ch_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '类型英文名',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('type_en_name');
-                      } else {
-                        param['type_en_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('type_en_name');
+                    } else {
+                      param['type_en_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '排序',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('sort');
-                      } else {
-                        param['sort'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('sort');
+                    } else {
+                      param['sort'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -265,6 +259,7 @@ class _BoardCutConfigTypeState extends State<BoardCutConfigType> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

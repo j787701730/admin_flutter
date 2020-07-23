@@ -249,13 +249,11 @@ class _ErpPaymentState extends State<ErpPayment> {
                     return Input(
                       label: '${searchInputs[item]}',
                       onChanged: (String val) {
-                        setState(() {
-                          if (val == '') {
-                            param.remove('$item');
-                          } else {
-                            param['$item'] = val;
-                          }
-                        });
+                        if (val == '') {
+                          param.remove('$item');
+                        } else {
+                          param['$item'] = val;
+                        }
                       },
                     );
                   }).toList(),
@@ -292,6 +290,7 @@ class _ErpPaymentState extends State<ErpPayment> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

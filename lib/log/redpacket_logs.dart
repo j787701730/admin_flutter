@@ -195,9 +195,11 @@ class _RedPacketLogsState extends State<RedPacketLogs> {
                     return Input(
                       label: '${searchName[key]}',
                       onChanged: (String val) {
-                        setState(() {
+                        if (val.trim() == '') {
+                          searchData.remove(key);
+                        } else {
                           searchData[key] = val;
-                        });
+                        }
                       },
                     );
                   }).toList(),
@@ -205,43 +207,35 @@ class _RedPacketLogsState extends State<RedPacketLogs> {
                 RangeInput(
                   label: '领取金额',
                   onChangeL: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('receive_amount_min');
-                      } else {
-                        param['receive_amount_min'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('receive_amount_min');
+                    } else {
+                      param['receive_amount_min'] = val;
+                    }
                   },
                   onChangeR: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('receive_amount_max');
-                      } else {
-                        param['receive_amount_max'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('receive_amount_max');
+                    } else {
+                      param['receive_amount_max'] = val;
+                    }
                   },
                 ),
                 RangeInput(
                   label: '领取数量',
                   onChangeL: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('num_min');
-                      } else {
-                        param['num_min'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('num_min');
+                    } else {
+                      param['num_min'] = val;
+                    }
                   },
                   onChangeR: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('num_max');
-                      } else {
-                        param['num_max'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('num_max');
+                    } else {
+                      param['num_max'] = val;
+                    }
                   },
                 ),
                 DateSelectPlugin(
@@ -277,6 +271,7 @@ class _RedPacketLogsState extends State<RedPacketLogs> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

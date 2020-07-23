@@ -222,9 +222,11 @@ class _WXLogsState extends State<WXLogs> {
                     return Input(
                       label: '${searchName[key]}',
                       onChanged: (String val) {
-                        setState(() {
+                        if (val.trim() == '') {
+                          searchData.remove(key);
+                        } else {
                           searchData[key] = val;
-                        });
+                        }
                       },
                     );
                   }).toList(),
@@ -266,6 +268,7 @@ class _WXLogsState extends State<WXLogs> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

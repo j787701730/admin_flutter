@@ -139,25 +139,21 @@ class _BalanceManualState extends State<BalanceManual> {
                 Input(
                   label: '用户名',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('login_name');
-                      } else {
-                        param['login_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('login_name');
+                    } else {
+                      param['login_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '操作者',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('full_name');
-                      } else {
-                        param['full_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('full_name');
+                    } else {
+                      param['full_name'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -165,13 +161,11 @@ class _BalanceManualState extends State<BalanceManual> {
                   selectedValue: param['balance_type_id'] ?? '0',
                   label: '余额类型:',
                   onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == '0') {
-                        param.remove('balance_type_id');
-                      } else {
-                        param['balance_type_id'] = newValue;
-                      }
-                    });
+                    if (newValue == '0') {
+                      param.remove('balance_type_id');
+                    } else {
+                      param['balance_type_id'] = newValue;
+                    }
                   },
                 ),
                 Select(
@@ -179,13 +173,11 @@ class _BalanceManualState extends State<BalanceManual> {
                   selectedValue: param['manual_type'] ?? '0',
                   label: '调账类型:',
                   onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == '0') {
-                        param.remove('manual_type');
-                      } else {
-                        param['manual_type'] = newValue;
-                      }
-                    });
+                    if (newValue == '0') {
+                      param.remove('manual_type');
+                    } else {
+                      param['manual_type'] = newValue;
+                    }
                   },
                 ),
               ]),
@@ -210,6 +202,7 @@ class _BalanceManualState extends State<BalanceManual> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

@@ -163,25 +163,21 @@ class _BbsPostState extends State<BbsPost> {
                 Input(
                   label: '用户',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('loginName');
-                      } else {
-                        param['loginName'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('loginName');
+                    } else {
+                      param['loginName'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '用户昵称',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('fullName');
-                      } else {
-                        param['fullName'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('fullName');
+                    } else {
+                      param['fullName'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -236,6 +232,7 @@ class _BbsPostState extends State<BbsPost> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

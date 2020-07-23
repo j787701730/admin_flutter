@@ -145,37 +145,31 @@ class _DrawTypeState extends State<DrawType> {
                 Input(
                   label: '中文名称',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('type_ch_name');
-                      } else {
-                        param['type_ch_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('type_ch_name');
+                    } else {
+                      param['type_ch_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '英文名称',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('type_en_name');
-                      } else {
-                        param['type_en_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('type_en_name');
+                    } else {
+                      param['type_en_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '备注',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('comments');
-                      } else {
-                        param['comments'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('comments');
+                    } else {
+                      param['comments'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -207,6 +201,7 @@ class _DrawTypeState extends State<DrawType> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

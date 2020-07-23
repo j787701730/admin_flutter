@@ -170,25 +170,21 @@ class _ChargeSummaryState extends State<ChargeSummary> {
                   Input(
                     label: '用户名',
                     onChanged: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('user_name');
-                        } else {
-                          param['user_name'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('user_name');
+                      } else {
+                        param['user_name'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '外部流水',
                     onChanged: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('ext_searial_id');
-                        } else {
-                          param['ext_searial_id'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('ext_searial_id');
+                      } else {
+                        param['ext_searial_id'] = val;
+                      }
                     },
                   ),
                   Select(
@@ -196,13 +192,11 @@ class _ChargeSummaryState extends State<ChargeSummary> {
                     selectedValue: param['charge_type'] ?? '0',
                     label: '充值类型',
                     onChanged: (String newValue) {
-                      setState(() {
-                        if (newValue == '0') {
-                          param.remove('charge_type');
-                        } else {
-                          param['charge_type'] = newValue;
-                        }
-                      });
+                      if (newValue == '0') {
+                        param.remove('charge_type');
+                      } else {
+                        param['charge_type'] = newValue;
+                      }
                     },
                   ),
                   Select(
@@ -210,13 +204,11 @@ class _ChargeSummaryState extends State<ChargeSummary> {
                     selectedValue: param['balance_type'] ?? '0',
                     label: '余额类型',
                     onChanged: (String newValue) {
-                      setState(() {
-                        if (newValue == '0') {
-                          param.remove('balance_type');
-                        } else {
-                          param['balance_type'] = newValue;
-                        }
-                      });
+                      if (newValue == '0') {
+                        param.remove('balance_type');
+                      } else {
+                        param['balance_type'] = newValue;
+                      }
                     },
                   ),
                   Select(
@@ -224,13 +216,11 @@ class _ChargeSummaryState extends State<ChargeSummary> {
                     selectedValue: param['constract_result'] ?? '-2',
                     label: '对账结果',
                     onChanged: (String newValue) {
-                      setState(() {
-                        if (newValue == '-2') {
-                          param.remove('constract_result');
-                        } else {
-                          param['constract_result'] = newValue;
-                        }
-                      });
+                      if (newValue == '-2') {
+                        param.remove('constract_result');
+                      } else {
+                        param['constract_result'] = newValue;
+                      }
                     },
                   ),
                   Select(
@@ -238,46 +228,40 @@ class _ChargeSummaryState extends State<ChargeSummary> {
                     selectedValue: param['charge_state'] ?? '-2',
                     label: '充值状态',
                     onChanged: (String newValue) {
-                      setState(() {
-                        if (newValue == '0') {
-                          param.remove('charge_state');
-                        } else {
-                          param['charge_state'] = newValue;
-                        }
-                      });
+                      if (newValue == '0') {
+                        param.remove('charge_state');
+                      } else {
+                        param['charge_state'] = newValue;
+                      }
                     },
                   ),
                   DateSelectPlugin(
                     onChanged: (val) {
-                      setState(() {
-                        if (val['min'] == null) {
-                          param.remove('create_dateL');
-                        } else {
-                          param['create_dateL'] = val['min'].toString().substring(0, 10);
-                        }
-                        if (val['max'] == null) {
-                          param.remove('create_dateU');
-                        } else {
-                          param['create_dateU'] = val['max'].toString().substring(0, 10);
-                        }
-                      });
+                      if (val['min'] == null) {
+                        param.remove('create_dateL');
+                      } else {
+                        param['create_dateL'] = val['min'].toString().substring(0, 10);
+                      }
+                      if (val['max'] == null) {
+                        param.remove('create_dateU');
+                      } else {
+                        param['create_dateU'] = val['max'].toString().substring(0, 10);
+                      }
                     },
                     label: '创建时间',
                   ),
                   DateSelectPlugin(
                     onChanged: (val) {
-                      setState(() {
-                        if (val['min'] == null) {
-                          param.remove('constract_dateL');
-                        } else {
-                          param['constract_dateL'] = val['min'].toString().substring(0, 10);
-                        }
-                        if (val['max'] == null) {
-                          param.remove('constract_dateU');
-                        } else {
-                          param['constract_dateU'] = val['max'].toString().substring(0, 10);
-                        }
-                      });
+                      if (val['min'] == null) {
+                        param.remove('constract_dateL');
+                      } else {
+                        param['constract_dateL'] = val['min'].toString().substring(0, 10);
+                      }
+                      if (val['max'] == null) {
+                        param.remove('constract_dateU');
+                      } else {
+                        param['constract_dateU'] = val['max'].toString().substring(0, 10);
+                      }
                     },
                     label: '对账时间',
                   ),
@@ -322,6 +306,7 @@ class _ChargeSummaryState extends State<ChargeSummary> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

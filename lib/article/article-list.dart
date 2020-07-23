@@ -421,61 +421,51 @@ class _ArticleListState extends State<ArticleList> {
                   Input(
                     label: '标题',
                     onChanged: (val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('article_topic');
-                        } else {
-                          param['article_topic'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('article_topic');
+                      } else {
+                        param['article_topic'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '内容',
                     onChanged: (val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('article_content');
-                        } else {
-                          param['article_content'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('article_content');
+                      } else {
+                        param['article_content'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '关键字',
                     onChanged: (val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('keywords');
-                        } else {
-                          param['keywords'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('keywords');
+                      } else {
+                        param['keywords'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '发布人',
                     onChanged: (val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('login_name');
-                        } else {
-                          param['login_name'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('login_name');
+                      } else {
+                        param['login_name'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '发布店铺',
                     onChanged: (val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('shop_name');
-                        } else {
-                          param['shop_name'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('shop_name');
+                      } else {
+                        param['shop_name'] = val;
+                      }
                     },
                   ),
                   Select(
@@ -542,6 +532,7 @@ class _ArticleListState extends State<ArticleList> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
@@ -559,81 +550,77 @@ class _ArticleListState extends State<ArticleList> {
                     alignment: Alignment.center,
                     child: CupertinoActivityIndicator(),
                   )
-                : Container(
-                    child: ajaxData.isEmpty
-                        ? Container(
-                            alignment: Alignment.center,
-                            child: Text('无数据'),
-                          )
-                        : Container(
+                : ajaxData.isEmpty
+                    ? Container(
+                        alignment: Alignment.center,
+                        child: Text('无数据'),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: ajaxData.map<Widget>((item) {
+                          return Container(
+                            padding: EdgeInsets.only(top: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Color(0xffeeeeee),
+                              ),
+                            ),
+                            margin: EdgeInsets.only(bottom: 10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ajaxData.map<Widget>((item) {
-                                return Container(
-                                  padding: EdgeInsets.only(top: 10),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Color(0xffeeeeee),
-                                    ),
-                                  ),
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: columns.map<Widget>((col) {
-                                      Widget con = Text('${item[col['key']] ?? ''}');
-                                      switch (col['key']) {
-                                        case 'state':
-                                          con = Text('${articleState[item['state']]}');
-                                          break;
-                                        case 'option':
-                                          con = Wrap(
-                                            spacing: 10,
-                                            runSpacing: 10,
-                                            children: <Widget>[
-                                              PrimaryButton(
-                                                onPressed: () {
-                                                  stateDialog(item);
-                                                },
-                                                child: Text(item['state'] == '1' ? '保存到草稿箱' : '发布'),
-                                              ),
+                              children: columns.map<Widget>((col) {
+                                Widget con = Text('${item[col['key']] ?? ''}');
+                                switch (col['key']) {
+                                  case 'state':
+                                    con = Text('${articleState[item['state']]}');
+                                    break;
+                                  case 'option':
+                                    con = Wrap(
+                                      spacing: 10,
+                                      runSpacing: 10,
+                                      children: <Widget>[
+                                        PrimaryButton(
+                                          onPressed: () {
+                                            stateDialog(item);
+                                          },
+                                          child: Text(item['state'] == '1' ? '保存到草稿箱' : '发布'),
+                                        ),
 //                                              PrimaryButton(
 //                                                onPressed: () {
 ////                                            operaDialog(item);
 //                                                },
 //                                                child: Text('修改'),
 //                                              ),
-                                              PrimaryButton(
-                                                type: 'error',
-                                                onPressed: () {
-                                                  stateDialog(item, del: true);
-                                                },
-                                                child: Text('删除'),
-                                              ),
-                                            ],
-                                          );
-                                          break;
-                                      }
-                                      return Container(
-                                        margin: EdgeInsets.only(bottom: 6),
-                                        child: Row(
-                                          children: <Widget>[
-                                            Container(
-                                              width: 80,
-                                              alignment: Alignment.centerRight,
-                                              child: Text('${col['title']}'),
-                                              margin: EdgeInsets.only(right: 10),
-                                            ),
-                                            Expanded(flex: 1, child: con),
-                                          ],
+                                        PrimaryButton(
+                                          type: 'error',
+                                          onPressed: () {
+                                            stateDialog(item, del: true);
+                                          },
+                                          child: Text('删除'),
                                         ),
-                                      );
-                                    }).toList(),
+                                      ],
+                                    );
+                                    break;
+                                }
+                                return Container(
+                                  margin: EdgeInsets.only(bottom: 6),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        width: 80,
+                                        alignment: Alignment.centerRight,
+                                        child: Text('${col['title']}'),
+                                        margin: EdgeInsets.only(right: 10),
+                                      ),
+                                      Expanded(flex: 1, child: con),
+                                    ],
                                   ),
                                 );
                               }).toList(),
                             ),
-                          ),
-                  ),
+                          );
+                        }).toList(),
+                      ),
             Container(
               child: PagePlugin(
                 current: param['curr_page'],

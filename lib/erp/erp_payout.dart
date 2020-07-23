@@ -171,58 +171,48 @@ class _ErpPayoutState extends State<ErpPayout> {
                 Input(
                   label: '订单号',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('order_no');
-                      } else {
-                        param['order_no'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('order_no');
+                    } else {
+                      param['order_no'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '工厂',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('shop_name');
-                      } else {
-                        param['shop_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('shop_name');
+                    } else {
+                      param['shop_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '用户',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('user_name');
-                      } else {
-                        param['user_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('user_name');
+                    } else {
+                      param['user_name'] = val;
+                    }
                   },
                 ),
                 RangeInput(
                   label: '价格',
                   onChangeL: (val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('payout_amount_min');
-                      } else {
-                        param['payout_amount_min'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('payout_amount_min');
+                    } else {
+                      param['payout_amount_min'] = val;
+                    }
                   },
                   onChangeR: (val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('payout_amount_max');
-                      } else {
-                        param['payout_amount_max'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('payout_amount_max');
+                    } else {
+                      param['payout_amount_max'] = val;
+                    }
                   },
                 ),
                 DateSelectPlugin(
@@ -257,6 +247,7 @@ class _ErpPayoutState extends State<ErpPayout> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

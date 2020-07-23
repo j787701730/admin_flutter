@@ -29,7 +29,7 @@ class _StaffAddState extends State<StaffAdd> {
   Map staffInfo = {};
   double width;
   List department = [
-    {'department_id': '0', 'department_name': '我的团队'},
+    {'department_id': '0', 'department_name': '我的团队'}
   ];
   List group = [];
 
@@ -146,415 +146,410 @@ class _StaffAddState extends State<StaffAdd> {
           },
         ),
       ),
-      body: ListView(
-        controller: _controller,
-        padding: EdgeInsets.all(12),
-        children: <Widget>[
-          Container(
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              spacing: 10,
-              runSpacing: 10,
-              children: <Widget>[
-                PrimaryButton(
-                  onPressed: () {
-                    print(param);
-                  },
-                  child: Text('保存'),
-                ),
-              ],
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: ListView(
+          controller: _controller,
+          padding: EdgeInsets.all(12),
+          children: <Widget>[
+            Container(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  PrimaryButton(
+                    onPressed: () {
+                      print(param);
+                    },
+                    child: Text('保存'),
+                  ),
+                ],
+              ),
+              margin: EdgeInsets.only(
+                bottom: 10,
+              ),
             ),
-            margin: EdgeInsets.only(
-              bottom: 10,
-            ),
-          ),
-          Input(
-            label: '账号',
-            labelWidth: 90,
-            require: true,
-            onChanged: (String val) {
-              setState(() {
+            Input(
+              label: '账号',
+              labelWidth: 90,
+              require: true,
+              onChanged: (String val) {
                 param['uname'] = val;
-              });
-            },
-            value: param['uname'],
-          ),
-          Input(
-            label: '密码',
-            labelWidth: 90,
-            require: true,
-            onChanged: (String val) {
-              setState(() {
+              },
+              value: param['uname'],
+            ),
+            Input(
+              label: '密码',
+              labelWidth: 90,
+              require: true,
+              onChanged: (String val) {
                 param['upwd'] = val;
-              });
-            },
-          ),
-          Input(
-            label: '确认密码',
-            labelWidth: 90,
-            require: true,
-            onChanged: (String val) {
-              setState(() {
+              },
+            ),
+            Input(
+              label: '确认密码',
+              labelWidth: 90,
+              require: true,
+              onChanged: (String val) {
                 param['upwd2'] = val;
-              });
-            },
-          ),
-          Input(
-            label: '姓名',
-            labelWidth: 90,
-            require: true,
-            onChanged: (String val) {
-              setState(() {
+              },
+            ),
+            Input(
+              label: '姓名',
+              labelWidth: 90,
+              require: true,
+              onChanged: (String val) {
                 param['fname'] = val;
-              });
-            },
-            value: param['fname'],
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 90,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('性别')
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Wrap(
-                      spacing: 10,
-                      runSpacing: 10,
+              },
+              value: param['fname'],
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 90,
+                    alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Radio(
-                              value: '1',
-                              groupValue: param['sex'],
-                              onChanged: (value) {
-                                setState(() {
-                                  param['sex'] = value;
-                                });
-                              },
-                            ),
-                            Text('男')
-                          ],
+                        Text(
+                          '* ',
+                          style: TextStyle(color: CFColors.danger),
                         ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Radio(
-                              value: '2',
-                              groupValue: param['sex'],
-                              onChanged: (value) {
-                                setState(() {
-                                  param['sex'] = value;
-                                });
-                              },
-                            ),
-                            Text('女')
-                          ],
-                        ),
+                        Text('性别')
                       ],
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 90,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('登录验证')
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Wrap(
-                      runSpacing: 10,
-                      spacing: 10,
-                      children: <Widget>[
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Radio(
-                              value: '1',
-                              groupValue: param['wx_check'],
-                              onChanged: (value) {
-                                setState(() {
-                                  param['wx_check'] = value;
-                                });
-                              },
-                            ),
-                            Text('微信验证')
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Radio(
-                              value: '0',
-                              groupValue: param['wx_check'],
-                              onChanged: (value) {
-                                setState(() {
-                                  param['wx_check'] = value;
-                                });
-                              },
-                            ),
-                            Text('普通验证')
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 90,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10, top: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('我的部门')
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Wrap(
-                      runSpacing: 6,
-                      spacing: 10,
-                      children: department.map<Widget>(
-                        (item) {
-                          return Row(
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Wrap(
+                        spacing: 10,
+                        runSpacing: 10,
+                        children: <Widget>[
+                          Row(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Radio(
-                                value: '${item['department_id']}',
-                                groupValue: param['depid'],
+                                value: '1',
+                                groupValue: param['sex'],
                                 onChanged: (value) {
                                   setState(() {
-                                    param['depid'] = value;
+                                    param['sex'] = value;
                                   });
                                 },
                               ),
-                              Text('${item['department_name']}')
+                              Text('男')
                             ],
-                          );
-                        },
-                      ).toList(),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 90,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10, top: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('岗位角色')
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Wrap(
-                      runSpacing: 6,
-                      spacing: 10,
-                      children: group.map<Widget>(
-                        (item) {
-                          return Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Radio(
-                                value: '${item['group_id']}',
-                                groupValue: param['grpID'],
-                                onChanged: (value) {
-                                  setState(() {
-                                    param['grpID'] = value;
-                                    getData();
-                                  });
-                                },
-                              ),
-                              Text('${item['group_name']}')
-                            ],
-                          );
-                        },
-                      ).toList(),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          loading
-              ? Container(
-                  alignment: Alignment.center,
-                  child: CupertinoActivityIndicator(),
-                )
-              : Container(
-                  child: ajaxData.isEmpty
-                      ? Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '无数据',
                           ),
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: ajaxData.map<Widget>((item) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Color(0xffdddddd),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Radio(
+                                value: '2',
+                                groupValue: param['sex'],
+                                onChanged: (value) {
+                                  setState(() {
+                                    param['sex'] = value;
+                                  });
+                                },
+                              ),
+                              Text('女')
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 90,
+                    alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          '* ',
+                          style: TextStyle(color: CFColors.danger),
+                        ),
+                        Text('登录验证')
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Wrap(
+                        runSpacing: 10,
+                        spacing: 10,
+                        children: <Widget>[
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Radio(
+                                value: '1',
+                                groupValue: param['wx_check'],
+                                onChanged: (value) {
+                                  setState(() {
+                                    param['wx_check'] = value;
+                                  });
+                                },
+                              ),
+                              Text('微信验证')
+                            ],
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Radio(
+                                value: '0',
+                                groupValue: param['wx_check'],
+                                onChanged: (value) {
+                                  setState(() {
+                                    param['wx_check'] = value;
+                                  });
+                                },
+                              ),
+                              Text('普通验证')
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    width: 90,
+                    alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(right: 10, top: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          '* ',
+                          style: TextStyle(color: CFColors.danger),
+                        ),
+                        Text('我的部门')
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Wrap(
+                        runSpacing: 6,
+                        spacing: 10,
+                        children: department.map<Widget>(
+                          (item) {
+                            return Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Radio(
+                                  value: '${item['department_id']}',
+                                  groupValue: param['depid'],
+                                  onChanged: (value) {
+                                    setState(() {
+                                      param['depid'] = value;
+                                    });
+                                  },
                                 ),
+                                Text('${item['department_name']}')
+                              ],
+                            );
+                          },
+                        ).toList(),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    width: 90,
+                    alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(right: 10, top: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          '* ',
+                          style: TextStyle(color: CFColors.danger),
+                        ),
+                        Text('岗位角色')
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Wrap(
+                        runSpacing: 6,
+                        spacing: 10,
+                        children: group.map<Widget>(
+                          (item) {
+                            return Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Radio(
+                                  value: '${item['group_id']}',
+                                  groupValue: param['grpID'],
+                                  onChanged: (value) {
+                                    setState(() {
+                                      param['grpID'] = value;
+                                      getData();
+                                    });
+                                  },
+                                ),
+                                Text('${item['group_name']}')
+                              ],
+                            );
+                          },
+                        ).toList(),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            loading
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
+                : ajaxData.isEmpty
+                    ? Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          '无数据',
+                        ),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: ajaxData.map<Widget>((item) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Color(0xffdddddd),
                               ),
-                              margin: EdgeInsets.only(
-                                bottom: 10,
-                              ),
-                              padding: EdgeInsets.only(
-                                top: 5,
-                                bottom: 5,
-                              ),
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    width: 100,
-                                    padding: EdgeInsets.symmetric(horizontal: 6),
-                                    child: Text('${item['mnm']}'),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 6,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          left: BorderSide(
-                                            color: Colors.grey,
-                                          ),
+                            ),
+                            margin: EdgeInsets.only(
+                              bottom: 10,
+                            ),
+                            padding: EdgeInsets.only(
+                              top: 5,
+                              bottom: 5,
+                            ),
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  width: 100,
+                                  padding: EdgeInsets.symmetric(horizontal: 6),
+                                  child: Text('${item['mnm']}'),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        left: BorderSide(
+                                          color: Colors.grey,
                                         ),
                                       ),
-                                      child: Column(
-                                        children: item['c'].map<Widget>(
-                                          (item2) {
-                                            return Row(
-                                              children: <Widget>[
-                                                Container(
-                                                  width: 110,
-                                                  child: Text('${item2['mnm']}'),
-                                                ),
-                                                Expanded(
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      border: Border(
-                                                        left: BorderSide(
-                                                          color: Colors.grey,
-                                                        ),
+                                    ),
+                                    child: Column(
+                                      children: item['c'].map<Widget>(
+                                        (item2) {
+                                          return Row(
+                                            children: <Widget>[
+                                              Container(
+                                                width: 110,
+                                                child: Text('${item2['mnm']}'),
+                                              ),
+                                              Expanded(
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    border: Border(
+                                                      left: BorderSide(
+                                                        color: Colors.grey,
                                                       ),
                                                     ),
-                                                    padding: EdgeInsets.symmetric(horizontal: 6),
-                                                    margin: EdgeInsets.symmetric(
-                                                      vertical: 6,
+                                                  ),
+                                                  padding: EdgeInsets.symmetric(horizontal: 6),
+                                                  margin: EdgeInsets.symmetric(
+                                                    vertical: 6,
 //                                                        horizontal: 6,
-                                                    ),
-                                                    child: Wrap(
-                                                      spacing: 10,
-                                                      runSpacing: 10,
-                                                      children: item2['c'].map<Widget>(
-                                                        (item3) {
-                                                          return Container(
-                                                            padding: EdgeInsets.symmetric(
-                                                              horizontal: 4,
-                                                            ),
-                                                            child: Row(
-                                                              mainAxisSize: MainAxisSize.min,
-                                                              children: <Widget>[
-                                                                Checkbox(
-                                                                  materialTapTargetSize:
-                                                                      MaterialTapTargetSize.shrinkWrap,
-                                                                  value: '${item3['ck']}' == '1',
-                                                                  onChanged: (bool newValue) {},
-                                                                ),
-                                                                Text(' ${item3['fnm']}'),
-                                                              ],
-                                                            ),
-                                                          );
-                                                        },
-                                                      ).toList(),
-                                                    ),
+                                                  ),
+                                                  child: Wrap(
+                                                    spacing: 10,
+                                                    runSpacing: 10,
+                                                    children: item2['c'].map<Widget>(
+                                                      (item3) {
+                                                        return Container(
+                                                          padding: EdgeInsets.symmetric(
+                                                            horizontal: 4,
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: <Widget>[
+                                                              Checkbox(
+                                                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                                value: '${item3['ck']}' == '1',
+                                                                onChanged: (bool newValue) {},
+                                                              ),
+                                                              Text(' ${item3['fnm']}'),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    ).toList(),
                                                   ),
                                                 ),
-                                              ],
-                                            );
-                                          },
-                                        ).toList(),
-                                      ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ).toList(),
                                     ),
-                                  )
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                ),
-        ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
+          ],
+        ),
       ),
       floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,

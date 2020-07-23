@@ -205,9 +205,11 @@ class _CADLogsState extends State<CADLogs> {
                     return Input(
                       label: '${searchName[key]}',
                       onChanged: (String val) {
-                        setState(() {
+                        if (val.trim() == '') {
+                          searchData.remove(key);
+                        } else {
                           searchData[key] = val;
-                        });
+                        }
                       },
                     );
                   }).toList(),
@@ -245,6 +247,7 @@ class _CADLogsState extends State<CADLogs> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

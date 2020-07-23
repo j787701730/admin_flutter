@@ -16,8 +16,10 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMixin {
+  bool get wantKeepAlive => true;
   DateTime _lastPressedAt; // 上次点击时间
+
   BuildContext _context;
   GlobalKey<_MenusWidgetState> _menusKey = GlobalKey<_MenusWidgetState>();
 
@@ -84,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return WillPopScope(
       onWillPop: () async {
         Fluttertoast.showToast(
@@ -123,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: EdgeInsets.all(10),
           children: <Widget>[
             MenuSearchInput(filterMenu),
-            MenusWidget(),
+            MenusWidget(key: _menusKey),
           ],
         ),
       ),
@@ -331,11 +334,10 @@ class MenusWidget extends StatefulWidget {
 }
 
 class _MenusWidgetState extends State<MenusWidget> with AutomaticKeepAliveClientMixin {
+  bool get wantKeepAlive => true;
   List menu = [];
   List access = [];
   BuildContext _context;
-
-  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -520,9 +522,7 @@ class _MenuSearchInputState extends State<MenuSearchInput> {
           hintText: '请输入关键字',
         ),
         onChanged: (val) {
-          widget.filterMenu(
-            val.trim(),
-          );
+          widget.filterMenu(val.trim());
         },
       ),
     );

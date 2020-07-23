@@ -142,49 +142,41 @@ class _RebateAuthorizeState extends State<RebateAuthorize> {
                 Input(
                   label: '厂家名称',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('factory_name');
-                      } else {
-                        param['factory_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('factory_name');
+                    } else {
+                      param['factory_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '厂家手机',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('opera_phone');
-                      } else {
-                        param['opera_phone'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('opera_phone');
+                    } else {
+                      param['opera_phone'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '店铺名称',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('shop_name');
-                      } else {
-                        param['shop_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('shop_name');
+                    } else {
+                      param['shop_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '店铺手机',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('user_phone');
-                      } else {
-                        param['user_phone'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('user_phone');
+                    } else {
+                      param['user_phone'] = val;
+                    }
                   },
                 ),
                 DateSelectPlugin(onChanged: getDateTime, label: '操作时间'),
@@ -211,6 +203,7 @@ class _RebateAuthorizeState extends State<RebateAuthorize> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

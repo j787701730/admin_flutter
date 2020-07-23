@@ -266,26 +266,22 @@ class _CadAdminsState extends State<CadAdmins> {
                   Input(
                       label: '店铺名称',
                       onChanged: (String val) {
-                        setState(() {
-                          if (val == '') {
-                            param.remove('shop_name');
-                          } else {
-                            param['shop_name'] = val;
-                          }
-                        });
+                        if (val == '') {
+                          param.remove('shop_name');
+                        } else {
+                          param['shop_name'] = val;
+                        }
                       }),
                   Select(
                     selectOptions: state,
                     selectedValue: param['if_state'] ?? 'all',
                     label: '状态',
                     onChanged: (String newValue) {
-                      setState(() {
-                        if (newValue == 'all') {
-                          param.remove('if_state');
-                        } else {
-                          param['if_state'] = newValue;
-                        }
-                      });
+                      if (newValue == 'all') {
+                        param.remove('if_state');
+                      } else {
+                        param['if_state'] = newValue;
+                      }
                     },
                   ),
                   DateSelectPlugin(
@@ -333,6 +329,7 @@ class _CadAdminsState extends State<CadAdmins> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

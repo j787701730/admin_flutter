@@ -233,13 +233,11 @@ class _BalanceListState extends State<BalanceList> {
                   selectedValue: param['balance_type_id'] ?? '0',
                   label: '余额类型',
                   onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == '0') {
-                        param.remove('balance_type_id');
-                      } else {
-                        param['balance_type_id'] = newValue;
-                      }
-                    });
+                    if (newValue == '0') {
+                      param.remove('balance_type_id');
+                    } else {
+                      param['balance_type_id'] = newValue;
+                    }
                   },
                 ),
                 Select(
@@ -247,13 +245,11 @@ class _BalanceListState extends State<BalanceList> {
                   selectedValue: param['state'] ?? 'all',
                   label: '状态',
                   onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == 'all') {
-                        param.remove('state');
-                      } else {
-                        param['state'] = newValue;
-                      }
-                    });
+                    if (newValue == 'all') {
+                      param.remove('state');
+                    } else {
+                      param['state'] = newValue;
+                    }
                   },
                 ),
                 Select(
@@ -261,55 +257,45 @@ class _BalanceListState extends State<BalanceList> {
                   selectedValue: param['balance_check'] ?? 'all',
                   label: '稽核结果',
                   onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == 'all') {
-                        param.remove('balance_check');
-                      } else {
-                        param['balance_check'] = newValue;
-                      }
-                    });
+                    if (newValue == 'all') {
+                      param.remove('balance_check');
+                    } else {
+                      param['balance_check'] = newValue;
+                    }
                   },
                 ),
                 RangeInput(
                   label: '余额范围',
                   onChangeL: (val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('amountL');
-                      } else {
-                        param['amountL'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('amountL');
+                    } else {
+                      param['amountL'] = val;
+                    }
                   },
                   onChangeR: (val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('amountU');
-                      } else {
-                        param['amountU'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('amountU');
+                    } else {
+                      param['amountU'] = val;
+                    }
                   },
                 ),
                 RangeInput(
                   label: '预占金额',
                   onChangeL: (val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('pre_amountL');
-                      } else {
-                        param['pre_amountL'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('pre_amountL');
+                    } else {
+                      param['pre_amountL'] = val;
+                    }
                   },
                   onChangeR: (val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('pre_amountU');
-                      } else {
-                        param['pre_amountU'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('pre_amountU');
+                    } else {
+                      param['pre_amountU'] = val;
+                    }
                   },
                 ),
               ]),
@@ -349,6 +335,7 @@ class _BalanceListState extends State<BalanceList> {
                     setState(() {
                       isExpandedFlag = !isExpandedFlag;
                     });
+                    FocusScope.of(context).requestFocus(FocusNode());
                   },
                   child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                 ),

@@ -211,25 +211,21 @@ class _AddedServicesState extends State<AddedServices> {
                   Input(
                     label: '用户',
                     onChanged: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('user_name');
-                        } else {
-                          param['user_name'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('user_name');
+                      } else {
+                        param['user_name'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '工厂',
                     onChanged: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('shop_name');
-                        } else {
-                          param['shop_name'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('shop_name');
+                      } else {
+                        param['shop_name'] = val;
+                      }
                     },
                   ),
                   Select(
@@ -237,13 +233,11 @@ class _AddedServicesState extends State<AddedServices> {
                     selectedValue: param['pricing_class'] ?? '0',
                     label: '服务类型',
                     onChanged: (String newValue) {
-                      setState(() {
-                        if (newValue == '0') {
-                          param.remove('pricing_class');
-                        } else {
-                          param['pricing_class'] = newValue;
-                        }
-                      });
+                      if (newValue == '0') {
+                        param.remove('pricing_class');
+                      } else {
+                        param['pricing_class'] = newValue;
+                      }
                     },
                   ),
                   DateSelectPlugin(
@@ -286,6 +280,7 @@ class _AddedServicesState extends State<AddedServices> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

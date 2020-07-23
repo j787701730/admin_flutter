@@ -308,8 +308,9 @@ class _PhoneMenusState extends State<PhoneMenus> {
               ),
             ),
             AnimatedCrossFade(
-              firstChild: Container(
-                height: 0,
+              firstChild: Placeholder(
+                fallbackHeight: 0.1,
+                color: Colors.transparent,
               ),
               secondChild: Container(
                 child: Column(
@@ -550,8 +551,9 @@ class _PhoneMenusState extends State<PhoneMenus> {
               ),
             ),
             AnimatedCrossFade(
-              firstChild: Container(
-                height: 0,
+              firstChild: Placeholder(
+                fallbackHeight: 0.1,
+                color: Colors.transparent,
               ),
               secondChild: Container(
                 margin: EdgeInsets.only(

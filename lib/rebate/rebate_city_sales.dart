@@ -140,37 +140,31 @@ class _RebateCitySalesState extends State<RebateCitySales> {
                 Input(
                   label: '用户名',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('login_name');
-                      } else {
-                        param['login_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('login_name');
+                    } else {
+                      param['login_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '联系人',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('user_name');
-                      } else {
-                        param['user_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('user_name');
+                    } else {
+                      param['user_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '联系电话',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('user_phone');
-                      } else {
-                        param['user_phone'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('user_phone');
+                    } else {
+                      param['user_phone'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -228,6 +222,7 @@ class _RebateCitySalesState extends State<RebateCitySales> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

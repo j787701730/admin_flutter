@@ -230,49 +230,41 @@ class _CadUserRelationState extends State<CadUserRelation> {
                   Input(
                     label: '发送店铺',
                     onChanged: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('a_shop_name');
-                        } else {
-                          param['a_shop_name'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('a_shop_name');
+                      } else {
+                        param['a_shop_name'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '发送电话',
                     onChanged: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('a_user_phone');
-                        } else {
-                          param['a_user_phone'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('a_user_phone');
+                      } else {
+                        param['a_user_phone'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '接收店铺',
                     onChanged: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('z_shop_name');
-                        } else {
-                          param['z_shop_name'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('z_shop_name');
+                      } else {
+                        param['z_shop_name'] = val;
+                      }
                     },
                   ),
                   Input(
                     label: '接收电话',
                     onChanged: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('z_user_phone');
-                        } else {
-                          param['z_user_phone'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('z_user_phone');
+                      } else {
+                        param['z_user_phone'] = val;
+                      }
                     },
                   ),
                   Select(
@@ -280,13 +272,11 @@ class _CadUserRelationState extends State<CadUserRelation> {
                     selectedValue: param['if_default'] ?? 'all',
                     label: '状态',
                     onChanged: (String newValue) {
-                      setState(() {
-                        if (newValue == 'all') {
-                          param.remove('if_default');
-                        } else {
-                          param['if_default'] = newValue;
-                        }
-                      });
+                      if (newValue == 'all') {
+                        param.remove('if_default');
+                      } else {
+                        param['if_default'] = newValue;
+                      }
                     },
                   ),
                   Select(
@@ -294,13 +284,11 @@ class _CadUserRelationState extends State<CadUserRelation> {
                     selectedValue: param['rela_source'] ?? 'all',
                     label: '数据来源',
                     onChanged: (String newValue) {
-                      setState(() {
-                        if (newValue == 'all') {
-                          param.remove('rela_source');
-                        } else {
-                          param['rela_source'] = newValue;
-                        }
-                      });
+                      if (newValue == 'all') {
+                        param.remove('rela_source');
+                      } else {
+                        param['rela_source'] = newValue;
+                      }
                     },
                   ),
                   DateSelectPlugin(
@@ -352,6 +340,7 @@ class _CadUserRelationState extends State<CadUserRelation> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

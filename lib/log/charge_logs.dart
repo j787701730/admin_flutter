@@ -217,13 +217,11 @@ class _ChargeLogsState extends State<ChargeLogs> {
                   selectedValue: param['constract_type'] ?? 'all',
                   label: '对账类型',
                   onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == 'all') {
-                        param.remove('constract_type');
-                      } else {
-                        param['constract_type'] = newValue;
-                      }
-                    });
+                    if (newValue == 'all') {
+                      param.remove('constract_type');
+                    } else {
+                      param['constract_type'] = newValue;
+                    }
                   },
                 ),
                 Select(
@@ -231,55 +229,45 @@ class _ChargeLogsState extends State<ChargeLogs> {
                   selectedValue: param['state'] ?? 'all',
                   label: '对账结果',
                   onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == 'all') {
-                        param.remove('state');
-                      } else {
-                        param['state'] = newValue;
-                      }
-                    });
+                    if (newValue == 'all') {
+                      param.remove('state');
+                    } else {
+                      param['state'] = newValue;
+                    }
                   },
                 ),
                 RangeInput(
                   label: '交易单量',
                   onChangeL: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('bill_countL');
-                      } else {
-                        param['bill_countL'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('bill_countL');
+                    } else {
+                      param['bill_countL'] = val;
+                    }
                   },
                   onChangeR: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('bill_countU');
-                      } else {
-                        param['bill_countU'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('bill_countU');
+                    } else {
+                      param['bill_countU'] = val;
+                    }
                   },
                 ),
                 RangeInput(
                   label: '交易总额',
                   onChangeL: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('bill_amountL');
-                      } else {
-                        param['bill_amountL'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('bill_amountL');
+                    } else {
+                      param['bill_amountL'] = val;
+                    }
                   },
                   onChangeR: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('bill_amountU');
-                      } else {
-                        param['bill_amountU'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('bill_amountU');
+                    } else {
+                      param['bill_amountU'] = val;
+                    }
                   },
                 ),
                 DateSelectPlugin(
@@ -315,6 +303,7 @@ class _ChargeLogsState extends State<ChargeLogs> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

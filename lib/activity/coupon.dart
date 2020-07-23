@@ -450,13 +450,11 @@ class _CouponState extends State<Coupon> {
                 Input(
                   label: '店铺',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('shop_name');
-                      } else {
-                        param['shop_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('shop_name');
+                    } else {
+                      param['shop_name'] = val;
+                    }
                   },
                   labelWidth: 90,
                 ),
@@ -465,13 +463,11 @@ class _CouponState extends State<Coupon> {
                   selectedValue: param['coupon_type'] ?? 'all',
                   label: '优惠券类型',
                   onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('coupon_type');
-                      } else {
-                        param['coupon_type'] = val;
-                      }
-                    });
+                    if (val == 'all') {
+                      param.remove('coupon_type');
+                    } else {
+                      param['coupon_type'] = val;
+                    }
                   },
                   labelWidth: 90,
                 ),
@@ -480,13 +476,11 @@ class _CouponState extends State<Coupon> {
                   selectedValue: param['goods_type'] ?? 'all',
                   label: '商品类型',
                   onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('goods_type');
-                      } else {
-                        param['goods_type'] = val;
-                      }
-                    });
+                    if (val == 'all') {
+                      param.remove('goods_type');
+                    } else {
+                      param['goods_type'] = val;
+                    }
                   },
                   labelWidth: 90,
                 ),
@@ -495,13 +489,11 @@ class _CouponState extends State<Coupon> {
                   selectedValue: param['coupon_source'] ?? 'all',
                   label: '优惠券来源',
                   onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('coupon_source');
-                      } else {
-                        param['coupon_source'] = val;
-                      }
-                    });
+                    if (val == 'all') {
+                      param.remove('coupon_source');
+                    } else {
+                      param['coupon_source'] = val;
+                    }
                   },
                   labelWidth: 90,
                 ),
@@ -510,13 +502,11 @@ class _CouponState extends State<Coupon> {
                   selectedValue: param['state'] ?? 'all',
                   label: '状态',
                   onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('state');
-                      } else {
-                        param['state'] = val;
-                      }
-                    });
+                    if (val == 'all') {
+                      param.remove('state');
+                    } else {
+                      param['state'] = val;
+                    }
                   },
                   labelWidth: 90,
                 ),
@@ -575,6 +565,7 @@ class _CouponState extends State<Coupon> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

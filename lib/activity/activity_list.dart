@@ -344,13 +344,11 @@ class _ActivityListState extends State<ActivityList> {
                 Input(
                   label: '活动名称',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('activity_name');
-                      } else {
-                        param['activity_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('activity_name');
+                    } else {
+                      param['activity_name'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -358,13 +356,11 @@ class _ActivityListState extends State<ActivityList> {
                   selectedValue: param['draw_type'] ?? 'all',
                   label: '抽奖类型',
                   onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('draw_type');
-                      } else {
-                        param['draw_type'] = val;
-                      }
-                    });
+                    if (val == 'all') {
+                      param.remove('draw_type');
+                    } else {
+                      param['draw_type'] = val;
+                    }
                   },
                 ),
                 DateSelectPlugin(onChanged: getDateTime, label: '创建时间'),
@@ -372,13 +368,11 @@ class _ActivityListState extends State<ActivityList> {
                 Input(
                   label: '备注',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('comments');
-                      } else {
-                        param['comments'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('comments');
+                    } else {
+                      param['comments'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -410,6 +404,7 @@ class _ActivityListState extends State<ActivityList> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

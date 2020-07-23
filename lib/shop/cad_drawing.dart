@@ -232,39 +232,33 @@ class _CadDrawingState extends State<CadDrawing> {
                     labelWidth: 100,
                     label: '用户名',
                     onChanged: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('user_name');
-                        } else {
-                          param['user_name'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('user_name');
+                      } else {
+                        param['user_name'] = val;
+                      }
                     },
                   ),
                   Input(
                     labelWidth: 100,
                     label: '用户电话',
                     onChanged: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('user_phone');
-                        } else {
-                          param['user_phone'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('user_phone');
+                      } else {
+                        param['user_phone'] = val;
+                      }
                     },
                   ),
                   Input(
                     labelWidth: 100,
                     label: '效果图标题',
                     onChanged: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('sd_title');
-                        } else {
-                          param['sd_title'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('sd_title');
+                      } else {
+                        param['sd_title'] = val;
+                      }
                     },
                   ),
                   DateSelectPlugin(
@@ -282,13 +276,11 @@ class _CadDrawingState extends State<CadDrawing> {
                     selectedValue: param['state'] ?? 'all',
                     label: '状态',
                     onChanged: (String newValue) {
-                      setState(() {
-                        if (newValue == 'all') {
-                          param.remove('state');
-                        } else {
-                          param['state'] = newValue;
-                        }
-                      });
+                      if (newValue == 'all') {
+                        param.remove('state');
+                      } else {
+                        param['state'] = newValue;
+                      }
                     },
                     labelWidth: 100,
                   ),
@@ -323,6 +315,7 @@ class _CadDrawingState extends State<CadDrawing> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

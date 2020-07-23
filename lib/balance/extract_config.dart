@@ -203,48 +203,40 @@ class _ExtractConfigState extends State<ExtractConfig> {
                   label: '用户',
                   labelWidth: 130,
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('user_name');
-                      } else {
-                        param['user_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('user_name');
+                    } else {
+                      param['user_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '电话号码',
                   labelWidth: 130,
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('user_phone');
-                      } else {
-                        param['user_phone'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('user_phone');
+                    } else {
+                      param['user_phone'] = val;
+                    }
                   },
                 ),
                 RangeInput(
                     label: '月免手续费额度',
                     labelWidth: 130,
                     onChangeL: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('extract_limit_l');
-                        } else {
-                          param['extract_limit_l'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('extract_limit_l');
+                      } else {
+                        param['extract_limit_l'] = val;
+                      }
                     },
                     onChangeR: (String val) {
-                      setState(() {
-                        if (val == '') {
-                          param.remove('extract_limit_r');
-                        } else {
-                          param['extract_limit_r'] = val;
-                        }
-                      });
+                      if (val == '') {
+                        param.remove('extract_limit_r');
+                      } else {
+                        param['extract_limit_r'] = val;
+                      }
                     }),
                 DateSelectPlugin(
                   onChanged: getDateTime,
@@ -286,6 +278,7 @@ class _ExtractConfigState extends State<ExtractConfig> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

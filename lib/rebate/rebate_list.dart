@@ -354,12 +354,10 @@ class _RebateListState extends State<RebateList> {
               children: <Widget>[
                 PrimaryButton(
                   onPressed: () {
-                    setState(() {
-                      param['curr_page'] = 1;
-                      param2['curr_page'] = 1;
-                      getData();
-                      getData2();
-                    });
+                    param['curr_page'] = 1;
+                    param2['curr_page'] = 1;
+                    getData();
+                    getData2();
                   },
                   child: Text('搜索'),
                 ),
@@ -369,6 +367,7 @@ class _RebateListState extends State<RebateList> {
                     setState(() {
                       isExpandedFlag = !isExpandedFlag;
                     });
+                    FocusScope.of(context).requestFocus(FocusNode());
                   },
                   child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                 ),

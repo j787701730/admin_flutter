@@ -176,25 +176,21 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
                 Input(
                   label: '用户',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('login_name');
-                      } else {
-                        param['login_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('login_name');
+                    } else {
+                      param['login_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '手机',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('user_phone');
-                      } else {
-                        param['user_phone'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('user_phone');
+                    } else {
+                      param['user_phone'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -269,6 +265,7 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

@@ -263,15 +263,13 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
                   selectedValue: param['log_source'] ?? 'all',
                   label: '日志来源',
                   onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == 'all') {
-                        param.remove('log_source');
-                        param2.remove('log_source');
-                      } else {
-                        param['log_source'] = newValue;
-                        param2['log_source'] = newValue;
-                      }
-                    });
+                    if (newValue == 'all') {
+                      param.remove('log_source');
+                      param2.remove('log_source');
+                    } else {
+                      param['log_source'] = newValue;
+                      param2['log_source'] = newValue;
+                    }
                   },
                 ),
                 Select(
@@ -279,15 +277,13 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
                   selectedValue: param['url_id'] ?? 'all',
                   label: '接口名称',
                   onChanged: (String newValue) {
-                    setState(() {
-                      if (newValue == 'all') {
-                        param.remove('url_id');
-                        param2.remove('url_id');
-                      } else {
-                        param['url_id'] = newValue;
-                        param2['url_id'] = newValue;
-                      }
-                    });
+                    if (newValue == 'all') {
+                      param.remove('url_id');
+                      param2.remove('url_id');
+                    } else {
+                      param['url_id'] = newValue;
+                      param2['url_id'] = newValue;
+                    }
                   },
                 ),
                 DateSelectPlugin(
@@ -327,6 +323,7 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

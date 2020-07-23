@@ -203,9 +203,11 @@ class _ErpLogsState extends State<ErpLogs> {
                     return Input(
                       label: '${searchName[key]}',
                       onChanged: (String val) {
-                        setState(() {
+                        if (val.trim() == '') {
+                          searchData.remove(key);
+                        } else {
                           searchData[key] = val;
-                        });
+                        }
                       },
                     );
                   }).toList(),
@@ -230,10 +232,8 @@ class _ErpLogsState extends State<ErpLogs> {
               children: <Widget>[
                 PrimaryButton(
                   onPressed: () {
-                    setState(() {
-                      curr_page = 1;
-                      getData();
-                    });
+                    curr_page = 1;
+                    getData();
                   },
                   child: Text('搜索'),
                 ),
@@ -243,6 +243,7 @@ class _ErpLogsState extends State<ErpLogs> {
                     setState(() {
                       isExpandedFlag = !isExpandedFlag;
                     });
+                    FocusScope.of(context).requestFocus(FocusNode());
                   },
                   child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                 ),

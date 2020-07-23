@@ -379,13 +379,11 @@ class _TaskPricingState extends State<TaskPricing> {
                 Input(
                   label: '用户名',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('user_name');
-                      } else {
-                        param['user_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('user_name');
+                    } else {
+                      param['user_name'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -393,13 +391,11 @@ class _TaskPricingState extends State<TaskPricing> {
                   selectedValue: param['task_type'] ?? 'all',
                   label: '任务类型',
                   onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('task_type');
-                      } else {
-                        param['task_type'] = val;
-                      }
-                    });
+                    if (val == 'all') {
+                      param.remove('task_type');
+                    } else {
+                      param['task_type'] = val;
+                    }
                   },
                 ),
                 RangeInput(
@@ -485,6 +481,7 @@ class _TaskPricingState extends State<TaskPricing> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

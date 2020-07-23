@@ -288,39 +288,33 @@ class _TaskListState extends State<TaskList> {
                   label: '任务标题',
                   labelWidth: 100,
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('task_name');
-                      } else {
-                        param['task_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('task_name');
+                    } else {
+                      param['task_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '任务编号',
                   labelWidth: 100,
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('task_id');
-                      } else {
-                        param['task_id'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('task_id');
+                    } else {
+                      param['task_id'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '订单单号',
                   labelWidth: 100,
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('order_no');
-                      } else {
-                        param['order_no'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('order_no');
+                    } else {
+                      param['order_no'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -329,13 +323,11 @@ class _TaskListState extends State<TaskList> {
                   selectedValue: param['state'] ?? 'all',
                   label: '任务状态',
                   onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('state');
-                      } else {
-                        param['state'] = val;
-                      }
-                    });
+                    if (val == 'all') {
+                      param.remove('state');
+                    } else {
+                      param['state'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -344,13 +336,11 @@ class _TaskListState extends State<TaskList> {
                   selectedValue: param['task_type'] ?? 'all',
                   label: '任务类型',
                   onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('task_type');
-                      } else {
-                        param['task_type'] = val;
-                      }
-                    });
+                    if (val == 'all') {
+                      param.remove('task_type');
+                    } else {
+                      param['task_type'] = val;
+                    }
                   },
                 ),
                 Select(
@@ -359,13 +349,11 @@ class _TaskListState extends State<TaskList> {
                   selectedValue: param['evaluate_state'] ?? 'all',
                   label: '评价状态',
                   onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('evaluate_state');
-                      } else {
-                        param['evaluate_state'] = val;
-                      }
-                    });
+                    if (val == 'all') {
+                      param.remove('evaluate_state');
+                    } else {
+                      param['evaluate_state'] = val;
+                    }
                   },
                 ),
                 DateSelectPlugin(
@@ -647,6 +635,7 @@ class _TaskListState extends State<TaskList> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

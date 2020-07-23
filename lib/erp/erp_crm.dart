@@ -184,13 +184,11 @@ class _ErpCrmState extends State<ErpCrm> {
                     return Input(
                       label: '${searchInputs[key]}',
                       onChanged: (String val) {
-                        setState(() {
-                          if (val == '') {
-                            param.remove(key);
-                          } else {
-                            param[key] = val;
-                          }
-                        });
+                        if (val == '') {
+                          param.remove(key);
+                        } else {
+                          param[key] = val;
+                        }
                       },
                     );
                   }).toList(),
@@ -200,13 +198,11 @@ class _ErpCrmState extends State<ErpCrm> {
                   selectedValue: param['state'] ?? 'all',
                   label: '备忘状态',
                   onChanged: (val) {
-                    setState(() {
-                      if (val == 'all') {
-                        param.remove('state');
-                      } else {
-                        param['state'] = val;
-                      }
-                    });
+                    if (val == 'all') {
+                      param.remove('state');
+                    } else {
+                      param['state'] = val;
+                    }
                   },
                 ),
                 DateSelectPlugin(
@@ -242,6 +238,7 @@ class _ErpCrmState extends State<ErpCrm> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

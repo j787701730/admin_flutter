@@ -197,13 +197,11 @@ class _OptListState extends State<OptList> {
                 Input(
                   label: '订单号',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('order_no');
-                      } else {
-                        param['order_no'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('order_no');
+                    } else {
+                      param['order_no'] = val;
+                    }
                   },
                 ),
                 Container(
@@ -330,6 +328,7 @@ class _OptListState extends State<OptList> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

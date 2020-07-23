@@ -246,25 +246,21 @@ class _ErpConfigState extends State<ErpConfig> {
                 Input(
                   label: '店铺名称',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('shop_name');
-                      } else {
-                        param['shop_name'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('shop_name');
+                    } else {
+                      param['shop_name'] = val;
+                    }
                   },
                 ),
                 Input(
                   label: '电话号码',
                   onChanged: (String val) {
-                    setState(() {
-                      if (val == '') {
-                        param.remove('user_phone');
-                      } else {
-                        param['user_phone'] = val;
-                      }
-                    });
+                    if (val == '') {
+                      param.remove('user_phone');
+                    } else {
+                      param['user_phone'] = val;
+                    }
                   },
                 ),
                 DateSelectPlugin(
@@ -310,6 +306,7 @@ class _ErpConfigState extends State<ErpConfig> {
                       setState(() {
                         isExpandedFlag = !isExpandedFlag;
                       });
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),

@@ -385,7 +385,7 @@ class _RenderClassState extends State<RenderClass> {
 //                    onPressed: () {
 //                      setState(() {
 //                        isExpandedFlag = !isExpandedFlag;
-//                      });
+//                      });FocusScope.of(context).requestFocus(FocusNode());
 //                    },
 //                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
 //                  ),
