@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:admin_flutter/activity/coupon_create.dart';
 import 'package:admin_flutter/plugin/date_select_plugin.dart';
+import 'package:admin_flutter/plugin/input-single.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
@@ -290,36 +291,14 @@ class _CouponState extends State<Coupon> {
                         ),
                         Expanded(
                           flex: 1,
-                          child: Container(
-                            height: 34,
-                            child: TextField(
-                              style: TextStyle(fontSize: CFFontSize.content),
-                              controller: TextEditingController.fromValue(
-                                TextEditingValue(
-                                  text: '${modifyItem['limit_nums'] ?? ''}',
-                                  selection: TextSelection.fromPosition(
-                                    TextPosition(
-                                      affinity: TextAffinity.downstream,
-                                      offset: '${modifyItem['limit_nums'] ?? ''}'.length,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.only(
-                                  top: 0,
-                                  bottom: 0,
-                                  left: 15,
-                                  right: 15,
-                                ),
-                              ),
-                              onChanged: (String val) {
-                                setState(() {
-                                  modifyItem['limit_nums'] = val;
-                                });
-                              },
-                            ),
+                          child: InputSingle(
+                            onChanged: (val) {
+                              setState(() {
+                                modifyItem['limit_nums'] = val;
+                              });
+                            },
+                            value: modifyItem['limit_nums'],
+                            type: 'int',
                           ),
                         ),
                       ],
@@ -351,36 +330,14 @@ class _CouponState extends State<Coupon> {
                         ),
                         Expanded(
                           flex: 1,
-                          child: Container(
-                            height: 34,
-                            child: TextField(
-                              style: TextStyle(fontSize: CFFontSize.content),
-                              controller: TextEditingController.fromValue(
-                                TextEditingValue(
-                                  text: '${modifyItem['left_nums'] ?? ''}',
-                                  selection: TextSelection.fromPosition(
-                                    TextPosition(
-                                      affinity: TextAffinity.downstream,
-                                      offset: '${modifyItem['left_nums'] ?? ''}'.length,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.only(
-                                  top: 0,
-                                  bottom: 0,
-                                  left: 15,
-                                  right: 15,
-                                ),
-                              ),
-                              onChanged: (String val) {
-                                setState(() {
-                                  modifyItem['left_nums'] = val;
-                                });
-                              },
-                            ),
+                          child: InputSingle(
+                            onChanged: (val) {
+                              setState(() {
+                                modifyItem['left_nums'] = val;
+                              });
+                            },
+                            value: modifyItem['left_nums'],
+                            type: 'int',
                           ),
                         ),
                       ],

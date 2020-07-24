@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:admin_flutter/cf-provider.dart';
+import 'package:admin_flutter/plugin/input-single.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
@@ -296,35 +297,9 @@ class _StaffDepartmentState extends State<StaffDepartment> {
           ),
           content: SingleChildScrollView(
             child: Container(
-              height: 34,
-//                width: MediaQuery.of(context).size.width - 100,
-              child: TextField(
-                style: TextStyle(fontSize: CFFontSize.content),
-                controller: TextEditingController.fromValue(
-                  TextEditingValue(
-                    text: '${itemTemp['department_name'] ?? ''}',
-                    selection: TextSelection.fromPosition(
-                      TextPosition(
-                        affinity: TextAffinity.downstream,
-                        offset: '${itemTemp['department_name'] ?? ''}'.length,
-                      ),
-                    ),
-                  ),
-                ),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.only(
-                    top: 6,
-                    bottom: 6,
-                    left: 15,
-                    right: 15,
-                  ),
-                ),
-                onChanged: (val) {
-                  setState(() {
-                    itemTemp['department_name'] = val;
-                  });
-                },
+              child: InputSingle(
+                onChanged: (val) => itemTemp['department_name'] = val,
+                value: itemTemp['department_name'],
               ),
             ),
           ),

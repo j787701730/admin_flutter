@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/user_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
@@ -145,188 +146,43 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
                   ),
                 )
               : Container(),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 140,
-                  alignment: Alignment.centerRight,
-                  height: 34,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('月免手续费额度')
-                    ],
-                  ),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        height: 34,
-                        child: TextField(
-                          style: TextStyle(fontSize: CFFontSize.content),
-                          controller: TextEditingController.fromValue(
-                            TextEditingValue(
-                              text: '${param['extract_limit'] ?? ''}',
-                              selection: TextSelection.fromPosition(
-                                TextPosition(
-                                  affinity: TextAffinity.downstream,
-                                  offset: '${param['extract_limit'] ?? ''}'.length,
-                                ),
-                              ),
-                            ),
-                          ),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.only(
-                              top: 0,
-                              bottom: 0,
-                              left: 15,
-                              right: 15,
-                            ),
-                          ),
-                          onChanged: (String val) {
-                            setState(() {
-                              param['extract_limit'] = val;
-                            });
-                          },
-                        ),
-                      ),
-                      Text(
-                        '用户每月提现的金额在该值以下，免手续费',
-                        style: TextStyle(
-                          color: Color(0xff999999),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '月免手续费额度',
+            onChanged: (val) {
+              param['extract_limit'] = val;
+            },
+            labelWidth: 140,
+            require: true,
+            value: param['extract_limit'] ?? '',
+            type: 'float',
+          ),
+          Input(
+            label: '费率占比',
+            onChanged: (val) {
+              param['extract_rate'] = val;
+            },
+            labelWidth: 140,
+            require: true,
+            value: param['extract_rate'] ?? '',
+            type: 'float',
           ),
           Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 140,
-                  height: 34,
-                  alignment: Alignment.centerRight,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('费率占比')
-                    ],
-                  ),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        height: 34,
-                        child: TextField(
-                          style: TextStyle(fontSize: CFFontSize.content),
-                          controller: TextEditingController.fromValue(
-                            TextEditingValue(
-                              text: '${param['extract_rate'] ?? ''}',
-                              selection: TextSelection.fromPosition(
-                                TextPosition(
-                                  affinity: TextAffinity.downstream,
-                                  offset: '${param['extract_rate'] ?? ''}'.length,
-                                ),
-                              ),
-                            ),
-                          ),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.only(
-                              top: 0,
-                              bottom: 0,
-                              left: 15,
-                              right: 15,
-                            ),
-                          ),
-                          onChanged: (String val) {
-                            setState(() {
-                              param['extract_rate'] = val;
-                            });
-                          },
-                        ),
-                      ),
-                      Text(
-                        '提现超过免费额度时候，提现的手续费占比',
-                        style: TextStyle(
-                          color: Color(0xff999999),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
+            margin: EdgeInsets.only(right: 150),
+            child: Text(
+              '提现超过免费额度时候，提现的手续费占比',
+              style: TextStyle(
+                color: Color(0xff999999),
+              ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 140,
-                  alignment: Alignment.centerRight,
-                  child: Text('备注'),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    maxLines: 4,
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['comments'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['comments'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 10,
-                        bottom: 10,
-                        left: 15,
-                        right: 15,
-                      ),
-                    ),
-                    onChanged: (String val) {
-                      setState(() {
-                        param['comments'] = val;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '备注',
+            onChanged: (String val) {
+              setState(() {
+                param['comments'] = val;
+              });
+            },
+            value: param['comments'] ?? '',
           ),
           Container(
             margin: EdgeInsets.only(bottom: 10),

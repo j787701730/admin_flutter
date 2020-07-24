@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:admin_flutter/plugin/input-single.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
@@ -236,33 +237,12 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
                                             child: Container(
                                               height: 34,
                                               width: 60,
-                                              child: TextField(
-                                                style: TextStyle(fontSize: CFFontSize.content),
-                                                controller: TextEditingController.fromValue(
-                                                  TextEditingValue(
-                                                    text: '${ajaxData[index]['left_value'] ?? ''}',
-                                                    selection: TextSelection.fromPosition(
-                                                      TextPosition(
-                                                        affinity: TextAffinity.downstream,
-                                                        offset: '${ajaxData[index]['left_value'] ?? ''}'.length,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  contentPadding: EdgeInsets.only(
-                                                    top: 0,
-                                                    bottom: 0,
-                                                    left: 10,
-                                                    right: 10,
-                                                  ),
-                                                ),
-                                                onChanged: (String val) {
-                                                  setState(() {
-                                                    ajaxData[index]['left_value'] = val;
-                                                  });
+                                              child: InputSingle(
+                                                onChanged: (val) {
+                                                  ajaxData[index]['left_value'] = val;
                                                 },
+                                                value: '${ajaxData[index]['left_value'] ?? ''}',
+                                                type: 'int',
                                               ),
                                             ),
                                           ),
@@ -276,33 +256,12 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
                                             child: Container(
                                               height: 34,
                                               width: 60,
-                                              child: TextField(
-                                                style: TextStyle(fontSize: CFFontSize.content),
-                                                controller: TextEditingController.fromValue(
-                                                  TextEditingValue(
-                                                    text: '${ajaxData[index]['right_value'] ?? ''}',
-                                                    selection: TextSelection.fromPosition(
-                                                      TextPosition(
-                                                        affinity: TextAffinity.downstream,
-                                                        offset: '${ajaxData[index]['right_value'] ?? ''}'.length,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  contentPadding: EdgeInsets.only(
-                                                    top: 0,
-                                                    bottom: 0,
-                                                    left: 10,
-                                                    right: 10,
-                                                  ),
-                                                ),
-                                                onChanged: (String val) {
-                                                  setState(() {
-                                                    ajaxData[index]['right_value'] = val;
-                                                  });
+                                              child: InputSingle(
+                                                onChanged: (val) {
+                                                  ajaxData[index]['right_value'] = val;
                                                 },
+                                                value: '${ajaxData[index]['right_value'] ?? ''}',
+                                                type: 'int',
                                               ),
                                             ),
                                           ),
@@ -322,36 +281,12 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
                                           ),
                                           Expanded(
                                             flex: 1,
-                                            child: Container(
-                                              height: 34,
-                                              child: TextField(
-                                                style: TextStyle(fontSize: CFFontSize.content),
-                                                controller: TextEditingController.fromValue(
-                                                  TextEditingValue(
-                                                    text: '${ajaxData[index]['level'] ?? ''}',
-                                                    selection: TextSelection.fromPosition(
-                                                      TextPosition(
-                                                        affinity: TextAffinity.downstream,
-                                                        offset: '${ajaxData[index]['level'] ?? ''}'.length,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  contentPadding: EdgeInsets.only(
-                                                    top: 0,
-                                                    bottom: 0,
-                                                    left: 10,
-                                                    right: 10,
-                                                  ),
-                                                ),
-                                                onChanged: (String val) {
-                                                  setState(() {
-                                                    ajaxData[index]['level'] = val;
-                                                  });
-                                                },
-                                              ),
+                                            child: InputSingle(
+                                              onChanged: (val) {
+                                                ajaxData[index]['level'] = val;
+                                              },
+                                              value: '${ajaxData[index]['level'] ?? ''}',
+                                              type: 'int',
                                             ),
                                           ),
                                         ],
@@ -371,31 +306,11 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
                                           ),
                                           Expanded(
                                             flex: 1,
-                                            child: Container(
-                                              height: 34,
-                                              child: TextField(
-                                                style: TextStyle(fontSize: CFFontSize.content),
-                                                controller: TextEditingController.fromValue(
-                                                  TextEditingValue(
-                                                    text: '${ajaxData[index]['level_name'] ?? ''}',
-                                                    selection: TextSelection.fromPosition(
-                                                      TextPosition(
-                                                        affinity: TextAffinity.downstream,
-                                                        offset: '${ajaxData[index]['level_name'] ?? ''}'.length,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  contentPadding: EdgeInsets.all(10),
-                                                ),
-                                                onChanged: (String val) {
-                                                  setState(() {
-                                                    ajaxData[index]['level_name'] = val;
-                                                  });
-                                                },
-                                              ),
+                                            child: InputSingle(
+                                              onChanged: (val) {
+                                                ajaxData[index]['level_name'] = val;
+                                              },
+                                              value: '${ajaxData[index]['level_name'] ?? ''}',
                                             ),
                                           ),
                                         ],

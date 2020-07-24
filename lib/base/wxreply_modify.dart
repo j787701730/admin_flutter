@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
 
 class WxReplyModify extends StatefulWidget {
@@ -41,49 +41,10 @@ class _WxReplyModifyState extends State<WxReplyModify> {
       body: ListView(
         padding: EdgeInsets.all(10),
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 80,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
-                  child: Text('关键字'),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['keyword'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['keyword']}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 6,
-                        bottom: 6,
-                        left: 15,
-                        right: 15,
-                      ),
-                    ),
-                    onChanged: (val) {
-                      setState(() {
-                        param['keyword'] = val;
-                      });
-                    },
-                  ),
-                )
-              ],
-            ),
+          Input(
+            label: '关键字',
+            onChanged: (val) => param['keyword'],
+            value: param['keyword'],
           ),
           Container(
             margin: EdgeInsets.only(bottom: 10),
@@ -161,379 +122,99 @@ class _WxReplyModifyState extends State<WxReplyModify> {
           ),
           Offstage(
             offstage: param['reply_type'] != '1',
-            child: Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 80,
-                    alignment: Alignment.centerRight,
-                    margin: EdgeInsets.only(right: 10),
-                    child: Text('函数名称'),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text:
-                              '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['function_name'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(
-                              affinity: TextAffinity.downstream,
-                              offset:
-                                  '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['function_name'] ?? ''}'
-                                      .length,
-                            ),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 6,
-                          bottom: 6,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (val) {
-                        setState(() {
-                          param['reply_content'] = jsonEncode({'function_name': val});
-                        });
-                      },
-                    ),
-                  )
-                ],
-              ),
+            child: Input(
+              label: '函数名称',
+              onChanged: (val) => param['reply_content'] = jsonEncode({'function_name': val}),
+              value:
+                  '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['function_name'] ?? ''}',
             ),
           ),
           Offstage(
             offstage: param['reply_type'] != '2',
-            child: Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 80,
-                    alignment: Alignment.centerRight,
-                    margin: EdgeInsets.only(right: 10),
-                    child: Text('消息内容'),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      maxLines: 4,
-                      controller: TextEditingController.fromValue(TextEditingValue(
-                        text:
-                            '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_content'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset:
-                                '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_content'] ?? ''}'
-                                    .length,
-                          ),
-                        ),
-                      )),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 6,
-                          bottom: 6,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (val) {
-                        setState(() {
-                          param['reply_content'] = jsonEncode({'msg_content': val});
-                        });
-                      },
-                    ),
-                  )
-                ],
-              ),
+            child: Input(
+              label: '消息内容',
+              onChanged: (val) => param['reply_content'] = jsonEncode({'msg_content': val}),
+              value: '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_content'] ?? ''}',
+              maxLines: 4,
             ),
           ),
           Offstage(
             offstage: param['reply_type'] != '3',
             child: Column(
               children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: 80,
-                        alignment: Alignment.centerRight,
-                        margin: EdgeInsets.only(right: 10),
-                        child: Text('消息标题'),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: TextField(
-                          style: TextStyle(fontSize: CFFontSize.content),
-                          maxLines: 4,
-                          controller: TextEditingController.fromValue(
-                            TextEditingValue(
-                              text:
-                                  '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_title'] ?? ''}',
-                              selection: TextSelection.fromPosition(
-                                TextPosition(
-                                  affinity: TextAffinity.downstream,
-                                  offset:
-                                      '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_title'] ?? ''}'
-                                          .length,
-                                ),
-                              ),
-                            ),
-                          ),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.only(
-                              top: 6,
-                              bottom: 6,
-                              left: 15,
-                              right: 15,
-                            ),
-                          ),
-                          onChanged: (val) {
-                            Map temp;
-                            if (param['reply_content'] == null) {
-                              temp = {'msg_title': val};
-                            } else {
-                              temp = jsonDecode(param['reply_content']);
-                              temp['msg_title'] = val;
-                            }
-                            setState(() {
-                              param['reply_content'] = jsonEncode(temp);
-                            });
-                          },
-                        ),
-                      )
-                    ],
-                  ),
+                Input(
+                  label: '消息标题',
+                  onChanged: (val) {
+                    Map temp;
+                    if (param['reply_content'] == null) {
+                      temp = {'msg_title': val};
+                    } else {
+                      temp = jsonDecode(param['reply_content']);
+                      temp['msg_title'] = val;
+                    }
+                    setState(() {
+                      param['reply_content'] = jsonEncode(temp);
+                    });
+                  },
+                  value:
+                      '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_title'] ?? ''}',
                 ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: 80,
-                        alignment: Alignment.centerRight,
-                        margin: EdgeInsets.only(right: 10),
-                        child: Text('消息内容'),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: TextField(
-                          style: TextStyle(fontSize: CFFontSize.content),
-                          maxLines: 4,
-                          controller: TextEditingController.fromValue(
-                            TextEditingValue(
-                              text:
-                                  '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_content'] ?? ''}',
-                              selection: TextSelection.fromPosition(
-                                TextPosition(
-                                  affinity: TextAffinity.downstream,
-                                  offset:
-                                      '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_content'] ?? ''}'
-                                          .length,
-                                ),
-                              ),
-                            ),
-                          ),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.only(
-                              top: 6,
-                              bottom: 6,
-                              left: 15,
-                              right: 15,
-                            ),
-                          ),
-                          onChanged: (val) {
-                            Map temp;
-                            if (param['reply_content'] == null) {
-                              temp = {'msg_content': val};
-                            } else {
-                              temp = jsonDecode(param['reply_content']);
-                              temp['msg_content'] = val;
-                            }
-                            setState(() {
-                              param['reply_content'] = jsonEncode(temp);
-                            });
-                          },
-                        ),
-                      )
-                    ],
-                  ),
+                Input(
+                  label: '消息内容',
+                  onChanged: (val) {
+                    Map temp;
+                    if (param['reply_content'] == null) {
+                      temp = {'msg_content': val};
+                    } else {
+                      temp = jsonDecode(param['reply_content']);
+                      temp['msg_content'] = val;
+                    }
+                    setState(() {
+                      param['reply_content'] = jsonEncode(temp);
+                    });
+                  },
+                  value:
+                      '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_content'] ?? ''}',
                 ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: 80,
-                        alignment: Alignment.centerRight,
-                        margin: EdgeInsets.only(right: 10),
-                        child: Text('图片路径'),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: TextField(
-                          style: TextStyle(fontSize: CFFontSize.content),
-                          controller: TextEditingController.fromValue(
-                            TextEditingValue(
-                              text:
-                                  '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['pic_url'] ?? ''}',
-                              selection: TextSelection.fromPosition(
-                                TextPosition(
-                                  affinity: TextAffinity.downstream,
-                                  offset:
-                                      '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['pic_url'] ?? ''}'
-                                          .length,
-                                ),
-                              ),
-                            ),
-                          ),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.only(
-                              top: 6,
-                              bottom: 6,
-                              left: 15,
-                              right: 15,
-                            ),
-                          ),
-                          onChanged: (val) {
-                            Map temp;
-                            if (param['reply_content'] == null) {
-                              temp = {'pic_url': val};
-                            } else {
-                              temp = jsonDecode(param['reply_content']);
-                              temp['pic_url'] = val;
-                            }
-                            setState(() {
-                              param['reply_content'] = jsonEncode(temp);
-                            });
-                          },
-                        ),
-                      ),
-                      Container(
-                        width: 60,
-                        child: PrimaryButton(
-                          padding: EdgeInsets.all(0),
-                          onPressed: () {},
-                          child: Text('图片'),
-                        ),
-                      )
-                    ],
-                  ),
+                Input(
+                  label: '图片路径',
+                  onChanged: (val) {
+                    Map temp;
+                    if (param['reply_content'] == null) {
+                      temp = {'pic_url': val};
+                    } else {
+                      temp = jsonDecode(param['reply_content']);
+                      temp['pic_url'] = val;
+                    }
+                    setState(() {
+                      param['reply_content'] = jsonEncode(temp);
+                    });
+                  },
+                  value: '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['pic_url'] ?? ''}',
                 ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: 80,
-                        alignment: Alignment.centerRight,
-                        margin: EdgeInsets.only(right: 10),
-                        child: Text('链接地址'),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: TextField(
-                          style: TextStyle(fontSize: CFFontSize.content),
-                          controller: TextEditingController.fromValue(
-                            TextEditingValue(
-                              text:
-                                  '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_url'] ?? ''}',
-                              selection: TextSelection.fromPosition(
-                                TextPosition(
-                                  affinity: TextAffinity.downstream,
-                                  offset:
-                                      '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_url'] ?? ''}'
-                                          .length,
-                                ),
-                              ),
-                            ),
-                          ),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.only(
-                              top: 6,
-                              bottom: 6,
-                              left: 15,
-                              right: 15,
-                            ),
-                          ),
-                          onChanged: (val) {
-                            Map temp;
-                            if (param['reply_content'] == null) {
-                              temp = {'msg_url': val};
-                            } else {
-                              temp = jsonDecode(param['reply_content']);
-                              temp['msg_url'] = val;
-                            }
-                            setState(() {
-                              param['reply_content'] = jsonEncode(temp);
-                            });
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                )
+                Input(
+                  label: '链接地址',
+                  onChanged: (val) {
+                    Map temp;
+                    if (param['reply_content'] == null) {
+                      temp = {'msg_url': val};
+                    } else {
+                      temp = jsonDecode(param['reply_content']);
+                      temp['msg_url'] = val;
+                    }
+                    setState(() {
+                      param['reply_content'] = jsonEncode(temp);
+                    });
+                  },
+                  value: '${param['reply_content'] == null ? '' : jsonDecode(param['reply_content'])['msg_url'] ?? ''}',
+                ),
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 80,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
-                  child: Text('备注'),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    maxLines: 4,
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['comments'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['comments']}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 6,
-                          bottom: 6,
-                          left: 15,
-                          right: 15,
-                        )),
-                    onChanged: (val) {
-                      setState(() {
-                        param['comments'] = val;
-                      });
-                    },
-                  ),
-                )
-              ],
-            ),
+          Input(
+            label: '备注',
+            onChanged: (val) => param['comments'],
+            value: param['comments'],
           ),
           Container(
             margin: EdgeInsets.only(bottom: 10),

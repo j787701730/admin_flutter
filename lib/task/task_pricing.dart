@@ -145,126 +145,23 @@ class _TaskPricingState extends State<TaskPricing> {
                       });
                     },
                   ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          width: 80,
-                          alignment: Alignment.centerRight,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Text(
-                                '* ',
-                                style: TextStyle(color: CFColors.danger, fontSize: CFFontSize.content),
-                              ),
-                              Text(
-                                '价格',
-                                style: TextStyle(fontSize: CFFontSize.content),
-                              )
-                            ],
-                          ),
-                          margin: EdgeInsets.only(right: 10),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            height: 34,
-                            child: TextField(
-                              style: TextStyle(fontSize: CFFontSize.content),
-                              controller: TextEditingController.fromValue(
-                                TextEditingValue(
-                                  text: '${modifyItem['price'] ?? ''}',
-                                  selection: TextSelection.fromPosition(
-                                    TextPosition(
-                                      affinity: TextAffinity.downstream,
-                                      offset: '${modifyItem['price'] ?? ''}'.length,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.only(
-                                  top: 0,
-                                  bottom: 0,
-                                  left: 15,
-                                  right: 15,
-                                ),
-                              ),
-                              onChanged: (String val) {
-                                setState(() {
-                                  modifyItem['price'] = val;
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                  Input(
+                    label: '价格',
+                    onChanged: (val) {
+                      modifyItem['price'] = val;
+                    },
+                    value: '${modifyItem['price'] ?? ''}',
+                    type: 'float',
+                    require: true,
                   ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          width: 80,
-                          alignment: Alignment.centerRight,
-                          height: 34,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Text(
-                                '* ',
-                                style: TextStyle(color: CFColors.danger, fontSize: CFFontSize.content),
-                              ),
-                              Text(
-                                '平台补贴',
-                                style: TextStyle(fontSize: CFFontSize.content),
-                              )
-                            ],
-                          ),
-                          margin: EdgeInsets.only(right: 10),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            height: 34,
-                            child: TextField(
-                              style: TextStyle(fontSize: CFFontSize.content),
-                              controller: TextEditingController.fromValue(
-                                TextEditingValue(
-                                  text: '${modifyItem['subsidy'] ?? ''}',
-                                  selection: TextSelection.fromPosition(
-                                    TextPosition(
-                                      affinity: TextAffinity.downstream,
-                                      offset: '${modifyItem['subsidy'] ?? ''}'.length,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.only(
-                                  top: 0,
-                                  bottom: 0,
-                                  left: 15,
-                                  right: 15,
-                                ),
-                              ),
-                              onChanged: (String val) {
-                                setState(() {
-                                  modifyItem['subsidy'] = val;
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                  Input(
+                    label: '平台补贴',
+                    onChanged: (val) {
+                      modifyItem['subsidy'] = val;
+                    },
+                    value: '${modifyItem['subsidy'] ?? ''}',
+                    type: 'float',
+                    require: true,
                   ),
                 ],
               ),

@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:admin_flutter/plugin/date_select_plugin.dart';
+import 'package:admin_flutter/plugin/input-single.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
@@ -173,31 +173,11 @@ class _BalanceExtractState extends State<BalanceExtract> {
             child: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(TextEditingValue(
-                      text: comments,
-                      selection: TextSelection.fromPosition(
-                        TextPosition(
-                          affinity: TextAffinity.downstream,
-                          offset: comments.length,
-                        ),
-                      ),
-                    )),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 6,
-                          bottom: 6,
-                          left: 15,
-                          right: 15,
-                        )),
-                    onChanged: (String val) {
-                      setState(() {
-                        comments = val;
-                      });
+                  InputSingle(
+                    onChanged: (val) {
+                      comments = val;
                     },
-                    maxLines: 4,
+                    value: '${comments ?? ''}',
                   )
                 ],
               ),

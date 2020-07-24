@@ -1,6 +1,6 @@
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -115,93 +115,23 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                 });
               },
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              height: 34,
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 100,
-                    alignment: Alignment.centerRight,
-                    child: Text('充值上限'),
-                    margin: EdgeInsets.only(right: 10),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['charge_limit'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(
-                              affinity: TextAffinity.downstream,
-                              offset: '${param['charge_limit'] ?? ''}'.length,
-                            ),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['charge_limit'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
+            Input(
+              label: '充值上限',
+              onChanged: (val) {
+                param['charge_limit'] = val;
+              },
+              labelWidth: 100,
+              type: 'float',
+              value: param['charge_limit'] ?? '',
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              height: 34,
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 100,
-                    alignment: Alignment.centerRight,
-                    child: Text('赠送额度'),
-                    margin: EdgeInsets.only(right: 10),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['present_value'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(
-                                affinity: TextAffinity.downstream, offset: '${param['present_value'] ?? ''}'.length),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['present_value'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
+            Input(
+              label: '赠送额度',
+              onChanged: (val) {
+                param['present_value'] = val;
+              },
+              labelWidth: 100,
+              type: 'float',
+              value: param['present_value'] ?? '',
             ),
             Container(
               margin: EdgeInsets.only(bottom: 10),
@@ -310,91 +240,23 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                 ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              height: 34,
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 100,
-                    alignment: Alignment.centerRight,
-                    child: Text('规则名称'),
-                    margin: EdgeInsets.only(right: 10),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(TextEditingValue(
-                        text: '${param['rule_name'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['rule_name'] ?? ''}'.length,
-                          ),
-                        ),
-                      )),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.only(
-                            top: 0,
-                            bottom: 0,
-                            left: 15,
-                            right: 15,
-                          )),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['rule_name'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
+            Input(
+              label: '规则名称',
+              onChanged: (val) {
+                param['rule_name'] = val;
+              },
+              value: '${param['rule_name'] ?? ''}',
+              labelWidth: 100,
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 100,
-                    alignment: Alignment.centerRight,
-                    child: Text('规则备注'),
-                    margin: EdgeInsets.only(right: 10),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      maxLines: 6,
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['comments'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(
-                              affinity: TextAffinity.downstream,
-                              offset: '${param['comments'] ?? ''}'.length,
-                            ),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 10,
-                          bottom: 10,
-                          left: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['comments'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
+            Input(
+              label: '规则备注',
+              onChanged: (val) {
+                param['comments'] = val;
+              },
+              value: '${param['comments'] ?? ''}',
+              maxLines: 6,
+              marginTop: 4.0,
+              labelWidth: 100,
             ),
             Container(
               margin: EdgeInsets.only(bottom: 6),

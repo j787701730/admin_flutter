@@ -1,6 +1,6 @@
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
 
 class ClassModifyAdd extends StatefulWidget {
@@ -43,163 +43,23 @@ class _ClassModifyAddState extends State<ClassModifyAdd> {
             },
             labelWidth: 90,
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 90,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('分类名称')
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 34,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['class_name'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(
-                              affinity: TextAffinity.downstream,
-                              offset: '${param['class_name'] ?? ''}'.length,
-                            ),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['class_name'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                )
-              ],
-            ),
+          Input(
+            label: '分类名称',
+            require: true,
+            onChanged: (val) => param['class_name'] = val,
+            value: param['class_name'],
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 90,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('分类排序')
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 34,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['sort'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(
-                              affinity: TextAffinity.downstream,
-                              offset: '${param['sort'] ?? ''}'.length,
-                            ),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['sort'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                )
-              ],
-            ),
+          Input(
+            label: '分类排序',
+            require: true,
+            onChanged: (val) => param['sort'] = val,
+            value: param['sort'],
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 90,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
-                  child: Text('默认定价'),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 34,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['class_price'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(
-                              affinity: TextAffinity.downstream,
-                              offset: '${param['class_price'] ?? ''}'.length,
-                            ),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['class_price'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                )
-              ],
-            ),
+          Input(
+            label: '默认定价',
+            require: true,
+            onChanged: (val) => param['class_price'] = val,
+            value: param['class_price'],
           ),
           Container(
             margin: EdgeInsets.only(bottom: 10),

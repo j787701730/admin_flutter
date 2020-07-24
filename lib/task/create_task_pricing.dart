@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/plugin/user_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
@@ -176,119 +177,17 @@ class _CreateTaskPricingState extends State<CreateTaskPricing> {
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-              Container(
-                width: 80,
-                alignment: Alignment.centerRight,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Text(
-                      '* ',
-                      style: TextStyle(color: CFColors.danger, fontSize: CFFontSize.content),
-                    ),
-                    Text(
-                      '定价标准',
-                      style: TextStyle(fontSize: CFFontSize.content),
-                    )
-                  ],
-                ),
-                margin: EdgeInsets.only(right: 10),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  height: 34,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['price'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['price'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 0,
-                        bottom: 0,
-                        left: 15,
-                        right: 15,
-                      ),
-                    ),
-                    onChanged: (String val) {
-                      setState(() {
-                        param['price'] = val;
-                      });
-                    },
-                  ),
-                ),
-              ),
-            ]),
+          Input(
+            label: '定价标准',
+            require: true,
+            onChanged: (val) => param['price'] = val,
+            value: param['price'],
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-              Container(
-                width: 80,
-                alignment: Alignment.centerRight,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Text(
-                      '* ',
-                      style: TextStyle(color: CFColors.danger, fontSize: CFFontSize.content),
-                    ),
-                    Text(
-                      '平台补贴',
-                      style: TextStyle(fontSize: CFFontSize.content),
-                    )
-                  ],
-                ),
-                margin: EdgeInsets.only(right: 10),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  height: 34,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['subsidy'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['subsidy'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 0,
-                        bottom: 0,
-                        left: 15,
-                        right: 15,
-                      ),
-                    ),
-                    onChanged: (String val) {
-                      setState(() {
-                        param['subsidy'] = val;
-                      });
-                    },
-                  ),
-                ),
-              ),
-            ]),
+          Input(
+            label: '平台补贴',
+            require: true,
+            onChanged: (val) => param['subsidy'] = val,
+            value: param['subsidy'],
           ),
           Select(
             selectOptions: taskType,

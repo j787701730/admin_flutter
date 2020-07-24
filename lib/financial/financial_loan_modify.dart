@@ -119,65 +119,11 @@ class _FinancialLoanModifyState extends State<FinancialLoanModify> {
               : Container(
                   width: 0,
                 ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  width: 90,
-                  alignment: Alignment.centerRight,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger, fontSize: CFFontSize.content),
-                      ),
-                      Text(
-                        '金融金额:',
-                        style: TextStyle(fontSize: CFFontSize.content),
-                      )
-                    ],
-                  ),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 34,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['amount'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(
-                              affinity: TextAffinity.downstream,
-                              offset: '${param['amount'] ?? ''}'.length,
-                            ),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['amount'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '金融金额',
+            require: true,
+            onChanged: (val) => param['amount'] = val,
+            value: param['amount'],
           ),
           Select(
             selectOptions: state,

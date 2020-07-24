@@ -1,9 +1,9 @@
 import 'dart:convert';
 
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/plugin/user_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
 
 class RebateRatesModify extends StatefulWidget {
@@ -158,129 +158,20 @@ class _RebateRatesModifyState extends State<RebateRatesModify> {
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            height: 34,
-            child: Row(children: <Widget>[
-              Container(
-                width: 80,
-                alignment: Alignment.centerRight,
-                child: Text('直接返利'),
-                margin: EdgeInsets.only(right: 10),
-              ),
-              Expanded(
-                flex: 1,
-                child: TextField(
-                  style: TextStyle(fontSize: CFFontSize.content),
-                  controller: TextEditingController.fromValue(
-                    TextEditingValue(
-                      text: '${param['direct_rate'] ?? ''}',
-                      selection: TextSelection.fromPosition(
-                        TextPosition(
-                          affinity: TextAffinity.downstream,
-                          offset: '${param['direct_rate'] ?? ''}'.length,
-                        ),
-                      ),
-                    ),
-                  ),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15, right: 15),
-                  ),
-                  onChanged: (String val) {
-                    setState(() {
-                      param['direct_rate'] = val;
-                    });
-                  },
-                ),
-              ),
-              Text('%')
-            ]),
+          Input(
+            label: '直接返利',
+            onChanged: (val) => param['direct_rate'] = val,
+            value: param['direct_rate'],
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            height: 34,
-            child: Row(children: <Widget>[
-              Container(
-                width: 80,
-                alignment: Alignment.centerRight,
-                child: Text('间接返利'),
-                margin: EdgeInsets.only(right: 10),
-              ),
-              Expanded(
-                flex: 1,
-                child: TextField(
-                  style: TextStyle(fontSize: CFFontSize.content),
-                  controller: TextEditingController.fromValue(
-                    TextEditingValue(
-                      text: '${param['indirect_rate'] ?? ''}',
-                      selection: TextSelection.fromPosition(
-                        TextPosition(
-                          affinity: TextAffinity.downstream,
-                          offset: '${param['indirect_rate'] ?? ''}'.length,
-                        ),
-                      ),
-                    ),
-                  ),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.only(
-                      top: 0,
-                      bottom: 0,
-                      left: 15,
-                      right: 15,
-                    ),
-                  ),
-                  onChanged: (String val) {
-                    setState(() {
-                      param['indirect_rate'] = val;
-                    });
-                  },
-                ),
-              ),
-              Text('%')
-            ]),
+          Input(
+            label: '间接返利',
+            onChanged: (val) => param['indirect_rate'] = val,
+            value: param['indirect_rate'],
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            height: 34,
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 80,
-                  alignment: Alignment.centerRight,
-                  child: Text('保金返还'),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['return_rate'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['return_rate'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15, right: 15),
-                    ),
-                    onChanged: (String val) {
-                      setState(() {
-                        param['return_rate'] = val;
-                      });
-                    },
-                  ),
-                ),
-                Text('%')
-              ],
-            ),
+          Input(
+            label: '保金返还',
+            onChanged: (val) => param['return_rate'] = val,
+            value: param['return_rate'],
           ),
           Select(
             selectOptions: rebateType,

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:admin_flutter/opt/opt_config_detail.dart';
+import 'package:admin_flutter/plugin/input-single.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
@@ -141,31 +142,14 @@ class _OptConfigState extends State<OptConfig> {
                 children: <Widget>[
                   Expanded(
                     flex: 1,
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      height: 34.0,
-                      child: TextField(
-                        style: TextStyle(fontSize: CFFontSize.content),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.only(
-                            top: 0,
-                            bottom: 0,
-                            left: 10,
-                            right: 10,
-                          ),
-                          hintText: '输入定义名字搜索',
-                        ),
-                        onChanged: (String val) {
-                          setState(() {
-                            if (val == '') {
-                              param.remove('config_name');
-                            } else {
-                              param['config_name'] = val;
-                            }
-                          });
-                        },
-                      ),
+                    child: InputSingle(
+                      onChanged: (val) {
+                        if (val == '') {
+                          param.remove('config_name');
+                        } else {
+                          param['config_name'] = val;
+                        }
+                      },
                     ),
                   ),
                   PrimaryButton(

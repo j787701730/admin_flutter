@@ -1,3 +1,4 @@
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/plugin/shop_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
@@ -163,315 +164,52 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
               });
             },
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 150,
-                  alignment: Alignment.centerRight,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('平台盈利：')
-                    ],
-                  ),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['plat_rate'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['plat_rate'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 6,
-                          bottom: 6,
-                          left: 15,
-                          right: 15,
-                        )),
-                    onChanged: (val) {
-                      setState(() {
-                        param['plat_rate'] = val;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '平台盈利：',
+            require: true,
+            labelWidth: 150,
+            onChanged: (val) => param['plat_rate'] = val,
+            value: param['plat_rate'],
+            type: 'float',
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 150,
-                  alignment: Alignment.centerRight,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('订单折扣率：')
-                    ],
-                  ),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['order_disrate'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['order_disrate'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 6,
-                        bottom: 6,
-                        left: 15,
-                        right: 15,
-                      ),
-                    ),
-                    onChanged: (val) {
-                      setState(() {
-                        param['order_disrate'] = val;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '订单折扣率：',
+            require: true,
+            labelWidth: 150,
+            onChanged: (val) => param['order_disrate'] = val,
+            value: param['order_disrate'],
+            type: 'float',
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 150,
-                  alignment: Alignment.centerRight,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('订单收入提现率：')
-                    ],
-                  ),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['order_extrate'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['order_extrate'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 6,
-                          bottom: 6,
-                          left: 15,
-                          right: 15,
-                        )),
-                    onChanged: (val) {
-                      setState(() {
-                        param['order_extrate'] = val;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '订单收入提现率：',
+            require: true,
+            labelWidth: 150,
+            onChanged: (val) => param['order_extrate'] = val,
+            value: param['order_extrate'],
+            type: 'float',
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 150,
-                  alignment: Alignment.centerRight,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('返红包率下限：')
-                    ],
-                  ),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['return_rate_lower'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['return_rate_lower'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 6,
-                        bottom: 6,
-                        left: 15,
-                        right: 15,
-                      ),
-                    ),
-                    onChanged: (val) {
-                      setState(() {
-                        param['return_rate_lower'] = val;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '返红包率下限：',
+            require: true,
+            labelWidth: 150,
+            onChanged: (val) => param['return_rate_lower'] = val,
+            value: param['return_rate_lower'],
+            type: 'float',
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 150,
-                  alignment: Alignment.centerRight,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('返红包率上限：')
-                    ],
-                  ),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['return_rate_upper'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['return_rate_upper'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 6,
-                          bottom: 6,
-                          left: 15,
-                          right: 15,
-                        )),
-                    onChanged: (val) {
-                      setState(() {
-                        param['return_rate_upper'] = val;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '返红包率上限：',
+            require: true,
+            labelWidth: 150,
+            onChanged: (val) => param['return_rate_upper'] = val,
+            value: param['return_rate_upper'],
+            type: 'float',
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 150,
-                  alignment: Alignment.centerRight,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[Text('备注：')],
-                  ),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    maxLines: 4,
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['pay_comments'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['pay_comments'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 6,
-                        bottom: 6,
-                        left: 15,
-                        right: 15,
-                      ),
-                    ),
-                    onChanged: (val) {
-                      setState(() {
-                        param['pay_comments'] = val;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '备注：',
+            labelWidth: 150,
+            onChanged: (val) => param['pay_comments'] = val,
+            value: param['pay_comments'],
+            maxLines: 4,
           ),
           Container(
             margin: EdgeInsets.only(bottom: 10),

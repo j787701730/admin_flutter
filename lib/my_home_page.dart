@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:admin_flutter/login.dart';
 import 'package:admin_flutter/menu_data.dart';
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -158,74 +159,14 @@ class _UserOperaState extends State<UserOpera> {
             '修改密码',
           ),
           content: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Container(
-                      child: Text(
-                        '旧密码: ',
-                        style: TextStyle(fontSize: CFFontSize.content),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        height: 34,
-                        child: TextField(
-                          style: TextStyle(fontSize: CFFontSize.content),
-                          textAlign: TextAlign.left,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.only(top: 2, bottom: 2, left: 10, right: 10),
-                            hintText: '输入新密码',
-                          ),
-                          obscureText: true,
-                          onChanged: (String val) {
-                            setState(() {
-                              // password = val;
-                            });
-                          },
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                Container(
-                  height: 15,
-                  width: MediaQuery.of(context).size.width - 100,
-                ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      child: Text(
-                        '新密码: ',
-                        style: TextStyle(fontSize: CFFontSize.content),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        height: 34,
-                        child: TextField(
-                          style: TextStyle(fontSize: CFFontSize.content),
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              errorText: null,
-                              contentPadding: EdgeInsets.only(top: 2, bottom: 2, left: 10, right: 10),
-                              hintText: '输入新密码'),
-                          obscureText: true,
-                          onChanged: (String val) {
-                            setState(() {
-                              // password = val;
-                            });
-                          },
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ],
+            child: Container(
+              width: MediaQuery.of(context).size.width - 100,
+              child: Column(
+                children: <Widget>[
+                  Input(label: '旧密码: ', onChanged: (val) {}),
+                  Input(label: '新密码: ', onChanged: (val) {}),
+                ],
+              ),
             ),
           ),
           actions: <Widget>[

@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -13,7 +13,6 @@ class RebateRule extends StatefulWidget {
 }
 
 class _RebateRuleState extends State<RebateRule> {
-  BuildContext _context;
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   Map param = {"curr_page": 1, "page_count": 15};
@@ -37,7 +36,6 @@ class _RebateRuleState extends State<RebateRule> {
   void initState() {
     super.initState();
     _controller = ScrollController();
-    _context = context;
     Timer(Duration(milliseconds: 200), () {
       getData();
     });
@@ -106,211 +104,40 @@ class _RebateRuleState extends State<RebateRule> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              height: 34,
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 140,
-                    alignment: Alignment.centerRight,
-                    child: Text('最小充值金额(元)'),
-                    margin: EdgeInsets.only(right: 10),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['min_charge'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(
-                              affinity: TextAffinity.downstream,
-                              offset: '${param['min_charge'] ?? ''}'.length,
-                            ),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['min_charge'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
+            Input(
+              label: '最小充值金额(元)',
+              labelWidth: 140,
+              onChanged: (val) => param['min_charge'] = val,
+              value: param['min_charge'],
+              type: 'float',
+            ),
+            Input(
+              label: '加价金额(元)',
+              labelWidth: 140,
+              onChanged: (val) => param['plus_charge'] = val,
+              value: param['plus_charge'],
+              type: 'float',
+            ),
+            Input(
+              label: '最大充值金额(元)',
+              labelWidth: 140,
+              onChanged: (val) => param['max_charge'] = val,
+              value: param['max_charge'],
+              type: 'float',
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10),
-              height: 34,
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 140,
-                    alignment: Alignment.centerRight,
-                    child: Text('加价金额(元)'),
-                    margin: EdgeInsets.only(right: 10),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['plus_charge'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(
-                              affinity: TextAffinity.downstream,
-                              offset: '${param['plus_charge'] ?? ''}'.length,
-                            ),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['plus_charge'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                ],
+              margin: EdgeInsets.only(bottom: 10, left: 150),
+              child: Text(
+                '最大充值金额 = 最小充值金额 + 加价金额 x n倍',
+                style: TextStyle(color: Colors.grey),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    width: 140,
-                    height: 34,
-                    alignment: Alignment.centerRight,
-                    child: Text('最大充值金额(元)'),
-                    margin: EdgeInsets.only(right: 10),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 34,
-                          child: TextField(
-                            style: TextStyle(fontSize: CFFontSize.content),
-                            controller: TextEditingController.fromValue(
-                              TextEditingValue(
-                                text: '${param['max_charge'] ?? ''}',
-                                selection: TextSelection.fromPosition(
-                                  TextPosition(
-                                    affinity: TextAffinity.downstream,
-                                    offset: '${param['max_charge'] ?? ''}'.length,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(
-                                top: 0,
-                                bottom: 0,
-                                left: 15,
-                                right: 15,
-                              ),
-                            ),
-                            onChanged: (String val) {
-                              setState(() {
-                                param['max_charge'] = val;
-                              });
-                            },
-                          ),
-                        ),
-                        Text(
-                          '最大充值金额 = 最小充值金额 + 加价金额 x n倍',
-                          style: TextStyle(color: Colors.grey),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    width: 140,
-                    height: 34,
-                    alignment: Alignment.centerRight,
-                    child: Text('每日封顶比例(%)'),
-                    margin: EdgeInsets.only(right: 10),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 34,
-                          child: TextField(
-                            style: TextStyle(fontSize: CFFontSize.content),
-                            controller: TextEditingController.fromValue(
-                              TextEditingValue(
-                                text: '${param['day_limit'] ?? ''}',
-                                selection: TextSelection.fromPosition(
-                                  TextPosition(
-                                    affinity: TextAffinity.downstream,
-                                    offset: '${param['day_limit'] ?? ''}'.length,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(
-                                top: 0,
-                                bottom: 0,
-                                left: 15,
-                                right: 15,
-                              ),
-                            ),
-                            onChanged: (String val) {
-                              setState(() {
-                                param['day_limit'] = val;
-                              });
-                            },
-                          ),
-                        ),
-                        Text(
-                          '每日封顶比例大于等于0且小于等于100',
-                          style: TextStyle(color: Colors.grey),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+            Input(
+              label: '每日封顶比例(%)',
+              labelWidth: 140,
+              onChanged: (val) => param['day_limit'] = val,
+              value: param['day_limit'],
+              type: 'float',
             ),
             Select(
               selectOptions: {'1': '是', '0': '否'},
@@ -345,11 +172,6 @@ class _RebateRuleState extends State<RebateRule> {
                 ),
               ]),
             )
-
-//              Container(
-//                child: PagePlugin(
-//                    current: param['curr_page'], total: count, pageSize: param['page_count'], function: getPage,),
-//              ),
           ],
         ),
       ),

@@ -262,69 +262,69 @@ class _ChargeCardState extends State<ChargeCard> {
                                 '充值卡制作',
                               ),
                               content: SingleChildScrollView(
-                                child: ListBody(
-                                  children: <Widget>[
-                                    Container(
-                                      width: width - 100,
-                                      margin: EdgeInsets.only(bottom: 10),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 90,
-                                            alignment: Alignment.centerRight,
-                                            child: Text(
-                                              '卡类型:',
-                                              style: TextStyle(fontSize: CFFontSize.content),
+                                child: Container(
+                                  width: width * 0.8,
+                                  child: ListBody(
+                                    children: <Widget>[
+                                      Container(
+                                        width: width - 100,
+                                        margin: EdgeInsets.only(bottom: 10),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Container(
+                                              width: 90,
+                                              alignment: Alignment.centerRight,
+                                              child: Text(
+                                                '卡类型:',
+                                                style: TextStyle(fontSize: CFFontSize.content),
+                                              ),
+                                              margin: EdgeInsets.only(right: 10),
                                             ),
-                                            margin: EdgeInsets.only(right: 10),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.grey),
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(4),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(color: Colors.grey),
+                                                  borderRadius: BorderRadius.all(
+                                                    Radius.circular(4),
+                                                  ),
+                                                ),
+                                                height: 34,
+                                                child: DropdownButton<String>(
+                                                  isExpanded: true,
+                                                  elevation: 1,
+                                                  underline: Container(),
+                                                  value: selectCardType,
+                                                  onChanged: (String newValue) {
+                                                    setState(() {
+                                                      selectCardType = newValue;
+                                                    });
+
+                                                    state(() {
+                                                      selectCardType = newValue;
+                                                    });
+                                                  },
+                                                  items: cardType.keys.toList().map<DropdownMenuItem<String>>((item) {
+                                                    return DropdownMenuItem(
+                                                      value: '$item',
+                                                      child: Container(
+                                                        padding: EdgeInsets.only(left: 10),
+                                                        child: Text(
+                                                          '${cardType[item]['type_ch_name']}',
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: TextStyle(fontSize: CFFontSize.content),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }).toList(),
                                                 ),
                                               ),
-                                              height: 34,
-                                              child: DropdownButton<String>(
-                                                isExpanded: true,
-                                                elevation: 1,
-                                                underline: Container(),
-                                                value: selectCardType,
-                                                onChanged: (String newValue) {
-                                                  setState(() {
-                                                    selectCardType = newValue;
-                                                  });
-
-                                                  state(() {
-                                                    selectCardType = newValue;
-                                                  });
-                                                },
-                                                items: cardType.keys.toList().map<DropdownMenuItem<String>>((item) {
-                                                  return DropdownMenuItem(
-                                                    value: '$item',
-                                                    child: Container(
-                                                      padding: EdgeInsets.only(left: 10),
-                                                      child: Text(
-                                                        '${cardType[item]['type_ch_name']}',
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: TextStyle(fontSize: CFFontSize.content),
-                                                      ),
-                                                    ),
-                                                  );
-                                                }).toList(),
-                                              ),
-                                            ),
-                                          )
-                                        ],
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Container(
-                                      width: width - 100,
-                                      child: Select(
+                                      Select(
                                         selectOptions: cardValue,
                                         selectedValue: selectCardValue,
                                         label: '面值类型:',
@@ -339,49 +339,17 @@ class _ChargeCardState extends State<ChargeCard> {
                                         },
                                         labelWidth: 90,
                                       ),
-                                    ),
-                                    Container(
-                                      width: width - 100,
-                                      margin: EdgeInsets.only(bottom: 10),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 90,
-                                            alignment: Alignment.centerRight,
-                                            child: Text(
-                                              '生成数量:',
-                                              style: TextStyle(fontSize: CFFontSize.content),
-                                            ),
-                                            margin: EdgeInsets.only(right: 10),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              height: 34,
-                                              child: TextField(
-                                                style: TextStyle(fontSize: CFFontSize.content),
-                                                controller: TextEditingController(text: setCardCount),
-                                                decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  contentPadding: EdgeInsets.only(
-                                                    top: 6,
-                                                    bottom: 6,
-                                                    left: 15,
-                                                    right: 15,
-                                                  ),
-                                                ),
-                                                onChanged: (String val) {
-                                                  setState(() {
-                                                    setCardCount = val;
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          )
-                                        ],
+                                      Input(
+                                        labelWidth: 90,
+                                        label: '生成数量',
+                                        onChanged: (val) {
+                                          setCardCount = val;
+                                        },
+                                        value: setCardCount ?? '',
+                                        type: 'int',
                                       ),
-                                    )
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                               actions: <Widget>[

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:admin_flutter/cf-provider.dart';
+import 'package:admin_flutter/plugin/input-single.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
@@ -180,35 +180,9 @@ class _StaffGroupState extends State<StaffGroup> {
           ),
           content: SingleChildScrollView(
             child: Container(
-              height: 34,
-//                width: MediaQuery.of(context).size.width - 100,
-              child: TextField(
-                style: TextStyle(fontSize: CFFontSize.content),
-                controller: TextEditingController.fromValue(
-                  TextEditingValue(
-                    text: '${itemTemp['group_name'] ?? ''}',
-                    selection: TextSelection.fromPosition(
-                      TextPosition(
-                        affinity: TextAffinity.downstream,
-                        offset: '${itemTemp['group_name'] ?? ''}'.length,
-                      ),
-                    ),
-                  ),
-                ),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.only(
-                    top: 6,
-                    bottom: 6,
-                    left: 15,
-                    right: 15,
-                  ),
-                ),
-                onChanged: (val) {
-                  setState(() {
-                    itemTemp['name'] = val;
-                  });
-                },
+              child: InputSingle(
+                onChanged: (val) => itemTemp['group_name'] = val,
+                value: itemTemp['group_name'],
               ),
             ),
           ),

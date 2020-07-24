@@ -205,61 +205,6 @@ class _SystemConfigState extends State<SystemConfig> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-//              Container(
-//                margin: EdgeInsets.only(bottom: 10),
-//                child: Row(
-//                  children: <Widget>[
-//                    Container(
-//                      width: 80,
-//                      alignment: Alignment.centerRight,
-//                      margin: EdgeInsets.only(right: 10),
-//                      child: Text('用户名'),
-//                    ),
-//                    Expanded(
-//                      flex: 1,
-//                      child: TextField(
-//                        decoration: InputDecoration(
-//                            border: OutlineInputBorder(),
-//                            contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 15,right: 15,)),
-//                        onChanged: (String val) {
-//                          setState(() {
-//                            if (val == '') {
-//                              param.remove('login_name');
-//                            } else {
-//                              param['login_name'] = val;
-//                            }
-//                          });
-//                        },
-//                      ),
-//                    )
-//                  ],
-//                ),
-//              ),
-//              Container(
-//                child: Wrap(
-//                  alignment: WrapAlignment.center,
-//                  spacing: 10,
-//                  runSpacing: 10,
-//                  children: <Widget>[
-//                    SizedBox(
-//                      height: 32,
-//                      child: PrimaryButton(
-//                          onPressed: () {
-//                            param['curr_page'] = 1;
-//                            getData();
-//                            FocusScope.of(context).requestFocus(FocusNode());
-//                          },
-//                          child: Text('搜索')),
-//                    ),
-//                  ],
-//                ),
-//                margin: EdgeInsets.only(bottom: 10),
-//              ),
-//              Container(
-//                margin: EdgeInsets.only(bottom: 6),
-//                alignment: Alignment.centerRight,
-//                child: NumberBar(count: count),
-//              ),
             loading
                 ? Container(
                     alignment: Alignment.center,

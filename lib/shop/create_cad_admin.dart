@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/shop_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
+import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CreateCadAdmin extends StatefulWidget {
   @override
@@ -11,6 +15,27 @@ class CreateCadAdmin extends StatefulWidget {
 
 class _CreateCadAdminState extends State<CreateCadAdmin> {
   Map param = {'shops': {}};
+  BuildContext _context;
+
+  @override
+  void initState() {
+    super.initState();
+    _context = context;
+  }
+
+  save() {
+    Map data = {'comments': param['comments'], 'shop_id': param['shops'].keys.toList()};
+    if (data['shop_id'].isEmpty) {
+      Fluttertoast.showToast(
+        msg: '请选择店铺',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+      return;
+    }
+    print(data['shop_id']);
+    ajax('Adminrelas-shopsManage-setCadAdmins', {'data': jsonEncode(data)}, true, (data) {}, () {}, _context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,9 +176,7 @@ class _CreateCadAdminState extends State<CreateCadAdmin> {
                   child: Row(
                     children: <Widget>[
                       PrimaryButton(
-                        onPressed: () {
-                          print(param);
-                        },
+                        onPressed: save,
                         child: Text('保存'),
                       ),
                     ],

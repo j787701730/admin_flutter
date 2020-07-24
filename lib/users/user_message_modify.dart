@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -77,106 +77,20 @@ class _UserMessageModifyState extends State<UserMessageModify> {
                         ],
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 10, right: 10),
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            width: 80,
-                            alignment: Alignment.centerRight,
-                            child: Text('登录名'),
-                            margin: EdgeInsets.only(right: 10),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              height: 34,
-                              child: TextField(
-                                style: TextStyle(fontSize: CFFontSize.content),
-                                controller: TextEditingController(text: '${userInfo['login_name']}'),
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15, right: 15),
-                                ),
-                                onChanged: (String val) {
-                                  setState(() {
-//                          searchData[key] = val;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    Input(
+                      label: '登录名',
+                      onChanged: (val) => userInfo['login_name'] = val,
+                      value: userInfo['login_name'],
                     ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 10, right: 10),
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            width: 80,
-                            alignment: Alignment.centerRight,
-                            child: Text('手机号'),
-                            margin: EdgeInsets.only(right: 10),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              height: 34,
-                              child: TextField(
-                                style: TextStyle(fontSize: CFFontSize.content),
-                                controller: TextEditingController(text: '${userInfo['user_phone']}'),
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.only(
-                                    top: 6,
-                                    bottom: 6,
-                                    left: 15,
-                                    right: 15,
-                                  ),
-                                ),
-                                onChanged: (String val) {
-                                  setState(() {
-//                          searchData[key] = val;
-                                  });
-                                },
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                    Input(
+                      label: '手机号',
+                      onChanged: (val) => userInfo['user_phone'] = val,
+                      value: userInfo['user_phone'],
                     ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 10, right: 10),
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            width: 80,
-                            alignment: Alignment.centerRight,
-                            child: Text('邮箱'),
-                            margin: EdgeInsets.only(right: 10),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              height: 34,
-                              child: TextField(
-                                style: TextStyle(fontSize: CFFontSize.content),
-                                controller: TextEditingController(text: '${userInfo['user_mail']}'),
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15, right: 15),
-                                ),
-                                onChanged: (String val) {
-                                  setState(() {
-//                          searchData[key] = val;
-                                  });
-                                },
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                    Input(
+                      label: '邮箱',
+                      onChanged: (val) => userInfo['user_mail'] = val,
+                      value: userInfo['user_mail'],
                     ),
                     Container(
                       margin: EdgeInsets.only(bottom: 10, right: 10),
@@ -282,13 +196,7 @@ class _UserMessageModifyState extends State<UserMessageModify> {
                       child: Row(
                         children: <Widget>[
                           Container(
-                            width: 80,
-                            alignment: Alignment.centerRight,
-                            child: Text(''),
-                            margin: EdgeInsets.only(right: 10),
-                          ),
-                          Expanded(
-                            flex: 1,
+                            margin: EdgeInsets.only(right: 90),
                             child: Row(
                               children: <Widget>[
                                 PrimaryButton(
@@ -297,7 +205,7 @@ class _UserMessageModifyState extends State<UserMessageModify> {
                                 ),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),

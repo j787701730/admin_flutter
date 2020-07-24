@@ -239,3 +239,54 @@ class SizeFit {
     return SizeFit.rpx * size;
   }
 }
+
+clearNoInt(String value) {
+  if (value == null || value.trim() == '') {
+    return '';
+  }
+  RegExp intReg = new RegExp(r"\d");
+  Iterable<Match> matches = intReg.allMatches(value);
+  List arr = [];
+  for (Match m in matches) {
+    arr.add(m.group(0));
+  }
+  return arr.join('');
+}
+
+clearNoNum(String value, {int decimal: 2, String sign: '+'}) {
+  if (value == null || value.trim() == '') {
+    return '';
+  }
+  RegExp intReg = new RegExp(r"\d|\.|\-");
+  Iterable<Match> matches = intReg.allMatches(value);
+  List arr = [];
+  for (Match m in matches) {
+    arr.add(m.group(0));
+  }
+  if (arr.isEmpty) {
+    return '';
+  }
+  int count = 0;
+  List returnArr = [];
+  for (var i = 0; i < arr.length; ++i) {
+    if (returnArr.isEmpty && sign == '-' && arr[i] == '-') {
+      returnArr.add('-');
+    } else if (arr[i] != '-') {
+      if (arr[i] == '.') {
+        if (returnArr.contains('-') && returnArr.length > 1 && !returnArr.contains('.')) {
+          returnArr.add('.');
+        } else if (!returnArr.contains('-') && returnArr.length > 0 && !returnArr.contains('.')) {
+          returnArr.add('.');
+        }
+      } else {
+        if (returnArr.contains('.') && count < decimal) {
+          returnArr.add(arr[i]);
+          count += 1;
+        } else if (!returnArr.contains('.')) {
+          returnArr.add(arr[i]);
+        }
+      }
+    }
+  }
+  return returnArr.join('');
+}

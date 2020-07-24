@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:admin_flutter/plugin/date_select_plugin.dart';
+import 'package:admin_flutter/plugin/input-single.dart';
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/user_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
@@ -524,55 +526,13 @@ class _PricePlanState extends State<PricePlan> {
               ),
               Offstage(
                 offstage: pricingMonthlyShow,
-                child: Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: 80,
-                        alignment: Alignment.centerRight,
-                        child: Text('月封顶费:'),
-                        margin: EdgeInsets.only(right: 10),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          height: 34,
-                          child: TextField(
-                            style: TextStyle(fontSize: CFFontSize.content),
-                            controller: TextEditingController.fromValue(
-                              TextEditingValue(
-                                text: '${pricingStrategyData['limit_fee']}',
-                                selection: TextSelection.fromPosition(
-                                  TextPosition(
-                                      affinity: TextAffinity.downstream,
-                                      offset: '${pricingStrategyData['limit_fee']}'.length),
-                                ),
-                              ),
-                            ),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(
-                                top: 6,
-                                bottom: 6,
-                                left: 15,
-                                right: 15,
-                              ),
-                            ),
-                            onChanged: (val) {
-                              setState(() {
-                                pricingStrategyData['limit_fee'] = val;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 10),
-                        child: Text('元'),
-                      ),
-                    ],
-                  ),
+                child: Input(
+                  label: '月封顶费:',
+                  onChanged: (val) {
+                    pricingStrategyData['limit_fee'] = val;
+                  },
+                  value: pricingStrategyData['limit_fee'] ?? '',
+                  type: 'float',
                 ),
               ),
               Container(
@@ -604,32 +564,11 @@ class _PricePlanState extends State<PricePlan> {
                                     children: <Widget>[
                                       Container(
                                         width: 120,
-                                        height: 34,
-                                        child: TextField(
-                                          style: TextStyle(fontSize: CFFontSize.content),
-                                          controller: TextEditingController.fromValue(
-                                            TextEditingValue(
-                                              text:
-                                                  '${jsonDecode(pricingStrategyData['pricing_strategy'])['pricing_amount']}',
-                                              selection: TextSelection.fromPosition(
-                                                TextPosition(
-                                                  affinity: TextAffinity.downstream,
-                                                  offset:
-                                                      '${jsonDecode(pricingStrategyData['pricing_strategy'])['pricing_amount']}'
-                                                          .length,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 10),
-                                          ),
-                                          onChanged: (val) {
-                                            setState(() {
-                                              pricingStrategyData['pricing_strategy']['pricing_amount'] = val;
-                                            });
-                                          },
+                                        child: InputSingle(
+                                          type: 'float',
+                                          onChanged: (val) =>
+                                              pricingStrategyData['pricing_strategy']['pricing_amount'] = val,
+                                          value: pricingStrategyData['pricing_strategy']['pricing_amount'],
                                         ),
                                       ),
                                       Container(
@@ -637,31 +576,12 @@ class _PricePlanState extends State<PricePlan> {
                                       ),
                                       Container(
                                         width: 120,
-                                        height: 34,
-                                        child: TextField(
-                                          style: TextStyle(fontSize: CFFontSize.content),
-                                          controller: TextEditingController.fromValue(
-                                            TextEditingValue(
-                                              text:
-                                                  '${pricingStrategyData['pricing_strategy'] == null ? '' : jsonDecode(pricingStrategyData['pricing_strategy'])['pricing_nums']}',
-                                              selection: TextSelection.fromPosition(
-                                                TextPosition(
-                                                    affinity: TextAffinity.downstream,
-                                                    offset:
-                                                        '${pricingStrategyData['pricing_strategy'] == null ? '' : jsonDecode(pricingStrategyData['pricing_strategy'])['pricing_nums']}'
-                                                            .length),
-                                              ),
-                                            ),
-                                          ),
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 10),
-                                          ),
-                                          onChanged: (val) {
-                                            setState(() {
-                                              pricingStrategyData['pricing_strategy']['pricing_nums'] = val;
-                                            });
-                                          },
+                                        child: InputSingle(
+                                          type: 'float',
+                                          onChanged: (val) =>
+                                              pricingStrategyData['pricing_strategy']['pricing_nums'] = val,
+                                          value:
+                                              '${pricingStrategyData['pricing_strategy'] == null ? '' : jsonDecode(pricingStrategyData['pricing_strategy'])['pricing_nums']}',
                                         ),
                                       ),
                                       Container(
@@ -739,28 +659,10 @@ class _PricePlanState extends State<PricePlan> {
                                               children: <Widget>[
                                                 Container(
                                                   width: 120,
-                                                  height: 34,
-                                                  child: TextField(
-                                                    style: TextStyle(fontSize: CFFontSize.content),
-                                                    controller: TextEditingController.fromValue(
-                                                      TextEditingValue(
-                                                        text: '${item['lower_limit']}',
-                                                        selection: TextSelection.fromPosition(
-                                                          TextPosition(
-                                                              affinity: TextAffinity.downstream,
-                                                              offset: '${item['lower_limit']}'.length),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    decoration: InputDecoration(
-                                                      border: OutlineInputBorder(),
-                                                      contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 10),
-                                                    ),
-                                                    onChanged: (val) {
-                                                      setState(() {
-                                                        item['lower_limit'] = val;
-                                                      });
-                                                    },
+                                                  child: InputSingle(
+                                                    onChanged: (val) => pricingStrategyData['lower_limit'] = val,
+                                                    value: pricingStrategyData['lower_limit'],
+                                                    type: 'float',
                                                   ),
                                                 ),
                                                 Container(
@@ -768,28 +670,10 @@ class _PricePlanState extends State<PricePlan> {
                                                 ),
                                                 Container(
                                                   width: 120,
-                                                  height: 34,
-                                                  child: TextField(
-                                                    style: TextStyle(fontSize: CFFontSize.content),
-                                                    controller: TextEditingController.fromValue(
-                                                      TextEditingValue(
-                                                        text: '${item['upper_limit']}',
-                                                        selection: TextSelection.fromPosition(
-                                                          TextPosition(
-                                                              affinity: TextAffinity.downstream,
-                                                              offset: '${item['upper_limit']}'.length),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    decoration: InputDecoration(
-                                                      border: OutlineInputBorder(),
-                                                      contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 10),
-                                                    ),
-                                                    onChanged: (val) {
-                                                      setState(() {
-                                                        item['upper_limit'] = val;
-                                                      });
-                                                    },
+                                                  child: InputSingle(
+                                                    onChanged: (val) => pricingStrategyData['upper_limit'] = val,
+                                                    value: pricingStrategyData['upper_limit'],
+                                                    type: 'float',
                                                   ),
                                                 ),
                                                 Container(
@@ -798,27 +682,9 @@ class _PricePlanState extends State<PricePlan> {
                                                 Container(
                                                   width: 120,
                                                   height: 34,
-                                                  child: TextField(
-                                                    style: TextStyle(fontSize: CFFontSize.content),
-                                                    controller: TextEditingController.fromValue(
-                                                      TextEditingValue(
-                                                        text: '${item['pricing_amount']}',
-                                                        selection: TextSelection.fromPosition(
-                                                          TextPosition(
-                                                              affinity: TextAffinity.downstream,
-                                                              offset: '${item['pricing_amount']}'.length),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    decoration: InputDecoration(
-                                                      border: OutlineInputBorder(),
-                                                      contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 10),
-                                                    ),
-                                                    onChanged: (val) {
-                                                      setState(() {
-                                                        item['pricing_amount'] = val;
-                                                      });
-                                                    },
+                                                  child: InputSingle(
+                                                    onChanged: (val) => pricingStrategyData['pricing_amount'] = val,
+                                                    value: pricingStrategyData['pricing_amount'],
                                                   ),
                                                 ),
                                                 Container(
@@ -827,27 +693,10 @@ class _PricePlanState extends State<PricePlan> {
                                                 Container(
                                                   width: 120,
                                                   height: 34,
-                                                  child: TextField(
-                                                    style: TextStyle(fontSize: CFFontSize.content),
-                                                    controller: TextEditingController.fromValue(
-                                                      TextEditingValue(
-                                                        text: '${item['pricing_nums']}',
-                                                        selection: TextSelection.fromPosition(
-                                                          TextPosition(
-                                                              affinity: TextAffinity.downstream,
-                                                              offset: '${item['pricing_nums']}'.length),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    decoration: InputDecoration(
-                                                      border: OutlineInputBorder(),
-                                                      contentPadding: EdgeInsets.only(top: 6, bottom: 6, left: 10),
-                                                    ),
-                                                    onChanged: (val) {
-                                                      setState(() {
-                                                        item['pricing_nums'] = val;
-                                                      });
-                                                    },
+                                                  child: InputSingle(
+                                                    onChanged: (val) => pricingStrategyData['pricing_nums'] = val,
+                                                    value: pricingStrategyData['pricing_nums'],
+                                                    type: 'float',
                                                   ),
                                                 ),
                                                 Container(

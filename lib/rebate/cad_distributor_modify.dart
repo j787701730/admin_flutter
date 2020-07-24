@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:admin_flutter/plugin/input-single.dart';
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
@@ -22,7 +24,6 @@ class CADDistributorModify extends StatefulWidget {
 
 class _CADDistributorModifyState extends State<CADDistributorModify> {
   Map data;
-  BuildContext _context;
   bool picLoading = false;
   bool logoLoading = false;
   bool isChecked = false;
@@ -30,7 +31,6 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
   @override
   void initState() {
     super.initState();
-    _context = context;
     data = jsonDecode(jsonEncode(widget.props['item']));
     data['show_text'] = data['show_text'] ?? '';
     data['show_phone'] = data['show_phone'] ?? '';
@@ -118,47 +118,10 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
         child: ListView(
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 80,
-                    alignment: Alignment.centerRight,
-                    child: Text('开通费用:'),
-                    margin: EdgeInsets.only(right: 10),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(TextEditingValue(
-                        text: '${data['amount']}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${data['amount']}'.length,
-                          ),
-                        ),
-                      )),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 6,
-                          bottom: 6,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          data['amount'] = val;
-                        });
-                      },
-                    ),
-                  )
-                ],
-              ),
+            Input(
+              label: '开通费用:',
+              onChanged: (val) => data['amount'] = val,
+              value: data['amount'],
             ),
             Container(
               margin: EdgeInsets.only(bottom: 10),
@@ -292,32 +255,9 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        TextField(
-                          style: TextStyle(fontSize: CFFontSize.content),
-                          controller: TextEditingController.fromValue(
-                            TextEditingValue(
-                              text: '${data['show_text']}',
-                              selection: TextSelection.fromPosition(
-                                TextPosition(
-                                  affinity: TextAffinity.downstream,
-                                  offset: '${data['show_text']}'.length,
-                                ),
-                              ),
-                            ),
-                          ),
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(
-                                top: 6,
-                                bottom: 6,
-                                left: 15,
-                                right: 15,
-                              )),
-                          onChanged: (String val) {
-                            setState(() {
-                              data['show_text'] = val;
-                            });
-                          },
+                        InputSingle(
+                          onChanged: (val) => data['show_text'] = val,
+                          value: data['show_text'],
                         ),
                         isChecked && (data['show_text'] == '' || data['show_text'] == null)
                             ? Text(
@@ -355,31 +295,9 @@ class _CADDistributorModifyState extends State<CADDistributorModify> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        TextField(
-                          style: TextStyle(fontSize: CFFontSize.content),
-                          controller: TextEditingController.fromValue(TextEditingValue(
-                            text: '${data['show_phone']}',
-                            selection: TextSelection.fromPosition(
-                              TextPosition(
-                                affinity: TextAffinity.downstream,
-                                offset: '${data['show_phone']}'.length,
-                              ),
-                            ),
-                          )),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.only(
-                              top: 6,
-                              bottom: 6,
-                              left: 15,
-                              right: 15,
-                            ),
-                          ),
-                          onChanged: (String val) {
-                            setState(() {
-                              data['show_phone'] = val;
-                            });
-                          },
+                        InputSingle(
+                          onChanged: (val) => data['show_phone'] = val,
+                          value: data['show_phone'],
                         ),
                         isChecked && (data['show_phone'] == '' || data['show_phone'] == null)
                             ? Text(

@@ -388,48 +388,24 @@ class _InvoiceDetailState extends State<InvoiceDetail> {
                           ? Column(
                               children: <Widget>[
                                 Input(
-                                    label: '发票号:',
-                                    require: true,
-                                    labelWidth: 120,
-                                    onChanged: (String val) {
-                                      setState(() {
+                                  label: '发票号:',
+                                  require: true,
+                                  labelWidth: 120,
+                                  onChanged: (String val) {
+                                    setState(() {
 //                              param['loginName'] = val;
-                                      });
-                                    }),
-                                Container(
-                                  margin: EdgeInsets.only(bottom: 6),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        width: 120,
-                                        alignment: Alignment.centerRight,
-                                        child: Text('开具备注:'),
-                                        margin: EdgeInsets.only(right: 10),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: TextField(
-                                          style: TextStyle(fontSize: CFFontSize.content),
-                                          maxLines: 4,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            contentPadding: EdgeInsets.only(
-                                              top: 6,
-                                              bottom: 6,
-                                              left: 15,
-                                              right: 15,
-                                            ),
-                                          ),
-                                          onChanged: (String val) {
-                                            setState(() {
+                                    });
+                                  },
+                                ),
+                                Input(
+                                  label: '开具备注:',
+                                  labelWidth: 120,
+                                  maxLines: 4,
+                                  onChanged: (String val) {
+                                    setState(() {
 //                              param['loginName'] = val;
-                                            });
-                                          },
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                    });
+                                  },
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(bottom: 6),

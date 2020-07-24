@@ -1,12 +1,11 @@
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
+
 import 'package:admin_flutter/plugin/input.dart';
-import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/plugin/user_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/style.dart';
-import 'package:flutter/material.dart';
 import 'package:admin_flutter/utils.dart';
+import 'package:flutter/material.dart';
 
 /// 手工账
 class BalanceManualOpera extends StatefulWidget {
@@ -378,50 +377,13 @@ class _BalanceManualOperaState extends State<BalanceManualOpera> {
                     ],
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: 80,
-                        alignment: Alignment.centerRight,
-                        child: Text('调账金额'),
-                        margin: EdgeInsets.only(right: 10),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          height: 34,
-                          child: TextField(
-                            style: TextStyle(fontSize: CFFontSize.content),
-                            controller: TextEditingController.fromValue(
-                              TextEditingValue(
-                                text: '${manualAmount ?? ''}',
-                                selection: TextSelection.fromPosition(
-                                  TextPosition(
-                                      affinity: TextAffinity.downstream, offset: '${manualAmount ?? ''}'.length),
-                                ),
-                              ),
-                            ),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(
-                                top: 0,
-                                bottom: 0,
-                                left: 10,
-                                right: 10,
-                              ),
-                            ),
-                            onChanged: (String val) {
-                              setState(() {
-                                manualAmount = val;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                Input(
+                  label: '调账金额',
+                  onChanged: (val) {
+                    manualAmount = val;
+                  },
+                  value: manualAmount,
+                  type: 'float',
                 ),
                 Input(
                   label: '调账备注',

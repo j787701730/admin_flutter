@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:admin_flutter/plugin/date_select_plugin.dart';
+import 'package:admin_flutter/plugin/input-single.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
@@ -102,6 +103,7 @@ class _CadAdminsState extends State<CadAdmins> {
   }
 
   dialog(data) {
+    String comments = data['comments'] ?? '';
     showDialog<void>(
       context: _context,
       barrierDismissible: false, // user must tap button!
@@ -115,24 +117,12 @@ class _CadAdminsState extends State<CadAdmins> {
               children: <Widget>[
                 Container(
                   width: MediaQuery.of(context).size.width - 100,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController(text: '${data['comments']}'),
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 6,
-                        bottom: 6,
-                        left: 15,
-                        right: 15,
-                      ),
-                    ),
-                    onChanged: (String val) {
-                      setState(() {
-//                              param['loginName'] = val;
-                      });
+                  child: InputSingle(
+                    onChanged: (val) {
+                      comments = val;
                     },
+                    value: comments,
+                    maxLines: 6,
                   ),
                 )
               ],
@@ -150,7 +140,19 @@ class _CadAdminsState extends State<CadAdmins> {
               textColor: CFColors.white,
               child: Text('保存'),
               onPressed: () {
-                Navigator.of(_context).pop();
+                print(comments);
+                ajax(
+                    'Adminrelas-shopsManage-editCadAdmins',
+                    {
+                      'data': jsonEncode({
+                        "comments": comments,
+                        "shop_id": data['shop_id'],
+                      })
+                    },
+                    true, (data) {
+                  Navigator.of(_context).pop();
+                  getData();
+                }, () {}, _context);
               },
             ),
           ],
@@ -193,13 +195,75 @@ class _CadAdminsState extends State<CadAdmins> {
               textColor: CFColors.white,
               child: Text('保存'),
               onPressed: () {
-                Navigator.of(_context).pop();
+                cadAdminsState({
+                  'shop_id': [item['shop_id']],
+                  'state': item['state'] == '1' ? '0' : '1'
+                }, () {
+                  Navigator.of(_context).pop();
+                });
               },
             ),
           ],
         );
       },
     );
+  }
+
+  delDialog(item) {
+    showDialog<void>(
+      context: _context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            '提示',
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width - 100,
+                  child: Text(
+                    '确定删除 ${item['name']} 管理员?',
+                    style: TextStyle(fontSize: CFFontSize.content),
+                  ),
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('关闭'),
+              onPressed: () {
+                Navigator.of(_context).pop();
+              },
+            ),
+            FlatButton(
+              color: Colors.blue,
+              textColor: CFColors.white,
+              child: Text('确认'),
+              onPressed: () {
+                ajax(
+                    'Adminrelas-shopsManage-delCadAdmin',
+                    {
+                      'admin_id': jsonEncode([item['shop_id']])
+                    },
+                    true, (data) {
+                  Navigator.of(_context).pop();
+                  getData();
+                }, () {}, _context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  cadAdminsState(data, callback) {
+    ajax('Adminrelas-shopsManage-cadAdminsState', {'state': jsonEncode(data)}, true, (data) {
+      callback();
+    }, () {}, _context);
   }
 
   String defaultVal = 'all';
@@ -264,14 +328,15 @@ class _CadAdminsState extends State<CadAdmins> {
               secondChild: Column(
                 children: <Widget>[
                   Input(
-                      label: '店铺名称',
-                      onChanged: (String val) {
-                        if (val == '') {
-                          param.remove('shop_name');
-                        } else {
-                          param['shop_name'] = val;
-                        }
-                      }),
+                    label: '店铺名称',
+                    onChanged: (String val) {
+                      if (val == '') {
+                        param.remove('shop_name');
+                      } else {
+                        param['shop_name'] = val;
+                      }
+                    },
+                  ),
                   Select(
                     selectOptions: state,
                     selectedValue: param['if_state'] ?? 'all',
@@ -319,7 +384,7 @@ class _CadAdminsState extends State<CadAdmins> {
                         new MaterialPageRoute(
                           builder: (context) => new CreateCadAdmin(),
                         ),
-                      );
+                      ).then((value) => getData());
                     },
                     child: Text('新增CAD管理员'),
                   ),
@@ -388,6 +453,13 @@ class _CadAdminsState extends State<CadAdmins> {
                                                 stateDialog(item);
                                               },
                                               child: Text('${item['state']}' == '1' ? '冻结' : '解冻'),
+                                            ),
+                                            PrimaryButton(
+                                              onPressed: () {
+                                                delDialog(item);
+                                              },
+                                              child: Text('删除'),
+                                              type: 'error',
                                             ),
                                           ],
                                         );

@@ -1,10 +1,10 @@
 import 'dart:convert';
 
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/style.dart';
-import 'package:flutter/material.dart';
 import 'package:admin_flutter/utils.dart';
+import 'package:flutter/material.dart';
 
 class PaymentPlanModify extends StatefulWidget {
   final props;
@@ -102,90 +102,19 @@ class _PaymentPlanModifyState extends State<PaymentPlanModify> {
               });
             },
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            height: 34,
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 80,
-                  alignment: Alignment.centerRight,
-                  child: Text('支付顺序'),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['balance_sort'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['balance_sort'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 0,
-                        bottom: 0,
-                        left: 15,
-                        right: 15,
-                      ),
-                    ),
-                    onChanged: (String val) {
-                      setState(() {
-                        param['balance_sort'] = val;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '支付顺序',
+            onChanged: (val) {
+              param['balance_sort'] = val;
+            },
+            value: '${param['balance_sort'] ?? ''}',
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 80,
-                  alignment: Alignment.centerRight,
-                  child: Text('调账备注'),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    maxLines: 4,
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['comments'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['comments'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15),
-                    ),
-                    onChanged: (String val) {
-                      setState(() {
-                        param['comments'] = val;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '调账备注',
+            onChanged: (val) {
+              param['comments'] = val;
+            },
+            value: '${param['comments'] ?? ''}',
           ),
           Container(
             margin: EdgeInsets.only(bottom: 10),

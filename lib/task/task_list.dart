@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:admin_flutter/plugin/city_select_plugin.dart';
 import 'package:admin_flutter/plugin/date_select_plugin.dart';
+import 'package:admin_flutter/plugin/input-single.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
@@ -463,35 +464,9 @@ class _TaskListState extends State<TaskList> {
                               ),
                               Container(
                                 width: 120,
-                                height: 34,
-                                child: TextField(
-                                  controller: TextEditingController.fromValue(
-                                    TextEditingValue(
-                                      text: '${markupValue ?? ''}',
-                                      selection: TextSelection.fromPosition(
-                                        TextPosition(
-                                          affinity: TextAffinity.downstream,
-                                          offset: '${markupValue ?? ''}'.length,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  style: TextStyle(fontSize: CFFontSize.content),
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.only(
-                                      top: 0,
-                                      bottom: 0,
-                                      left: 10,
-                                      right: 10,
-                                    ),
-                                  ),
-                                  maxLines: 1,
-                                  onChanged: (String val) {
-                                    setState(() {
-                                      markupValue = val;
-                                    });
-                                  },
+                                child: InputSingle(
+                                  onChanged: (val) => markupValue = val,
+                                  value: markupValue,
                                 ),
                               ),
                               Text(' 倍'),
@@ -530,70 +505,18 @@ class _TaskListState extends State<TaskList> {
                               ),
                               Expanded(
                                 child: Container(
-                                  height: 34,
-                                  child: TextField(
-                                    controller: TextEditingController.fromValue(
-                                      TextEditingValue(
-                                        text: '${markupValueList['markup_valueL'] ?? ''}',
-                                        selection: TextSelection.fromPosition(
-                                          TextPosition(
-                                            affinity: TextAffinity.downstream,
-                                            offset: '${markupValueList['markup_valueL'] ?? ''}'.length,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    style: TextStyle(fontSize: CFFontSize.content),
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      contentPadding: EdgeInsets.only(
-                                        top: 0,
-                                        bottom: 0,
-                                        left: 10,
-                                        right: 10,
-                                      ),
-                                    ),
-                                    maxLines: 1,
-                                    onChanged: (String val) {
-                                      setState(() {
-                                        markupValueList['markup_valueL'] = val;
-                                      });
-                                    },
+                                  child: InputSingle(
+                                    onChanged: (val) => markupValueList['markup_valueL'] = val,
+                                    value: markupValueList['markup_valueL'],
                                   ),
                                 ),
                               ),
                               Text(' - '),
                               Expanded(
                                 child: Container(
-                                  height: 34,
-                                  child: TextField(
-                                    controller: TextEditingController.fromValue(
-                                      TextEditingValue(
-                                        text: '${markupValueList['markup_valueU'] ?? ''}',
-                                        selection: TextSelection.fromPosition(
-                                          TextPosition(
-                                            affinity: TextAffinity.downstream,
-                                            offset: '${markupValueList['markup_valueU'] ?? ''}'.length,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    style: TextStyle(fontSize: CFFontSize.content),
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      contentPadding: EdgeInsets.only(
-                                        top: 0,
-                                        bottom: 0,
-                                        left: 10,
-                                        right: 10,
-                                      ),
-                                    ),
-                                    maxLines: 1,
-                                    onChanged: (String val) {
-                                      setState(() {
-                                        markupValueList['markup_valueU'] = val;
-                                      });
-                                    },
+                                  child: InputSingle(
+                                    onChanged: (val) => markupValueList['markup_valueU'] = val,
+                                    value: markupValueList['markup_valueU'],
                                   ),
                                 ),
                               ),

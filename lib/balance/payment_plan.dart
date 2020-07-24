@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:admin_flutter/balance/payment_plan_modify.dart';
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
@@ -200,131 +201,29 @@ class _PaymentPlanState extends State<PaymentPlan> {
               width: MediaQuery.of(context).size.width - 100,
               child: Column(
                 children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    height: 34,
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          width: 80,
-                          alignment: Alignment.centerRight,
-                          child: Text('中文名字'),
-                          margin: EdgeInsets.only(right: 10),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: TextField(
-                            style: TextStyle(fontSize: CFFontSize.content),
-                            controller: TextEditingController.fromValue(
-                              TextEditingValue(
-                                text: '${planTypeModify['type_ch_name'] ?? ''}',
-                                selection: TextSelection.fromPosition(
-                                  TextPosition(
-                                    affinity: TextAffinity.downstream,
-                                    offset: '${planTypeModify['type_ch_name'] ?? ''}'.length,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(
-                                top: 0,
-                                bottom: 0,
-                                left: 15,
-                                right: 15,
-                              ),
-                            ),
-                            onChanged: (String val) {
-                              setState(() {
-                                planTypeModify['type_ch_name'] = val;
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                  Input(
+                    label: '中文名字',
+                    onChanged: (val) {
+                      planTypeModify['type_ch_name'] = val;
+                    },
+                    value: planTypeModify['type_ch_name'] ?? '',
                   ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    height: 34,
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          width: 80,
-                          alignment: Alignment.centerRight,
-                          child: Text('英文名字'),
-                          margin: EdgeInsets.only(right: 10),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: TextField(
-                            style: TextStyle(fontSize: CFFontSize.content),
-                            controller: TextEditingController.fromValue(
-                              TextEditingValue(
-                                text: '${planTypeModify['type_en_name'] ?? ''}',
-                                selection: TextSelection.fromPosition(
-                                  TextPosition(
-                                    affinity: TextAffinity.downstream,
-                                    offset: '${planTypeModify['type_en_name'] ?? ''}'.length,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 15, right: 15),
-                            ),
-                            onChanged: (String val) {
-                              setState(() {
-                                planTypeModify['type_en_name'] = val;
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                  Input(
+                    label: '英文名字',
+                    onChanged: (val) {
+                      planTypeModify['type_en_name'] = val;
+                    },
+                    value: planTypeModify['type_en_name'] ?? '',
                   ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          width: 80,
-                          alignment: Alignment.centerRight,
-                          child: Text('描述'),
-                          margin: EdgeInsets.only(right: 10),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: TextField(
-                            style: TextStyle(fontSize: CFFontSize.content),
-                            maxLines: 3,
-                            controller: TextEditingController.fromValue(
-                              TextEditingValue(
-                                text: '${planTypeModify['comments'] ?? ''}',
-                                selection: TextSelection.fromPosition(
-                                  TextPosition(
-                                    affinity: TextAffinity.downstream,
-                                    offset: '${planTypeModify['comments'] ?? ''}'.length,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15),
-                            ),
-                            onChanged: (String val) {
-                              setState(() {
-                                planTypeModify['comments'] = val;
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                  Input(
+                    label: '描述',
+                    onChanged: (val) {
+                      planTypeModify['comments'] = val;
+                    },
+                    value: planTypeModify['comments'] ?? '',
+                    maxLines: 4,
+                    marginTop: 4.0,
+                  ),
                 ],
               ),
             ),

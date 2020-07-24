@@ -1,6 +1,6 @@
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +14,6 @@ class SiteMapModifyTwo extends StatefulWidget {
 }
 
 class _SiteMapModifyTwoState extends State<SiteMapModifyTwo> {
-  BuildContext _context;
   ScrollController _controller;
 
   Map param = {};
@@ -24,7 +23,6 @@ class _SiteMapModifyTwoState extends State<SiteMapModifyTwo> {
   void initState() {
     super.initState();
     _controller = ScrollController();
-    _context = context;
     if (widget.props != null) {
       param = {
         'map_ch_name': widget.props['item']['mnm'],
@@ -65,137 +63,23 @@ class _SiteMapModifyTwoState extends State<SiteMapModifyTwo> {
         controller: _controller,
         padding: EdgeInsets.all(10),
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 90,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
-                  child: Text('菜单图标'),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['map_icon'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['map_icon'] ?? ""}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 6,
-                        bottom: 6,
-                        left: 15,
-                        right: 15,
-                      ),
-                    ),
-                    onChanged: (val) {
-                      setState(() {
-                        param['map_icon'] = val;
-                      });
-                    },
-                  ),
-                )
-              ],
-            ),
+          Input(
+            label: '菜单图标',
+            onChanged: (val) => param['map_icon'] = val,
+            value: param['map_icon'],
+            labelWidth: 90,
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 90,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
-                  child: Text('菜单中文名'),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['map_ch_name'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['map_ch_name'] ?? ""}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 6,
-                        bottom: 6,
-                        left: 15,
-                        right: 15,
-                      ),
-                    ),
-                    onChanged: (val) {
-                      setState(() {
-                        param['map_ch_name'] = val;
-                      });
-                    },
-                  ),
-                )
-              ],
-            ),
+          Input(
+            label: '菜单中文名',
+            onChanged: (val) => param['map_ch_name'] = val,
+            value: param['map_ch_name'],
+            labelWidth: 90,
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 90,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
-                  child: Text('菜单英文名'),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['map_en_name'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['map_en_name'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 6,
-                        bottom: 6,
-                        left: 15,
-                        right: 15,
-                      ),
-                    ),
-                    onChanged: (val) {
-                      setState(() {
-                        param['map_en_name'] = val;
-                      });
-                    },
-                  ),
-                )
-              ],
-            ),
+          Input(
+            label: '菜单英文名',
+            onChanged: (val) => param['map_en_name'] = val,
+            value: param['map_en_name'],
+            labelWidth: 90,
           ),
           Select(
             selectOptions: parentMenu,
@@ -208,94 +92,18 @@ class _SiteMapModifyTwoState extends State<SiteMapModifyTwo> {
               });
             },
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 90,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
-                  child: Text('排序'),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['map_sort'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['map_sort'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 6,
-                        bottom: 6,
-                        left: 15,
-                        right: 15,
-                      ),
-                    ),
-                    onChanged: (val) {
-                      setState(() {
-                        param['map_sort'] = val;
-                      });
-                    },
-                  ),
-                )
-              ],
-            ),
+          Input(
+            label: '排序',
+            onChanged: (val) => param['map_sort'] = val,
+            value: param['map_sort'],
+            labelWidth: 90,
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 90,
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 10),
-                  child: Text('备注'),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    style: TextStyle(fontSize: CFFontSize.content),
-                    maxLines: 4,
-                    controller: TextEditingController.fromValue(
-                      TextEditingValue(
-                        text: '${param['comments'] ?? ''}',
-                        selection: TextSelection.fromPosition(
-                          TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${param['comments'] ?? ''}'.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(
-                        top: 6,
-                        bottom: 6,
-                        left: 15,
-                        right: 15,
-                      ),
-                    ),
-                    onChanged: (val) {
-                      setState(() {
-                        param['comments'] = val;
-                      });
-                    },
-                  ),
-                )
-              ],
-            ),
+          Input(
+            label: '备注',
+            onChanged: (val) => param['comments'] = val,
+            value: param['comments'],
+            labelWidth: 90,
+            maxLines: 4,
           ),
           Container(
             margin: EdgeInsets.only(bottom: 10),

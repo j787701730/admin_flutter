@@ -1,5 +1,5 @@
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
 
 class BoardCutConfigTypeModify extends StatefulWidget {
@@ -36,218 +36,35 @@ class _BoardCutConfigTypeModifyState extends State<BoardCutConfigTypeModify> {
       body: ListView(
         padding: EdgeInsets.all(10),
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 100,
-                  alignment: Alignment.centerRight,
-                  height: 34,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('类型中文名：'),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 34,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['type_ch_name'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(
-                              affinity: TextAffinity.downstream,
-                              offset: '${param['type_ch_name'] ?? ''}'.length,
-                            ),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['type_ch_name'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '类型中文名：',
+            onChanged: (val) => param['type_ch_name'],
+            require: true,
+            value: param['type_ch_name'],
+            labelWidth: 100,
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 100,
-                  alignment: Alignment.centerRight,
-                  height: 34,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('类型英文名：'),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 34,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['type_en_name'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(
-                                affinity: TextAffinity.downstream, offset: '${param['type_en_name'] ?? ''}'.length),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['type_en_name'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '类型英文名：',
+            onChanged: (val) => param['type_en_name'],
+            require: true,
+            value: param['type_en_name'],
+            labelWidth: 100,
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 100,
-                  alignment: Alignment.centerRight,
-                  height: 34,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text('备注：'),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    child: TextField(
-                      maxLines: 4,
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['comments'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(
-                                affinity: TextAffinity.downstream, offset: '${param['comments'] ?? ''}'.length),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 10,
-                          bottom: 10,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['comments'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '备注：',
+            onChanged: (val) => param['comments'],
+            require: true,
+            value: param['comments'],
+            labelWidth: 100,
+            maxLines: 4,
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 100,
-                  alignment: Alignment.centerRight,
-                  height: 34,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text('排序：'),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 34,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['sort'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(affinity: TextAffinity.downstream, offset: '${param['sort'] ?? ''}'.length),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['sort'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '排序：',
+            onChanged: (val) => param['sort'],
+            require: true,
+            value: param['sort'],
+            labelWidth: 100,
+            maxLines: 4,
           ),
           Container(
             margin: EdgeInsets.only(bottom: 10),

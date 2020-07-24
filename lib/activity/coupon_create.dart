@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:admin_flutter/plugin/input-single.dart';
+import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/plugin/shop_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
@@ -232,7 +234,7 @@ class _CouponCreateState extends State<CouponCreate> {
                         return InkWell(
                           onTap: () {
                             setState(() {
-                              param['leftnum'] = item;
+                              param['leftnum'] = '$item';
                             });
                           },
                           child: Container(
@@ -255,60 +257,17 @@ class _CouponCreateState extends State<CouponCreate> {
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 100,
-                  alignment: Alignment.centerRight,
-                  height: 34,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('发放量'),
-                    ],
-                  ),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 34,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['leftnum']}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(affinity: TextAffinity.downstream, offset: '${param['leftnum']}'.length),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['leftnum'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            labelWidth: 100,
+            label: '发放量',
+            onChanged: (val) {
+              setState(() {
+                param['leftnum'] = val;
+              });
+            },
+            type: 'int',
+            require: true,
+            value: param['leftnum'] ?? '',
           ),
           Container(
             margin: EdgeInsets.only(bottom: 10),
@@ -340,93 +299,29 @@ class _CouponCreateState extends State<CouponCreate> {
                 ),
                 Expanded(
                   flex: 1,
-                  child: Container(
-                    height: 34,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['limitnum'] ?? '1'}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(
-                                affinity: TextAffinity.downstream, offset: '${param['limitnum'] ?? '1'}'.length),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['limitnum'] = val;
-                        });
-                      },
-                    ),
+                  child: InputSingle(
+                    onChanged: (val) {
+                      setState(() {
+                        param['limitnum'] = val;
+                      });
+                    },
+                    value: '${param['limitnum'] ?? '1'}',
+                    type: 'int',
                   ),
                 ),
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 100,
-                  alignment: Alignment.centerRight,
-                  height: 34,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '* ',
-                        style: TextStyle(color: CFColors.danger),
-                      ),
-                      Text('抵扣金额')
-                    ],
-                  ),
-                  margin: EdgeInsets.only(right: 10),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 34,
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                          text: '${param['subval'] ?? ''}',
-                          selection: TextSelection.fromPosition(
-                            TextPosition(affinity: TextAffinity.downstream, offset: '${param['subval'] ?? ''}'.length),
-                          ),
-                        ),
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
-                      onChanged: (String val) {
-                        setState(() {
-                          param['subval'] = val;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          Input(
+            label: '抵扣金额',
+            onChanged: (val) {
+              setState(() {
+                param['subval'] = val;
+              });
+            },
+            require: true,
+            type: 'float',
+            labelWidth: 100,
           ),
           Select(
             selectOptions: goodsType,

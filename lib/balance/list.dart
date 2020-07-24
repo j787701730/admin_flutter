@@ -84,10 +84,14 @@ class _BalanceListState extends State<BalanceList> {
         for (var o in data['balanceType']) {
           balanceTypeTemp[o['balance_type_id']] = o['balance_type_ch_name'];
         }
+        Map balanceCheck = {};
+        for (var i = 0; i < data['balanceCheck'].length; ++i) {
+          balanceCheck['$i'] = data['balanceCheck'][i];
+        }
 
         setState(() {
           balanceType.addAll(balanceTypeTemp);
-          balanceCheckOptions.addAll(data['balanceCheck']);
+          balanceCheckOptions.addAll(balanceCheck);
         });
       }
     }, () {}, _context);
