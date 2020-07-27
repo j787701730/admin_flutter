@@ -7,9 +7,9 @@ import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/range_input.dart';
+import 'package:admin_flutter/plugin/search-bar-plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,6 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
   Map ajaxData = {};
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = true;
 
   List columns = [
     {'title': '积量类型', 'key': 'type_ch_name'},
@@ -164,14 +163,7 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            AnimatedCrossFade(
-              duration: const Duration(
-                milliseconds: 300,
-              ),
-              firstChild: Placeholder(
-                fallbackHeight: 0.1,
-                color: Colors.transparent,
-              ),
+            SearchBarPlugin(
               secondChild: Column(children: <Widget>[
                 Input(
                   label: '用户',
@@ -243,7 +235,6 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
                   label: '更新时间',
                 ),
               ]),
-              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -258,16 +249,6 @@ class _AccumulateFlowState extends State<AccumulateFlow> {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('搜索'),
-                  ),
-                  PrimaryButton(
-                    color: CFColors.success,
-                    onPressed: () {
-                      setState(() {
-                        isExpandedFlag = !isExpandedFlag;
-                      });
-                      FocusScope.of(context).requestFocus(FocusNode());
-                    },
-                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),

@@ -7,9 +7,9 @@ import 'package:admin_flutter/plugin/month_select_plugin.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/range_input.dart';
+import 'package:admin_flutter/plugin/search-bar-plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,7 @@ class _PayoutSummaryState extends State<PayoutSummary> {
     '2': '季度',
     '3': '年份',
   };
-  bool isExpandedFlag = true;
+
   List columns = [
     {'title': '工厂', 'key': 'shop_name'},
     {'title': '用户', 'key': 'user_name'},
@@ -152,14 +152,7 @@ class _PayoutSummaryState extends State<PayoutSummary> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            AnimatedCrossFade(
-              duration: const Duration(
-                milliseconds: 300,
-              ),
-              firstChild: Placeholder(
-                fallbackHeight: 0.1,
-                color: Colors.transparent,
-              ),
+            SearchBarPlugin(
               secondChild: Column(children: <Widget>[
                 Input(
                   label: '工厂',
@@ -230,7 +223,6 @@ class _PayoutSummaryState extends State<PayoutSummary> {
                   onChanged: orderBy,
                 ),
               ]),
-              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -244,16 +236,6 @@ class _PayoutSummaryState extends State<PayoutSummary> {
                       getData();
                     },
                     child: Text('搜索'),
-                  ),
-                  PrimaryButton(
-                    color: CFColors.success,
-                    onPressed: () {
-                      setState(() {
-                        isExpandedFlag = !isExpandedFlag;
-                      });
-                      FocusScope.of(context).requestFocus(FocusNode());
-                    },
-                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),

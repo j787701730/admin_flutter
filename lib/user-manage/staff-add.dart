@@ -24,7 +24,7 @@ class _StaffAddState extends State<StaffAdd> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = true;
+
   Map param = {'sex': '1', 'depid': '0', 'grpID': '1', 'wx_check': '1'};
   Map staffInfo = {};
   double width;

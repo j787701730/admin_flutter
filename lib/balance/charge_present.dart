@@ -5,6 +5,7 @@ import 'package:admin_flutter/balance/charge_present_modify.dart';
 import 'package:admin_flutter/plugin/date_select_plugin.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
+import 'package:admin_flutter/plugin/search-bar-plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
@@ -28,7 +29,6 @@ class _ChargePresentState extends State<ChargePresent> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = true;
 
   Map balanceType = {"all": '全部', "1": "商城现金", "3": "云端计费", "5": "经销商"};
 
@@ -194,14 +194,7 @@ class _ChargePresentState extends State<ChargePresent> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            AnimatedCrossFade(
-              duration: const Duration(
-                milliseconds: 300,
-              ),
-              firstChild: Placeholder(
-                fallbackHeight: 0.1,
-                color: Colors.transparent,
-              ),
+            SearchBarPlugin(
               secondChild: Column(children: <Widget>[
                 Select(
                   labelWidth: 100,
@@ -274,7 +267,6 @@ class _ChargePresentState extends State<ChargePresent> {
                   labelWidth: 100,
                 ),
               ]),
-              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               child: Wrap(
@@ -296,16 +288,6 @@ class _ChargePresentState extends State<ChargePresent> {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('添加规则'),
-                  ),
-                  PrimaryButton(
-                    color: CFColors.success,
-                    onPressed: () {
-                      setState(() {
-                        isExpandedFlag = !isExpandedFlag;
-                      });
-                      FocusScope.of(context).requestFocus(FocusNode());
-                    },
-                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),

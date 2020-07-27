@@ -6,6 +6,7 @@ import 'package:admin_flutter/plugin/date_select_plugin.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
+import 'package:admin_flutter/plugin/search-bar-plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/shop/shop_modify.dart';
@@ -339,8 +340,6 @@ class _ShopListState extends State<ShopList> {
     );
   }
 
-  bool isExpandedFlag = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -357,14 +356,7 @@ class _ShopListState extends State<ShopList> {
           controller: _controller,
           padding: EdgeInsets.all(15),
           children: <Widget>[
-            AnimatedCrossFade(
-              duration: const Duration(
-                milliseconds: 300,
-              ),
-              firstChild: Placeholder(
-                fallbackHeight: 0.1,
-                color: Colors.transparent,
-              ),
+            SearchBarPlugin(
               secondChild: Column(
                 children: <Widget>[
                   Input(
@@ -405,7 +397,6 @@ class _ShopListState extends State<ShopList> {
                   ),
                 ],
               ),
-              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               margin: EdgeInsets.only(
@@ -423,16 +414,6 @@ class _ShopListState extends State<ShopList> {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('搜索'),
-                  ),
-                  PrimaryButton(
-                    color: CFColors.success,
-                    onPressed: () {
-                      setState(() {
-                        isExpandedFlag = !isExpandedFlag;
-                      });
-                      FocusScope.of(context).requestFocus(FocusNode());
-                    },
-                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),

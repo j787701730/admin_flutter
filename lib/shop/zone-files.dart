@@ -6,8 +6,8 @@ import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/photo-view-plugin.dart';
+import 'package:admin_flutter/plugin/search-bar-plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +26,7 @@ class _ZoneFilesState extends State<ZoneFiles> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = true;
+
   List columns = [
     {'title': '文件名称', 'key': 'name'},
     {'title': '文件大小', 'key': 'file_size'},
@@ -130,11 +130,7 @@ class _ZoneFilesState extends State<ZoneFiles> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            AnimatedCrossFade(
-              firstChild: Placeholder(
-                fallbackHeight: 0.1,
-                color: Colors.transparent,
-              ),
+            SearchBarPlugin(
               secondChild: Column(
                 children: <Widget>[
                   Input(
@@ -163,10 +159,6 @@ class _ZoneFilesState extends State<ZoneFiles> {
                   ),
                 ],
               ),
-              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-              duration: const Duration(
-                milliseconds: 300,
-              ),
             ),
             Container(
               child: Wrap(
@@ -182,16 +174,6 @@ class _ZoneFilesState extends State<ZoneFiles> {
                     },
                     child: Text('搜索'),
                   ),
-                  PrimaryButton(
-                    color: CFColors.success,
-                    onPressed: () {
-                      setState(() {
-                        isExpandedFlag = !isExpandedFlag;
-                      });
-                      FocusScope.of(context).requestFocus(FocusNode());
-                    },
-                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-                  )
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),

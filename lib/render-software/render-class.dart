@@ -27,7 +27,6 @@ class _RenderClassState extends State<RenderClass> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   Map type = {'0': '全部', "1": "模型", "2": "材质", "3": "户型"};
-  bool isExpandedFlag = true;
 
   void _onRefresh() {
     setState(() {
@@ -342,17 +341,6 @@ class _RenderClassState extends State<RenderClass> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            AnimatedCrossFade(
-              duration: const Duration(
-                milliseconds: 300,
-              ),
-              firstChild: Placeholder(
-                fallbackHeight: 0.1,
-                color: Colors.transparent,
-              ),
-              secondChild: Column(children: <Widget>[]),
-              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-            ),
             Container(
               child: Wrap(
                 alignment: WrapAlignment.center,
@@ -380,15 +368,6 @@ class _RenderClassState extends State<RenderClass> {
                     },
                     child: Text('编辑属性关联'),
                   ),
-//                  PrimaryButton(
-//                    color: CFColors.success,
-//                    onPressed: () {
-//                      setState(() {
-//                        isExpandedFlag = !isExpandedFlag;
-//                      });FocusScope.of(context).requestFocus(FocusNode());
-//                    },
-//                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
-//                  ),
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),

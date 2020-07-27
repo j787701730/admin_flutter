@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:admin_flutter/plugin/number_bar.dart';
+import 'package:admin_flutter/plugin/search-bar-plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
@@ -203,8 +204,6 @@ class _VitualProductTradingState extends State<VitualProductTrading> {
     );
   }
 
-  bool isExpandedFlag = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -221,14 +220,7 @@ class _VitualProductTradingState extends State<VitualProductTrading> {
           controller: _controller,
           padding: EdgeInsets.all(15),
           children: <Widget>[
-            AnimatedCrossFade(
-              duration: const Duration(
-                milliseconds: 300,
-              ),
-              firstChild: Placeholder(
-                fallbackHeight: 0.1,
-                color: Colors.transparent,
-              ),
+            SearchBarPlugin(
               secondChild: Column(
                 children: <Widget>[
 //                  Select(
@@ -248,7 +240,6 @@ class _VitualProductTradingState extends State<VitualProductTrading> {
                   )
                 ],
               ),
-              crossFadeState: isExpandedFlag ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
             Container(
               margin: EdgeInsets.only(
@@ -266,16 +257,6 @@ class _VitualProductTradingState extends State<VitualProductTrading> {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('搜索'),
-                  ),
-                  PrimaryButton(
-                    color: CFColors.success,
-                    onPressed: () {
-                      setState(() {
-                        isExpandedFlag = !isExpandedFlag;
-                      });
-                      FocusScope.of(context).requestFocus(FocusNode());
-                    },
-                    child: Text('${isExpandedFlag ? '展开' : '收缩'}选项'),
                   ),
                 ],
               ),

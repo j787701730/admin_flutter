@@ -20,7 +20,7 @@ class _ShopMenusState extends State<ShopMenus> {
   List rightsErp = [];
   List rightsPlat = [];
   bool loading = true;
-  bool isExpandedFlag = true;
+
   int type = 1;
   double width;
 

@@ -25,7 +25,7 @@ class _StaffGroupState extends State<StaffGroup> {
   List ajaxData = [];
   int count = 0;
   bool loading = true;
-  bool isExpandedFlag = true;
+
   Map state = {
     "all": "全部",
     "1": "使用中",

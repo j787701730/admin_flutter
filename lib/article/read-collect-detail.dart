@@ -35,7 +35,6 @@ class _ReadCollectDetailState extends State<ReadCollectDetail> {
     {'title': '阅读时长', 'key': 'read_duration'},
     {'title': '阅读时间', 'key': 'update_time'}
   ];
-  bool isExpandedFlag = true;
 
   void _onRefresh() {
     setState(() {
