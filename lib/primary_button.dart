@@ -23,6 +23,9 @@ class PrimaryButton extends FlatButton {
       case BtnType.Default:
         return CFColors.white;
         break;
+      case BtnType.info:
+        return CFColors.info;
+        break;
     }
   }
 
