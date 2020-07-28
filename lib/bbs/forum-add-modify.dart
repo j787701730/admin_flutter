@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:admin_flutter/plugin/input-single.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/user_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
@@ -275,21 +276,17 @@ class _ForumAddModifyState extends State<ForumAddModify> {
                                                   child: Row(
                                                     children: <Widget>[
                                                       Expanded(
-                                                        child: Input(
-                                                          label: '',
+                                                        child: InputSingle(
                                                           onChanged: (val) {},
                                                           value: item['bbs_subject_name'] ?? '',
-                                                          labelWidth: 0,
                                                         ),
                                                       ),
                                                       Container(
                                                         margin: EdgeInsets.symmetric(horizontal: 10),
                                                         width: 80,
-                                                        child: Input(
-                                                          label: '',
+                                                        child: InputSingle(
                                                           onChanged: (val) {},
                                                           value: item['bbs_subject_sort'] ?? '',
-                                                          labelWidth: 0,
                                                         ),
                                                       ),
                                                       Container(

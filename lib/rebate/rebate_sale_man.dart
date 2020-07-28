@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:admin_flutter/plugin/input.dart';
+import 'package:admin_flutter/plugin/input-single.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
@@ -219,14 +219,12 @@ class _RebateSaleManState extends State<RebateSaleMan> {
                                     Widget con = Text('${item[col['key']] ?? ''}');
                                     switch (col['key']) {
                                       case 'left_value':
-                                        con = Input(
-                                          label: '',
+                                        con = InputSingle(
                                           onChanged: (val) {
                                             setState(() {
                                               item['left_value'] = val;
                                             });
                                           },
-                                          labelWidth: 0,
                                           value: '${item['left_value']}',
                                         );
                                         break;
@@ -235,14 +233,12 @@ class _RebateSaleManState extends State<RebateSaleMan> {
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children: <Widget>[
                                             Expanded(
-                                              child: Input(
-                                                label: '',
+                                              child: InputSingle(
                                                 onChanged: (val) {
                                                   setState(() {
                                                     item['right_value'] = val;
                                                   });
                                                 },
-                                                labelWidth: 0,
                                                 value: '${item['right_value']}',
                                               ),
                                             ),
@@ -260,14 +256,12 @@ class _RebateSaleManState extends State<RebateSaleMan> {
                                         con = Row(
                                           children: <Widget>[
                                             Expanded(
-                                              child: Input(
-                                                label: '',
+                                              child: InputSingle(
                                                 onChanged: (val) {
                                                   setState(() {
                                                     item['rate'] = val;
                                                   });
                                                 },
-                                                labelWidth: 0,
                                                 value: '${item['rate']}',
                                               ),
                                             ),

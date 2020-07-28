@@ -4,6 +4,7 @@ import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/user_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
+import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
 
 class ExtractConfigModify extends StatefulWidget {
@@ -154,7 +155,7 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
             labelWidth: 140,
             require: true,
             value: param['extract_limit'] ?? '',
-            type: 'float',
+            type: NumberType.float,
           ),
           Input(
             label: '费率占比',
@@ -164,7 +165,7 @@ class _ExtractConfigModifyState extends State<ExtractConfigModify> {
             labelWidth: 140,
             require: true,
             value: param['extract_rate'] ?? '',
-            type: 'float',
+            type: NumberType.float,
           ),
           Container(
             margin: EdgeInsets.only(right: 150),

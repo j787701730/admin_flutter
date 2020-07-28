@@ -242,7 +242,7 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
                                                   ajaxData[index]['left_value'] = val;
                                                 },
                                                 value: '${ajaxData[index]['left_value'] ?? ''}',
-                                                type: 'int',
+                                                type: NumberType.int,
                                               ),
                                             ),
                                           ),
@@ -261,7 +261,7 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
                                                   ajaxData[index]['right_value'] = val;
                                                 },
                                                 value: '${ajaxData[index]['right_value'] ?? ''}',
-                                                type: 'int',
+                                                type: NumberType.int,
                                               ),
                                             ),
                                           ),
@@ -286,7 +286,7 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
                                                 ajaxData[index]['level'] = val;
                                               },
                                               value: '${ajaxData[index]['level'] ?? ''}',
-                                              type: 'int',
+                                              type: NumberType.int,
                                             ),
                                           ),
                                         ],

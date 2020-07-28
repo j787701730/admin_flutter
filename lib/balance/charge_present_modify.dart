@@ -1,6 +1,7 @@
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -121,7 +122,7 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                 param['charge_limit'] = val;
               },
               labelWidth: 100,
-              type: 'float',
+              type: NumberType.float,
               value: param['charge_limit'] ?? '',
             ),
             Input(
@@ -130,7 +131,7 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                 param['present_value'] = val;
               },
               labelWidth: 100,
-              type: 'float',
+              type: NumberType.float,
               value: param['present_value'] ?? '',
             ),
             Container(

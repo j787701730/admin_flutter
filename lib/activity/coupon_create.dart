@@ -265,7 +265,7 @@ class _CouponCreateState extends State<CouponCreate> {
                 param['leftnum'] = val;
               });
             },
-            type: 'int',
+            type: NumberType.int,
             require: true,
             value: param['leftnum'] ?? '',
           ),
@@ -306,7 +306,7 @@ class _CouponCreateState extends State<CouponCreate> {
                       });
                     },
                     value: '${param['limitnum'] ?? '1'}',
-                    type: 'int',
+                    type: NumberType.int,
                   ),
                 ),
               ],
@@ -320,7 +320,7 @@ class _CouponCreateState extends State<CouponCreate> {
               });
             },
             require: true,
-            type: 'float',
+            type: NumberType.float,
             labelWidth: 100,
           ),
           Select(

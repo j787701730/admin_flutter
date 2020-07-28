@@ -3,6 +3,7 @@ import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/plugin/shop_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
+import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
 
 class ErpConfigModify extends StatefulWidget {
@@ -170,7 +171,7 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
             labelWidth: 150,
             onChanged: (val) => param['plat_rate'] = val,
             value: param['plat_rate'],
-            type: 'float',
+            type: NumberType.float,
           ),
           Input(
             label: '订单折扣率：',
@@ -178,7 +179,7 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
             labelWidth: 150,
             onChanged: (val) => param['order_disrate'] = val,
             value: param['order_disrate'],
-            type: 'float',
+            type: NumberType.float,
           ),
           Input(
             label: '订单收入提现率：',
@@ -186,7 +187,7 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
             labelWidth: 150,
             onChanged: (val) => param['order_extrate'] = val,
             value: param['order_extrate'],
-            type: 'float',
+            type: NumberType.float,
           ),
           Input(
             label: '返红包率下限：',
@@ -194,7 +195,7 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
             labelWidth: 150,
             onChanged: (val) => param['return_rate_lower'] = val,
             value: param['return_rate_lower'],
-            type: 'float',
+            type: NumberType.float,
           ),
           Input(
             label: '返红包率上限：',
@@ -202,7 +203,7 @@ class _ErpConfigModifyState extends State<ErpConfigModify> {
             labelWidth: 150,
             onChanged: (val) => param['return_rate_upper'] = val,
             value: param['return_rate_upper'],
-            type: 'float',
+            type: NumberType.float,
           ),
           Input(
             label: '备注：',

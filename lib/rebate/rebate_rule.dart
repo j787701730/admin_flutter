@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -109,21 +110,21 @@ class _RebateRuleState extends State<RebateRule> {
               labelWidth: 140,
               onChanged: (val) => param['min_charge'] = val,
               value: param['min_charge'],
-              type: 'float',
+              type: NumberType.float,
             ),
             Input(
               label: '加价金额(元)',
               labelWidth: 140,
               onChanged: (val) => param['plus_charge'] = val,
               value: param['plus_charge'],
-              type: 'float',
+              type: NumberType.float,
             ),
             Input(
               label: '最大充值金额(元)',
               labelWidth: 140,
               onChanged: (val) => param['max_charge'] = val,
               value: param['max_charge'],
-              type: 'float',
+              type: NumberType.float,
             ),
             Container(
               margin: EdgeInsets.only(bottom: 10, left: 150),
@@ -137,7 +138,7 @@ class _RebateRuleState extends State<RebateRule> {
               labelWidth: 140,
               onChanged: (val) => param['day_limit'] = val,
               value: param['day_limit'],
-              type: 'float',
+              type: NumberType.float,
             ),
             Select(
               selectOptions: {'1': '是', '0': '否'},

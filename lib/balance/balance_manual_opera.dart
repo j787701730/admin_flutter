@@ -383,7 +383,7 @@ class _BalanceManualOperaState extends State<BalanceManualOpera> {
                     manualAmount = val;
                   },
                   value: manualAmount,
-                  type: 'float',
+                  type: NumberType.float,
                 ),
                 Input(
                   label: '调账备注',

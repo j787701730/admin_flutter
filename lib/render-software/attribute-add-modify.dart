@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:admin_flutter/plugin/input-single.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
@@ -82,9 +83,7 @@ class _AttributeAddModifyState extends State<AttributeAddModify> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Expanded(
-                                      child: Input(
-                                        label: '',
-                                        labelWidth: 0,
+                                      child: InputSingle(
                                         onChanged: (val) {
                                           param['param_enums'][index] = val;
                                         },

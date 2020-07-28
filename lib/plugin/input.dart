@@ -13,7 +13,7 @@ class Input extends StatefulWidget {
   final Padding contentPadding; // TextField contentPadding
   final value;
   final double marginTop;
-  final String type; // int, float
+  final NumberType type; // int, float
   final int decimal; // type 是 float, 保留的位数
   final String sign; // '-' 表示支持负数, 负整数设置: type=float, decimal=0
 
@@ -110,9 +110,9 @@ class _InputState extends State<Input> {
                 maxLines: widget.maxLines,
                 onChanged: (String val) {
                   String regVal = val;
-                  if (widget.type == 'int') {
+                  if (widget.type == NumberType.int) {
                     regVal = clearNoInt(val);
-                  } else if (widget.type == 'float') {
+                  } else if (widget.type == NumberType.float) {
                     regVal = clearNoNum(val, decimal: widget.decimal, sign: widget.sign);
                   }
                   setState(() {

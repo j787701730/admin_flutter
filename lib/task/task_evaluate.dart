@@ -188,7 +188,7 @@ class _TaskEvaluateState extends State<TaskEvaluate> {
                                               ajaxData[index]['left_value'] = val;
                                             },
                                             value: '${ajaxData[index]['left_value'] ?? ''}',
-                                            type: 'int',
+                                            type: NumberType.float,
                                           ),
                                         ),
                                       ),
@@ -207,7 +207,7 @@ class _TaskEvaluateState extends State<TaskEvaluate> {
                                               ajaxData[index]['right_value'] = val;
                                             },
                                             value: '${ajaxData[index]['right_value'] ?? ''}',
-                                            type: 'int',
+                                            type: NumberType.int,
                                           ),
                                         ),
                                       ),

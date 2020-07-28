@@ -346,7 +346,7 @@ class _ChargeCardState extends State<ChargeCard> {
                                           setCardCount = val;
                                         },
                                         value: setCardCount ?? '',
-                                        type: 'int',
+                                        type: NumberType.int,
                                       ),
                                     ],
                                   ),

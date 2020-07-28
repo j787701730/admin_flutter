@@ -240,6 +240,8 @@ class SizeFit {
   }
 }
 
+enum NumberType { float, int }
+
 clearNoInt(String value) {
   if (value == null || value.trim() == '') {
     return '';
@@ -250,7 +252,8 @@ clearNoInt(String value) {
   for (Match m in matches) {
     arr.add(m.group(0));
   }
-  return arr.join('');
+  String val = arr.join('');
+  return val.isEmpty ? '' : '${int.parse(val)}';
 }
 
 clearNoNum(String value, {int decimal: 2, String sign: '+'}) {
@@ -279,7 +282,7 @@ clearNoNum(String value, {int decimal: 2, String sign: '+'}) {
           returnArr.add('.');
         }
       } else {
-        if (returnArr.contains('.') && count < decimal) {
+        if (returnArr.contains('.') && count < decimal && arr[i] != '.') {
           returnArr.add(arr[i]);
           count += 1;
         } else if (!returnArr.contains('.')) {
@@ -288,5 +291,20 @@ clearNoNum(String value, {int decimal: 2, String sign: '+'}) {
       }
     }
   }
-  return returnArr.join('');
+
+  if (returnArr.isEmpty) {
+    return '';
+  } else if (returnArr.join('') == '-') {
+    return '-';
+  }
+  List newArr = returnArr.join('').split('.');
+  String preSign = '${newArr[0]}';
+  String str = '${int.parse(newArr[0])}';
+  if (preSign.contains('-') && str == '0') {
+    str = '-$str';
+  }
+  if (newArr.length == 2) {
+    str = '$str.${newArr[1]}';
+  }
+  return str;
 }

@@ -151,7 +151,7 @@ class _TaskPricingState extends State<TaskPricing> {
                       modifyItem['price'] = val;
                     },
                     value: '${modifyItem['price'] ?? ''}',
-                    type: 'float',
+                    type: NumberType.float,
                     require: true,
                   ),
                   Input(
@@ -160,7 +160,7 @@ class _TaskPricingState extends State<TaskPricing> {
                       modifyItem['subsidy'] = val;
                     },
                     value: '${modifyItem['subsidy'] ?? ''}',
-                    type: 'float',
+                    type: NumberType.float,
                     require: true,
                   ),
                 ],

@@ -299,7 +299,7 @@ class _CouponState extends State<Coupon> {
                               });
                             },
                             value: modifyItem['limit_nums'],
-                            type: 'int',
+                            type: NumberType.int,
                           ),
                         ),
                       ],
@@ -338,7 +338,7 @@ class _CouponState extends State<Coupon> {
                               });
                             },
                             value: modifyItem['left_nums'],
-                            type: 'int',
+                            type: NumberType.int,
                           ),
                         ),
                       ],

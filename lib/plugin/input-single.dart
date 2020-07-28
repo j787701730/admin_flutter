@@ -6,7 +6,7 @@ class InputSingle extends StatefulWidget {
   final Function onChanged;
   final Padding contentPadding; // TextField contentPadding
   final value;
-  final String type; // int, float
+  final NumberType type; // int, float
   final int decimal; // type 是 float, 保留的位数
   final String sign; // '-' 表示支持负数, 负整数设置: type=float, decimal=0
   final int maxLines;
@@ -73,10 +73,12 @@ class _InputSingleState extends State<InputSingle> {
         ),
         onChanged: (String val) {
           String regVal = val;
-          if (widget.type == 'int') {
+          if (widget.type == NumberType.int) {
             regVal = clearNoInt(val);
-          } else if (widget.type == 'float') {
-            regVal = clearNoNum(val, decimal: widget.decimal, sign: widget.sign);
+          } else {
+            if (widget.type == NumberType.float) {
+              regVal = clearNoNum(val, decimal: widget.decimal, sign: widget.sign);
+            }
           }
           setState(() {
             value = regVal;
