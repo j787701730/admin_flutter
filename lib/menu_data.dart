@@ -36,7 +36,8 @@ List menuData = [
         "spell_all": "jiaochengpingjia",
         "spell_index": "jcpj",
         "name": "教程评价",
-        "access": [112]
+        "access": [112],
+        'path': '/courseEvaluate'
       },
       {
         "spell_all": "jiaochengyuedu",

@@ -32,22 +32,6 @@ class _ReadCollectState extends State<ReadCollect> {
   int count2 = 0;
   bool loading = true;
 
-  List columns = [
-    {'title': '阅读用户', 'key': 'login_name'},
-    {'title': '阅读教程', 'key': 'article_topic'},
-    {'title': '教程类型', 'key': 'class_name'},
-    {'title': '阅读次数', 'key': 'read_nums'},
-    {'title': '阅读时长', 'key': 'read_duration'},
-    {'title': '阅读时间', 'key': 'update_time'}
-  ];
-  List columns2 = [
-    {'title': '阅读用户', 'key': 'login_name'},
-    {'title': '阅读总教程数', 'key': 'sum_article'},
-    {'title': '阅读总次数', 'key': 'sum_nums'},
-    {'title': '阅读总时长', 'key': 'sum_duration'},
-    {'title': '操作', 'key': 'option'},
-  ];
-
   void _onRefresh() {
     setState(() {
       param['curr_page'] = 1;
@@ -216,10 +200,13 @@ class _ReadCollectState extends State<ReadCollect> {
                 children: <Widget>[
                   PrimaryButton(
                     onPressed: () {
-                      param['curr_page'] = 1;
-                      param2['curr_page'] = 1;
-                      getData();
-                      getData2();
+                      if (type == 1) {
+                        param['curr_page'] = 1;
+                        getData();
+                      } else {
+                        param2['curr_page'] = 1;
+                        getData2();
+                      }
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('搜索'),
@@ -299,8 +286,8 @@ class _ReadCollectState extends State<ReadCollect> {
                 ],
               ),
             ),
-            Offstage(
-              offstage: type == 2,
+            Visibility(
+              visible: type == 1,
               child: Column(
                 children: <Widget>[
                   Container(
@@ -319,43 +306,8 @@ class _ReadCollectState extends State<ReadCollect> {
                                   alignment: Alignment.center,
                                   child: Text('无数据'),
                                 )
-                              : Container(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: ajaxData.map<Widget>((item) {
-                                      return Container(
-                                        padding: EdgeInsets.only(top: 10),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xffeeeeee),
-                                          ),
-                                        ),
-                                        margin: EdgeInsets.only(bottom: 10),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: columns.map<Widget>((col) {
-                                            Widget con = Text('${item[col['key']] ?? ''}');
-                                            switch (col['key']) {
-                                            }
-                                            return Container(
-                                              margin: EdgeInsets.only(bottom: 6),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Container(
-                                                    width: 80,
-                                                    alignment: Alignment.centerRight,
-                                                    child: Text('${col['title']}'),
-                                                    margin: EdgeInsets.only(right: 10),
-                                                  ),
-                                                  Expanded(flex: 1, child: con),
-                                                ],
-                                              ),
-                                            );
-                                          }).toList(),
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
+                              : ReadCollectContent(
+                                  ajaxData: ajaxData,
                                 ),
                         ),
                   Container(
@@ -369,8 +321,8 @@ class _ReadCollectState extends State<ReadCollect> {
                 ],
               ),
             ),
-            Offstage(
-              offstage: type == 1,
+            Visibility(
+              visible: type == 2,
               child: Column(
                 children: <Widget>[
                   Container(
@@ -383,70 +335,14 @@ class _ReadCollectState extends State<ReadCollect> {
                           alignment: Alignment.center,
                           child: CupertinoActivityIndicator(),
                         )
-                      : Container(
-                          child: ajaxData2.isEmpty
-                              ? Container(
-                                  alignment: Alignment.center,
-                                  child: Text('无数据'),
-                                )
-                              : Container(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: ajaxData2.map<Widget>((item) {
-                                      return Container(
-                                        padding: EdgeInsets.only(top: 10),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xffeeeeee),
-                                          ),
-                                        ),
-                                        margin: EdgeInsets.only(bottom: 10),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: columns2.map<Widget>((col) {
-                                            Widget con = Text('${item[col['key']] ?? ''}');
-                                            switch (col['key']) {
-                                              case 'option':
-                                                con = Wrap(
-                                                  children: <Widget>[
-                                                    PrimaryButton(
-                                                      onPressed: () {
-                                                        Navigator.push(
-                                                          _context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) => ReadCollectDetail(item),
-                                                          ),
-                                                        );
-                                                      },
-                                                      child: Text(
-                                                        '详情',
-                                                      ),
-                                                    ),
-                                                  ],
-                                                );
-                                                break;
-                                            }
-                                            return Container(
-                                              margin: EdgeInsets.only(bottom: 6),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Container(
-                                                    width: 110,
-                                                    alignment: Alignment.centerRight,
-                                                    child: Text('${col['title']}'),
-                                                    margin: EdgeInsets.only(right: 10),
-                                                  ),
-                                                  Expanded(flex: 1, child: con),
-                                                ],
-                                              ),
-                                            );
-                                          }).toList(),
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                ),
-                        ),
+                      : ajaxData2.isEmpty
+                          ? Container(
+                              alignment: Alignment.center,
+                              child: Text('无数据'),
+                            )
+                          : ReadCollectContent2(
+                              ajaxData2: ajaxData2,
+                            ),
                   Container(
                     child: PagePlugin(
                       current: param2['curr_page'],
@@ -465,6 +361,154 @@ class _ReadCollectState extends State<ReadCollect> {
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),
+    );
+  }
+}
+
+class ReadCollectContent extends StatefulWidget {
+  final List ajaxData;
+
+  ReadCollectContent({this.ajaxData});
+
+  @override
+  _ReadCollectContentState createState() => _ReadCollectContentState();
+}
+
+class _ReadCollectContentState extends State<ReadCollectContent> {
+  List columns = [
+    {'title': '阅读用户', 'key': 'login_name'},
+    {'title': '阅读教程', 'key': 'article_topic'},
+    {'title': '教程类型', 'key': 'class_name'},
+    {'title': '阅读次数', 'key': 'read_nums'},
+    {'title': '阅读时长', 'key': 'read_duration'},
+    {'title': '阅读时间', 'key': 'update_time'}
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: widget.ajaxData.map<Widget>((item) {
+          return Container(
+            padding: EdgeInsets.only(top: 10),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Color(0xffeeeeee),
+              ),
+            ),
+            margin: EdgeInsets.only(bottom: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: columns.map<Widget>((col) {
+                Widget con = Text('${item[col['key']] ?? ''}');
+                switch (col['key']) {
+                }
+                return Container(
+                  margin: EdgeInsets.only(bottom: 6),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        width: 80,
+                        alignment: Alignment.centerRight,
+                        child: Text('${col['title']}'),
+                        margin: EdgeInsets.only(right: 10),
+                      ),
+                      Expanded(flex: 1, child: con),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+class ReadCollectContent2 extends StatefulWidget {
+  final List ajaxData2;
+
+  ReadCollectContent2({this.ajaxData2});
+
+  @override
+  _ReadCollectContent2State createState() => _ReadCollectContent2State();
+}
+
+class _ReadCollectContent2State extends State<ReadCollectContent2> {
+  BuildContext _context;
+
+  @override
+  void initState() {
+    super.initState();
+    _context = context;
+  }
+
+  List columns2 = [
+    {'title': '阅读用户', 'key': 'login_name'},
+    {'title': '阅读总教程数', 'key': 'sum_article'},
+    {'title': '阅读总次数', 'key': 'sum_nums'},
+    {'title': '阅读总时长', 'key': 'sum_duration'},
+    {'title': '操作', 'key': 'option'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: widget.ajaxData2.map<Widget>((item) {
+        return Container(
+          padding: EdgeInsets.only(top: 10),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Color(0xffeeeeee),
+            ),
+          ),
+          margin: EdgeInsets.only(bottom: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: columns2.map<Widget>((col) {
+              Widget con = Text('${item[col['key']] ?? ''}');
+              switch (col['key']) {
+                case 'option':
+                  con = Wrap(
+                    children: <Widget>[
+                      PrimaryButton(
+                        onPressed: () {
+                          Navigator.push(
+                            _context,
+                            MaterialPageRoute(
+                              builder: (context) => ReadCollectDetail(item),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          '详情',
+                        ),
+                      ),
+                    ],
+                  );
+                  break;
+              }
+              return Container(
+                margin: EdgeInsets.only(bottom: 6),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      width: 110,
+                      alignment: Alignment.centerRight,
+                      child: Text('${col['title']}'),
+                      margin: EdgeInsets.only(right: 10),
+                    ),
+                    Expanded(flex: 1, child: con),
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
+        );
+      }).toList(),
     );
   }
 }

@@ -91,10 +91,12 @@ class _CitySelectPluginState extends State<CitySelectPlugin> {
 
   getArea() async {
     var res = await cache.get('Config-area', {});
-    setState(() {
-      areaData = res;
-      getCityData(0);
-    });
+    if (mounted) {
+      setState(() {
+        areaData = res;
+        getCityData(0);
+      });
+    }
   }
 
   getCityData(index) {

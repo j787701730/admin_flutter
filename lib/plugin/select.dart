@@ -9,19 +9,28 @@ class Select extends StatefulWidget {
   final String selectedValue;
   final bool require;
 
-  Select(
-      {@required this.selectOptions,
-      @required this.selectedValue,
-      @required this.label,
-      @required this.onChanged,
-      this.labelWidth,
-      this.require = false});
+  Select({
+    @required this.selectOptions,
+    @required this.selectedValue,
+    @required this.label,
+    @required this.onChanged,
+    this.labelWidth,
+    this.require = false,
+  });
 
   @override
   _SelectState createState() => _SelectState();
 }
 
 class _SelectState extends State<Select> {
+  String selectedValue;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedValue = widget.selectedValue;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,15 +60,20 @@ class _SelectState extends State<Select> {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.all(Radius.circular(4),),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(4),
+                ),
               ),
               height: 34,
               child: DropdownButton<String>(
                 isExpanded: true,
                 elevation: 1,
                 underline: Container(),
-                value: widget.selectedValue,
+                value: selectedValue,
                 onChanged: (String newValue) {
+                  setState(() {
+                    selectedValue = newValue;
+                  });
                   widget.onChanged(newValue);
                 },
                 items: widget.selectOptions.keys.toList().map<DropdownMenuItem<String>>((key) {

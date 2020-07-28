@@ -30,19 +30,6 @@ class _ArticleListState extends State<ArticleList> {
   bool loading = true;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  List columns = [
-    {'title': '标题', 'key': 'article_topic'},
-    {'title': '发布人', 'key': 'login_name'},
-    {'title': '发布店铺', 'key': 'shop_name'},
-    {'title': '排序', 'key': 'sort'},
-    {'title': '首页展示', 'key': 'if_index'},
-    {'title': '点赞', 'key': 'up_counts'},
-    {'title': '吐槽', 'key': 'down_counts'},
-    {'title': '发布时间', 'key': 'create_date'},
-    {'title': '浏览量', 'key': 'read_times'},
-    {'title': '状态', 'key': 'state'},
-    {'title': '操作', 'key': 'option'},
-  ];
   Map articleState = {'0': '全部', "1": "已发布", "2": "草稿箱", "3": "待审核"};
 
   void _onRefresh() {
@@ -321,55 +308,6 @@ class _ArticleListState extends State<ArticleList> {
     getData();
   }
 
-  stateDialog(data, {del = false}) {
-    String text = '确认修改 ${data['article_topic']} 状态为 ${data['state'] == '1' ? '保存到草稿箱' : '发布'} ?';
-    if (del) {
-      text = '确认删除 ${data['article_topic']} ?';
-    }
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: true, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            '提示',
-          ),
-          content: SingleChildScrollView(
-            child: Container(
-//                width: MediaQuery.of(context).size.width - 100,
-              child: Text(
-                text,
-                style: TextStyle(fontSize: CFFontSize.content),
-              ),
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('取消'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
-              child: Text('提交'),
-              onPressed: () {
-                ajax(
-                    'Adminrelas-ArticleManage-articlestate',
-                    {'state': del ? '0' : data['state'] == '1' ? '2' : '1', 'articleid': data['article_id']},
-                    true, (data) {
-                  getData();
-                  Navigator.of(context).pop();
-                }, () {}, _context);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -537,71 +475,10 @@ class _ArticleListState extends State<ArticleList> {
                         alignment: Alignment.center,
                         child: Text('无数据'),
                       )
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: ajaxData.map<Widget>((item) {
-                          return Container(
-                            padding: EdgeInsets.only(top: 10),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Color(0xffeeeeee),
-                              ),
-                            ),
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: columns.map<Widget>((col) {
-                                Widget con = Text('${item[col['key']] ?? ''}');
-                                switch (col['key']) {
-                                  case 'state':
-                                    con = Text('${articleState[item['state']]}');
-                                    break;
-                                  case 'option':
-                                    con = Wrap(
-                                      spacing: 10,
-                                      runSpacing: 10,
-                                      children: <Widget>[
-                                        PrimaryButton(
-                                          onPressed: () {
-                                            stateDialog(item);
-                                          },
-                                          child: Text(item['state'] == '1' ? '保存到草稿箱' : '发布'),
-                                        ),
-//                                              PrimaryButton(
-//                                                onPressed: () {
-////                                            operaDialog(item);
-//                                                },
-//                                                child: Text('修改'),
-//                                              ),
-                                        PrimaryButton(
-                                          type: BtnType.danger,
-                                          onPressed: () {
-                                            stateDialog(item, del: true);
-                                          },
-                                          child: Text('删除'),
-                                        ),
-                                      ],
-                                    );
-                                    break;
-                                }
-                                return Container(
-                                  margin: EdgeInsets.only(bottom: 6),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        width: 80,
-                                        alignment: Alignment.centerRight,
-                                        child: Text('${col['title']}'),
-                                        margin: EdgeInsets.only(right: 10),
-                                      ),
-                                      Expanded(flex: 1, child: con),
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          );
-                        }).toList(),
+                    : ArticleListContent(
+                        ajaxData: ajaxData,
+                        articleState: articleState,
+                        getData: getData,
                       ),
             Container(
               child: PagePlugin(
@@ -618,6 +495,160 @@ class _ArticleListState extends State<ArticleList> {
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),
+    );
+  }
+}
+
+class ArticleListContent extends StatefulWidget {
+  final ajaxData;
+  final Function getData;
+  final articleState;
+
+  ArticleListContent({this.ajaxData, this.getData, this.articleState});
+
+  @override
+  _ArticleListContentState createState() => _ArticleListContentState();
+}
+
+class _ArticleListContentState extends State<ArticleListContent> {
+  BuildContext _context;
+
+  @override
+  void initState() {
+    super.initState();
+    _context = context;
+  }
+
+  stateDialog(data, {del = false}) {
+    String text = '确认修改 ${data['article_topic']} 状态为 ${data['state'] == '1' ? '保存到草稿箱' : '发布'} ?';
+    if (del) {
+      text = '确认删除 ${data['article_topic']} ?';
+    }
+    return showDialog<void>(
+      context: _context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            '提示',
+          ),
+          content: SingleChildScrollView(
+            child: Container(
+//                width: MediaQuery.of(context).size.width - 100,
+              child: Text(
+                text,
+                style: TextStyle(fontSize: CFFontSize.content),
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('取消'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: Text('提交'),
+              onPressed: () {
+                ajax(
+                    'Adminrelas-ArticleManage-articlestate',
+                    {'state': del ? '0' : data['state'] == '1' ? '2' : '1', 'articleid': data['article_id']},
+                    true, (data) {
+                  widget.getData();
+                  Navigator.of(context).pop();
+                }, () {}, _context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  List columns = [
+    {'title': '标题', 'key': 'article_topic'},
+    {'title': '发布人', 'key': 'login_name'},
+    {'title': '发布店铺', 'key': 'shop_name'},
+    {'title': '排序', 'key': 'sort'},
+    {'title': '首页展示', 'key': 'if_index'},
+    {'title': '点赞', 'key': 'up_counts'},
+    {'title': '吐槽', 'key': 'down_counts'},
+    {'title': '发布时间', 'key': 'create_date'},
+    {'title': '浏览量', 'key': 'read_times'},
+    {'title': '状态', 'key': 'state'},
+    {'title': '操作', 'key': 'option'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: widget.ajaxData.map<Widget>((item) {
+        return Container(
+          padding: EdgeInsets.only(top: 10),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Color(0xffeeeeee),
+            ),
+          ),
+          margin: EdgeInsets.only(bottom: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: columns.map<Widget>((col) {
+              Widget con = Text('${item[col['key']] ?? ''}');
+              switch (col['key']) {
+                case 'state':
+                  con = Text('${widget.articleState[item['state']]}');
+                  break;
+                case 'option':
+                  con = Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: <Widget>[
+                      PrimaryButton(
+                        onPressed: () {
+                          stateDialog(item);
+                        },
+                        child: Text(item['state'] == '1' ? '保存到草稿箱' : '发布'),
+                      ),
+//                                              PrimaryButton(
+//                                                onPressed: () {
+////                                            operaDialog(item);
+//                                                },
+//                                                child: Text('修改'),
+//                                              ),
+                      PrimaryButton(
+                        type: BtnType.danger,
+                        onPressed: () {
+                          stateDialog(item, del: true);
+                        },
+                        child: Text('删除'),
+                      ),
+                    ],
+                  );
+                  break;
+              }
+              return Container(
+                margin: EdgeInsets.only(bottom: 6),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      width: 80,
+                      alignment: Alignment.centerRight,
+                      child: Text('${col['title']}'),
+                      margin: EdgeInsets.only(right: 10),
+                    ),
+                    Expanded(flex: 1, child: con),
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
+        );
+      }).toList(),
     );
   }
 }

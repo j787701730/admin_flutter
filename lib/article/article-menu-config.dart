@@ -149,8 +149,8 @@ class _ArticleMenuConfigState extends State<ArticleMenuConfig> {
                             selectClassTree = node.nodeId.toString();
                             selectClassTreeName = node.object.toString();
                             selectClassTreeLevel = '${node.depth}';
-                            getData();
-                            Navigator.pop(context);
+//                            getData();
+//                            Navigator.pop(context);
                           });
                         },
                         child: Container(
@@ -320,15 +320,14 @@ class _ArticleMenuConfigState extends State<ArticleMenuConfig> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            PrimaryButton(
+              type: BtnType.Default,
               child: Text('取消'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
+            PrimaryButton(
               child: Text('提交'),
               onPressed: () {
                 ajax(
@@ -405,7 +404,7 @@ class _ArticleMenuConfigState extends State<ArticleMenuConfig> {
                                     icon: Icon(Icons.mode_edit),
                                     onPressed: () {},
                                   )
-                                : Container(),
+                                : SizedBox(),
                           ],
                         ),
                       ),
@@ -426,31 +425,27 @@ class _ArticleMenuConfigState extends State<ArticleMenuConfig> {
                     alignment: Alignment.center,
                     child: CupertinoActivityIndicator(),
                   )
-                : Container(
-                    child: classTrees.isEmpty
-                        ? Container(
-                            alignment: Alignment.center,
-                            child: Text('无数据'),
-                          )
-                        : Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  child: PrimaryButton(
-                                    onPressed: () {},
-                                    child: Text('添加分类'),
-                                  ),
-                                  margin: EdgeInsets.symmetric(vertical: 10),
-                                ),
-                                Column(
-                                  children: _buildNode(expand),
-                                )
-                              ],
+                : classTrees.isEmpty
+                    ? Container(
+                        alignment: Alignment.center,
+                        child: Text('无数据'),
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            child: PrimaryButton(
+                              onPressed: () {},
+                              child: Text('添加分类'),
                             ),
+                            margin: EdgeInsets.symmetric(vertical: 10),
                           ),
-                  ),
+                          Column(
+                            children: _buildNode(expand),
+                          )
+                        ],
+                      ),
           ],
         ),
       ),

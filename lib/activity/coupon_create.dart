@@ -328,9 +328,7 @@ class _CouponCreateState extends State<CouponCreate> {
             selectedValue: param['goods_type'] ?? '0',
             label: '商品类型',
             onChanged: (val) {
-              setState(() {
-                param['goods_type'] = val;
-              });
+              param['goods_type'] = val;
             },
             require: true,
             labelWidth: 100,

@@ -6,6 +6,7 @@ import 'package:admin_flutter/app-settings.dart';
 import 'package:admin_flutter/article/article-list.dart';
 import 'package:admin_flutter/article/article-menu-config.dart';
 import 'package:admin_flutter/article/article-recycle.dart';
+import 'package:admin_flutter/article/course-evaluate.dart';
 import 'package:admin_flutter/article/read-collect.dart';
 import 'package:admin_flutter/balance/account-summary.dart';
 import 'package:admin_flutter/balance/accum_flow.dart';
@@ -110,10 +111,11 @@ final routes = <String, WidgetBuilder>{
   '/home': (_) => MyHomePage(),
   '/AppSettings': (_) => AppSettings(),
   '/login': (_) => Login(),
-  '/articleList': (_) => ArticleList(), // 文章列表
-  '/articleRecycle': (_) => ArticleRecycle(), // 文章回收站
-  '/readCollect': (_) => ReadCollect(), // 教程阅读
-  '/articleMenuConfig': (_) => ArticleMenuConfig(), // 栏目管理
+  '/articleList': (_) => ArticleList(), // 文章列表 (完成)
+  '/articleRecycle': (_) => ArticleRecycle(), // 文章回收站 (完成)
+  '/readCollect': (_) => ReadCollect(), // 教程阅读 (完成)
+  '/courseEvaluate': (_) => CourseEvaluate(), // 教程评价 (完成)
+  '/articleMenuConfig': (_) => ArticleMenuConfig(), // 栏目管理 (只能看看)
   '/staffDepartment': (_) => StaffDepartment(), // 组织架构
   '/staffGroup': (_) => StaffGroup(), // 岗位架构
   '/staffAdd': (_) => StaffAdd(), // 员工添加
