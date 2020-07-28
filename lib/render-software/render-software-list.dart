@@ -461,7 +461,7 @@ class _RenderSoftwareListState extends State<RenderSoftwareList> {
                     child: Text('模型目录'),
                   ),
                   PrimaryButton(
-                    type: 'error',
+                    type: BtnType.primary,
                     onPressed: () {
                       print(selectModules);
                       FocusScope.of(context).requestFocus(FocusNode());

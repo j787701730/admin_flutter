@@ -238,7 +238,7 @@ class _RebateDistributorState extends State<RebateDistributor> {
                     child: Text('审核成功'),
                   ),
                   PrimaryButton(
-                    type: 'error',
+                    type: BtnType.danger,
                     onPressed: () {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },

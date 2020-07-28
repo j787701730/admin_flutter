@@ -441,7 +441,7 @@ class _CadAdminsState extends State<CadAdmins> {
                                                 delDialog(item);
                                               },
                                               child: Text('删除'),
-                                              type: 'error',
+                                              type: BtnType.danger,
                                             ),
                                           ],
                                         );

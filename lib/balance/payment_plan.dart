@@ -530,7 +530,7 @@ class _PaymentPlanState extends State<PaymentPlan> {
                                                           delDialog(item);
                                                         },
                                                         child: Text('删除'),
-                                                        type: 'error',
+                                                        type: BtnType.danger,
                                                       ),
                                                     ],
                                                   );

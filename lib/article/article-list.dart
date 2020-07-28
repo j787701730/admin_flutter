@@ -512,7 +512,7 @@ class _ArticleListState extends State<ArticleList> {
                     child: Text('文章目录'),
                   ),
                   PrimaryButton(
-                    type: 'error',
+                    type: BtnType.danger,
                     onPressed: () {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
@@ -574,7 +574,7 @@ class _ArticleListState extends State<ArticleList> {
 //                                                child: Text('修改'),
 //                                              ),
                                         PrimaryButton(
-                                          type: 'error',
+                                          type: BtnType.danger,
                                           onPressed: () {
                                             stateDialog(item, del: true);
                                           },

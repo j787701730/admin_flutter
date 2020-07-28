@@ -435,142 +435,142 @@ class _ShopListState extends State<ShopList> {
                         height: 40,
                         child: Text('无数据'),
                       )
-                    : Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: ajaxData.map<Widget>((item) {
-                            return Container(
-                              padding: EdgeInsets.only(top: 10),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Color(0xffeeeeee),
-                                ),
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: ajaxData.map<Widget>((item) {
+                          return Container(
+                            padding: EdgeInsets.only(top: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Color(0xffeeeeee),
                               ),
-                              margin: EdgeInsets.only(bottom: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: columns.map<Widget>((col) {
-                                  Widget con = Text('${item[col['key']] ?? ''}');
-                                  switch (col['key']) {
-                                    case 'shop_name':
-                                      con = InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                            _context,
-                                            MaterialPageRoute(
-                                              builder: (context) => ShopModify(
-                                                props: item,
-                                              ),
+                            ),
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: columns.map<Widget>((col) {
+                                Widget con = Text('${item[col['key']] ?? ''}');
+                                switch (col['key']) {
+                                  case 'shop_name':
+                                    con = InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          _context,
+                                          MaterialPageRoute(
+                                            builder: (context) => ShopModify(
+                                              props: item,
                                             ),
-                                          );
-                                        },
-                                        child: Text(
-                                          '${item['shop_name']}',
-                                          style: TextStyle(
-                                            color: CFColors.primary,
                                           ),
+                                        );
+                                      },
+                                      child: Text(
+                                        '${item['shop_name']}',
+                                        style: TextStyle(
+                                          color: CFColors.primary,
                                         ),
-                                      );
-                                      break;
-                                    case 'login_name':
-                                      con = Wrap(
-                                        crossAxisAlignment: WrapCrossAlignment.center,
-                                        children: <Widget>[
-                                          Text('[店主] ${item['login_name']} '),
-                                          InkWell(
-                                            child: Container(
-                                              child: Text(
-                                                '查看员工',
-                                                style: TextStyle(color: Colors.blue),
-                                              ),
-                                            ),
-                                            onTap: () {
-                                              turnTo(item);
-                                            },
-                                          )
-                                        ],
-                                      );
-                                      break;
-                                    case 'state':
-                                      con = Row(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 60,
-                                            height: 34,
-                                            alignment: Alignment.center,
-                                            decoration: BoxDecoration(
-                                              color: Color(0xff5cb85c),
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(4),
-                                              ),
-                                            ),
+                                      ),
+                                    );
+                                    break;
+                                  case 'login_name':
+                                    con = Wrap(
+                                      crossAxisAlignment: WrapCrossAlignment.center,
+                                      children: <Widget>[
+                                        Text('[店主] ${item['login_name']} '),
+                                        InkWell(
+                                          child: Container(
                                             child: Text(
-                                              '${shopState[item['state']]}',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
+                                              '查看员工',
+                                              style: TextStyle(color: Colors.blue),
                                             ),
                                           ),
-                                        ],
-                                      );
-                                      break;
-                                    case 'role_id':
-                                      con = InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            selectRole = item['role_id'].split(',');
-                                            roleDialog();
-                                          });
-                                        },
-                                        child: Container(
-                                          child: Wrap(
-                                            spacing: 10,
-                                            runSpacing: 10,
-                                            children: item['role_id'].split(',').map<Widget>((role) {
-                                              return Container(
-                                                child: Text(
-                                                  '${roles[role]['role_ch_name']}',
-                                                  style: TextStyle(color: Colors.blue),
-                                                ),
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ),
-                                      );
-                                      break;
-                                    case 'option':
-                                      con = Row(
-                                        children: <Widget>[
-                                          PrimaryButton(
-                                            type: item['state'] == '1' || item['state'] == '-1' ? 'error' : null,
-                                            onPressed: () {
-                                              operaDialog(item);
-                                            },
-                                            child: Text(item['state'] == '1' || item['state'] == '-1' ? '冻结' : '解冻'),
-                                          ),
-                                        ],
-                                      );
-                                      break;
-                                  }
-                                  return Container(
-                                    margin: EdgeInsets.only(bottom: 6),
-                                    child: Row(
+                                          onTap: () {
+                                            turnTo(item);
+                                          },
+                                        )
+                                      ],
+                                    );
+                                    break;
+                                  case 'state':
+                                    con = Row(
                                       children: <Widget>[
                                         Container(
-                                          width: 80,
-                                          alignment: Alignment.centerRight,
-                                          child: Text('${col['title']}'),
-                                          margin: EdgeInsets.only(right: 10),
+                                          width: 60,
+                                          height: 34,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xff5cb85c),
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(4),
+                                            ),
+                                          ),
+                                          child: Text(
+                                            '${shopState[item['state']]}',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                         ),
-                                        Expanded(flex: 1, child: con),
                                       ],
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            );
-                          }).toList(),
-                        ),
+                                    );
+                                    break;
+                                  case 'role_id':
+                                    con = InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectRole = item['role_id'].split(',');
+                                          roleDialog();
+                                        });
+                                      },
+                                      child: Container(
+                                        child: Wrap(
+                                          spacing: 10,
+                                          runSpacing: 10,
+                                          children: item['role_id'].split(',').map<Widget>((role) {
+                                            return Container(
+                                              child: Text(
+                                                '${roles[role]['role_ch_name']}',
+                                                style: TextStyle(color: Colors.blue),
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    );
+                                    break;
+                                  case 'option':
+                                    con = Row(
+                                      children: <Widget>[
+                                        PrimaryButton(
+                                          type: item['state'] == '1' || item['state'] == '-1'
+                                              ? BtnType.danger
+                                              : BtnType.primary,
+                                          onPressed: () {
+                                            operaDialog(item);
+                                          },
+                                          child: Text(item['state'] == '1' || item['state'] == '-1' ? '冻结' : '解冻'),
+                                        ),
+                                      ],
+                                    );
+                                    break;
+                                }
+                                return Container(
+                                  margin: EdgeInsets.only(bottom: 6),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        width: 80,
+                                        alignment: Alignment.centerRight,
+                                        child: Text('${col['title']}'),
+                                        margin: EdgeInsets.only(right: 10),
+                                      ),
+                                      Expanded(flex: 1, child: con),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          );
+                        }).toList(),
                       ),
             Container(
               child: PagePlugin(
@@ -588,5 +588,17 @@ class _ShopListState extends State<ShopList> {
         child: Icon(Icons.keyboard_arrow_up),
       ),
     );
+  }
+}
+
+class ShopListContent extends StatefulWidget {
+  @override
+  _ShopListContentState createState() => _ShopListContentState();
+}
+
+class _ShopListContentState extends State<ShopListContent> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

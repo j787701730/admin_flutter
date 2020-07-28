@@ -487,7 +487,7 @@ class _PhoneMenusState extends State<PhoneMenus> {
                                                 delDialog(item, key);
                                               },
                                               child: Text('删除'),
-                                              type: 'error',
+                                              type: BtnType.danger,
                                             ),
                                           ],
                                         );
@@ -733,7 +733,7 @@ class _PhoneMenusState extends State<PhoneMenus> {
                                                 delDialog(item, key);
                                               },
                                               child: Text('删除'),
-                                              type: 'error',
+                                              type: BtnType.danger,
                                             ),
                                           ],
                                         );

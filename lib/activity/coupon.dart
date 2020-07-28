@@ -582,7 +582,7 @@ class _CouponState extends State<Coupon> {
                                                       stateDialog(item);
                                                     },
                                                     child: Text('停用'),
-                                                    type: 'error',
+                                                    type: BtnType.danger,
                                                   )
                                                 : PrimaryButton(
                                                     onPressed: () {

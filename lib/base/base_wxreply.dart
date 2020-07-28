@@ -247,7 +247,7 @@ class _BaseWxreplyState extends State<BaseWxreply> {
                                                   ),
                                                 ),
                                                 PrimaryButton(
-                                                  type: 'error',
+                                                  type: BtnType.danger,
                                                   onPressed: () {},
                                                   child: Text(
                                                     '删除',

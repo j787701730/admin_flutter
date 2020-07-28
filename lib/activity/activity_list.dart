@@ -484,7 +484,7 @@ class _ActivityListState extends State<ActivityList> {
                                                 closeDialog(item);
                                               },
                                               child: Text('关闭'),
-                                              type: 'error',
+                                              type: BtnType.danger,
                                             ),
                                           ],
                                         );

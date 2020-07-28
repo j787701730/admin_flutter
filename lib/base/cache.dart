@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -16,7 +14,6 @@ class BaseCache extends StatefulWidget {
 }
 
 class _BaseCacheState extends State<BaseCache> {
-  BuildContext _context;
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   Map param = {"curr_page": 1, "page_count": 15};
@@ -90,7 +87,6 @@ class _BaseCacheState extends State<BaseCache> {
   void initState() {
     super.initState();
     _controller = ScrollController();
-    _context = context;
     Timer(Duration(milliseconds: 200), () {
       getData();
     });
@@ -196,7 +192,7 @@ class _BaseCacheState extends State<BaseCache> {
                               child: Text('搜索'),
                             ),
                             PrimaryButton(
-                              color: Colors.green,
+                              type: BtnType.success,
                               onPressed: () {
                                 print(selectType);
                               },

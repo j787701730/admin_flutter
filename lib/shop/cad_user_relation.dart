@@ -379,7 +379,7 @@ class _CadUserRelationState extends State<CadUserRelation> {
                                               child: Text('修改'),
                                             ),
                                             PrimaryButton(
-                                              type: 'error',
+                                              type: BtnType.danger,
                                               onPressed: () {
                                                 delDialog(item);
                                               },

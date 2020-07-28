@@ -37,7 +37,7 @@ class _SearchBarPluginState extends State<SearchBarPlugin> {
                   color: Colors.transparent,
                 )
               : widget.secondChild,
-          crossFadeState: isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+          crossFadeState: isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
         ),
         Container(
           decoration: BoxDecoration(
@@ -74,7 +74,7 @@ class _SearchBarPluginState extends State<SearchBarPlugin> {
                         ),
                       ),
                       Icon(
-                        isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                        isExpanded ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up,
                         size: 20,
                       ),
                     ],

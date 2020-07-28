@@ -289,7 +289,7 @@ class _RebateSaleManState extends State<RebateSaleMan> {
                                                 child: Text('添加'),
                                               ),
                                               PrimaryButton(
-                                                type: 'error',
+                                                type: BtnType.danger,
                                                 onPressed: () {
                                                   del(
                                                     ajaxData.indexOf(item),

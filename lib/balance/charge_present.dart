@@ -372,7 +372,7 @@ class _ChargePresentState extends State<ChargePresent> {
                                               delDialog(item);
                                             },
                                             child: Text('删除'),
-                                            type: "error",
+                                            type: BtnType.danger,
                                           ),
                                         ],
                                       );

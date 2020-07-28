@@ -275,7 +275,7 @@ class _BalancePricingState extends State<BalancePricing> {
                                         );
                                       },
                                       child: Text('删除'),
-                                      type: 'error',
+                                      type: BtnType.danger,
                                     ),
                                   ],
                                 );

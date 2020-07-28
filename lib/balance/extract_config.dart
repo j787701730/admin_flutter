@@ -318,7 +318,7 @@ class _ExtractConfigState extends State<ExtractConfig> {
                                                 FocusScope.of(context).requestFocus(FocusNode());
                                               },
                                               child: Text('删除'),
-                                              type: 'error',
+                                              type: BtnType.danger,
                                             ),
                                           ],
                                         );

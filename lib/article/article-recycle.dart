@@ -247,7 +247,7 @@ class _ArticleRecycleState extends State<ArticleRecycle> {
 //                    child: Text('批量还原'),
 //                  ),
 //                  PrimaryButton(
-//                    type: 'error',
+//                    type: BtnType.danger,
 //                    onPressed: () {
 //                      FocusScope.of(context).requestFocus(FocusNode());
 //                    },
@@ -306,7 +306,7 @@ class _ArticleRecycleState extends State<ArticleRecycle> {
 //                                                child: Text('修改'),
 //                                              ),
                                         PrimaryButton(
-                                          type: 'error',
+                                          type: BtnType.danger,
                                           onPressed: () {
                                             stateDialog(item, del: true);
                                           },

@@ -295,7 +295,7 @@ class _BoardCutConfigTypeState extends State<BoardCutConfigType> {
                                               child: Text('修改'),
                                             ),
                                             PrimaryButton(
-                                              type: "error",
+                                              type: BtnType.danger,
                                               onPressed: () {
                                                 delDialog(item);
                                               },

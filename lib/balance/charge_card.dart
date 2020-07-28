@@ -374,7 +374,7 @@ class _ChargeCardState extends State<ChargeCard> {
                         },
                       );
                     },
-                    color: Colors.green,
+                    type: BtnType.success,
                     child: Text(
                       '制作充值卡',
                     ),
@@ -386,7 +386,7 @@ class _ChargeCardState extends State<ChargeCard> {
                     ),
                   ),
                   PrimaryButton(
-                    type: 'error',
+                    type: BtnType.danger,
                     onPressed: () {},
                     child: Text(
                       '批量作废',
@@ -566,7 +566,7 @@ class _ChargeCardState extends State<ChargeCard> {
                                         PrimaryButton(
                                           onPressed: () {},
                                           child: Text('激活'),
-                                          type: 'error',
+                                          type: BtnType.danger,
                                         ),
                                       ],
                                     );
@@ -576,7 +576,7 @@ class _ChargeCardState extends State<ChargeCard> {
                                         PrimaryButton(
                                           onPressed: () {},
                                           child: Text('作废'),
-                                          type: 'error',
+                                          type: BtnType.danger,
                                         ),
                                       ],
                                     );

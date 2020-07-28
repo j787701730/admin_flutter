@@ -310,7 +310,7 @@ class _BalanceListState extends State<BalanceList> {
                   child: Text('搜索'),
                 ),
                 PrimaryButton(
-                  color: Colors.green,
+                  type: BtnType.success,
                   onPressed: () {
                     setState(() {
                       balanceCheckParam = {'userId': '0', 'acctBalanceID': '0'};

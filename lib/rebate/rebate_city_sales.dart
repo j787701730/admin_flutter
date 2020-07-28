@@ -7,7 +7,6 @@ import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/search-bar-plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
-import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -196,14 +195,13 @@ class _RebateCitySalesState extends State<RebateCitySales> {
                     child: Text('通过'),
                   ),
                   PrimaryButton(
-                    color: CFColors.secondary,
                     onPressed: () {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('待审核'),
                   ),
                   PrimaryButton(
-                    type: 'error',
+                    type: BtnType.danger,
                     onPressed: () {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },

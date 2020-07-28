@@ -332,7 +332,7 @@ class _BoardCutUserGrantState extends State<BoardCutUserGrant> {
                                                 delDialog(item);
                                               },
                                               child: Text('删除'),
-                                              type: 'error',
+                                              type: BtnType.danger,
                                             ),
                                           ],
                                         );
