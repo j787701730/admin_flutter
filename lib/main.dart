@@ -101,6 +101,7 @@ class _MyAppState extends State<MyApp> {
           fontSize: CFFontSize.content,
           color: DarkColor.title,
         ),
+        elevation: 0,
       ),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );
@@ -163,6 +164,7 @@ class _MyAppState extends State<MyApp> {
           fontSize: CFFontSize.content,
           color: LightColor.title,
         ),
+        elevation: 0,
       ),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );

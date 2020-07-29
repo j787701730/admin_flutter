@@ -133,6 +133,8 @@ class _StaffDepartmentState extends State<StaffDepartment> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '信息',
           ),
@@ -146,15 +148,14 @@ class _StaffDepartmentState extends State<StaffDepartment> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            PrimaryButton(
+              type: BtnType.Default,
               child: Text('取消'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
+            PrimaryButton(
               child: Text('提交'),
               onPressed: () {
                 ajax('Adminrelas-Staff-deleteDepartment', {'depID': item['department_id']}, true, (data) {
@@ -178,6 +179,8 @@ class _StaffDepartmentState extends State<StaffDepartment> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             item['department_name'] == null ? '新增部门' : '${itemTemp['department_name']} 修改',
           ),
@@ -191,6 +194,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
           ),
           actions: <Widget>[
             PrimaryButton(
+              type: BtnType.Default,
               child: Text('取消'),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -199,12 +203,27 @@ class _StaffDepartmentState extends State<StaffDepartment> {
             PrimaryButton(
               child: Text('提交'),
               onPressed: () {
-                ajax('Adminrelas-Staff-editDepartmentName',
-                    {'depID': itemTemp['department_id'], 'depName': itemTemp['department_name']}, true, (data) {
-                  setState(() {
-                    item['department_name'] = itemTemp['department_name'];
-                    Navigator.of(context).pop();
-                  });
+                String url = 'Adminrelas-Staff-editDepartmentName';
+                Map depData = {'depName': itemTemp['department_name']};
+                if (item.isEmpty) {
+                  url = 'Adminrelas-Staff-addDepartment';
+                } else {
+                  depData['depID'] = itemTemp['department_id'];
+                }
+                ajax(url, depData, true, (data) {
+                  if (item.isEmpty) {
+                    setState(() {
+                      department = [
+                        {'department_id': '0', 'department_name': '我的团队'},
+                      ];
+                      getDepartment();
+                    });
+                  } else {
+                    setState(() {
+                      item['department_name'] = itemTemp['department_name'];
+                    });
+                  }
+                  Navigator.of(context).pop();
                 }, () {}, _context);
               },
             ),
@@ -468,6 +487,8 @@ class _StaffDepartmentContentState extends State<StaffDepartmentContent> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '信息',
           ),
@@ -516,6 +537,8 @@ class _StaffDepartmentContentState extends State<StaffDepartmentContent> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '信息',
           ),
@@ -529,15 +552,14 @@ class _StaffDepartmentContentState extends State<StaffDepartmentContent> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            PrimaryButton(
+              type: BtnType.Default,
               child: Text('取消'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
+            PrimaryButton(
               child: Text('提交'),
               onPressed: () {
                 ajax(

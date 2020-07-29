@@ -153,6 +153,8 @@ class _WorkOrdersListState extends State<WorkOrdersList> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '系统提示',
           ),
@@ -197,6 +199,8 @@ class _WorkOrdersListState extends State<WorkOrdersList> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '${item['order_no']} (${item['evaluate_stars']}星) 评价内容',
           ),
@@ -232,6 +236,8 @@ class _WorkOrdersListState extends State<WorkOrdersList> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '系统提示',
           ),

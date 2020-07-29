@@ -132,6 +132,8 @@ class _ProductionProcessingState extends State<ProductionProcessing> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '系统提示',
           ),
@@ -175,6 +177,8 @@ class _ProductionProcessingState extends State<ProductionProcessing> {
         return StatefulBuilder(builder: (context1, state) {
           /// 这里的state就是setState
           return AlertDialog(
+            contentPadding: EdgeInsets.all(10),
+            titlePadding: EdgeInsets.all(10),
             title: Text(
               '权限管理',
             ),

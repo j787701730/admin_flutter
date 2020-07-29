@@ -101,6 +101,8 @@ class _SystemConfigState extends State<SystemConfig> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '${item['config_label']} 备注',
           ),
@@ -134,6 +136,8 @@ class _SystemConfigState extends State<SystemConfig> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '${item['config_label']} 配置值修改',
           ),

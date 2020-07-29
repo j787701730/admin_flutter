@@ -65,7 +65,7 @@ class _PagePluginState extends State<PagePlugin> {
     if (totalPages > 5 && (current <= totalPages - 4 || current < 5)) {
       arr.add('last');
     }
-    return arr.isEmpty
+    return arr.isEmpty || totalPages == 1
         ? SizedBox()
         : Wrap(
             alignment: WrapAlignment.center,

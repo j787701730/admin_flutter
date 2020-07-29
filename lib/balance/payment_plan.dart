@@ -149,6 +149,8 @@ class _PaymentPlanState extends State<PaymentPlan> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '提示',
           ),
@@ -193,6 +195,8 @@ class _PaymentPlanState extends State<PaymentPlan> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '修改支付方案类型',
           ),

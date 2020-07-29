@@ -44,6 +44,8 @@ class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMi
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '更新内容',
           ),
@@ -177,6 +179,8 @@ class _UserOperaState extends State<UserOpera> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '修改密码',
           ),

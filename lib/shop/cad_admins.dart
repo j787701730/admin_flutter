@@ -109,6 +109,8 @@ class _CadAdminsState extends State<CadAdmins> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '${data['name']} 修改',
           ),
@@ -167,6 +169,8 @@ class _CadAdminsState extends State<CadAdmins> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '提示',
           ),
@@ -215,6 +219,8 @@ class _CadAdminsState extends State<CadAdmins> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '提示',
           ),

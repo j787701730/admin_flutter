@@ -130,6 +130,8 @@ class _StaffGroupState extends State<StaffGroup> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '信息',
           ),
@@ -143,15 +145,14 @@ class _StaffGroupState extends State<StaffGroup> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            PrimaryButton(
+              type: BtnType.Default,
               child: Text('取消'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
+            PrimaryButton(
               child: Text('提交'),
               onPressed: () {
                 ajax('Adminrelas-Staff-deleteGroups', {'grpID': item['group_id']}, true, (data) {
@@ -175,6 +176,8 @@ class _StaffGroupState extends State<StaffGroup> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             item['group_name'] == null ? '新增岗位' : '${item['group_name']} 修改',
           ),
@@ -187,24 +190,33 @@ class _StaffGroupState extends State<StaffGroup> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            PrimaryButton(
+              type: BtnType.Default,
               child: Text('取消'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
+            PrimaryButton(
               child: Text('提交'),
               onPressed: () {
-                ajax('Adminrelas-Staff-editGroupsName', {'grpID': item['group_id'], 'grpName': itemTemp['group_name']},
-                    true, (data) {}, () {
-                  setState(() {
-                    item['group_name'] = itemTemp['group_name'];
-                    Navigator.of(context).pop();
-                  });
-                }, _context);
+                String url = 'Adminrelas-Staff-editGroupsName';
+                Map grpData = {'grpName': itemTemp['group_name']};
+                if (item.isEmpty) {
+                  url = 'Adminrelas-Staff-addGroup';
+                } else {
+                  grpData['grpID'] = item['group_id'];
+                }
+                ajax(url, grpData, true, (data) {
+                  if (item.isEmpty) {
+                    getGroups();
+                  } else {
+                    setState(() {
+                      item['group_name'] = itemTemp['group_name'];
+                    });
+                  }
+                  Navigator.of(context).pop();
+                }, () {}, _context);
               },
             ),
           ],
@@ -373,199 +385,9 @@ class _StaffGroupState extends State<StaffGroup> {
                               '无数据',
                             ),
                           )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: ajaxData.map<Widget>((item) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Color(0xffdddddd),
-                                  ),
-                                ),
-                                margin: EdgeInsets.only(
-                                  bottom: 10,
-                                ),
-                                padding: EdgeInsets.only(
-                                  top: 5,
-                                  bottom: 5,
-                                ),
-                                child: Row(
-                                  children: <Widget>[
-                                    InkWell(
-                                      onTap: () {
-                                        if (canEdit) {
-                                          if (item['clickCount'] == null || item['clickCount'] == 0) {
-                                            for (var o in item['c']) {
-                                              for (var p in o['c']) {
-                                                setState(() {
-                                                  p['ck'] = 1;
-                                                  item['clickCount'] = 1;
-                                                });
-                                              }
-                                            }
-                                          } else {
-                                            for (var o in item['c']) {
-                                              for (var p in o['c']) {
-                                                setState(() {
-                                                  p['ck'] = 0;
-                                                  item['clickCount'] = 0;
-                                                });
-                                              }
-                                            }
-                                          }
-                                        }
-                                      },
-                                      child: Container(
-                                        width: 100,
-                                        padding: EdgeInsets.symmetric(horizontal: 6),
-                                        child: Text(
-                                          '${item['mnm']}',
-                                          style: TextStyle(
-                                            color: canEdit ? CFColors.primary : CFColors.text,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 6,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            left: BorderSide(
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        ),
-                                        child: Column(
-                                          children: item['c'].map<Widget>(
-                                            (item2) {
-                                              return Row(
-                                                children: <Widget>[
-                                                  InkWell(
-                                                    onTap: () {
-                                                      if (canEdit) {
-                                                        if (item2['clickCount'] == null || item2['clickCount'] == 0) {
-                                                          for (var o in item2['c']) {
-                                                            setState(() {
-                                                              o['ck'] = 1;
-                                                              item2['clickCount'] = 1;
-                                                            });
-                                                          }
-                                                        } else {
-                                                          for (var o in item2['c']) {
-                                                            setState(() {
-                                                              o['ck'] = 0;
-                                                              item2['clickCount'] = 0;
-                                                            });
-                                                          }
-                                                        }
-                                                      }
-                                                    },
-                                                    child: Container(
-                                                      width: 110,
-                                                      child: Text(
-                                                        '${item2['mnm']}',
-                                                        style: TextStyle(
-                                                          color: canEdit ? CFColors.primary : CFColors.text,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        border: Border(
-                                                          left: BorderSide(
-                                                            color: Colors.grey,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      padding: EdgeInsets.symmetric(horizontal: 6),
-                                                      margin: EdgeInsets.symmetric(
-                                                        vertical: 6,
-//                                                        horizontal: 6,
-                                                      ),
-                                                      child: Wrap(
-                                                        spacing: 10,
-                                                        runSpacing: 10,
-                                                        children: item2['c'].map<Widget>(
-                                                          (item3) {
-                                                            return Container(
-                                                              padding: EdgeInsets.symmetric(
-                                                                horizontal: 4,
-                                                              ),
-                                                              decoration: BoxDecoration(
-//                                                                  color:
-//                                                                      '${item3['ck']}' == '1' && '${item3['kp']}' == '1'
-//                                                                          ? Color(0xffFFFCED)
-//                                                                          : Colors.white,
-                                                                  ),
-                                                              child: InkWell(
-                                                                onTap: () {
-                                                                  if (canEdit) {
-                                                                    bool flag = false;
-                                                                    if (item2['c'].indexOf(item3) == 0) {
-                                                                      if (item2['c'].length == 1) {
-                                                                        flag = true;
-                                                                      } else {
-                                                                        flag = true;
-                                                                        for (var i = 1; i < item2['c'].length; i++) {
-                                                                          if ('${item2['c'][i]['ck']}' == '1') {
-                                                                            flag = false;
-                                                                            break;
-                                                                          }
-                                                                        }
-                                                                      }
-                                                                    } else {
-                                                                      flag = true;
-                                                                      setState(() {
-                                                                        item2['c'][0]['ck'] = '1';
-                                                                      });
-                                                                    }
-                                                                    if (flag) {
-                                                                      setState(() {
-                                                                        item3['ck'] =
-                                                                            '${item3['ck']}' == '1' ? '0' : '1';
-                                                                      });
-                                                                    }
-                                                                  }
-                                                                },
-                                                                child: Row(
-                                                                  mainAxisSize: MainAxisSize.min,
-                                                                  children: <Widget>[
-                                                                    Checkbox(
-                                                                      materialTapTargetSize:
-                                                                          MaterialTapTargetSize.shrinkWrap,
-                                                                      value: '${item3['ck']}' == '1',
-                                                                      onChanged: (bool newValue) {
-//                                                                        setState(() {
-//                                                                          item3['ck'] = newValue ? '1' : '0';
-//                                                                        });
-                                                                      },
-                                                                    ),
-                                                                    Text(' ${item3['fnm']}'),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
-                                                        ).toList(),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          ).toList(),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              );
-                            }).toList(),
+                        : StaffGroupContent(
+                            ajaxData: ajaxData,
+                            canEdit: canEdit,
                           ),
                   ),
           ],
@@ -581,6 +403,207 @@ class _StaffGroupState extends State<StaffGroup> {
         floatingActionButtonOffsetX,
         floatingActionButtonOffsetY,
       ),
+    );
+  }
+}
+
+class StaffGroupContent extends StatefulWidget {
+  final canEdit;
+  final List ajaxData;
+
+  StaffGroupContent({this.ajaxData, this.canEdit});
+
+  @override
+  _StaffGroupContentState createState() => _StaffGroupContentState();
+}
+
+class _StaffGroupContentState extends State<StaffGroupContent> {
+  rightsClick(item) {
+    if (widget.canEdit) {
+      if (item['clickCount'] == null || item['clickCount'] == 0) {
+        for (var o in item['c']) {
+          for (var p in o['c']) {
+            p['ck'] = 1;
+            item['clickCount'] = 1;
+          }
+        }
+      } else {
+        for (var o in item['c']) {
+          for (var p in o['c']) {
+            p['ck'] = 0;
+            item['clickCount'] = 0;
+          }
+        }
+      }
+      setState(() {});
+    }
+  }
+
+  rightsLevel2Click(item2) {
+    if (widget.canEdit) {
+      if (item2['clickCount'] == null || item2['clickCount'] == 0) {
+        for (var o in item2['c']) {
+          o['ck'] = 1;
+          item2['clickCount'] = 1;
+        }
+      } else {
+        for (var o in item2['c']) {
+          o['ck'] = 0;
+          item2['clickCount'] = 0;
+        }
+      }
+      setState(() {});
+    }
+  }
+
+  rightsLevel3Click(item2, item3) {
+    if (widget.canEdit) {
+      bool flag = false;
+      if (item2['c'].indexOf(item3) == 0) {
+        if (item2['c'].length == 1) {
+          flag = true;
+        } else {
+          flag = true;
+          for (var i = 1; i < item2['c'].length; i++) {
+            if ('${item2['c'][i]['ck']}' == '1') {
+              flag = false;
+              break;
+            }
+          }
+        }
+      } else {
+        flag = true;
+        setState(() {
+          item2['c'][0]['ck'] = '1';
+        });
+      }
+      if (flag) {
+        setState(() {
+          item3['ck'] = '${item3['ck']}' == '1' ? '0' : '1';
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: widget.ajaxData.map<Widget>((item) {
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Color(0xffdddddd),
+            ),
+          ),
+          margin: EdgeInsets.only(
+            bottom: 10,
+          ),
+          padding: EdgeInsets.only(
+            top: 5,
+            bottom: 5,
+          ),
+          child: Row(
+            children: <Widget>[
+              InkWell(
+                onTap: () {
+                  rightsClick(item);
+                },
+                child: Container(
+                  width: 80,
+                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                  child: Text(
+                    '${item['mnm']}',
+                    style: TextStyle(
+                      color: widget.canEdit ? CFColors.primary : CFColors.text,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      left: BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  child: Column(
+                    children: item['c'].map<Widget>(
+                      (item2) {
+                        return Row(
+                          children: <Widget>[
+                            InkWell(
+                              onTap: () {
+                                rightsLevel2Click(item2);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                                width: 80,
+                                child: Text(
+                                  '${item2['mnm']}',
+                                  style: TextStyle(
+                                    color: widget.canEdit ? CFColors.primary : CFColors.text,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    left: BorderSide(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                                padding: EdgeInsets.symmetric(horizontal: 6),
+                                margin: EdgeInsets.symmetric(vertical: 6),
+                                child: Wrap(
+                                  spacing: 4,
+                                  runSpacing: 5,
+                                  children: item2['c'].map<Widget>(
+                                    (item3) {
+                                      return Container(
+                                        child: InkWell(
+                                          onTap: () {
+                                            rightsLevel3Click(item2, item3);
+                                          },
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              Checkbox(
+                                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                value: '${item3['ck']}' == '1',
+                                                onChanged: (bool newValue) {
+                                                  rightsLevel3Click(item2, item3);
+                                                },
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.only(right: 8),
+                                                child: Text('${item3['fnm']}'),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ).toList(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ).toList(),
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }

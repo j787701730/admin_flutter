@@ -133,6 +133,8 @@ class _BbsUserState extends State<BbsUser> {
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context1, state) {
           return AlertDialog(
+            contentPadding: EdgeInsets.all(10),
+            titlePadding: EdgeInsets.all(10),
             title: Text(
               '${item['full_name']} 信息修改',
             ),

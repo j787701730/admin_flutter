@@ -1,4 +1,4 @@
-import 'package:admin_flutter/style.dart';
+import 'package:admin_flutter/plugin/input-single.dart';
 import 'package:flutter/material.dart';
 
 class RangeInput extends StatefulWidget {
@@ -33,17 +33,7 @@ class _RangeInputState extends State<RangeInput> {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
+                    child: InputSingle(
                       onChanged: (String val) {
                         widget.onChangeL(val);
                       },
@@ -55,17 +45,7 @@ class _RangeInputState extends State<RangeInput> {
                     child: Text('-'),
                   ),
                   Expanded(
-                    child: TextField(
-                      style: TextStyle(fontSize: CFFontSize.content),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                          top: 0,
-                          bottom: 0,
-                          left: 15,
-                          right: 15,
-                        ),
-                      ),
+                    child: InputSingle(
                       onChanged: (String val) {
                         widget.onChangeR(val);
                       },

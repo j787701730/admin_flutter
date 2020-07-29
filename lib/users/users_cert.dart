@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:admin_flutter/plugin/number_bar.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
+import 'package:admin_flutter/plugin/photo-view-plugin.dart';
+import 'package:admin_flutter/plugin/search-bar-plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/utils.dart';
@@ -22,6 +25,7 @@ class _UsersCertState extends State<UsersCert> {
   List ajaxData = [];
   int count = 0;
   bool loading = false;
+  List selectUsers = [];
 
   Map userSex = {
     '1': '男',
@@ -82,6 +86,7 @@ class _UsersCertState extends State<UsersCert> {
       if (mounted) {
         setState(() {
           ajaxData = res['data'];
+          selectUsers = [];
           count = int.tryParse('${res['count'] ?? 0}');
           toTop();
           loading = false;
@@ -146,6 +151,55 @@ class _UsersCertState extends State<UsersCert> {
     getData();
   }
 
+  imgSee(url) {
+    Navigator.push(
+      _context,
+      MaterialPageRoute(
+        builder: (context) => PhotoViewPlugin([
+          '$baseUrl$url',
+        ]),
+      ),
+    );
+  }
+
+  reviewRecord(state) {
+    showDialog<void>(
+      context: _context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
+          title: Text(
+            '系统提示',
+          ),
+          content: Container(
+            child: Text('确定审核${state == '1' ? '通过' : '失败'} ${selectUsers.length} 个数据?'),
+          ),
+          actions: <Widget>[
+            PrimaryButton(
+              type: BtnType.Default,
+              child: Text('关闭'),
+              onPressed: () {
+                Navigator.of(_context).pop();
+              },
+            ),
+            PrimaryButton(
+              child: Text('保存'),
+              onPressed: () {
+                ajax('adminrelas-certify-reviewRecord', {'idenIDs': jsonEncode(selectUsers), 'state': state}, true,
+                    (data) {
+                  Navigator.of(_context).pop();
+                  getData();
+                }, () {}, _context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,21 +217,27 @@ class _UsersCertState extends State<UsersCert> {
           controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
-            Select(
-              selectOptions: auditState,
-              selectedValue: param['state'] ?? 'all',
-              label: '审核状态',
-              onChanged: (String newValue) {
-                setState(() {
-                  param['state'] = newValue;
-                });
-              },
-            ),
-            Select(
-              selectOptions: selects,
-              selectedValue: defaultVal,
-              label: '排序',
-              onChanged: orderBy,
+            SearchBarPlugin(
+              secondChild: Column(
+                children: <Widget>[
+                  Select(
+                    selectOptions: auditState,
+                    selectedValue: param['state'] ?? 'all',
+                    label: '审核状态',
+                    onChanged: (String newValue) {
+                      setState(() {
+                        param['state'] = newValue;
+                      });
+                    },
+                  ),
+                  Select(
+                    selectOptions: selects,
+                    selectedValue: defaultVal,
+                    label: '排序',
+                    onChanged: orderBy,
+                  ),
+                ],
+              ),
             ),
             Container(
               child: Wrap(
@@ -192,6 +252,23 @@ class _UsersCertState extends State<UsersCert> {
                     },
                     child: Text('搜索'),
                   ),
+                  PrimaryButton(
+                    onPressed: () {
+                      if (selectUsers.isNotEmpty) {
+                        reviewRecord('1');
+                      }
+                    },
+                    child: Text('审核通过'),
+                  ),
+                  PrimaryButton(
+                    type: BtnType.danger,
+                    onPressed: () {
+                      if (selectUsers.isNotEmpty) {
+                        reviewRecord('-1');
+                      }
+                    },
+                    child: Text('没有通过'),
+                  ),
                 ],
               ),
               margin: EdgeInsets.only(bottom: 10),
@@ -203,68 +280,102 @@ class _UsersCertState extends State<UsersCert> {
             ),
             loading
                 ? CupertinoActivityIndicator()
-                : Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: ajaxData.map<Widget>((item) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Color(0xffdddddd), width: 1),
-                          ),
-                          margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.only(top: 5, bottom: 5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: columns.map<Widget>((col) {
-                              Widget con = Text('${item[col['key']] ?? ''}');
-                              switch (col['key']) {
-                                case 'province':
-                                  con = Text('${item['province']}${item['city']}${item['region']}');
-                                  break;
-                                case 'user_sex':
-                                  con = Text('${userSex['${item['user_sex']}']}');
-                                  break;
-                                case 'audit_state':
-                                  con = Text('${auditState['${item['audit_state']}']}');
-                                  break;
-                                case 'if_charge':
-                                  con = Container(
-                                    alignment: Alignment.centerLeft,
-                                    child: '${item[col['key']]}' == '1'
-                                        ? Icon(
-                                            Icons.close,
-                                            color: Colors.red,
-                                          )
-                                        : Icon(
-                                            Icons.check,
-                                            color: Colors.green,
-                                          ),
-                                  );
-                                  break;
-                                case 'option':
-                                  con = Text('在用');
-                                  break;
-                              }
-
-                              return Container(
-                                margin: EdgeInsets.only(bottom: 6),
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                      width: 80,
-                                      alignment: Alignment.centerRight,
-                                      child: Text('${col['title']}'),
-                                      margin: EdgeInsets.only(right: 10),
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: ajaxData.map<Widget>((item) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Color(0xffdddddd), width: 1),
+                        ),
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(top: 5, bottom: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: columns.map<Widget>((col) {
+                            Widget con = Text('${item[col['key']] ?? ''}');
+                            switch (col['key']) {
+                              case 'province':
+                                con = Text('${item['province']}${item['city']}${item['region']}');
+                                break;
+                              case 'user_sex':
+                                con = Text('${userSex['${item['user_sex']}']}');
+                                break;
+                              case 'audit_state':
+                                con = Text('${auditState['${item['audit_state']}']}');
+                                break;
+                              case 'if_charge':
+                                con = Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: '${item[col['key']]}' == '1'
+                                      ? Icon(
+                                          Icons.close,
+                                          color: Colors.red,
+                                        )
+                                      : Icon(
+                                          Icons.check,
+                                          color: Colors.green,
+                                        ),
+                                );
+                                break;
+                              case 'id_up_url':
+                              case 'id_down_url':
+                                con = InkWell(
+                                  onTap: () {
+                                    if (item[col['key']] != null && item[col['key']].toString().trim().isNotEmpty) {
+                                      imgSee('${item[col['key']] ?? ''}');
+                                    }
+                                  },
+                                  child: Container(
+                                    child: Image.network(
+                                      '$baseUrl${item[col['key']] ?? ''}',
+                                      fit: BoxFit.contain,
                                     ),
-                                    Expanded(flex: 1, child: con)
-                                  ],
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        );
-                      }).toList(),
-                    ),
+                                  ),
+                                );
+                                break;
+                              case 'option':
+                                con = Text('在用');
+                                break;
+                            }
+
+                            return Container(
+                              margin: EdgeInsets.only(bottom: 6),
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    width: 90,
+                                    alignment: Alignment.centerRight,
+                                    child: col['key'] == 'login_name'
+                                        ? Row(
+                                            children: <Widget>[
+                                              Checkbox(
+                                                value: selectUsers.contains(item['identity_id']),
+                                                onChanged: (val) {
+                                                  if (selectUsers.contains(item['identity_id'])) {
+                                                    setState(() {
+                                                      selectUsers.remove(item['identity_id']);
+                                                    });
+                                                  } else {
+                                                    setState(() {
+                                                      selectUsers.add(item['identity_id']);
+                                                    });
+                                                  }
+                                                },
+                                              ),
+                                              Text('${col['title']}')
+                                            ],
+                                          )
+                                        : Text('${col['title']}'),
+                                    margin: EdgeInsets.only(right: 10),
+                                  ),
+                                  Expanded(flex: 1, child: con)
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    }).toList(),
                   ),
             Container(
               child: PagePlugin(

@@ -85,6 +85,8 @@ class _ShopMenusState extends State<ShopMenus> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '信息',
           ),

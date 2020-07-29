@@ -300,10 +300,13 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
                 children: <Widget>[
                   PrimaryButton(
                     onPressed: () {
-                      param['curr_page'] = 1;
-                      param2['curr_page'] = 1;
-                      getData();
-                      getData2();
+                      if (tabType == 1) {
+                        param['curr_page'] = 1;
+                        getData();
+                      } else {
+                        param2['curr_page'] = 1;
+                        getData2();
+                      }
                       FocusScope.of(context).requestFocus(
                         FocusNode(),
                       );
@@ -403,8 +406,8 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
                   )
                 : Column(
                     children: <Widget>[
-                      Offstage(
-                        offstage: tabType != 1,
+                      Visibility(
+                        visible: tabType == 1,
                         child: Column(
                           children: <Widget>[
                             Container(
@@ -433,8 +436,8 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
                           ],
                         ),
                       ),
-                      Offstage(
-                        offstage: tabType != 2,
+                      Visibility(
+                        visible: tabType == 2,
                         child: Column(
                           children: <Widget>[
                             Container(

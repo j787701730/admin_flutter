@@ -113,6 +113,8 @@ class _ActivityListState extends State<ActivityList> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '${item['activity_name']} 抽奖规则',
           ),
@@ -156,6 +158,8 @@ class _ActivityListState extends State<ActivityList> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '${item['activity_name']} 奖品',
           ),
@@ -232,6 +236,8 @@ class _ActivityListState extends State<ActivityList> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '提示',
           ),

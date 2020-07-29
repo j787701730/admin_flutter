@@ -1,3 +1,4 @@
+import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,6 @@ class LogCard extends StatelessWidget {
           : Text(
               '${item[col['key']]}'.replaceAll(RegExp(r"\n", multiLine: true), ''),
               maxLines: col['lines'],
-              softWrap: true,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(color: Colors.blue),
             ),
@@ -37,6 +37,8 @@ class LogCard extends StatelessWidget {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '参数解析',
           ),
@@ -80,7 +82,8 @@ class LogCard extends StatelessWidget {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            PrimaryButton(
+              type: BtnType.Default,
               child: Text('关闭'),
               onPressed: () {
                 Navigator.of(_context).pop();

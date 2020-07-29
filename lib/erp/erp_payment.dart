@@ -106,6 +106,8 @@ class _ErpPaymentState extends State<ErpPayment> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '参数解析',
           ),

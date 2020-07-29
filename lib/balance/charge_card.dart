@@ -258,6 +258,8 @@ class _ChargeCardState extends State<ChargeCard> {
                           return StatefulBuilder(builder: (context1, state) {
                             /// 这里的state就是setState
                             return AlertDialog(
+                              contentPadding: EdgeInsets.all(10),
+                              titlePadding: EdgeInsets.all(10),
                               title: Text(
                                 '充值卡制作',
                               ),
@@ -402,6 +404,8 @@ class _ChargeCardState extends State<ChargeCard> {
                             builder: (context1, state) {
                               /// 这里的state就是setState
                               return AlertDialog(
+                                contentPadding: EdgeInsets.all(10),
+                                titlePadding: EdgeInsets.all(10),
                                 title: Text(
                                   '赠送充值卡',
                                 ),

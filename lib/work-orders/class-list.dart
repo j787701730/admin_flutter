@@ -167,6 +167,8 @@ class _ClassListState extends State<ClassList> {
                             builder: (context1, state) {
                               /// 这里的state就是setState
                               return AlertDialog(
+                                contentPadding: EdgeInsets.all(10),
+                                titlePadding: EdgeInsets.all(10),
                                 title: Text(
                                   '信息',
                                 ),

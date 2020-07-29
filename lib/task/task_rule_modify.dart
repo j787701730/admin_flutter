@@ -132,6 +132,8 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context1, state) {
           return AlertDialog(
+            contentPadding: EdgeInsets.all(10),
+            titlePadding: EdgeInsets.all(10),
             title: Text(
               '等级图片',
             ),

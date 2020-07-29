@@ -39,7 +39,7 @@ class PrimaryButton extends FlatButton {
           key: key,
           onPressed: onPressed,
           child: child,
-          textColor: Colors.white,
+          textColor: type == BtnType.Default ? CFColors.text : Colors.white,
           color: btnColor(type),
           padding: padding,
 

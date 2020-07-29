@@ -90,6 +90,8 @@ class _BbsForumState extends State<BbsForum> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '系统提示',
           ),
@@ -132,6 +134,8 @@ class _BbsForumState extends State<BbsForum> {
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             flag ? '${item['bfname']} 修改' : item == null ? '新增帖子' : '${item['bfname']} 新增子帖子',
           ),

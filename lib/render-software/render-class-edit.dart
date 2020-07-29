@@ -116,6 +116,8 @@ class _RenderClassEditState extends State<RenderClassEdit> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '系统提示',
           ),
@@ -157,6 +159,8 @@ class _RenderClassEditState extends State<RenderClassEdit> {
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context1, state) {
           return AlertDialog(
+            contentPadding: EdgeInsets.all(10),
+            titlePadding: EdgeInsets.all(10),
             title: Text(
               '拥有的资源属性',
             ),

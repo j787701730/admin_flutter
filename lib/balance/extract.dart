@@ -123,6 +123,8 @@ class _BalanceExtractState extends State<BalanceExtract> {
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
+            contentPadding: EdgeInsets.all(10),
+            titlePadding: EdgeInsets.all(10),
             title: Text(
               '信息',
             ),
@@ -165,6 +167,8 @@ class _BalanceExtractState extends State<BalanceExtract> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '确定${type == '1' ? '' : ' 取消'} ${item['login_name']} 提现?',
           ),

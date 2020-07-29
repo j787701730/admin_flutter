@@ -27,8 +27,8 @@ class _UsersManagerState extends State<UsersManager> {
   bool loading = false;
   BuildContext _context;
   ScrollController _controller;
-  Map searchData = {'user_name': '', 'ip': '', 'err_code': '', 'url': ''};
-  Map searchName = {'user_name': '用户', 'ip': 'IP地址', 'err_code': '错误码', 'url': '访问路径'};
+  Map searchData = {'login_name': '', 'ip': '', 'err_code': '', 'url': ''};
+  Map searchName = {'login_name': '用户', 'ip': 'IP地址', 'err_code': '错误码', 'url': '访问路径'};
   List columns = [
     {'title': '类型', 'key': 'type'},
     {'title': '用户', 'key': 'login_name'},
@@ -192,14 +192,14 @@ class _UsersManagerState extends State<UsersManager> {
   userTypeDialog() {
     showDialog<void>(
       context: _context,
-      barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context1, state) {
           return AlertDialog(
+            contentPadding: EdgeInsets.all(10),
+            titlePadding: EdgeInsets.all(10),
             title: Text(
               '${selectRow['login_name']} 用户类型修改',
             ),
-            contentPadding: EdgeInsets.all(10),
             content: SingleChildScrollView(
               child: Container(
                 width: 1400,
@@ -450,6 +450,8 @@ class _UsersManagerState extends State<UsersManager> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(10),
+          titlePadding: EdgeInsets.all(10),
           title: Text(
             '系统提示',
           ),
@@ -464,16 +466,14 @@ class _UsersManagerState extends State<UsersManager> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            PrimaryButton(
+              type: BtnType.Default,
               child: Text('取消'),
-              color: Colors.white,
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
+            PrimaryButton(
               child: Text('确定'),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -534,6 +534,8 @@ class _UsersManagerState extends State<UsersManager> {
                   onPressed: () {
                     param['curr_page'] = 1;
                     getData();
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    print(param);
                   },
                   child: Text('搜索'),
                 ),
@@ -651,7 +653,6 @@ class _UsersManagerState extends State<UsersManager> {
                                               onPressed: () {
                                                 operaDialog(item);
                                               },
-                                              padding: EdgeInsets.only(left: 0),
                                               child: Text('冻结'),
                                             ),
                                           );

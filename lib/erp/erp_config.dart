@@ -113,6 +113,8 @@ class _ErpConfigState extends State<ErpConfig> {
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context1, state) {
           return AlertDialog(
+            contentPadding: EdgeInsets.all(10),
+            titlePadding: EdgeInsets.all(10),
             title: Text(
               '信息',
             ),
