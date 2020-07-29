@@ -342,6 +342,12 @@ class _ShopPluginState extends State<ShopPlugin> {
         child: Icon(Icons.add_shopping_cart),
         onPressed: () => shopsBox(width),
       ),
+      floatingActionButtonAnimator: ScalingAnimation(),
+      floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+        FloatingActionButtonLocation.endFloat,
+        floatingActionButtonOffsetX,
+        floatingActionButtonOffsetY,
+      ),
     );
   }
 }

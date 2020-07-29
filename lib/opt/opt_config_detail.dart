@@ -291,6 +291,12 @@ class _OptConfigDetailState extends State<OptConfigDetail> {
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),
+      floatingActionButtonAnimator: ScalingAnimation(),
+      floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+        FloatingActionButtonLocation.endFloat,
+        floatingActionButtonOffsetX,
+        floatingActionButtonOffsetY,
+      ),
     );
   }
 }

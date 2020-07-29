@@ -289,6 +289,12 @@ class _DrawTypeState extends State<DrawType> {
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),
+      floatingActionButtonAnimator: ScalingAnimation(),
+      floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+        FloatingActionButtonLocation.endFloat,
+        floatingActionButtonOffsetX,
+        floatingActionButtonOffsetY,
+      ),
     );
   }
 }

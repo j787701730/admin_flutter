@@ -261,6 +261,12 @@ class _TaskRulesState extends State<TaskRules> {
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),
+      floatingActionButtonAnimator: ScalingAnimation(),
+      floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+        FloatingActionButtonLocation.endFloat,
+        floatingActionButtonOffsetX,
+        floatingActionButtonOffsetY,
+      ),
     );
   }
 }

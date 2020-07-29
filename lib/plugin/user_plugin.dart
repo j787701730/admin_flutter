@@ -334,6 +334,12 @@ class _UserPluginState extends State<UserPlugin> {
         child: Icon(Icons.add_shopping_cart),
         onPressed: () => shopsBox(),
       ),
+      floatingActionButtonAnimator: ScalingAnimation(),
+      floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+        FloatingActionButtonLocation.endFloat,
+        floatingActionButtonOffsetX,
+        floatingActionButtonOffsetY,
+      ),
     );
   }
 }

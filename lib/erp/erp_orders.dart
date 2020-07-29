@@ -287,6 +287,12 @@ class _ErpOrdersState extends State<ErpOrders> {
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),
+      floatingActionButtonAnimator: ScalingAnimation(),
+      floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+        FloatingActionButtonLocation.endFloat,
+        floatingActionButtonOffsetX,
+        floatingActionButtonOffsetY,
+      ),
     );
   }
 }

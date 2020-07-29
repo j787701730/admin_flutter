@@ -495,6 +495,12 @@ class _ArticleListState extends State<ArticleList> {
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
       ),
+      floatingActionButtonAnimator: ScalingAnimation(),
+      floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+        FloatingActionButtonLocation.endFloat,
+        floatingActionButtonOffsetX,
+        floatingActionButtonOffsetY,
+      ),
     );
   }
 }

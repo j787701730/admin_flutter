@@ -305,8 +305,13 @@ class _ErpPayoutState extends State<ErpPayout> {
       floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
-      ),floatingActionButtonLocation: CustomFloatingActionButtonLocation(
-          FloatingActionButtonLocation.endFloat, floatingActionButtonOffsetX, floatingActionButtonOffsetY),
+      ),
+      floatingActionButtonAnimator: ScalingAnimation(),
+      floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+        FloatingActionButtonLocation.endFloat,
+        floatingActionButtonOffsetX,
+        floatingActionButtonOffsetY,
+      ),
     );
   }
 }

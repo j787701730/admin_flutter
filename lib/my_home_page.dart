@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:admin_flutter/login.dart';
 import 'package:admin_flutter/menu_data.dart';
 import 'package:admin_flutter/plugin/input.dart';
+import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,7 +21,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
   DateTime _lastPressedAt; // 上次点击时间
-
+  ScrollController _controller;
   BuildContext _context;
   GlobalKey<_MenusWidgetState> _menusKey = GlobalKey<_MenusWidgetState>();
 
@@ -28,11 +29,13 @@ class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMi
   void initState() {
     super.initState();
     _context = context;
+    _controller = ScrollController();
   }
 
   @override
   void dispose() {
     super.dispose();
+    _controller.dispose();
   }
 
   updateLog() {
@@ -85,6 +88,14 @@ class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMi
     _menusKey.currentState.filterMenu(val);
   }
 
+  toTop() {
+    _controller.animateTo(
+      0,
+      duration: new Duration(milliseconds: 300), // 300ms
+      curve: Curves.bounceIn, // 动画方式
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -124,11 +135,22 @@ class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMi
           ],
         ),
         body: ListView(
+          controller: _controller,
           padding: EdgeInsets.all(10),
           children: <Widget>[
             MenuSearchInput(filterMenu),
             MenusWidget(key: _menusKey),
           ],
+        ),
+        floatingActionButton: CFFloatingActionButton(
+          onPressed: toTop,
+          child: Icon(Icons.keyboard_arrow_up),
+        ),
+        floatingActionButtonAnimator: ScalingAnimation(),
+        floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+          FloatingActionButtonLocation.endFloat,
+          floatingActionButtonOffsetX,
+          floatingActionButtonOffsetY,
         ),
       ),
     );
