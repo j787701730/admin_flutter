@@ -90,7 +90,7 @@ class _AgreementState extends State<Agreement> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

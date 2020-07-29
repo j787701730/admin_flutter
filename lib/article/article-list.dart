@@ -304,7 +304,7 @@ class _ArticleListState extends State<ArticleList> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

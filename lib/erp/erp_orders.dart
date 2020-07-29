@@ -101,7 +101,7 @@ class _ErpOrdersState extends State<ErpOrders> {
 
   getPage(page) {
     if (loading) return;
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

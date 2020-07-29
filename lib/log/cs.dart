@@ -136,7 +136,7 @@ class _CsLogsState extends State<CsLogs> {
 
   getPage(page) {
     if (loading) return;
-    curr_page += page;
+    curr_page = page;
     getData();
   }
 

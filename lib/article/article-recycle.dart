@@ -80,7 +80,7 @@ class _ArticleRecycleState extends State<ArticleRecycle> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

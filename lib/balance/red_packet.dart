@@ -97,7 +97,7 @@ class _RedPacketState extends State<RedPacket> {
 
   getPage(page) {
     if (loading) return;
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

@@ -126,7 +126,7 @@ class _PaymentPlanState extends State<PaymentPlan> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

@@ -89,7 +89,7 @@ class _DrawTypeState extends State<DrawType> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

@@ -103,7 +103,7 @@ class _ActivityListState extends State<ActivityList> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

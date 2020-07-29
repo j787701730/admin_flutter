@@ -94,7 +94,7 @@ class _OptConfigState extends State<OptConfig> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

@@ -125,7 +125,7 @@ class _RebateDistributorState extends State<RebateDistributor> {
 
   getPage(page) {
     if (loading) return;
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     selectDistributor.clear();
     getData();
   }

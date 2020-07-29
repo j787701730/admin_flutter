@@ -94,7 +94,7 @@ class _ZoneFilesState extends State<ZoneFiles> {
   }
 
   getPage(page) {
-    param['currPage'] += page;
+    param['currPage'] = page;
     getData();
   }
 

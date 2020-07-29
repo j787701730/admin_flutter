@@ -170,7 +170,7 @@ class _UserPluginState extends State<UserPlugin> {
   }
 
   getPage(page) {
-    param['currPage'] += page;
+    param['currPage'] = page;
     fetchShop();
   }
 

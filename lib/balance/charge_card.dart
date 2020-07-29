@@ -191,7 +191,7 @@ class _ChargeCardState extends State<ChargeCard> {
 
   getPage(page) {
     if (loading) return;
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

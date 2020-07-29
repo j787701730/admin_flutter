@@ -108,7 +108,7 @@ class _OptListState extends State<OptList> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

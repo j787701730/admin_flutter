@@ -100,7 +100,7 @@ class _BalanceTransferState extends State<BalanceTransfer> {
 
   getPage(page) {
     if (loading) return;
-    param['currPage'] += page;
+    param['currPage'] = page;
     getData();
   }
 

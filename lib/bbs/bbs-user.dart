@@ -98,7 +98,7 @@ class _BbsUserState extends State<BbsUser> {
 
   getPage(page) {
     if (loading) return;
-    param['currPage'] += page;
+    param['currPage'] = page;
     getData();
   }
 

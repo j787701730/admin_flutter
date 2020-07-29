@@ -116,12 +116,12 @@ class _ReadCollectState extends State<ReadCollect> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 
   getPage2(page) {
-    param2['curr_page'] += page;
+    param2['curr_page'] = page;
     getData2();
   }
 

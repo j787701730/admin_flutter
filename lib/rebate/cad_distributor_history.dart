@@ -90,7 +90,7 @@ class _CADDistributorHistoryState extends State<CADDistributorHistory> {
 
   getPage(page) {
     if (loading) return;
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

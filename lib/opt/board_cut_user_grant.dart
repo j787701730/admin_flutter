@@ -117,7 +117,7 @@ class _BoardCutUserGrantState extends State<BoardCutUserGrant> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

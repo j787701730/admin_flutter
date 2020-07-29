@@ -112,7 +112,7 @@ class _BalancePricingState extends State<BalancePricing> {
 
   getPage(page) {
     if (loading) return;
-    param['currPage'] += page;
+    param['currPage'] = page;
     getData();
   }
 

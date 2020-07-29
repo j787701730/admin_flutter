@@ -91,7 +91,7 @@ class _SystemConfigState extends State<SystemConfig> {
 
   getPage(page) {
     if (loading) return;
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

@@ -92,7 +92,7 @@ class _ShopsZoneState extends State<ShopsZone> {
   }
 
   getPage(page) {
-    param['currPage'] += page;
+    param['currPage'] = page;
     getData();
   }
 

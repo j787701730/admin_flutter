@@ -1,5 +1,6 @@
 import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 
 class SearchBarPlugin extends StatefulWidget {
   final Widget firstChild;
@@ -40,6 +41,7 @@ class _SearchBarPluginState extends State<SearchBarPlugin> {
           crossFadeState: isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
         ),
         Container(
+          margin: EdgeInsets.only(bottom: 10),
           decoration: BoxDecoration(
             border: Border(
               top: BorderSide(

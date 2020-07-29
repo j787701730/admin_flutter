@@ -163,7 +163,7 @@ class _SmsLogsState extends State<SmsLogs> {
 
   getPage(page) {
     if (loading) return;
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

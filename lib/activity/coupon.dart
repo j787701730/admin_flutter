@@ -127,7 +127,7 @@ class _CouponState extends State<Coupon> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

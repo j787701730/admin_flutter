@@ -109,7 +109,7 @@ class _UserPrizesState extends State<UserPrizes> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

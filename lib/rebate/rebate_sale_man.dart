@@ -90,7 +90,7 @@ class _RebateSaleManState extends State<RebateSaleMan> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

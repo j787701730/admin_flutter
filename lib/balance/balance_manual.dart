@@ -105,7 +105,7 @@ class _BalanceManualState extends State<BalanceManual> {
 
   getPage(page) {
     if (loading) return;
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

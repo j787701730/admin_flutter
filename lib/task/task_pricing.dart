@@ -115,7 +115,7 @@ class _TaskPricingState extends State<TaskPricing> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

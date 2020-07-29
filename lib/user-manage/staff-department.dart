@@ -122,7 +122,7 @@ class _StaffDepartmentState extends State<StaffDepartment> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

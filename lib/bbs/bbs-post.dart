@@ -107,7 +107,7 @@ class _BbsPostState extends State<BbsPost> {
 
   getPage(page) {
     if (loading) return;
-    param['currPage'] += page;
+    param['currPage'] = page;
     getData();
   }
 

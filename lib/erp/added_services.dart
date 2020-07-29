@@ -121,7 +121,7 @@ class _AddedServicesState extends State<AddedServices> {
 
   getPage(page) {
     if (loading) return;
-    param['currPage'] += page;
+    param['currPage'] = page;
     getData();
   }
 

@@ -109,7 +109,7 @@ class _FinancialDetailState extends State<FinancialDetail> {
 
   getPage(page) {
     if (loading) return;
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

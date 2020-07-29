@@ -135,7 +135,7 @@ class _ChargeSummaryState extends State<ChargeSummary> {
 
   getPage(page) {
     if (loading) return;
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

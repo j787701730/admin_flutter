@@ -137,7 +137,7 @@ class _CADLogsState extends State<CADLogs> {
 
   getPage(page) {
     if (loading) return;
-    curr_page += page;
+    curr_page = page;
     getData();
   }
 

@@ -161,7 +161,7 @@ class _ShopPluginState extends State<ShopPlugin> {
   }
 
   getPage(page) {
-    param['currPage'] += page;
+    param['currPage'] = page;
     fetchShop();
   }
 

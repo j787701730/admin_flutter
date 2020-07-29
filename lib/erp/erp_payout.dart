@@ -95,7 +95,7 @@ class _ErpPayoutState extends State<ErpPayout> {
 
   getPage(page) {
     if (loading) return;
-    param['currPage'] += page;
+    param['currPage'] = page;
     getData();
   }
 
@@ -305,7 +305,8 @@ class _ErpPayoutState extends State<ErpPayout> {
       floatingActionButton: CFFloatingActionButton(
         onPressed: toTop,
         child: Icon(Icons.keyboard_arrow_up),
-      ),
+      ),floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+          FloatingActionButtonLocation.endFloat, floatingActionButtonOffsetX, floatingActionButtonOffsetY),
     );
   }
 }

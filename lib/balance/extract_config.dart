@@ -97,7 +97,7 @@ class _ExtractConfigState extends State<ExtractConfig> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

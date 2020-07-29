@@ -115,7 +115,7 @@ class _CourseEvaluateState extends State<CourseEvaluate> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

@@ -107,7 +107,7 @@ class _FinancialLoanState extends State<FinancialLoan> {
 
   getPage(page) {
     if (loading) return;
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

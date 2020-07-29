@@ -109,7 +109,7 @@ class _BoardCutConfigsState extends State<BoardCutConfigs> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

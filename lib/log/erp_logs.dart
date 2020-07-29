@@ -159,7 +159,7 @@ class _ErpLogsState extends State<ErpLogs> {
 
   getPage(page) {
     if (loading) return;
-    curr_page += page;
+    curr_page = page;
     getData();
   }
 

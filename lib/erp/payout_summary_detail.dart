@@ -94,7 +94,7 @@ class _PayoutSummaryDetailState extends State<PayoutSummaryDetail> {
 
   getPage(page) {
     if (loading) return;
-    param['currPage'] += page;
+    param['currPage'] = page;
     getData();
   }
 

@@ -135,7 +135,7 @@ class _AccumulateFlowDetailState extends State<AccumulateFlowDetail> {
   }
 
   getPage(page) {
-    param['currPage'] += page;
+    param['currPage'] = page;
     getData();
   }
 

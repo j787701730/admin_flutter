@@ -104,7 +104,7 @@ class _CadUserRelationState extends State<CadUserRelation> {
 
   getPage(page) {
     if (loading) return;
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

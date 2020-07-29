@@ -79,7 +79,7 @@ class _TaskTypeListState extends State<TaskTypeList> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

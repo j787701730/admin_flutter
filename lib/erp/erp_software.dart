@@ -107,7 +107,7 @@ class _ErpSoftwareState extends State<ErpSoftware> {
 
   getPage(page) {
     if (loading) return;
-    param['currPage'] += page;
+    param['currPage'] = page;
     getData();
   }
 

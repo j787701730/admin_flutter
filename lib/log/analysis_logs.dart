@@ -191,10 +191,10 @@ class _AnalysisLogsState extends State<AnalysisLogs> {
   getPage(page) {
     if (loading) return;
     if (tabType == 1) {
-      param['curr_page'] += page;
+      param['curr_page'] = page;
       getData();
     } else {
-      param2['curr_page'] += page;
+      param2['curr_page'] = page;
       getData2();
     }
   }

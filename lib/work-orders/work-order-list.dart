@@ -143,7 +143,7 @@ class _WorkOrdersListState extends State<WorkOrdersList> {
 
   getPage(page) {
     if (loading) return;
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

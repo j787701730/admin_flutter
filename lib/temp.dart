@@ -102,7 +102,7 @@ class _$1$State extends State<$1$> {
   }
 
   getPage(page) {
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 

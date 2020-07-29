@@ -134,7 +134,7 @@ class _AccountItemState extends State<AccountItem> {
 
   getPage(page) {
     if (loading) return;
-    param['curr_page'] += page;
+    param['curr_page'] = page;
     getData();
   }
 
