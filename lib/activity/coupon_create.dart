@@ -8,7 +8,7 @@ import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:rounded_flutter_datetime_picker/rounded_flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class CouponCreate extends StatefulWidget {
@@ -93,7 +93,11 @@ class _CouponCreateState extends State<CouponCreate> {
       }, () {}, _context);
     } else {
       Fluttertoast.showToast(
-          msg: '请填写 ${msg.join(', ')}', gravity: ToastGravity.CENTER, toastLength: Toast.LENGTH_LONG);
+          backgroundColor: CFColors.secondary,
+          textColor: CFColors.white,
+          msg: '请填写 ${msg.join(', ')}',
+          gravity: ToastGravity.CENTER,
+          toastLength: Toast.LENGTH_LONG);
     }
   }
 

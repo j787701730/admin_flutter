@@ -171,6 +171,8 @@ class _AttributeAddModifyState extends State<AttributeAddModify> {
                       }, () {}, context);
                     } else {
                       Fluttertoast.showToast(
+                        backgroundColor: CFColors.secondary,
+                        textColor: CFColors.white,
                         msg: '请填写 ${msg.join(', ')}',
                         gravity: ToastGravity.CENTER,
                       );

@@ -403,6 +403,8 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
                                                 setState(() {
                                                   if (ajaxData.length == 5) {
                                                     Fluttertoast.showToast(
+                                                      backgroundColor: CFColors.secondary,
+                                                      textColor: CFColors.white,
                                                       msg: '最多只能配置5条规则',
                                                       gravity: ToastGravity.CENTER,
                                                     );
@@ -439,6 +441,8 @@ class _TaskRuleModifyState extends State<TaskRuleModify> {
                           FocusScope.of(context).requestFocus(FocusNode());
                           if (ajaxData.length == 5) {
                             Fluttertoast.showToast(
+                              backgroundColor: CFColors.secondary,
+                              textColor: CFColors.white,
                               msg: '最多只能配置5条规则',
                               gravity: ToastGravity.CENTER,
                             );

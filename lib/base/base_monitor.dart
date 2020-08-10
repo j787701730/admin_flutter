@@ -5,6 +5,7 @@ import 'package:admin_flutter/base/io_chart.dart';
 import 'package:admin_flutter/base/mem_chart.dart';
 import 'package:admin_flutter/base/net_chart.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,6 @@ class BaseMonitor extends StatefulWidget {
 }
 
 class _BaseMonitorState extends State<BaseMonitor> {
-  BuildContext _context;
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   List ajaxCpu = [];
@@ -41,7 +41,6 @@ class _BaseMonitorState extends State<BaseMonitor> {
   void initState() {
     super.initState();
     _controller = ScrollController();
-    _context = context;
     Timer(Duration(milliseconds: 200), () {
       getData();
       getData2();
@@ -66,6 +65,8 @@ class _BaseMonitorState extends State<BaseMonitor> {
           });
         } else {
           Fluttertoast.showToast(
+            backgroundColor: CFColors.secondary,
+            textColor: CFColors.white,
             msg: '${res['err_msg']}',
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,

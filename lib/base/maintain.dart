@@ -2,7 +2,7 @@ import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:rounded_flutter_datetime_picker/rounded_flutter_datetime_picker.dart';
 
 class Maintain extends StatefulWidget {
   @override

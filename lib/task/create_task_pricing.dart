@@ -64,6 +64,8 @@ class _CreateTaskPricingState extends State<CreateTaskPricing> {
       );
     } else {
       Fluttertoast.showToast(
+        backgroundColor: CFColors.secondary,
+        textColor: CFColors.white,
         msg: '请填写 ${msg.join(', ')}',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,

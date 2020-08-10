@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:admin_flutter/balance/balance_manual_opera.dart';
 import 'package:admin_flutter/balance/balance_detail.dart';
+import 'package:admin_flutter/balance/balance_manual_opera.dart';
 import 'package:admin_flutter/balance/balance_redbag_detail.dart';
+import 'package:admin_flutter/plugin/date_select_plugin.dart';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/range_input.dart';
@@ -25,7 +26,7 @@ class _BalanceListState extends State<BalanceList> {
   BuildContext _context;
   ScrollController _controller;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
-  Map param = {"curr_page": 1, "page_count": 15};
+  Map param = {"curr_page": 1, "page_count": 10};
   Map ajaxData = {};
   int count = 0;
   Map balanceCheckParam = {'userId': '', 'acctBalanceID': ''};
@@ -134,6 +135,7 @@ class _BalanceListState extends State<BalanceList> {
     getData();
   }
 
+  // 稽核
   balanceCheck() {
     showDialog<void>(
       context: _context,
@@ -156,23 +158,19 @@ class _BalanceListState extends State<BalanceList> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            PrimaryButton(
               child: Text('取消'),
-              color: Colors.white,
+              type: BtnType.Default,
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
+            PrimaryButton(
               child: Text('确定'),
               onPressed: () {
+                print(balanceCheckParam);
+                ajax('Adminrelas-Balance-balanceCheck', balanceCheckParam, true, (data) {}, () {}, _context);
                 Navigator.of(context).pop();
-//                ajax('Adminrelas-Balance-balanceCheck', balanceCheckParam, true, (data) {
-//
-//                }, () {}, _context);
-//
               },
             ),
           ],
@@ -185,7 +183,11 @@ class _BalanceListState extends State<BalanceList> {
     Navigator.push(
       _context,
       MaterialPageRoute(builder: (context) => BalanceManualOpera(val)),
-    );
+    ).then((value) {
+      if (value == true) {
+        getData();
+      }
+    });
   }
 
   @override
@@ -279,6 +281,7 @@ class _BalanceListState extends State<BalanceList> {
                       param['amountU'] = val;
                     }
                   },
+                  type: NumberType.float,
                 ),
                 RangeInput(
                   label: '预占金额',
@@ -295,6 +298,39 @@ class _BalanceListState extends State<BalanceList> {
                     } else {
                       param['pre_amountU'] = val;
                     }
+                  },
+                  type: NumberType.float,
+                ),
+                DateSelectPlugin(
+                  label: '创建时间',
+                  onChanged: (val) {
+                    if (val['min'] == null) {
+                      param.remove('create_dateL');
+                    } else {
+                      param['create_dateL'] = val['min'].toString().substring(0, 10);
+                    }
+                    if (val['max'] == null) {
+                      param.remove('create_dateU');
+                    } else {
+                      param['create_dateU'] = val['max'].toString().substring(0, 10);
+                    }
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                ),
+                DateSelectPlugin(
+                  label: '更新时间',
+                  onChanged: (val) {
+                    if (val['min'] == null) {
+                      param.remove('update_dateL');
+                    } else {
+                      param['update_dateL'] = val['min'].toString().substring(0, 10);
+                    }
+                    if (val['max'] == null) {
+                      param.remove('update_dateU');
+                    } else {
+                      param['update_dateU'] = val['max'].toString().substring(0, 10);
+                    }
+                    FocusScope.of(context).requestFocus(FocusNode());
                   },
                 ),
               ]),
@@ -342,278 +378,272 @@ class _BalanceListState extends State<BalanceList> {
                       )
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: ajaxData.keys.toList().map<Widget>(
-                          (key) {
-                            return Container(
-                              margin: EdgeInsets.only(bottom: 15),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: 6),
-                                    child: Wrap(
-                                      crossAxisAlignment: WrapCrossAlignment.center,
-                                      spacing: 10,
-                                      children: <Widget>[
-                                        Text('用户: ${ajaxData[key]['login_name']}(${ajaxData[key]['user_phone']})'),
-                                        PrimaryButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              balanceCheckParam = {'userId': '$key', 'acctBalanceID': '0'};
-                                              balanceCheck();
-                                            });
-                                          },
-                                          child: Text(
-                                            '用户稽核',
-                                          ),
+                        children: ajaxData.keys.toList().map<Widget>((key) {
+                          Map list = ajaxData[key];
+                          return Container(
+                            margin: EdgeInsets.only(bottom: 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.only(bottom: 6),
+                                  child: Wrap(
+                                    crossAxisAlignment: WrapCrossAlignment.center,
+                                    spacing: 6,
+                                    children: <Widget>[
+                                      Text('用户: ${list['login_name']}(${list['user_phone']})'),
+                                      PrimaryButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            balanceCheckParam = {'userId': '$key', 'acctBalanceID': '0'};
+                                            balanceCheck();
+                                          });
+                                        },
+                                        child: Text(
+                                          '稽核',
                                         ),
-                                        PrimaryButton(
-                                          onPressed: () {
-                                            Map data = {
-                                              'user': {
-                                                '$key': {
-                                                  'user_id': '$key',
-                                                  'login_name': '${ajaxData[key]['login_name']}',
-                                                }
-                                              },
-                                              'manualType': '5',
-                                              'manualState': '1',
-                                              'manualTypeFlag': true
-                                            };
-                                            turnTo(data);
-                                          },
-                                          child: Text(
-                                            '手工账',
-                                          ),
+                                      ),
+                                      PrimaryButton(
+                                        onPressed: () {
+                                          Map data = {
+                                            'user': {
+                                              '$key': {
+                                                'user_id': '$key',
+                                                'login_name': '${list['login_name']}',
+                                              }
+                                            },
+                                            'manualType': '5',
+                                            'manualState': '1',
+                                            'manualTypeFlag': true,
+                                          };
+                                          turnTo(data);
+                                        },
+                                        child: Text(
+                                          '手工账',
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.only(top: 6, left: 6, right: 6),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: Color(0xffdddddd), width: 1),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: ajaxData[key]['acctRes'].map<Widget>(
-                                        (item) {
-                                          return Container(
-                                            padding: EdgeInsets.only(top: 10),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(color: Color(0xffeeeeee), width: 1),
-                                            ),
-                                            margin: EdgeInsets.only(bottom: 6),
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: columns.map<Widget>(
-                                                (col) {
-                                                  Widget con = Text('${item[col['key']] ?? ''}');
-                                                  switch (col['key']) {
-                                                    case 'state':
-                                                      con = '${item[col['key']]}' == '1' ? Text('在用') : Text('停用');
-                                                      break;
-                                                    case 'if_charge':
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 6, left: 6, right: 6),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Color(0xffdddddd), width: 1),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: list['acctRes'].map<Widget>(
+                                      (item) {
+                                        return Container(
+                                          padding: EdgeInsets.only(top: 10),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(color: Color(0xffeeeeee), width: 1),
+                                          ),
+                                          margin: EdgeInsets.only(bottom: 6),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: columns.map<Widget>(
+                                              (col) {
+                                                Widget con = Text('${item[col['key']] ?? ''}');
+                                                switch (col['key']) {
+                                                  case 'state':
+                                                    con = '${item[col['key']]}' == '1' ? Text('在用') : Text('停用');
+                                                    break;
+                                                  case 'if_charge':
+                                                    con = Row(
+                                                      children: <Widget>[
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Text('充值:'),
+                                                              '${item['if_charge']}' == '1'
+                                                                  ? Icon(
+                                                                      Icons.close,
+                                                                      color: Colors.red,
+                                                                      size: 20,
+                                                                    )
+                                                                  : Icon(
+                                                                      Icons.check,
+                                                                      color: Colors.green,
+                                                                      size: 20,
+                                                                    ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Text('提取:'),
+                                                              '${item['if_extract']}' == '1'
+                                                                  ? Icon(
+                                                                      Icons.close,
+                                                                      color: Colors.red,
+                                                                      size: 20,
+                                                                    )
+                                                                  : Icon(
+                                                                      Icons.check,
+                                                                      color: Colors.green,
+                                                                      size: 20,
+                                                                    ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Text('转账:'),
+                                                              '${item['if_transfer']}' == '1'
+                                                                  ? Icon(
+                                                                      Icons.close,
+                                                                      color: Colors.red,
+                                                                      size: 20,
+                                                                    )
+                                                                  : Icon(
+                                                                      Icons.check,
+                                                                      color: Colors.green,
+                                                                      size: 20,
+                                                                    ),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      ],
+                                                    );
+                                                    break;
+                                                  case 'option':
+                                                    EdgeInsets pad = EdgeInsets.only(left: 6, right: 6);
+                                                    if ('${item['balance_type_id']}' != '2') {
+                                                      con = Wrap(
+                                                        runSpacing: 6,
+                                                        spacing: 6,
+                                                        children: <Widget>[
+                                                          PrimaryButton(
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder: (context) => BalanceDetail({
+                                                                    'login_name': '${list['login_name']}',
+                                                                    'balance_type_ch_name':
+                                                                        '${item['balance_type_ch_name']}',
+                                                                    'acct_balance_id': '${item['acct_balance_id']}',
+                                                                  }),
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: Text('查看'),
+                                                            padding: pad,
+                                                          ),
+                                                          PrimaryButton(
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                balanceCheckParam = {
+                                                                  'userId': '$key',
+                                                                  'acctBalanceID': '${item['acct_balance_id']}'
+                                                                };
+                                                                balanceCheck();
+                                                              });
+                                                            },
+                                                            padding: pad,
+                                                            child: Text('稽核'),
+                                                          ),
+                                                          '${item['balance_type_id']}' != '6'
+                                                              ? PrimaryButton(
+                                                                  onPressed: () {
+                                                                    Map data = {
+                                                                      'user': {
+                                                                        '$key': {
+                                                                          'user_id': '$key',
+                                                                          'login_name': '${list['login_name']}',
+                                                                        }
+                                                                      },
+                                                                      'manualType': '${item['balance_type_id']}',
+                                                                      'manualState': '1',
+                                                                      'acct_balance_id': item['acct_balance_id'],
+                                                                    };
+                                                                    turnTo(data);
+                                                                  },
+                                                                  padding: pad,
+                                                                  child: Text('调增'),
+                                                                )
+                                                              : Container(
+                                                                  width: 0,
+                                                                ),
+                                                          '${item['balance_type_id']}' != '6'
+                                                              ? PrimaryButton(
+                                                                  onPressed: () {
+                                                                    Map data = {
+                                                                      'user': {
+                                                                        '$key': {
+                                                                          'user_id': '$key',
+                                                                          'login_name': '${list['login_name']}'
+                                                                        },
+                                                                      },
+                                                                      'manualType': '${item['balance_type_id']}',
+                                                                      'manualState': '2',
+                                                                      'acct_balance_id': item['acct_balance_id'],
+                                                                    };
+                                                                    turnTo(data);
+                                                                  },
+                                                                  padding: pad,
+                                                                  child: Text('调减'),
+                                                                  type: BtnType.danger,
+                                                                )
+                                                              : Container(
+                                                                  width: 0,
+                                                                )
+                                                        ],
+                                                      );
+                                                    } else {
                                                       con = Row(
                                                         children: <Widget>[
-                                                          Expanded(
-                                                            flex: 1,
-                                                            child: Row(
-                                                              children: <Widget>[
-                                                                Text('充值:'),
-                                                                '${item['if_charge']}' == '1'
-                                                                    ? Icon(
-                                                                        Icons.close,
-                                                                        color: Colors.red,
-                                                                      )
-                                                                    : Icon(
-                                                                        Icons.check,
-                                                                        color: Colors.green,
-                                                                      ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 1,
-                                                            child: Row(
-                                                              children: <Widget>[
-                                                                Text('提取:'),
-                                                                '${item['if_extract']}' == '1'
-                                                                    ? Icon(
-                                                                        Icons.close,
-                                                                        color: Colors.red,
-                                                                      )
-                                                                    : Icon(
-                                                                        Icons.check,
-                                                                        color: Colors.green,
-                                                                      ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 1,
-                                                            child: Row(
-                                                              children: <Widget>[
-                                                                Text('转账:'),
-                                                                '${item['if_transfer']}' == '1'
-                                                                    ? Icon(
-                                                                        Icons.close,
-                                                                        color: Colors.red,
-                                                                      )
-                                                                    : Icon(
-                                                                        Icons.check,
-                                                                        color: Colors.green,
-                                                                      ),
-                                                              ],
-                                                            ),
+                                                          PrimaryButton(
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder: (context) => BalanceRedBagDetail(
+                                                                    {'item': item},
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                            padding: pad,
+                                                            child: Text('详情'),
                                                           )
                                                         ],
                                                       );
-                                                      break;
-                                                    case 'option':
-                                                      EdgeInsets pad = EdgeInsets.only(left: 6, right: 6);
-                                                      if ('${item['balance_type_id']}' != '2') {
-                                                        con = Wrap(
-                                                          runSpacing: 6,
-                                                          spacing: 6,
-                                                          children: <Widget>[
-                                                            PrimaryButton(
-                                                              onPressed: () {
-                                                                Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                    builder: (context) => BalanceDetail({
-                                                                      'login_name': '${ajaxData[key]['login_name']}',
-                                                                      'balance_type_ch_name':
-                                                                          '${item['balance_type_ch_name']}',
-                                                                      'acct_balance_id': '${item['acct_balance_id']}',
-                                                                    }),
-                                                                  ),
-                                                                );
-                                                              },
-                                                              child: Text('查看'),
-                                                              padding: pad,
-                                                            ),
-                                                            PrimaryButton(
-                                                              onPressed: () {
-                                                                setState(() {
-                                                                  balanceCheckParam = {
-                                                                    'userId': '$key',
-                                                                    'acctBalanceID': '${item['acct_balance_id']}'
-                                                                  };
-                                                                  balanceCheck();
-                                                                });
-                                                              },
-                                                              padding: pad,
-                                                              child: Text('稽核'),
-                                                            ),
-                                                            '${item['balance_type_id']}' != '6'
-                                                                ? PrimaryButton(
-                                                                    onPressed: () {
-                                                                      Map data = {
-                                                                        'user': {
-                                                                          '$key': {
-                                                                            'user_id': '$key',
-                                                                            'login_name':
-                                                                                '${ajaxData[key]['login_name']}',
-                                                                          }
-                                                                        },
-                                                                        'manualType': '${item['balance_type_id']}',
-                                                                        'manualState': '1'
-                                                                      };
-                                                                      Navigator.push(
-                                                                        context,
-                                                                        MaterialPageRoute(
-                                                                          builder: (context) =>
-                                                                              BalanceManualOpera(data),
-                                                                        ),
-                                                                      );
-                                                                    },
-                                                                    padding: pad,
-                                                                    child: Text('手工帐调增'),
-                                                                  )
-                                                                : Container(
-                                                                    width: 0,
-                                                                  ),
-                                                            '${item['balance_type_id']}' != '6'
-                                                                ? PrimaryButton(
-                                                                    onPressed: () {
-                                                                      Map data = {
-                                                                        'user': {
-                                                                          '$key': {
-                                                                            'user_id': '$key',
-                                                                            'login_name':
-                                                                                '${ajaxData[key]['login_name']}'
-                                                                          },
-                                                                        },
-                                                                        'manualType': '${item['balance_type_id']}',
-                                                                        'manualState': '2'
-                                                                      };
-                                                                      Navigator.push(
-                                                                        context,
-                                                                        MaterialPageRoute(
-                                                                          builder: (context) =>
-                                                                              BalanceManualOpera(data),
-                                                                        ),
-                                                                      );
-                                                                    },
-                                                                    padding: pad,
-                                                                    child: Text('手工帐调减'),
-                                                                  )
-                                                                : Container(
-                                                                    width: 0,
-                                                                  )
-                                                          ],
-                                                        );
-                                                      } else {
-                                                        con = Row(
-                                                          children: <Widget>[
-                                                            PrimaryButton(
-                                                              onPressed: () {
-                                                                Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                    builder: (context) => BalanceRedBagDetail(
-                                                                      {'item': item},
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                              padding: pad,
-                                                              child: Text('详情'),
-                                                            )
-                                                          ],
-                                                        );
-                                                      }
-                                                      break;
-                                                  }
-                                                  return Container(
-                                                    margin: EdgeInsets.only(bottom: 6),
-                                                    child: Row(
-                                                      children: <Widget>[
-                                                        Container(
-                                                          width: 80,
-                                                          alignment: Alignment.centerRight,
-                                                          child: Text('${col['title']}'),
-                                                          margin: EdgeInsets.only(right: 10),
-                                                        ),
-                                                        Expanded(flex: 1, child: con)
-                                                      ],
-                                                    ),
-                                                  );
-                                                },
-                                              ).toList(),
-                                            ),
-                                          );
-                                        },
-                                      ).toList(),
-                                    ),
+                                                    }
+                                                    break;
+                                                }
+                                                return Container(
+                                                  margin: EdgeInsets.only(bottom: 6),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Container(
+                                                        width: 80,
+                                                        alignment: Alignment.centerRight,
+                                                        child: Text('${col['title']}'),
+                                                        margin: EdgeInsets.only(right: 10),
+                                                      ),
+                                                      Expanded(flex: 1, child: con)
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            ).toList(),
+                                          ),
+                                        );
+                                      },
+                                    ).toList(),
                                   ),
-                                ],
-                              ),
-                            );
-                          },
-                        ).toList(),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
                       ),
             Container(
               child: PagePlugin(

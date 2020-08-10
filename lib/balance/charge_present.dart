@@ -159,18 +159,20 @@ class _ChargePresentState extends State<ChargePresent> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            PrimaryButton(
+              type: BtnType.Default,
               child: Text('取消'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
+            PrimaryButton(
               child: Text('提交'),
               onPressed: () {
-                Navigator.of(context).pop();
+                ajax('Adminrelas-balance-delPresentRules', {'rule_id': data['rule_id']}, true, (data) {
+                  Navigator.of(context).pop();
+                  getData();
+                }, () {}, _context);
               },
             ),
           ],
@@ -351,7 +353,7 @@ class _ChargePresentState extends State<ChargePresent> {
                                             shrinkWrap: true,
                                             style: {
                                               'body': Style(
-                                                fontSize: FontSize(CFFontSize.title),
+                                                fontSize: FontSize(CFFontSize.content),
                                               )
                                             },
                                           ),
@@ -386,12 +388,18 @@ class _ChargePresentState extends State<ChargePresent> {
                                     child: Row(
                                       children: <Widget>[
                                         Container(
-                                          width: 120,
+                                          width: 90,
                                           alignment: Alignment.centerRight,
                                           child: Text('${col['title']}'),
                                           margin: EdgeInsets.only(right: 10),
                                         ),
-                                        Expanded(flex: 1, child: con)
+                                        Expanded(
+                                          flex: 1,
+                                          child: Container(
+                                            padding: EdgeInsets.only(right: 6),
+                                            child: con,
+                                          ),
+                                        )
                                       ],
                                     ),
                                   );

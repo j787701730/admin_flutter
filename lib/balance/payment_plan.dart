@@ -271,6 +271,8 @@ class _PaymentPlanState extends State<PaymentPlan> {
                   );
                 } else {
                   Fluttertoast.showToast(
+                    backgroundColor: CFColors.secondary,
+                    textColor: CFColors.white,
                     msg: '请填写 ${msg.join(', ')}',
                     gravity: ToastGravity.CENTER,
                   );

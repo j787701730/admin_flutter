@@ -104,6 +104,8 @@ class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMi
     return WillPopScope(
       onWillPop: () async {
         Fluttertoast.showToast(
+          backgroundColor: CFColors.secondary,
+          textColor: CFColors.white,
           msg: '再按一次退出app',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,

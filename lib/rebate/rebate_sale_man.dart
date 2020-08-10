@@ -167,6 +167,8 @@ class _RebateSaleManState extends State<RebateSaleMan> {
       );
     } else {
       Fluttertoast.showToast(
+        backgroundColor: CFColors.secondary,
+        textColor: CFColors.white,
         msg: '${msg.join(', ')}',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,

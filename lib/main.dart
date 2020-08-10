@@ -139,7 +139,7 @@ class _MyAppState extends State<MyApp> {
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: const Color.fromARGB(55, 0, 0, 0),
+        backgroundColor: Color(0xfff5f5f5),
       ),
       appBarTheme: AppBarTheme(
         textTheme: TextTheme(

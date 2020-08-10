@@ -2,6 +2,7 @@ import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -79,6 +80,8 @@ class _UserPluginState extends State<UserPlugin> {
     FocusScope.of(context).requestFocus(FocusNode());
     if (userCount > 1 && selectUsersData.keys.length == userCount && !selectUsersData.keys.contains(item['user_id'])) {
       Fluttertoast.showToast(
+        backgroundColor: CFColors.secondary,
+        textColor: CFColors.white,
         msg: '最多选择 $userCount 个用户',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,

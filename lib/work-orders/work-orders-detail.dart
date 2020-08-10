@@ -97,6 +97,8 @@ class _WorkOrdersDetailState extends State<WorkOrdersDetail> {
     print(param);
     if (param['log_content'] == null || '${param['log_content']}'.trim() == '') {
       Fluttertoast.showToast(
+        backgroundColor: CFColors.secondary,
+        textColor: CFColors.white,
         msg: '请输入内容',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,

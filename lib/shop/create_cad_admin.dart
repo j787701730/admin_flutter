@@ -27,6 +27,8 @@ class _CreateCadAdminState extends State<CreateCadAdmin> {
     Map data = {'comments': param['comments'], 'shop_id': param['shops'].keys.toList()};
     if (data['shop_id'].isEmpty) {
       Fluttertoast.showToast(
+        backgroundColor: CFColors.secondary,
+        textColor: CFColors.white,
         msg: '请选择店铺',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,

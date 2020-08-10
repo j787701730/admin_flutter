@@ -562,7 +562,6 @@ class _StaffGroupContentState extends State<StaffGroupContent> {
                                 margin: EdgeInsets.symmetric(vertical: 6),
                                 child: Wrap(
                                   spacing: 4,
-                                  runSpacing: 5,
                                   children: item2['c'].map<Widget>(
                                     (item3) {
                                       return Container(
@@ -580,9 +579,11 @@ class _StaffGroupContentState extends State<StaffGroupContent> {
                                                   rightsLevel3Click(item2, item3);
                                                 },
                                               ),
-                                              Padding(
-                                                padding: EdgeInsets.only(right: 8),
-                                                child: Text('${item3['fnm']}'),
+                                              Expanded(
+                                                child: Text(
+                                                  '${item3['fnm']}',
+                                                  softWrap: true,
+                                                ),
                                               ),
                                             ],
                                           ),

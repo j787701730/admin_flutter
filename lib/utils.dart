@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:admin_flutter/login.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
@@ -50,6 +51,8 @@ ajaxSimple(String url, data, Function fun, {Function netError}) async {
     }
 //    print(e);
     Fluttertoast.showToast(
+      backgroundColor: CFColors.secondary,
+      textColor: CFColors.white,
       msg: '$e',
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
@@ -99,7 +102,9 @@ ajax(String url, data, bool toast, Function fun, Function fun2, BuildContext _co
     if (res.data['err_code'] == 0) {
       if (toast == true) {
         Fluttertoast.showToast(
-          msg: '${res.data['err_msg']}'.length > 15 ? '成功' : '${res.data['err_msg']}',
+          backgroundColor: CFColors.secondary,
+          textColor: CFColors.white,
+          msg: res.data['err_msg'] is String ? res.data['err_msg'] : '请求成功',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
         );
@@ -126,6 +131,8 @@ ajax(String url, data, bool toast, Function fun, Function fun2, BuildContext _co
     } else {
       if (toast == true) {
         Fluttertoast.showToast(
+          backgroundColor: CFColors.secondary,
+          textColor: CFColors.white,
           msg: '${res.data['err_code']}: ${res.data['err_msg']}',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
@@ -159,6 +166,8 @@ ajax(String url, data, bool toast, Function fun, Function fun2, BuildContext _co
     }
     // print(e);
     Fluttertoast.showToast(
+      backgroundColor: CFColors.secondary,
+      textColor: CFColors.white,
       msg: '$e',
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,

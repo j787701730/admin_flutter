@@ -269,6 +269,8 @@ class _WorkOrdersListState extends State<WorkOrdersList> {
                 print(price);
                 ajax('Adminrelas-WorkOrders-editW', {'order_no': item['order_no'], 'order_price': price}, true, (data) {
                   Fluttertoast.showToast(
+                    backgroundColor: CFColors.secondary,
+                    textColor: CFColors.white,
                     msg: '修改成功',
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.CENTER,

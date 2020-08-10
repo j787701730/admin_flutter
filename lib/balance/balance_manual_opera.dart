@@ -4,8 +4,10 @@ import 'dart:convert';
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/user_plugin.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 /// 手工账
 class BalanceManualOpera extends StatefulWidget {
@@ -62,6 +64,50 @@ class _BalanceManualOperaState extends State<BalanceManualOpera> {
     }, () {}, _context);
   }
 
+  save() {
+    // 新增
+    String url = 'Adminrelas-Balance-balanceManual';
+    Map submitData;
+    List msg = [];
+    if (widget.props != null && widget.props['acct_balance_id'] != null) {
+      // 修改
+      url = 'Adminrelas-Balance-manualByBalanceType';
+      submitData = {
+        'acctBalanceID': widget.props['acct_balance_id'],
+        'state': manualState,
+        'amount': manualAmount,
+        'operReason': manualComment
+      };
+    } else {
+      // 新增
+      submitData = {
+        'userId': selectUsersData.keys.toList()[0],
+        'state': manualState,
+        'amount': manualAmount,
+        'balanceTypeId': manualTypeID,
+        'operReason': manualComment,
+      };
+      if (selectUsersData.isEmpty) {
+        msg.add('用户');
+      }
+    }
+    if (submitData['amount'] == null || submitData['amount'].trim() == '' || double.parse(submitData['amount']) == 0) {
+      msg.add('用户');
+    }
+    if (msg.isEmpty) {
+      ajax(url, submitData, true, (data) {
+        Navigator.pop(context, true);
+      }, () {}, _context);
+    } else {
+      Fluttertoast.showToast(
+          backgroundColor: CFColors.secondary,
+          textColor: CFColors.white,
+          msg: '${msg.join(', ')}',
+          gravity: ToastGravity.CENTER);
+    }
+    FocusScope.of(context).requestFocus(FocusNode());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,47 +152,45 @@ class _BalanceManualOperaState extends State<BalanceManualOpera> {
                           height: 32,
                           alignment: Alignment.centerLeft,
                           child: Wrap(
-                            children: selectUsersData.keys.toList().map<Widget>(
-                              (key) {
-                                return Container(
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.only(right: 20),
-                                        child: Text(
-                                          '${selectUsersData[key]['login_name']}',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                            children: selectUsersData.keys.toList().map<Widget>((key) {
+                              return Container(
+                                child: Stack(
+                                  children: <Widget>[
+                                    Container(
+                                      padding: EdgeInsets.only(right: 20),
+                                      child: Text(
+                                        '${selectUsersData[key]['login_name']}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      widget.props == null
-                                          ? Positioned(
-                                              top: 0,
-                                              right: 0,
-                                              child: Container(
-                                                color: Color(0xffeeeeee),
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      selectUsersData.remove(key);
-                                                    });
-                                                  },
-                                                  child: Icon(
-                                                    Icons.clear,
-                                                    color: Colors.red,
-                                                    size: 20,
-                                                  ),
+                                    ),
+                                    widget.props == null
+                                        ? Positioned(
+                                            top: 0,
+                                            right: 0,
+                                            child: Container(
+                                              color: Color(0xffeeeeee),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    selectUsersData.remove(key);
+                                                  });
+                                                },
+                                                child: Icon(
+                                                  Icons.clear,
+                                                  color: Colors.red,
+                                                  size: 20,
                                                 ),
                                               ),
-                                            )
-                                          : Container(
-                                              width: 0,
-                                            )
-                                    ],
-                                  ),
-                                );
-                              },
-                            ).toList(),
+                                            ),
+                                          )
+                                        : Container(
+                                            width: 0,
+                                          )
+                                  ],
+                                ),
+                              );
+                            }).toList(),
                           ),
                         ),
                       ),
@@ -428,9 +472,7 @@ class _BalanceManualOperaState extends State<BalanceManualOpera> {
                             Container(
                               margin: EdgeInsets.only(top: 10),
                               child: PrimaryButton(
-                                onPressed: () {
-                                  FocusScope.of(context).requestFocus(FocusNode());
-                                },
+                                onPressed: save,
                                 child: Text('确认提交'),
                               ),
                             )

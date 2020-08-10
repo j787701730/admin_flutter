@@ -1,4 +1,5 @@
 import 'package:admin_flutter/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InputSingle extends StatefulWidget {
@@ -40,6 +41,23 @@ class _InputSingleState extends State<InputSingle> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.value != widget.value) {
       value = widget.value;
+    }
+  }
+
+  keyboardType() {
+    switch (widget.type) {
+      case NumberType.float:
+        if (widget.sign == '+') {
+          return TextInputType.numberWithOptions(decimal: true);
+        } else {
+          return TextInputType.text;
+        }
+        break;
+      case NumberType.int:
+        return TextInputType.number;
+        break;
+      default:
+        return TextInputType.text;
     }
   }
 
@@ -85,6 +103,7 @@ class _InputSingleState extends State<InputSingle> {
           });
           widget.onChanged(regVal);
         },
+        keyboardType: keyboardType(),
       ),
     );
   }

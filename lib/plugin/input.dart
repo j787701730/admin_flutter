@@ -1,3 +1,4 @@
+import 'package:admin_flutter/plugin/input-single.dart';
 import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -83,32 +84,8 @@ class _InputState extends State<Input> {
             child: Container(
               alignment: Alignment.centerLeft,
               height: widget.maxLines == 1 ? 34.0 : null,
-              child: TextField(
-                controller: TextEditingController.fromValue(
-                  TextEditingValue(
-                    text: '${value ?? ''}',
-                    selection: TextSelection.fromPosition(
-                      TextPosition(
-                        affinity: TextAffinity.downstream,
-                        offset: '${value ?? ''}'.length,
-                      ),
-                    ),
-                  ),
-                ),
-                style: TextStyle(fontSize: CFFontSize.content),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  contentPadding: widget.contentPadding ??
-                      EdgeInsets.only(
-                        top: widget.maxLines == 1 ? 0 : 10,
-                        bottom: widget.maxLines == 1 ? 0 : 10,
-                        left: 10,
-                        right: 10,
-                      ),
-                  hintText: widget.placeholder ?? '',
-                ),
-                maxLines: widget.maxLines,
-                onChanged: (String val) {
+              child: InputSingle(
+                onChanged: (val) {
                   String regVal = val;
                   if (widget.type == NumberType.int) {
                     regVal = clearNoInt(val);
@@ -120,6 +97,13 @@ class _InputState extends State<Input> {
                   });
                   widget.onChanged(regVal);
                 },
+                maxLines: widget.maxLines,
+                value: widget.value,
+                placeholder: widget.placeholder,
+                decimal: widget.decimal,
+                sign: widget.sign,
+                type: widget.type,
+                contentPadding: widget.contentPadding,
               ),
             ),
           )

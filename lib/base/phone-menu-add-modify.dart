@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -90,6 +91,8 @@ class _PhoneMenuAddModifyState extends State<PhoneMenuAddModify> {
       }, () {}, _context);
     } else {
       Fluttertoast.showToast(
+        backgroundColor: CFColors.secondary,
+        textColor: CFColors.white,
         msg: '请填写 ${msg.join(', ')}',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,

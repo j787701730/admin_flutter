@@ -71,7 +71,7 @@ class _PagePluginState extends State<PagePlugin> {
             alignment: WrapAlignment.center,
             crossAxisAlignment: WrapCrossAlignment.center,
             runSpacing: 10,
-            spacing: 10,
+            spacing: 4,
             children: arr.map<Widget>((item) {
               Widget con = SizedBox();
               if (current == item) {
@@ -83,7 +83,7 @@ class _PagePluginState extends State<PagePlugin> {
                 switch (item) {
                   case 'first':
                     con = Container(
-                      width: 44,
+                      width: 40,
                       child: PrimaryButton(
                         onPressed: () {
                           widget.function(1);
@@ -95,7 +95,7 @@ class _PagePluginState extends State<PagePlugin> {
                     break;
                   case 'prev':
                     con = Container(
-                      width: 44,
+                      width: 40,
                       child: PrimaryButton(
                         onPressed: () {
                           widget.function(current - 1);
@@ -107,7 +107,7 @@ class _PagePluginState extends State<PagePlugin> {
                     break;
                   case 'next':
                     con = Container(
-                      width: 44,
+                      width: 40,
                       child: PrimaryButton(
                         onPressed: () {
                           widget.function(current + 1);
@@ -119,7 +119,7 @@ class _PagePluginState extends State<PagePlugin> {
                     break;
                   case 'last':
                     con = Container(
-                      width: 44,
+                      width: 40,
                       child: PrimaryButton(
                         onPressed: () {
                           widget.function(totalPages);

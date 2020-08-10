@@ -3,7 +3,7 @@ import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:rounded_flutter_datetime_picker/rounded_flutter_datetime_picker.dart';
 
 class ChargePresentModify extends StatefulWidget {
   final props;
@@ -48,6 +48,32 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
     }
   }
 
+  msgChange() {
+    String str = '';
+    print(param);
+    if (param['user_type'] == '1') {
+      str += '消费者';
+    } else {
+      str += '商家';
+    }
+    str += chargeType[param['charge_type']] + '充值满';
+    str += param['charge_limit'] == null || param['charge_limit'].trim() == '' ? 'X' : param['charge_limit'];
+    if (param['present_type'] == '1') {
+      str += '送';
+    } else {
+      str += '返';
+    }
+    str += param['present_value'] == null || param['present_value'].trim() == '' ? 'X' : param['present_value'];
+    if (param['present_type'] == '1') {
+//      str += '';
+    } else {
+      str += '%';
+    }
+    setState(() {
+      param['rule_name'] = str;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,9 +93,7 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
               selectedValue: param['balance_type'] ?? '1',
               label: '账本类型',
               onChanged: (val) {
-                setState(() {
-                  param['balance_type'] = val;
-                });
+                param['balance_type'] = val;
               },
             ),
             Select(
@@ -78,9 +102,8 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
               selectedValue: param['charge_type'] ?? '2',
               label: '充值类型',
               onChanged: (val) {
-                setState(() {
-                  param['charge_type'] = val;
-                });
+                param['charge_type'] = val;
+                msgChange();
               },
             ),
             Select(
@@ -89,9 +112,8 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
               selectedValue: param['user_type'] ?? '1',
               label: '用户类型',
               onChanged: (val) {
-                setState(() {
-                  param['user_type'] = val;
-                });
+                param['user_type'] = val;
+                msgChange();
               },
             ),
             Select(
@@ -100,9 +122,8 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
               selectedValue: param['present_type'] ?? '1',
               label: '赠送类型',
               onChanged: (val) {
-                setState(() {
-                  param['present_type'] = val;
-                });
+                param['present_type'] = val;
+                msgChange();
               },
             ),
             Select(
@@ -111,15 +132,15 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
               selectedValue: param['present_balance_type'] ?? '2',
               label: '赠送账本类型',
               onChanged: (val) {
-                setState(() {
-                  param['present_balance_type'] = val;
-                });
+                param['present_balance_type'] = val;
+                msgChange();
               },
             ),
             Input(
               label: '充值上限',
               onChanged: (val) {
                 param['charge_limit'] = val;
+                msgChange();
               },
               labelWidth: 100,
               type: NumberType.float,
@@ -129,6 +150,7 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
               label: '赠送额度',
               onChanged: (val) {
                 param['present_value'] = val;
+                msgChange();
               },
               labelWidth: 100,
               type: NumberType.float,
@@ -161,9 +183,7 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                             print('change $date');
                           },
                           onConfirm: (date) {
-                            setState(() {
-                              param['eff_date'] = date;
-                            });
+                            param['eff_date'] = date;
                           },
                           currentTime: param['eff_date'] ?? DateTime.now(),
                           locale: LocaleType.zh,
@@ -215,9 +235,7 @@ class _ChargePresentModifyState extends State<ChargePresentModify> {
                             print('change $date');
                           },
                           onConfirm: (date) {
-                            setState(() {
-                              param['exp_date'] = date;
-                            });
+                            param['exp_date'] = date;
                           },
                           currentTime: param['exp_date'] ?? DateTime.now(),
                           locale: LocaleType.zh,

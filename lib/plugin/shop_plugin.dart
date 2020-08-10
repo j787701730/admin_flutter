@@ -4,6 +4,7 @@ import 'package:admin_flutter/plugin/input.dart';
 import 'package:admin_flutter/plugin/page_plugin.dart';
 import 'package:admin_flutter/plugin/select.dart';
 import 'package:admin_flutter/primary_button.dart';
+import 'package:admin_flutter/style.dart';
 import 'package:admin_flutter/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -84,6 +85,8 @@ class _ShopPluginState extends State<ShopPlugin> {
   selectOrCancel(item) {
     if (shopCount > 1 && selectShopsData.keys.length == shopCount && !selectShopsData.keys.contains(item['shop_id'])) {
       Fluttertoast.showToast(
+        backgroundColor: CFColors.secondary,
+        textColor: CFColors.white,
         msg: '最多选择 $shopCount 家店铺',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
