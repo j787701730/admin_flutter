@@ -90,7 +90,7 @@ class _LoginState extends State<Login> {
   }
 
   getAccess() {
-    ajax('Adminrelas-Manage-getTest', {}, true, (res) {
+    ajax('Adminrelas-Manage-getAuth', {}, true, (res) {
       if (res.runtimeType != String && res['err_code'] == 0) {
 //        Navigator.pop(_context, {'islogin': true, 'access': res['data']});
         Navigator.pushAndRemoveUntil(

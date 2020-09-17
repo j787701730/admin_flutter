@@ -504,6 +504,7 @@ class _ShopListContentState extends State<ShopListContent> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: widget.ajaxData.map<Widget>((item) {
         return Container(
+          key: Key('${item['shop_id']}'),
           padding: EdgeInsets.only(top: 10),
           decoration: BoxDecoration(
             border: Border.all(
@@ -585,6 +586,7 @@ class _ShopListContentState extends State<ShopListContent> {
                         runSpacing: 10,
                         children: item['role_id'].split(',').map<Widget>((role) {
                           return Container(
+                            key: Key(role),
                             child: Text(
                               '${widget.roles[role]['role_ch_name']}',
                               style: TextStyle(color: Colors.blue),

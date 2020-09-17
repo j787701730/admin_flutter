@@ -331,7 +331,7 @@ class _MenusWidgetState extends State<MenusWidget> with AutomaticKeepAliveClient
   }
 
   getAccess() {
-    ajaxSimple('Adminrelas-Manage-getTest', {}, (res) {
+    ajaxSimple('Adminrelas-Manage-getAuth', {}, (res) {
       if (res.runtimeType != String && res['err_code'] == 0) {
         setState(() {
           access = res['data'];
@@ -405,6 +405,7 @@ class _MenusWidgetState extends State<MenusWidget> with AutomaticKeepAliveClient
                         width: 0,
                       )
                     : Container(
+                        key: Key('${item['access'][0]}'),
                         margin: EdgeInsets.only(bottom: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -422,6 +423,7 @@ class _MenusWidgetState extends State<MenusWidget> with AutomaticKeepAliveClient
                               children: item['children'].map<Widget>((child) {
                                 return access.contains(child['access'][0])
                                     ? InkWell(
+                                        key: Key('${child['access'][0]}'),
                                         onTap: () {
                                           turnTo(child['path']);
                                         },

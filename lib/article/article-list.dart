@@ -596,6 +596,7 @@ class _ArticleListContentState extends State<ArticleListContent> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: widget.ajaxData.map<Widget>((item) {
         return Container(
+          key: Key('${item['article_id']}'),
           padding: EdgeInsets.only(top: 10),
           decoration: BoxDecoration(
             border: Border.all(
